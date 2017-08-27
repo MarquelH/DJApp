@@ -78,6 +78,15 @@ class LoginController: UIViewController {
         return ui
     }()
     
+    let djOrGuestSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["DJ Login", "Guest Enter"])
+        sc.backgroundColor = UIColor.blue.withAlphaComponent(0.25)
+        sc.tintColor = UIColor.white
+        sc.selectedSegmentIndex = 0
+        sc.translatesAutoresizingMaskIntoConstraints = false
+        return sc
+    }()
+    
 
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -101,6 +110,7 @@ class LoginController: UIViewController {
         view.addSubview(djGuestLoginButton)
         view.addSubview(usernameContainer)
         view.addSubview(passwordContainer)
+        view.addSubview(djOrGuestSegmentedControl)
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)
         passwordContainer.addSubview(passwordTextField)
@@ -112,6 +122,11 @@ class LoginController: UIViewController {
         usernameContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
         usernameContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         
+        djOrGuestSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        djOrGuestSegmentedControl.bottomAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: -15).isActive = true
+        djOrGuestSegmentedControl.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        djOrGuestSegmentedControl.heightAnchor.constraint(equalToConstant: 24).isActive = true
+
         
         passwordContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passwordContainer.topAnchor.constraint(equalTo: usernameContainer.bottomAnchor, constant: 12).isActive = true
@@ -120,7 +135,7 @@ class LoginController: UIViewController {
         
         
         djGuestLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        djGuestLoginButton.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 24).isActive = true
+        djGuestLoginButton.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 50).isActive = true
         djGuestLoginButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         djGuestLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         
