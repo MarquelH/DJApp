@@ -87,6 +87,15 @@ class LoginController: UIViewController {
         return sc
     }()
     
+    let notUserLabel: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Don't have an account? Sign up here", for: .normal)
+        btn.setTitleColor(UIColor.white, for: .normal)
+        btn.titleLabel?.font = UIFont.italicSystemFont(ofSize: 15)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
 
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -111,6 +120,7 @@ class LoginController: UIViewController {
         view.addSubview(usernameContainer)
         view.addSubview(passwordContainer)
         view.addSubview(djOrGuestSegmentedControl)
+        view.addSubview(notUserLabel)
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)
         passwordContainer.addSubview(passwordTextField)
@@ -121,6 +131,15 @@ class LoginController: UIViewController {
         usernameContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         usernameContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
         usernameContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        
+        notUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        notUserLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        notUserLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        notUserLabel.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor).isActive = true
+        
+        
+        
+        
         
         djOrGuestSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         djOrGuestSegmentedControl.bottomAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: -15).isActive = true

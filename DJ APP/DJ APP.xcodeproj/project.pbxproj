@@ -516,6 +516,7 @@
 				D81A66E61F4F6E3E00543A8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D81A66E71F4F6E3E00543A8F /* Build configuration list for PBXNativeTarget "DJ APPTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +525,7 @@
 				D81A66E91F4F6E3E00543A8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D81A66EA1F4F6E3E00543A8F /* Build configuration list for PBXNativeTarget "DJ APPUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +534,7 @@
 				D81A66EC1F4F6E3E00543A8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
