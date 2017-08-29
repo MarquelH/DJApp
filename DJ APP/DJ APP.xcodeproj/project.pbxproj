@@ -14,6 +14,8 @@
 		D81A66E01F4F6E3E00543A8F /* DJ_APPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66DF1F4F6E3E00543A8F /* DJ_APPUITests.swift */; };
 		D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66F01F4F713F00543A8F /* DJTableViewController.swift */; };
 		D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66F21F4F721D00543A8F /* LoginController.swift */; };
+		D86732981F54E31C00270D07 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86732971F54E31C00270D07 /* RegisterController.swift */; };
+		D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86732991F54E58E00270D07 /* DJRootViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		D81A66E11F4F6E3E00543A8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D81A66F01F4F713F00543A8F /* DJTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJTableViewController.swift; sourceTree = "<group>"; };
 		D81A66F21F4F721D00543A8F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		D86732971F54E31C00270D07 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		D86732991F54E58E00270D07 /* DJRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJRootViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,8 @@
 			children = (
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
 				D81A66F21F4F721D00543A8F /* LoginController.swift */,
+				D86732971F54E31C00270D07 /* RegisterController.swift */,
+				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -269,6 +275,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D86732981F54E31C00270D07 /* RegisterController.swift in Sources */,
+				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
 				D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */,
 				D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */,
