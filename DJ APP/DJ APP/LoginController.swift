@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginController: UIViewController {
     
@@ -95,7 +96,7 @@ class LoginController: UIViewController {
     
     let notUserLabel: UIButton = {
         let btn = UIButton(type: .system)
-        let lightblue = UIColor.cyan.withAlphaComponent(0.75)
+        let lightblue = UIColor.white.withAlphaComponent(0.75)
         btn.setTitle("Don't have an account? Sign up here", for: .normal)
         btn.setTitleColor(lightblue, for: .normal)
         btn.titleLabel?.font = UIFont.italicSystemFont(ofSize: 15)
@@ -114,6 +115,10 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //let ref = Firebase.Database.database().reference(fromURL: "https://godja-9d13b.firebaseio.com/")
+        
+        
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
@@ -198,6 +203,7 @@ class LoginController: UIViewController {
     func handleLoginEnterChange() {
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 0) {
             djGuestLoginButton.setTitle("Login", for: .normal)
+            djGuestLoginButton.setTitleColor(UIColor.blue, for: .normal)
             usernameContainer.isHidden = false
             passwordContainer.isHidden = false
             usernameImage.isHidden = false
@@ -208,7 +214,7 @@ class LoginController: UIViewController {
             loginButtonTopAnchor?.constant = 50
         }
         else {
-            loginButtonTopAnchor?.constant = -125
+            loginButtonTopAnchor?.constant = -75
             notUserLabel.isHidden = true
             usernameContainer.isHidden = true
             passwordContainer.isHidden = true
@@ -217,6 +223,7 @@ class LoginController: UIViewController {
             passwordTextField.isHidden = true
             usernameTextField.isHidden = true
             djGuestLoginButton.setTitle("Enter", for: .normal)
+            djGuestLoginButton.setTitleColor(UIColor.white, for: .normal)
         }
     }
     
@@ -226,7 +233,7 @@ class LoginController: UIViewController {
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 0){
             handleLogin()
         }
-        //Guest eneter was hit
+        //Guest enter was hit
         else {
             handleEnter()
         }
@@ -238,6 +245,10 @@ class LoginController: UIViewController {
     }
     
     func handleLogin() {
+        
+        
+        
+        
         let djRootViewController = DJRootViewController()
         present(djRootViewController, animated: true, completion: nil)
     }
