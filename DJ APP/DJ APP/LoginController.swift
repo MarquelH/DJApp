@@ -105,8 +105,6 @@ class LoginController: UIViewController {
         return btn
     }()
     
-
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -223,7 +221,6 @@ class LoginController: UIViewController {
             passwordTextField.isHidden = true
             usernameTextField.isHidden = true
             djGuestLoginButton.setTitle("Enter", for: .normal)
-            djGuestLoginButton.setTitleColor(UIColor.white, for: .normal)
         }
     }
     
@@ -241,7 +238,8 @@ class LoginController: UIViewController {
     
     func handleRegister() {
         let registerController = RegisterController()
-        present(registerController, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: registerController)
+        present(navController, animated: true, completion: nil)
     }
     
     func handleLogin() {

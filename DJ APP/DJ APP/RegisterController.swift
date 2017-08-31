@@ -10,37 +10,68 @@ import UIKit
 
 class RegisterController: UIViewController {
 
+//    let profilePic: UIImageView = {
+//        let pp = UIImageView()
+//        pp.image = UIImage(named: "usernameIcon")
+//        pp.contentMode = .scaleAspectFit
+//        pp.layer.cornerRadius = 30
+//        pp.clipsToBounds = true
+//        pp.layer.borderWidth = 1.0
+//        pp.layer.borderColor = UIColor.black.cgColor
+//        pp.translatesAutoresizingMaskIntoConstraints = false
+//        return pp
+//    }()
+    
+    let profilePicButton: UIButton = {
+        let ppb = UIButton(type: UIButtonType.custom)
+        let image = UIImage(named: "usernameIcon")
+        ppb.addTarget(self, action: #selector(handlePicTapped), for: .touchUpInside)
+        ppb.setImage(image, for: .normal)
+        ppb.translatesAutoresizingMaskIntoConstraints = false
+        return ppb
+    }()
+    
+    let cancelButton: UIBarButtonItem = {
+        let cb = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        
+        return cb
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
-        backgroundImage.image = UIImage(named: "djBackgroundImage")
-        backgroundImage.contentMode = .scaleAspectFill
-        view.insertSubview(backgroundImage, at: 0)
+//        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
+//        backgroundImage.image = UIImage(named: "djBackgroundImage")
+//        backgroundImage.contentMode = .scaleAspectFill
+//        view.insertSubview(backgroundImage, at: 0)
+
+        view.backgroundColor = UIColor.white
         
+       
+        setupNavigationBar()
         setupViews()
     }
-    
-    let profilePic: UIImageView = {
-        let pp = UIImageView()
-        pp.image = UIImage(named: "usernameIcon")
-        pp.contentMode = .scaleAspectFit
-        pp.layer.cornerRadius = 12
-        pp.clipsToBounds = true
-        pp.layer.borderWidth = 3.0
-        pp.layer.borderColor = UIColor.white.cgColor
-        pp.translatesAutoresizingMaskIntoConstraints = false
-        return pp
-    }()
+
+    func setupNavigationBar() {
+        self.navigationItem.title = "Enter Info"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
+    }
     
     func setupViews(){
+        view.addSubview(profilePicButton)
         
-        view.addSubview(profilePic)
-        
-        
-        profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profilePic.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -65).isActive = true
-        profilePic.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -35).isActive = true
-        profilePic.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        profilePicButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profilePicButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 25).isActive = true
+        profilePicButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        profilePicButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    }
+    
+    func handlePicTapped() {
+        print("Add image here...")
+    }
+    
+    func handleCancel() {
+        print("Dissmissing register controller")
+        self.dismiss(animated: true, completion: nil)
     }
 }
