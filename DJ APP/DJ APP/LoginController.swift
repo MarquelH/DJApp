@@ -238,6 +238,7 @@ class LoginController: UIViewController {
     
     func handleRegister() {
         let registerController = RegisterController()
+        registerController.loginController = self
         let navController = UINavigationController(rootViewController: registerController)
         present(navController, animated: true, completion: nil)
     }
@@ -252,7 +253,8 @@ class LoginController: UIViewController {
     }
     
     func handleEnter() {
-            self.dismiss(animated: true, completion: nil)
+        print ("Login controller enter")
+        dismiss(animated: true, completion: nil)
     }
 }
 

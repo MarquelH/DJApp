@@ -12,8 +12,8 @@ class DJTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavBar()
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -26,9 +26,14 @@ class DJTableViewController: UITableViewController {
         return 0
     }
 
+    func setupNavBar() {
+        navigationItem.title = "DJ List"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
+    }
+    
     func handleLogout() {
-    let loginController = LoginController()
-     present(loginController, animated: true, completion: nil)
+        let loginController = LoginController()
+        present(loginController, animated: true, completion: nil)
     }
    
 }

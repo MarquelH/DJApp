@@ -8,8 +8,13 @@
 
 import UIKit
 
-class RegisterController: UIViewController {
+class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
+    var loginController: LoginController?
+    var originalView: CGFloat?
+    
+    let genre: [String] = ["Rap", "Rock", "Country", "Folk", "Indie", "Reggee", "EDM", "House", "R&B", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
+    
     let profilePic: UIImageView = {
         let pp = UIImageView()
         pp.alpha = 0.85
@@ -50,6 +55,7 @@ class RegisterController: UIViewController {
         let htf = UITextField()
         htf.backgroundColor = UIColor.yellow
         htf.clearButtonMode = .whileEditing
+        htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         htf.translatesAutoresizingMaskIntoConstraints = false
         return htf
     }()
@@ -60,18 +66,229 @@ class RegisterController: UIViewController {
         hs.translatesAutoresizingMaskIntoConstraints = false
         return hs
     }()
-  
+    
+    let djNameLabel: UILabel = {
+        let dl = UILabel()
+        dl.textColor = UIColor.gray
+        dl.text = "DJ Name:"
+        dl.backgroundColor = UIColor.red
+        dl.translatesAutoresizingMaskIntoConstraints = false
+        return dl
+    }()
+    
+    let djNameTextField: UITextField = {
+        let dtf = UITextField()
+        dtf.backgroundColor = UIColor.yellow
+        dtf.clearButtonMode = .whileEditing
+        dtf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
+        dtf.translatesAutoresizingMaskIntoConstraints = false
+        return dtf
+    }()
+    
+    let djSep: UIView = {
+        let ds = UIView()
+        ds.backgroundColor = UIColor.lightGray
+        ds.translatesAutoresizingMaskIntoConstraints = false
+        return ds
+    }()
+    
+    let ageLabel: UILabel = {
+        let al = UILabel()
+        al.textColor = UIColor.gray
+        al.text = "Age:"
+        al.backgroundColor = UIColor.red
+        al.translatesAutoresizingMaskIntoConstraints = false
+        return al
+    }()
+    
+    let ageTextField: UITextField = {
+        let atf = UITextField()
+        atf.backgroundColor = UIColor.yellow
+        atf.clearButtonMode = .whileEditing
+        atf.translatesAutoresizingMaskIntoConstraints = false
+        atf.addTarget(self, action: #selector(ageClicked), for: UIControlEvents.editingDidBegin)
+        return atf
+    }()
+    
+    let ageSep: UIView = {
+        let aS = UIView()
+        aS.backgroundColor = UIColor.lightGray
+        aS.translatesAutoresizingMaskIntoConstraints = false
+        return aS
+    }()
+    
+    let genreLabel: UILabel = {
+        let gl = UILabel()
+        gl.textColor = UIColor.gray
+        gl.text = "Genre:"
+        gl.backgroundColor = UIColor.red
+        gl.translatesAutoresizingMaskIntoConstraints = false
+        return gl
+    }()
+    
+    let genreTextField: UITextField = {
+        let gtf = UITextField()
+        gtf.backgroundColor = UIColor.yellow
+        gtf.clearButtonMode = .whileEditing
+        gtf.translatesAutoresizingMaskIntoConstraints = false
+        gtf.addTarget(self, action: #selector(genreClicked), for: UIControlEvents.editingDidBegin)
+        return gtf
+    }()
+    
+    let genreSep: UIView = {
+        let gs = UIView()
+        gs.backgroundColor = UIColor.lightGray
+        gs.translatesAutoresizingMaskIntoConstraints = false
+        return gs
+    }()
+    
+    lazy var genrePickView: UIPickerView = {
+        let gp = UIPickerView()
+        gp.dataSource = self
+        gp.delegate = self
+        return gp
+    }()
+    
+    lazy var agePickView: UIPickerView = {
+        let ap = UIPickerView()
+        ap.dataSource = self
+        ap.delegate = self
+        return ap
+    }()
+
+    let toolbar: UIToolbar = {
+        let tb = UIToolbar()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleToolBarDone))
+        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleToolBarCancel))
+        tb.barTintColor = UIColor.white
+        tb.barStyle = .default
+        tb.isTranslucent = true
+        tb.tintColor = UIColor(colorLiteralRed: 75/255, green: 215/255, blue: 100/255, alpha: 1)
+        tb.sizeToFit()
+        tb.setItems([cancelButton, spacer, doneButton], animated: true)
+        
+        return tb
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        originalView = self.view.frame.origin.y
         
         setupNavigationBar()
         setupViews()
     }
-
+    
+    func handlePicTapped() {
+        print("Add image here...")
+    }
+    
+    func handleCancel() {
+        print("Dissmissing register controller")
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func handleDone() {
+        print("Done was clicked, alert should display")
+        if (genreTextField.isEditing == true || ageTextField.isEditing == true) {
+            handleToolBarDone()
+        }
+        let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 48 hours for your DJ account to be processed abd created.\nPress 'Continue' to be taken the main view.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
+            print("I was pressed")
+            self.registrationComplete()
+        }))
+        
+        alert.addAction((UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    // returns the number of 'columns' to display.
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // returns the # of rows in each component..
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if (pickerView == agePickView) {
+            return 51-16
+        }
+        else {
+            return genre.count
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if (pickerView == agePickView) {
+            return "\(row + 16)"        }
+        else {
+            return genre[row]
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if (pickerView == agePickView) {
+            ageTextField.text = "\(row + 16)"
+        }
+        else {
+            genreTextField.text = "\(genre[row])"
+        }
+    }
+    
+    
+    func handleToolBarDone() {
+        print("Toolbar done was clicked")
+        self.view.endEditing(true)
+        resetView()
+    }
+    
+    func handleToolBarCancel() {
+        print ("Toolbar cancel was clicked")
+        if (ageTextField.isEditing) {
+            ageTextField.text = ""
+        }
+        else if (genreTextField.isEditing)  {
+            genreTextField.text = ""
+        }
+        self.view.endEditing(true)
+        resetView()
+    }
+  
+    func ageClicked() {
+        print("Age text Field was clicked")
+        resetView()
+        self.view.frame.origin.y -= 65
+        ageTextField.inputView = agePickView
+        ageTextField.inputAccessoryView = toolbar
+    }
+   
+    func genreClicked() {
+        print("Genre text Field was clicked")
+        resetView()
+        self.view.frame.origin.y -= 110
+        genreTextField.inputView = genrePickView
+        genreTextField.inputAccessoryView = toolbar
+    }
+    
+    func registrationComplete() {
+        self.dismiss(animated: true, completion: nil)
+        self.loginController?.handleEnter()
+    }
+    
+    func resetView() {
+        if let ov = originalView {
+            self.view.frame.origin.y = ov
+        } else {
+            print ("Didn't safely unwrap originalView")
+        }
+    }
+    
     func setupNavigationBar() {
         self.navigationItem.title = "Enter Info"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleDone))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
     }
     
@@ -81,7 +298,16 @@ class RegisterController: UIViewController {
         view.addSubview(hometownLabel)
         view.addSubview(hometownTextField)
         view.addSubview(hometownSep)
-
+        view.addSubview(djNameLabel)
+        view.addSubview(djNameTextField)
+        view.addSubview(djSep)
+        view.addSubview(ageLabel)
+        view.addSubview(ageTextField)
+        view.addSubview(ageSep)
+        view.addSubview(genreLabel)
+        view.addSubview(genreTextField)
+        view.addSubview(genreSep)
+        
         
         profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profilePic.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 24).isActive = true
@@ -110,14 +336,52 @@ class RegisterController: UIViewController {
         hometownSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         
-    }
-    
-    func handlePicTapped() {
-        print("Add image here...")
-    }
-    
-    func handleCancel() {
-        print("Dissmissing register controller")
-        self.dismiss(animated: true, completion: nil)
+        djNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
+        djNameLabel.topAnchor.constraint(equalTo: hometownSep.bottomAnchor, constant: 6).isActive = true
+        djNameLabel.widthAnchor.constraint(equalToConstant: djNameLabel.intrinsicContentSize.width).isActive = true
+        djNameLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        
+        djNameTextField.leftAnchor.constraint(equalTo: djNameLabel.rightAnchor, constant: 12).isActive = true
+        djNameTextField.topAnchor.constraint(equalTo: djNameLabel.topAnchor).isActive = true
+        djNameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
+        djNameTextField.heightAnchor.constraint(equalTo: djNameLabel.heightAnchor).isActive = true
+        
+        djSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        djSep.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 6).isActive = true
+        djSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        djSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        
+        ageLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
+        ageLabel.topAnchor.constraint(equalTo: djSep.bottomAnchor, constant: 6).isActive = true
+        ageLabel.widthAnchor.constraint(equalToConstant: ageLabel.intrinsicContentSize.width).isActive = true
+        ageLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        
+        ageTextField.leftAnchor.constraint(equalTo: ageLabel.rightAnchor, constant: 12).isActive = true
+        ageTextField.topAnchor.constraint(equalTo: ageLabel.topAnchor).isActive = true
+        ageTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
+        ageTextField.heightAnchor.constraint(equalTo: ageLabel.heightAnchor).isActive = true
+        
+        ageSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        ageSep.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 6).isActive = true
+        ageSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        ageSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        genreLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
+        genreLabel.topAnchor.constraint(equalTo: ageSep.bottomAnchor, constant: 6).isActive = true
+        genreLabel.widthAnchor.constraint(equalToConstant: genreLabel.intrinsicContentSize.width).isActive = true
+        genreLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        
+        genreTextField.leftAnchor.constraint(equalTo: genreLabel.rightAnchor, constant: 12).isActive = true
+        genreTextField.topAnchor.constraint(equalTo: genreLabel.topAnchor).isActive = true
+        genreTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
+        genreTextField.heightAnchor.constraint(equalTo: genreLabel.heightAnchor).isActive = true
+        
+        genreSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        genreSep.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 6).isActive = true
+        genreSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        genreSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        
     }
 }
