@@ -1,387 +1,105 @@
 //
-//  RegisterController.swift
+//  ViewController.swift
 //  DJ APP
 //
-//  Created by arturo ho on 8/28/17.
+//  Created by arturo ho on 9/3/17.
 //  Copyright © 2017 Marquel and Micajuine App Team. All rights reserved.
 //
 
 import UIKit
 
-class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class RegisterController: UIViewController {
 
     var loginController: LoginController?
-    var originalView: CGFloat?
     
-    let genre: [String] = ["Rap", "Rock", "Country", "Folk", "Indie", "Reggee", "EDM", "House", "R&B", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
-    
-    let profilePic: UIImageView = {
-        let pp = UIImageView()
-        pp.alpha = 0.85
-        pp.image = UIImage(named: "usernameIcon")
-        pp.contentMode = .scaleAspectFit
-        pp.layer.cornerRadius = 60
-        pp.clipsToBounds = true
-        pp.layer.borderWidth = 1.0
-        pp.layer.borderColor = UIColor.black.cgColor
-        pp.translatesAutoresizingMaskIntoConstraints = false
-        return pp
-    }()
-    
-    let addPhoto: UIButton = {
-        let ap = UIButton()
-        let lightblue = UIColor(colorLiteralRed: 94/255, green: 211/255, blue: 237/255, alpha: 1)
-        ap.setTitleColor(lightblue, for: .normal)
-        ap.setTitleColor(UIColor.white, for: .highlighted)
-        ap.titleLabel?.lineBreakMode = .byWordWrapping
-        ap.titleLabel?.textAlignment = .center
-        ap.titleLabel?.font = ap.titleLabel?.font.withSize(30)
-        ap.setTitle("Add\nphoto", for: .normal)
-        ap.translatesAutoresizingMaskIntoConstraints = false
-        ap.addTarget(self, action: #selector(handlePicTapped), for: .touchUpInside)
-        return ap
-    }()
-    
-    let hometownLabel: UILabel = {
-        let ht = UILabel()
-        ht.textColor = UIColor.gray
-        ht.text = "Hometown:"
-        ht.backgroundColor = UIColor.red
-        ht.translatesAutoresizingMaskIntoConstraints = false
-        return ht
-    }()
-    
-    let hometownTextField: UITextField = {
+    let usernameTextField: UITextField = {
         let htf = UITextField()
+        htf.placeholder = "Username"
         htf.backgroundColor = UIColor.yellow
         htf.clearButtonMode = .whileEditing
-        htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         htf.translatesAutoresizingMaskIntoConstraints = false
         return htf
     }()
     
-    let hometownSep: UIView = {
-        let hs = UIView()
-        hs.backgroundColor = UIColor.lightGray
-        hs.translatesAutoresizingMaskIntoConstraints = false
-        return hs
+    let passwordTextField: UITextField = {
+        let htf = UITextField()
+        htf.placeholder = "Password"
+        htf.backgroundColor = UIColor.yellow
+        htf.clearButtonMode = .whileEditing
+        htf.isSecureTextEntry = true
+        htf.translatesAutoresizingMaskIntoConstraints = false
+        return htf
     }()
     
-    let djNameLabel: UILabel = {
-        let dl = UILabel()
-        dl.textColor = UIColor.gray
-        dl.text = "DJ Name:"
-        dl.backgroundColor = UIColor.red
-        dl.translatesAutoresizingMaskIntoConstraints = false
-        return dl
-    }()
-    
-    let djNameTextField: UITextField = {
-        let dtf = UITextField()
-        dtf.backgroundColor = UIColor.yellow
-        dtf.clearButtonMode = .whileEditing
-        dtf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
-        dtf.translatesAutoresizingMaskIntoConstraints = false
-        return dtf
-    }()
-    
-    let djSep: UIView = {
-        let ds = UIView()
-        ds.backgroundColor = UIColor.lightGray
-        ds.translatesAutoresizingMaskIntoConstraints = false
-        return ds
-    }()
-    
-    let ageLabel: UILabel = {
-        let al = UILabel()
-        al.textColor = UIColor.gray
-        al.text = "Age:"
-        al.backgroundColor = UIColor.red
-        al.translatesAutoresizingMaskIntoConstraints = false
-        return al
-    }()
-    
-    let ageTextField: UITextField = {
-        let atf = UITextField()
-        atf.backgroundColor = UIColor.yellow
-        atf.clearButtonMode = .whileEditing
-        atf.translatesAutoresizingMaskIntoConstraints = false
-        atf.addTarget(self, action: #selector(ageClicked), for: UIControlEvents.editingDidBegin)
-        return atf
-    }()
-    
-    let ageSep: UIView = {
-        let aS = UIView()
-        aS.backgroundColor = UIColor.lightGray
-        aS.translatesAutoresizingMaskIntoConstraints = false
-        return aS
-    }()
-    
-    let genreLabel: UILabel = {
-        let gl = UILabel()
-        gl.textColor = UIColor.gray
-        gl.text = "Genre:"
-        gl.backgroundColor = UIColor.red
-        gl.translatesAutoresizingMaskIntoConstraints = false
-        return gl
-    }()
-    
-    let genreTextField: UITextField = {
-        let gtf = UITextField()
-        gtf.backgroundColor = UIColor.yellow
-        gtf.clearButtonMode = .whileEditing
-        gtf.translatesAutoresizingMaskIntoConstraints = false
-        gtf.addTarget(self, action: #selector(genreClicked), for: UIControlEvents.editingDidBegin)
-        return gtf
-    }()
-    
-    let genreSep: UIView = {
-        let gs = UIView()
-        gs.backgroundColor = UIColor.lightGray
-        gs.translatesAutoresizingMaskIntoConstraints = false
-        return gs
-    }()
-    
-    lazy var genrePickView: UIPickerView = {
-        let gp = UIPickerView()
-        gp.dataSource = self
-        gp.delegate = self
-        return gp
-    }()
-    
-    lazy var agePickView: UIPickerView = {
-        let ap = UIPickerView()
-        ap.dataSource = self
-        ap.delegate = self
-        return ap
-    }()
-
-    let toolbar: UIToolbar = {
-        let tb = UIToolbar()
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleToolBarDone))
-        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleToolBarCancel))
-        tb.barTintColor = UIColor.white
-        tb.barStyle = .default
-        tb.isTranslucent = true
-        tb.tintColor = UIColor(colorLiteralRed: 75/255, green: 215/255, blue: 100/255, alpha: 1)
-        tb.sizeToFit()
-        tb.setItems([cancelButton, spacer, doneButton], animated: true)
-        
-        return tb
+    let reenterPasswordTextField: UITextField = {
+        let htf = UITextField()
+        htf.placeholder = "Reenter Password "
+        htf.backgroundColor = UIColor.yellow
+        htf.clearButtonMode = .whileEditing
+        htf.isSecureTextEntry = true
+        htf.translatesAutoresizingMaskIntoConstraints = false
+        return htf
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
-        originalView = self.view.frame.origin.y
-        
+        view.backgroundColor = UIColor.cyan
         setupNavigationBar()
         setupViews()
     }
     
-    func handlePicTapped() {
-        print("Add image here...")
-    }
-    
     func handleCancel() {
-        print("Dissmissing register controller")
         self.dismiss(animated: true, completion: nil)
     }
     
-    func handleDone() {
-        print("Done was clicked, alert should display")
-        if (genreTextField.isEditing == true || ageTextField.isEditing == true) {
-            handleToolBarDone()
+    //Present Addinfo controller and pass in
+    func handleContinue() {
+        guard let username = usernameTextField.text, let password = passwordTextField.text, let passwordAgain = reenterPasswordTextField.text else {
+            print("Not valid input ")
+            return
         }
-        let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 48 hours for your DJ account to be processed abd created.\nPress 'Continue' to be taken the main view.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
-            print("I was pressed")
-            self.registrationComplete()
-        }))
         
-        alert.addAction((UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)))
-        
-        self.present(alert, animated: true, completion: nil)
-        
-    }
-    
-    // returns the number of 'columns' to display.
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    // returns the # of rows in each component..
-    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if (pickerView == agePickView) {
-            return 51-16
+        //Check if the username and password are valid 
+        if (username != "" && password != "" && password == passwordAgain) {
+            let addInfoController = AddInfoController()
+            addInfoController.loginController = loginController
+            addInfoController.username = username
+            addInfoController.password = password
+            self.navigationController?.pushViewController(addInfoController, animated: true)
         }
         else {
-            return genre.count
+            print ("You must have good login inputs")
         }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if (pickerView == agePickView) {
-            return "\(row + 16)"        }
-        else {
-            return genre[row]
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if (pickerView == agePickView) {
-            ageTextField.text = "\(row + 16)"
-        }
-        else {
-            genreTextField.text = "\(genre[row])"
-        }
-    }
-    
-    
-    func handleToolBarDone() {
-        print("Toolbar done was clicked")
-        self.view.endEditing(true)
-        resetView()
-    }
-    
-    func handleToolBarCancel() {
-        print ("Toolbar cancel was clicked")
-        if (ageTextField.isEditing) {
-            ageTextField.text = ""
-        }
-        else if (genreTextField.isEditing)  {
-            genreTextField.text = ""
-        }
-        self.view.endEditing(true)
-        resetView()
-    }
-  
-    func ageClicked() {
-        print("Age text Field was clicked")
-        resetView()
-        self.view.frame.origin.y -= 65
-        ageTextField.inputView = agePickView
-        ageTextField.inputAccessoryView = toolbar
-    }
-   
-    func genreClicked() {
-        print("Genre text Field was clicked")
-        resetView()
-        self.view.frame.origin.y -= 110
-        genreTextField.inputView = genrePickView
-        genreTextField.inputAccessoryView = toolbar
-    }
-    
-    func registrationComplete() {
-        self.dismiss(animated: true, completion: nil)
-        self.loginController?.handleEnter()
-    }
-    
-    func resetView() {
-        if let ov = originalView {
-            self.view.frame.origin.y = ov
-        } else {
-            print ("Didn't safely unwrap originalView")
-        }
+        
     }
     
     func setupNavigationBar() {
-        self.navigationItem.title = "Enter Info"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleDone))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
+        self.navigationItem.title = "Login Information"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleContinue))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
     }
     
-    func setupViews(){
-        view.addSubview(profilePic)
-        view.addSubview(addPhoto)
-        view.addSubview(hometownLabel)
-        view.addSubview(hometownTextField)
-        view.addSubview(hometownSep)
-        view.addSubview(djNameLabel)
-        view.addSubview(djNameTextField)
-        view.addSubview(djSep)
-        view.addSubview(ageLabel)
-        view.addSubview(ageTextField)
-        view.addSubview(ageSep)
-        view.addSubview(genreLabel)
-        view.addSubview(genreTextField)
-        view.addSubview(genreSep)
+    func setupViews() {
+        view.addSubview(usernameTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(reenterPasswordTextField)
+
+        let quarterHeight = view.frame.height / 3
         
+        usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        usernameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: quarterHeight).isActive = true
+        usernameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         
-        profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profilePic.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 24).isActive = true
-        profilePic.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        profilePic.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 36).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        passwordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         
-        
-        addPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        addPhoto.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 25).isActive = true
-        addPhoto.widthAnchor.constraint(equalTo: profilePic.widthAnchor, multiplier: 1).isActive = true
-        addPhoto.heightAnchor.constraint(equalTo: profilePic.heightAnchor, multiplier: 1).isActive = true
-        
-        hometownLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
-        hometownLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 24).isActive = true
-        hometownLabel.widthAnchor.constraint(equalToConstant: hometownLabel.intrinsicContentSize.width).isActive = true
-        hometownLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        hometownTextField.leftAnchor.constraint(equalTo: hometownLabel.rightAnchor, constant: 12).isActive = true
-        hometownTextField.topAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
-        hometownTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
-        hometownTextField.heightAnchor.constraint(equalTo: hometownLabel.heightAnchor).isActive = true
-        
-        hometownSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        hometownSep.topAnchor.constraint(equalTo: hometownLabel.bottomAnchor, constant: 6).isActive = true
-        hometownSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        hometownSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
-        
-        djNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
-        djNameLabel.topAnchor.constraint(equalTo: hometownSep.bottomAnchor, constant: 6).isActive = true
-        djNameLabel.widthAnchor.constraint(equalToConstant: djNameLabel.intrinsicContentSize.width).isActive = true
-        djNameLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        djNameTextField.leftAnchor.constraint(equalTo: djNameLabel.rightAnchor, constant: 12).isActive = true
-        djNameTextField.topAnchor.constraint(equalTo: djNameLabel.topAnchor).isActive = true
-        djNameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
-        djNameTextField.heightAnchor.constraint(equalTo: djNameLabel.heightAnchor).isActive = true
-        
-        djSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        djSep.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 6).isActive = true
-        djSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        djSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
-        
-        ageLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
-        ageLabel.topAnchor.constraint(equalTo: djSep.bottomAnchor, constant: 6).isActive = true
-        ageLabel.widthAnchor.constraint(equalToConstant: ageLabel.intrinsicContentSize.width).isActive = true
-        ageLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        ageTextField.leftAnchor.constraint(equalTo: ageLabel.rightAnchor, constant: 12).isActive = true
-        ageTextField.topAnchor.constraint(equalTo: ageLabel.topAnchor).isActive = true
-        ageTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
-        ageTextField.heightAnchor.constraint(equalTo: ageLabel.heightAnchor).isActive = true
-        
-        ageSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        ageSep.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 6).isActive = true
-        ageSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        ageSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
-        genreLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
-        genreLabel.topAnchor.constraint(equalTo: ageSep.bottomAnchor, constant: 6).isActive = true
-        genreLabel.widthAnchor.constraint(equalToConstant: genreLabel.intrinsicContentSize.width).isActive = true
-        genreLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        genreTextField.leftAnchor.constraint(equalTo: genreLabel.rightAnchor, constant: 12).isActive = true
-        genreTextField.topAnchor.constraint(equalTo: genreLabel.topAnchor).isActive = true
-        genreTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
-        genreTextField.heightAnchor.constraint(equalTo: genreLabel.heightAnchor).isActive = true
-        
-        genreSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        genreSep.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 6).isActive = true
-        genreSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        genreSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
+        reenterPasswordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        reenterPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 36).isActive = true
+        reenterPasswordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        reenterPasswordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         
     }
 }

@@ -202,24 +202,24 @@ class LoginController: UIViewController {
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 0) {
             djGuestLoginButton.setTitle("Login", for: .normal)
             djGuestLoginButton.setTitleColor(UIColor.blue, for: .normal)
-            usernameContainer.isHidden = false
+          //  usernameContainer.isHidden = false
             passwordContainer.isHidden = false
-            usernameImage.isHidden = false
+          //  usernameImage.isHidden = false
             passwordImage.isHidden = false
             passwordTextField.isHidden = false
-            usernameTextField.isHidden = false
+           // usernameTextField.isHidden = false
             notUserLabel.isHidden = false
-            loginButtonTopAnchor?.constant = 50
+            loginButtonTopAnchor?.constant = 25
         }
         else {
-            loginButtonTopAnchor?.constant = -75
+            loginButtonTopAnchor?.constant = -55
             notUserLabel.isHidden = true
-            usernameContainer.isHidden = true
+          //  usernameContainer.isHidden = true
             passwordContainer.isHidden = true
-            usernameImage.isHidden = true
+         //   usernameImage.isHidden = true
             passwordImage.isHidden = true
             passwordTextField.isHidden = true
-            usernameTextField.isHidden = true
+          //  usernameTextField.isHidden = true
             djGuestLoginButton.setTitle("Enter", for: .normal)
         }
     }
