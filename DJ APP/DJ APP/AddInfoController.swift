@@ -48,14 +48,13 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let ht = UILabel()
         ht.textColor = UIColor.gray
         ht.text = "Hometown:"
-        ht.backgroundColor = UIColor.red
         ht.translatesAutoresizingMaskIntoConstraints = false
         return ht
     }()
     
     let hometownTextField: UITextField = {
         let htf = UITextField()
-        htf.backgroundColor = UIColor.yellow
+        htf.textColor = UIColor.white
         htf.clearButtonMode = .whileEditing
         htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         htf.translatesAutoresizingMaskIntoConstraints = false
@@ -73,14 +72,15 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let dl = UILabel()
         dl.textColor = UIColor.gray
         dl.text = "DJ Name:"
-        dl.backgroundColor = UIColor.red
+        //dl.backgroundColor = UIColor.red
         dl.translatesAutoresizingMaskIntoConstraints = false
         return dl
     }()
     
     let djNameTextField: UITextField = {
         let dtf = UITextField()
-        dtf.backgroundColor = UIColor.yellow
+        //dtf.backgroundColor = UIColor.yellow
+        dtf.textColor = UIColor.white
         dtf.clearButtonMode = .whileEditing
         dtf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         dtf.translatesAutoresizingMaskIntoConstraints = false
@@ -98,14 +98,15 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let al = UILabel()
         al.textColor = UIColor.gray
         al.text = "Age:"
-        al.backgroundColor = UIColor.red
+        //al.backgroundColor = UIColor.red
         al.translatesAutoresizingMaskIntoConstraints = false
         return al
     }()
     
     let ageTextField: UITextField = {
         let atf = UITextField()
-        atf.backgroundColor = UIColor.yellow
+        //atf.backgroundColor = UIColor.yellow
+        atf.textColor = UIColor.white
         atf.clearButtonMode = .whileEditing
         atf.translatesAutoresizingMaskIntoConstraints = false
         atf.addTarget(self, action: #selector(ageClicked), for: UIControlEvents.editingDidBegin)
@@ -123,14 +124,15 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let gl = UILabel()
         gl.textColor = UIColor.gray
         gl.text = "Genre:"
-        gl.backgroundColor = UIColor.red
+        //gl.backgroundColor = UIColor.red
         gl.translatesAutoresizingMaskIntoConstraints = false
         return gl
     }()
     
     let genreTextField: UITextField = {
         let gtf = UITextField()
-        gtf.backgroundColor = UIColor.yellow
+        //gtf.backgroundColor = UIColor.yellow
+        gtf.textColor = UIColor.white
         gtf.clearButtonMode = .whileEditing
         gtf.translatesAutoresizingMaskIntoConstraints = false
         gtf.addTarget(self, action: #selector(genreClicked), for: UIControlEvents.editingDidBegin)
@@ -175,7 +177,10 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
+        backgroundImage.image = UIImage(named: "headphonesImage")
+        backgroundImage.contentMode = .scaleAspectFill
+        view.insertSubview(backgroundImage, at: 0)
         originalView = self.view.frame.origin.y
 
         setupNavigationBar()

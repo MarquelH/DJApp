@@ -12,10 +12,15 @@ class RegisterController: UIViewController {
 
     var loginController: LoginController?
     
+    
     let usernameTextField: UITextField = {
         let htf = UITextField()
-        htf.placeholder = "Username"
-        htf.backgroundColor = UIColor.yellow
+        htf.placeholder = "     Username"
+        htf.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        htf.layer.masksToBounds = true
+        htf.layer.cornerRadius = 25
+        htf.layer.borderWidth = 0.5
+        htf.layer.borderColor = UIColor.black.cgColor
         htf.clearButtonMode = .whileEditing
         htf.translatesAutoresizingMaskIntoConstraints = false
         return htf
@@ -23,8 +28,12 @@ class RegisterController: UIViewController {
     
     let passwordTextField: UITextField = {
         let htf = UITextField()
-        htf.placeholder = "Password"
-        htf.backgroundColor = UIColor.yellow
+        htf.placeholder = "     Password"
+        htf.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        htf.layer.masksToBounds = true
+        htf.layer.cornerRadius = 25
+        htf.layer.borderWidth = 0.5
+        htf.layer.borderColor = UIColor.black.cgColor
         htf.clearButtonMode = .whileEditing
         htf.isSecureTextEntry = true
         htf.translatesAutoresizingMaskIntoConstraints = false
@@ -33,8 +42,12 @@ class RegisterController: UIViewController {
     
     let reenterPasswordTextField: UITextField = {
         let htf = UITextField()
-        htf.placeholder = "Reenter Password "
-        htf.backgroundColor = UIColor.yellow
+        htf.placeholder = "     Confirm Password"
+        htf.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        htf.layer.masksToBounds = true
+        htf.layer.cornerRadius = 25
+        htf.layer.borderWidth = 0.5
+        htf.layer.borderColor = UIColor.black.cgColor
         htf.clearButtonMode = .whileEditing
         htf.isSecureTextEntry = true
         htf.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +56,10 @@ class RegisterController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.cyan
+        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
+        backgroundImage.image = UIImage(named: "headphonesImage")
+        backgroundImage.contentMode = .scaleAspectFill
+        view.insertSubview(backgroundImage, at: 0)
         setupNavigationBar()
         setupViews()
     }
@@ -84,22 +100,23 @@ class RegisterController: UIViewController {
         view.addSubview(passwordTextField)
         view.addSubview(reenterPasswordTextField)
 
+
         let quarterHeight = view.frame.height / 3
         
         usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         usernameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: quarterHeight).isActive = true
         usernameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        
+        usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -17).isActive = true
+
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 36).isActive = true
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        passwordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        passwordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -17).isActive = true
         
         reenterPasswordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         reenterPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 36).isActive = true
         reenterPasswordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        reenterPasswordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        reenterPasswordTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -17).isActive = true
         
     }
 }
