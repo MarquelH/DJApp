@@ -26,6 +26,22 @@ class RegisterController: UIViewController {
         return htf
     }()
     
+    let logoGo: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "GO")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
+    let logoDJ: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "DJ")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
     let passwordTextField: UITextField = {
         let htf = UITextField()
         htf.placeholder = "     Password"
@@ -99,6 +115,8 @@ class RegisterController: UIViewController {
         view.addSubview(usernameTextField)
         view.addSubview(passwordTextField)
         view.addSubview(reenterPasswordTextField)
+        view.addSubview(logoGo)
+        view.addSubview(logoDJ)
 
 
         let quarterHeight = view.frame.height / 3
@@ -108,6 +126,18 @@ class RegisterController: UIViewController {
         usernameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         usernameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -17).isActive = true
 
+        logoGo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logoGo.topAnchor.constraint(equalTo: reenterPasswordTextField.bottomAnchor, constant: 63).isActive = true
+        logoGo.heightAnchor.constraint(equalToConstant: 27).isActive = true
+        logoGo.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        
+        logoDJ.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 1).isActive = true
+        logoDJ.topAnchor.constraint(equalTo: logoGo.bottomAnchor, constant: 10).isActive = true
+        logoDJ.heightAnchor.constraint(equalToConstant: 27).isActive = true
+        logoDJ.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 36).isActive = true
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true

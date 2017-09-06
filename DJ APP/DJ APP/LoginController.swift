@@ -82,7 +82,7 @@ class LoginController: UIViewController {
     }()
     
     lazy var djOrGuestSegmentedControl: UISegmentedControl = {
-        let sc = UISegmentedControl(items: ["DJ Login", "Guest Enter"])
+        let sc = UISegmentedControl(items: ["DJ Login", "Guest Login"])
         sc.backgroundColor = UIColor.blue.withAlphaComponent(0.25)
         sc.tintColor = UIColor.white
         sc.selectedSegmentIndex = 0
@@ -105,6 +105,30 @@ class LoginController: UIViewController {
         return btn
     }()
     
+    let logoInLogin: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "headphones")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
+    let logoGo: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "GO")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
+    let logoDJ: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "DJ")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -120,7 +144,7 @@ class LoginController: UIViewController {
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
-        backgroundImage.contentMode = .scaleToFill
+        backgroundImage.contentMode = .scaleAspectFill
         
         view.insertSubview(backgroundImage, at: 0)
         
@@ -135,6 +159,9 @@ class LoginController: UIViewController {
         view.addSubview(passwordContainer)
         view.addSubview(djOrGuestSegmentedControl)
         view.addSubview(notUserLabel)
+        view.addSubview(logoInLogin)
+        view.addSubview(logoGo)
+        view.addSubview(logoDJ)
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)
         passwordContainer.addSubview(passwordTextField)
@@ -145,6 +172,27 @@ class LoginController: UIViewController {
         usernameContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         usernameContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
         usernameContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        
+        logoGo.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75).isActive = true
+        logoGo.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
+        logoGo.topAnchor.constraint(equalTo: logoInLogin.topAnchor, constant: 75)
+        logoGo.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        logoGo.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        logoDJ.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 75).isActive = true
+        logoDJ.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
+        logoDJ.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        logoDJ.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        logoInLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logoInLogin.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -65).isActive = true
+        logoInLogin.topAnchor.constraint(equalTo: view.topAnchor, constant: 30)
+        logoInLogin.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        logoInLogin.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        
+        
         
         
         notUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
