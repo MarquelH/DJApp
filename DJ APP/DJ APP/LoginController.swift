@@ -15,7 +15,7 @@ class LoginController: UIViewController {
     let djGuestLoginButton: UIButton = {
         let lb = UIButton(type: .system)
         lb.setTitle("Login", for: .normal)
-        lb.setTitleColor(UIColor.blue, for: .normal)
+        lb.setTitleColor(UIColor.white, for: .normal)
         lb.backgroundColor = UIColor.black.withAlphaComponent(0.25)
         lb.layer.cornerRadius = 40
         lb.layer.borderWidth = 1
@@ -120,7 +120,8 @@ class LoginController: UIViewController {
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
-        backgroundImage.contentMode = .scaleAspectFill
+        backgroundImage.contentMode = .scaleToFill
+        
         view.insertSubview(backgroundImage, at: 0)
         
         setupViews()
@@ -201,7 +202,7 @@ class LoginController: UIViewController {
     func handleLoginEnterChange() {
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 0) {
             djGuestLoginButton.setTitle("Login", for: .normal)
-            djGuestLoginButton.setTitleColor(UIColor.blue, for: .normal)
+          //  djGuestLoginButton.setTitleColor(UIColor.blue, for: .normal)
           //  usernameContainer.isHidden = false
             passwordContainer.isHidden = false
           //  usernameImage.isHidden = false
