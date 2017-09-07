@@ -11,7 +11,6 @@ import Firebase
 
 class LoginController: UIViewController {
     
-    
     let djGuestLoginButton: UIButton = {
         let lb = UIButton(type: .system)
         lb.setTitle("Login", for: .normal)
@@ -51,7 +50,7 @@ class LoginController: UIViewController {
     let usernameTextField: UITextField = {
         let tf = UITextField()
         tf.font = UIFont.boldSystemFont(ofSize: 20)
-        tf.placeholder = "Username"
+        tf.placeholder = "Email"
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -138,15 +137,12 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let ref = Firebase.Database.database().reference(fromURL: "https://godja-9d13b.firebaseio.com/")
-        
-        
-        
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
         backgroundImage.contentMode = .scaleAspectFill
         
         view.insertSubview(backgroundImage, at: 0)
+
         
         setupViews()
       
@@ -289,14 +285,16 @@ class LoginController: UIViewController {
         let registerController = RegisterController()
         registerController.loginController = self
         let navController = UINavigationController(rootViewController: registerController)
+        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
+        backgroundImage.image = UIImage(named: "headphonesImage")
+        backgroundImage.contentMode = .scaleAspectFill
+        navController.view.insertSubview(backgroundImage, at: 0)
+        navController.view.backgroundColor = UIColor.black
+        
         present(navController, animated: true, completion: nil)
     }
     
     func handleLogin() {
-        
-        
-        
-        
         let djRootViewController = DJRootViewController()
         present(djRootViewController, animated: true, completion: nil)
     }

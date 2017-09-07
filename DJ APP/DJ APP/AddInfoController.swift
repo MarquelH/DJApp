@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
@@ -72,14 +73,12 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let dl = UILabel()
         dl.textColor = UIColor.gray
         dl.text = "DJ Name:"
-        //dl.backgroundColor = UIColor.red
         dl.translatesAutoresizingMaskIntoConstraints = false
         return dl
     }()
     
     let djNameTextField: UITextField = {
         let dtf = UITextField()
-        //dtf.backgroundColor = UIColor.yellow
         dtf.textColor = UIColor.white
         dtf.clearButtonMode = .whileEditing
         dtf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
@@ -98,14 +97,12 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let al = UILabel()
         al.textColor = UIColor.gray
         al.text = "Age:"
-        //al.backgroundColor = UIColor.red
         al.translatesAutoresizingMaskIntoConstraints = false
         return al
     }()
     
     let ageTextField: UITextField = {
         let atf = UITextField()
-        //atf.backgroundColor = UIColor.yellow
         atf.textColor = UIColor.white
         atf.clearButtonMode = .whileEditing
         atf.translatesAutoresizingMaskIntoConstraints = false
@@ -124,14 +121,12 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let gl = UILabel()
         gl.textColor = UIColor.gray
         gl.text = "Genre:"
-        //gl.backgroundColor = UIColor.red
         gl.translatesAutoresizingMaskIntoConstraints = false
         return gl
     }()
     
     let genreTextField: UITextField = {
         let gtf = UITextField()
-        //gtf.backgroundColor = UIColor.yellow
         gtf.textColor = UIColor.white
         gtf.clearButtonMode = .whileEditing
         gtf.translatesAutoresizingMaskIntoConstraints = false
@@ -177,11 +172,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
-        backgroundImage.image = UIImage(named: "headphonesImage")
-        backgroundImage.contentMode = .scaleAspectFill
-        view.insertSubview(backgroundImage, at: 0)
         originalView = self.view.frame.origin.y
+        //view.backgroundColor = UIColor.clear
 
         setupNavigationBar()
         setupViews()
@@ -213,29 +205,66 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             addPhoto.setTitle("Edit\nPhoto", for: .normal)
         }
         dismiss(animated: true, completion: nil)
-        print("Picture was chosen")
     }
     
-    func handleCancel() {
-        print("Pop off stack")
+    func handleBack() {
         self.navigationController?.popViewController(animated: true)
     }
     
     func handleDone() {
-        print("Done was clicked, alert should display")
+
         if (genreTextField.isEditing == true || ageTextField.isEditing == true) {
             handleToolBarDone()
         }
-        let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 48 hours for your DJ account to be processed and created.\nPress 'Continue' to be taken the main view.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
-            print("I was pressed")
-            self.registrationComplete()
-        }))
         
-        alert.addAction((UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)))
         
-        self.present(alert, animated: true, completion: nil)
+        //make sure the fields are valid
+        guard let usernameUnwrapped = username, let passwordUnwrapper = password, let age = ageTextField.text, let genre = genreTextField.text, let name = djNameTextField.text, let hometown = hometownTextField.text else {
+            print("Not valid args passed in.")
+            return
+        }
         
+        if (age == "" || genre == "" || hometown == "" || name == "") {
+            print("Not valid entries");
+            return
+        }
+        
+        Auth.auth().createUser(withEmail: usernameUnwrapped, password: passwordUnwrapper) { (user, error) in
+            if let error = error {
+                print ("My error is: \n")
+                print(error.localizedDescription)
+                return
+            }
+            else {
+                //save user
+                
+                guard let uid = user?.uid else {
+                    return
+                }
+                
+                let ref = Database.database().reference()
+                let usersRef = ref.child("users").child(uid)
+                let values = ["name":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped]
+                usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                    if let err = err {
+                        print("Adding values error: \n")
+                        print(err.localizedDescription)
+                        return
+                    }
+                    print ("Adding values was a success!")
+                })
+                
+                
+                //display alert
+                let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 48 hours for your DJ account to be processed and created.\nPress 'Continue' to be taken the main view.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
+                    print("I was pressed")
+                    self.registrationComplete()
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     // returns the number of 'columns' to display.
@@ -272,13 +301,11 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     
     func handleToolBarDone() {
-        print("Toolbar done was clicked")
         self.view.endEditing(true)
         resetView()
     }
     
     func handleToolBarCancel() {
-        print ("Toolbar cancel was clicked")
         if (ageTextField.isEditing) {
             ageTextField.text = ""
         }
@@ -290,7 +317,6 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
   
     func ageClicked() {
-        print("Age text Field was clicked")
         resetView()
         self.view.frame.origin.y -= 65
         ageTextField.inputView = agePickView
@@ -298,7 +324,6 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
    
     func genreClicked() {
-        print("Genre text Field was clicked")
         resetView()
         self.view.frame.origin.y -= 110
         genreTextField.inputView = genrePickView
@@ -321,7 +346,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     func setupNavigationBar() {
         self.navigationItem.title = "Enter Info"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleDone))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
     }
     
     func setupViews(){
