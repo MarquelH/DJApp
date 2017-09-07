@@ -340,7 +340,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     func registrationComplete() {
         self.dismiss(animated: true, completion: nil)
-        self.loginController?.handleEnter()
+        self.loginController?.handleGuestEnter()
     }
     
     func resetView() {

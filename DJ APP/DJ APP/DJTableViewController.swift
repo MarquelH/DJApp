@@ -14,9 +14,7 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        if (Auth.auth().currentUser?.uid == nil) {
-            perform(#selector(handleLogout), with: nil, afterDelay: 0)
-        }
+       
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -33,18 +31,9 @@ class DJTableViewController: UITableViewController {
         navigationItem.title = "DJ List"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
     }
-    
+
     func handleLogout() {
-        let fireAuth = Auth.auth()
-        
-        do {
-            try fireAuth.signOut()
-        } catch let signoutError as NSError {
-            print("Error signing out: %@", signoutError)
-        }
-        
-        let loginController = LoginController()
-        present(loginController, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
    
 }

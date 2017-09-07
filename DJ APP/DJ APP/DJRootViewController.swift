@@ -7,24 +7,34 @@
 //
 
 import UIKit
+import Firebase
 
 class DJRootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNavigationBar()
-
         self.view.backgroundColor = UIColor.white
     }
     
     // Not sure why the below didn't work.... (I see no nav bar)
     func setupNavigationBar() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleCancel))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
     }
     
-    func handleCancel() {
-        print("Pop off stack")
-        self.navigationController?.popViewController(animated: true)
+    
+    func handleLogout() {
+        let fireAuth = Auth.auth()
+        
+        do {
+            try fireAuth.signOut()
+        } catch let signoutError as NSError {
+            print("Error signing out: %@", signoutError)
+        }
+        
+        let loginController = LoginController()
+        present(loginController, animated: true, completion: nil)
     }
 
 

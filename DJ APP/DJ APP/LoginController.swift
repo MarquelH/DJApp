@@ -277,7 +277,7 @@ class LoginController: UIViewController {
         }
         //Guest enter was hit
         else {
-            handleEnter()
+            handleGuestEnter()
         }
     }
     
@@ -296,12 +296,14 @@ class LoginController: UIViewController {
     
     func handleLogin() {
         let djRootViewController = DJRootViewController()
-        present(djRootViewController, animated: true, completion: nil)
+        let djNavController = UINavigationController(rootViewController: djRootViewController)
+        present(djNavController, animated: true, completion: nil)
     }
     
-    func handleEnter() {
-        print ("Login controller enter")
-        dismiss(animated: true, completion: nil)
+    func handleGuestEnter() {
+        let djTableViewController = DJTableViewController()
+        let djTableNavController = UINavigationController(rootViewController: djTableViewController)
+        present(djTableNavController, animated: true, completion: nil)
     }
 }
 
