@@ -237,6 +237,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             return
         }
         
+        //create user
         Auth.auth().createUser(withEmail: usernameUnwrapped, password: passwordUnwrapper) { (user, error) in
             if let error = error {
                 print ("My error is: \n")
@@ -244,7 +245,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 return
             }
             else {
-                //save user
+                //save user info into database
                 
                 guard let uid = user?.uid else {
                     return
@@ -252,7 +253,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 
                 let ref = Database.database().reference()
                 let usersRef = ref.child("users").child(uid)
-                let values = ["name":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped]
+                let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": 0] as [String : Any]
                 usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                     if let err = err {
                         print("Adding values error: \n")

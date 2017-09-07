@@ -295,9 +295,50 @@ class LoginController: UIViewController {
     }
     
     func handleLogin() {
-        let djRootViewController = DJRootViewController()
-        let djNavController = UINavigationController(rootViewController: djRootViewController)
-        present(djNavController, animated: true, completion: nil)
+        guard let email = usernameTextField.text, let password = passwordTextField.text else {
+            print("Login info was invalid")
+            return
+        }
+        Auth.auth().signIn(withEmail: email, password: password, completion: {(user, error) in
+            
+            //There was an error signing in, reset text fields.
+            if let error = error {
+                print ("Error signging in: ")
+                print(error.localizedDescription)
+                self.usernameTextField.text = ""
+                self.passwordTextField.text = ""
+            }
+            //Else there was no error and we gucci
+            else {
+                
+                //Check if the user is validated by us
+                guard let uid = Auth.auth().currentUser?.uid else {
+                    return
+                }
+                
+                Database.database().reference().child("users").child(uid).observe(.value, with: {(snapshot) in
+                    if let dictionary = snapshot.value as? [String: AnyObject] {
+                       
+                        //If user is validated, present DJRootViewController
+                        if (dictionary["validated"]?.isEqual(1))! {
+                            let djRootViewController = DJRootViewController()
+                            let djNavController = UINavigationController(rootViewController: djRootViewController)
+                            self.present(djNavController, animated: true, completion: nil)
+                        }
+                        else {
+                            print ("user is not validated")
+                            return
+                        }
+                    }
+                
+                })
+                
+                
+           
+            }
+        })
+        
+        
     }
     
     func handleGuestEnter() {
