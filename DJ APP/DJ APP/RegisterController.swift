@@ -86,6 +86,13 @@ class RegisterController: UIViewController {
         return cv
     }()
     
+    let backgroundImage: UIImageView = {
+        let bi = UIImageView()
+        bi.image = UIImage(named: "headphonesImage")
+        bi.translatesAutoresizingMaskIntoConstraints = false
+        bi.contentMode = .scaleToFill
+        return bi
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,6 +138,7 @@ class RegisterController: UIViewController {
     }
     
     func setupViews() {
+        view.addSubview(backgroundImage)
         view.addSubview(passwordContainer)
         view.addSubview(reenterPasswordContainer)
         view.addSubview(logoGo)
@@ -141,6 +149,11 @@ class RegisterController: UIViewController {
         reenterPasswordContainer.addSubview(reenterPasswordTextField)
 
         let quarterHeight = view.frame.height / 3
+        
+        backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        backgroundImage.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         
         usernameTextField.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 10).isActive = true
         usernameTextField.topAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: 5).isActive = true

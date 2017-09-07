@@ -166,15 +166,22 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         tb.tintColor = UIColor(colorLiteralRed: 75/255, green: 215/255, blue: 100/255, alpha: 1)
         tb.sizeToFit()
         tb.setItems([cancelButton, spacer, doneButton], animated: true)
-        
         return tb
+    }()
+    
+    
+    let backgroundImage: UIImageView = {
+        let bi = UIImageView()
+        bi.image = UIImage(named: "headphonesImage")
+        bi.translatesAutoresizingMaskIntoConstraints = false
+        bi.contentMode = .scaleToFill
+        return bi
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         originalView = self.view.frame.origin.y
-        //view.backgroundColor = UIColor.clear
-
+        view.backgroundColor = UIColor.black
         setupNavigationBar()
         setupViews()
     }
@@ -208,7 +215,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     func handleBack() {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
+        
     }
     
     func handleDone() {
@@ -350,6 +358,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     func setupViews(){
+        view.addSubview(backgroundImage)
         view.addSubview(profilePic)
         view.addSubview(addPhoto)
         view.addSubview(hometownLabel)
@@ -365,6 +374,11 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         view.addSubview(genreTextField)
         view.addSubview(genreSep)
         
+        
+        backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        backgroundImage.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         
         profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profilePic.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 24).isActive = true
