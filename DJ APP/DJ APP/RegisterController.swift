@@ -90,7 +90,7 @@ class RegisterController: UIViewController {
         let bi = UIImageView()
         bi.image = UIImage(named: "headphonesImage")
         bi.translatesAutoresizingMaskIntoConstraints = false
-        bi.contentMode = .scaleToFill
+        bi.contentMode = .scaleAspectFill
         return bi
     }()
     

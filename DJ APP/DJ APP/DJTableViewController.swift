@@ -11,6 +11,8 @@ import Firebase
 
 class DJTableViewController: UITableViewController {
 
+    var users = [UserDJ]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
