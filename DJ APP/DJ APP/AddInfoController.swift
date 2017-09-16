@@ -174,7 +174,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let bi = UIImageView()
         bi.image = UIImage(named: "headphonesImage")
         bi.translatesAutoresizingMaskIntoConstraints = false
-        bi.contentMode = .scaleAspectFill
+        bi.contentMode = .scaleToFill
+        bi.layer.masksToBounds = true
         return bi
     }()
     

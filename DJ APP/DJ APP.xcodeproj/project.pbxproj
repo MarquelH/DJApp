@@ -171,8 +171,8 @@
 			children = (
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
 				D81A66F21F4F721D00543A8F /* LoginController.swift */,
-				D86732971F54E31C00270D07 /* AddInfoController.swift */,
 				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
+				D86732971F54E31C00270D07 /* AddInfoController.swift */,
 				D80A18971F5C867200747022 /* RegisterController.swift */,
 			);
 			name = Controllers;

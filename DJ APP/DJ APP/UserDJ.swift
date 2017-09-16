@@ -10,10 +10,10 @@ import UIKit
 
 class UserDJ: NSObject {
     var age: Int?
+    var currentLocation: String?
     var djName: String?
     var email: String?
     var genere: String?
     var hometown: String?
     var validated: Int?
-    var currentLocation: String?
 }

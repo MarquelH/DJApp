@@ -18,7 +18,6 @@ class DJRootViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
     }
     
-    // Not sure why the below didn't work.... (I see no nav bar)
     func setupNavigationBar() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
     }
