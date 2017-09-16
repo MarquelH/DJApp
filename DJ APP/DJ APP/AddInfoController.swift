@@ -18,16 +18,17 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     let genre: [String] = ["Rap", "Rock", "Country", "Folk", "Indie", "Reggee", "EDM", "House", "R&B", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
     
-    let profilePic: UIImageView = {
+    lazy var profilePic: UIImageView = {
         let pp = UIImageView()
         pp.alpha = 0.85
         pp.image = UIImage(named: "usernameIcon")
-        pp.contentMode = .scaleAspectFit
+        pp.contentMode = .scaleAspectFill
         pp.layer.cornerRadius = 60
         pp.clipsToBounds = true
         pp.layer.borderWidth = 1.0
         pp.layer.borderColor = UIColor.black.cgColor
         pp.translatesAutoresizingMaskIntoConstraints = false
+        //pp.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageSelection)))
         return pp
     }()
     
@@ -187,6 +188,10 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         setupViews()
     }
     
+    //func handleImageSelection() {
+        
+    //}
+    
     func handlePicTapped() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -242,7 +247,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
         
         //create user
-        Auth.auth().createUser(withEmail: usernameUnwrapped, password: passwordUnwrapper) { (user, error) in
+        Auth.auth().createUser(withEmail: usernameUnwrapped, password: passwordUnwrapper){ (user, error) in
             if let error = error {
                 print ("My error is: \n")
                 print(error.localizedDescription)
@@ -254,19 +259,29 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 guard let uid = user?.uid else {
                     return
                 }
+                // successfully created user
+                let imageName = NSUUID().uuidString
+                let storageRef = Storage.storage().reference().child("\(imageName).png")
                 
-                let ref = Database.database().reference()
-                let usersRef = ref.child("users").child(uid)
-                let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": 0, "currentLocation": "Somewhere"] as [String : Any]
-                usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                    if let err = err {
-                        print("Adding values error: \n")
-                        print(err.localizedDescription)
-                        return
-                    }
-                    print ("Adding values was a success!")
-                })
+                if let uploadData = UIImagePNGRepresentation(self.profilePic.image!){
                 
+                    storageRef.putData(uploadData, metadata: nil, completion: {
+                        (metadata, error) in
+                        if let error = error{
+                            print(error.localizedDescription)
+                            return
+                        }
+                        
+                        if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
+                            
+                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": 0, "currentLocation": "Somewhere","profilePicURL": profileImageUrl] as [String : Any]
+                        
+                        self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
+                        }
+                    })
+                }
+
+            
                 
                 //display alert
                 let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 48 hours for your DJ account to be processed and created.\nPress 'Continue' to be taken the main view.", preferredStyle: UIAlertControllerStyle.alert)
@@ -278,8 +293,22 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 self.present(alert, animated: true, completion: nil)
             }
         }
+        
     }
     
+    private func registerUserIntoDatabaseWithUID(uid: String, values: [String: AnyObject]) {
+        let ref = Database.database().reference()
+        let usersRef = ref.child("users").child(uid)
+        usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            if let err = err {
+                print("Adding values error: \n")
+                print(err.localizedDescription)
+                return
+            }
+            print ("Adding values was a success!")
+        })
+        
+    }
     // returns the number of 'columns' to display.
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
