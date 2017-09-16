@@ -303,7 +303,7 @@ class LoginController: UIViewController {
             
             //There was an error signing in, reset text fields.
             if let error = error {
-                print ("Error signging in: ")
+                print ("Error signing in: ")
                 print(error.localizedDescription)
                 self.usernameTextField.text = ""
                 self.passwordTextField.text = ""
