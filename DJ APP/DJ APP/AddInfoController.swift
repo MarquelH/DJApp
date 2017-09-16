@@ -225,14 +225,17 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             handleToolBarDone()
         }
         
+        guard let ageSting = ageTextField.text else {
+            return
+        }
         
         //make sure the fields are valid
-        guard let usernameUnwrapped = username, let passwordUnwrapper = password, let age = ageTextField.text, let genre = genreTextField.text, let name = djNameTextField.text, let hometown = hometownTextField.text else {
+        guard let usernameUnwrapped = username, let passwordUnwrapper = password, let age = Int(ageSting), let genre = genreTextField.text, let name = djNameTextField.text, let hometown = hometownTextField.text else {
             print("Not valid args passed in.")
             return
         }
         
-        if (age == "" || genre == "" || hometown == "" || name == "") {
+        if (genre == "" || hometown == "" || name == "") {
             print("Not valid entries");
             return
         }
@@ -253,7 +256,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 
                 let ref = Database.database().reference()
                 let usersRef = ref.child("users").child(uid)
-                let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": 0] as [String : Any]
+                let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": 0, "currentLocation": "Somewhere"] as [String : Any]
                 usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                     if let err = err {
                         print("Adding values error: \n")
