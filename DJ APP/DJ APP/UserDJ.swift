@@ -15,5 +15,7 @@ class UserDJ: NSObject {
     var email: String?
     var genere: String?
     var hometown: String?
-    var validated: Int?
+    var validated: Bool?
+    var profilePicURL: String?
+    
 }

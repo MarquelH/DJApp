@@ -33,17 +33,16 @@ class DJTableViewController: UITableViewController {
                 for (_,value) in dictionary {
                     let dj = UserDJ()
                     
-                    print(snapshot.value as Any)
                     dj.djName = value["djName"] as? String
                     dj.age = value["age"] as? Int
                     dj.currentLocation = value["currentLocation"] as? String
                     dj.email = value["email"] as? String
                     dj.genere = value["genre"] as? String
                     dj.hometown = value["hometown"] as? String
-                    dj.validated = value["validated"] as? Int
+                    dj.validated = value["validated"] as? Bool
+                    dj.profilePicURL = value["profilePicURL"] as? String
                     
                     self.users.append(dj)
-                    print(self.users.count)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -63,7 +62,7 @@ class DJTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! DJCell
         
         
         let dj = users[indexPath.row]
@@ -72,7 +71,17 @@ class DJTableViewController: UITableViewController {
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
         }
+
+        
+        if let profileUrl = dj.profilePicURL {
+            cell.profileImageView.loadImageWithChachfromUrl(urlString: profileUrl)
+        }
+        
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
 
     func setupNavBar() {
@@ -87,12 +96,41 @@ class DJTableViewController: UITableViewController {
 }
 
 class DJCell: UITableViewCell {
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        //10 for left and right, 50 for size of image
+        textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 1
+            , width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+    }
+    
+    let profileImageView: UIImageView = {
+       let iv = UIImageView()
+        iv.image = UIImage(named: "usernameIcon")
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.layer.masksToBounds = true
+        iv.layer.cornerRadius = 25
+        return iv
+    }()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        
+        setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupViews() {
+        addSubview(profileImageView)
+        
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
 }

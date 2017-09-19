@@ -261,9 +261,13 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 }
                 // successfully created user
                 let imageName = NSUUID().uuidString
-                let storageRef = Storage.storage().reference().child("\(imageName).png")
+                let storageRef = Storage.storage().reference().child("\(imageName).jpg")
                 
-                if let uploadData = UIImagePNGRepresentation(self.profilePic.image!){
+             
+                
+                //Image Compression for optimization
+                if let profileImage = self.profilePic.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.075) {
+                
                 
                     storageRef.putData(uploadData, metadata: nil, completion: {
                         (metadata, error) in
@@ -274,7 +278,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         
                         if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
                             
-                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": 0, "currentLocation": "Somewhere","profilePicURL": profileImageUrl] as [String : Any]
+                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl] as [String : Any]
                         
                         self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
                         }

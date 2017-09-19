@@ -11,6 +11,7 @@
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
 		D80A18981F5C867200747022 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A18971F5C867200747022 /* RegisterController.swift */; };
+		D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81321EB1F71C9A900C130AD /* Exensions.swift */; };
 		D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66BF1F4F6E3E00543A8F /* AppDelegate.swift */; };
 		D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D81A66C61F4F6E3E00543A8F /* Assets.xcassets */; };
 		D81A66CA1F4F6E3E00543A8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D81A66C81F4F6E3E00543A8F /* LaunchScreen.storyboard */; };
@@ -51,6 +52,7 @@
 		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
 		D80A18971F5C867200747022 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		D81321EB1F71C9A900C130AD /* Exensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exensions.swift; sourceTree = "<group>"; };
 		D81A66BC1F4F6E3E00543A8F /* DJ APP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DJ APP.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81A66BF1F4F6E3E00543A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D81A66C61F4F6E3E00543A8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +114,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D81321EA1F71C98E00C130AD /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D81321EB1F71C9A900C130AD /* Exensions.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		D81A66B31F4F6E3D00543A8F = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 		D81A66BE1F4F6E3E00543A8F /* DJ APP */ = {
 			isa = PBXGroup;
 			children = (
+				D81321EA1F71C98E00C130AD /* Helpers */,
 				D81A66BF1F4F6E3E00543A8F /* AppDelegate.swift */,
 				D847BA1D1F6DAD66002C1BE7 /* Model */,
 				D81A66ED1F4F705700543A8F /* Controllers */,
@@ -169,9 +180,9 @@
 		D81A66ED1F4F705700543A8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
 				D81A66F21F4F721D00543A8F /* LoginController.swift */,
-				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
 				D86732971F54E31C00270D07 /* AddInfoController.swift */,
 				D80A18971F5C867200747022 /* RegisterController.swift */,
 			);
@@ -486,6 +497,7 @@
 				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
 				D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */,
+				D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */,
 				D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

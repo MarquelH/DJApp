@@ -319,8 +319,12 @@ class LoginController: UIViewController {
                 Database.database().reference().child("users").child(uid).observe(.value, with: {(snapshot) in
                     if let dictionary = snapshot.value as? [String: AnyObject] {
                        
+                        guard let validated = dictionary["validated"] as? Bool else {
+                            return
+                        }
+                        
                         //If user is validated, present DJRootViewController
-                        if (dictionary["validated"]?.isEqual(1))! {
+                        if (validated) {
                             let djRootViewController = DJRootViewController()
                             let djNavController = UINavigationController(rootViewController: djRootViewController)
                             self.present(djNavController, animated: true, completion: nil)
