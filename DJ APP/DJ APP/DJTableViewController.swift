@@ -19,7 +19,7 @@ class DJTableViewController: UITableViewController {
         setupNavBar()
         tableView.backgroundColor = UIColor.lightGray
         //remove seperators from empty cells
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.separatorStyle = .none
         tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
         
         fetchDjs()
@@ -83,8 +83,27 @@ class DJTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 80
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
+        currentCell.cellClicked()
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+        let songTableController = SongTableViewController()
+        songTableController.dj = users[indexPath.row]
+        self.navigationController?.pushViewController(songTableController, animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 , execute: {
+            currentCell.cellEndedClick()
+        })
+        
+    }
+    
 
     func setupNavBar() {
         navigationItem.title = "DJ List"
@@ -99,47 +118,69 @@ class DJTableViewController: UITableViewController {
 }
 
 class DJCell: UITableViewCell {
-    let gradientLayer = CAGradientLayer()
-    let firstColor: CGColor = UIColor(red: 0, green: 0.832, blue: 0.557, alpha: 1.0).cgColor
-    let secondColor: CGColor = UIColor(red: 0, green: 0.635, blue: 0.923, alpha: 1.0).cgColor
-   
+    
     let profileImageView: UIImageView = {
        let iv = UIImageView()
         iv.image = UIImage(named: "usernameIcon")
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.layer.masksToBounds = true
-        iv.layer.cornerRadius = 25
+        iv.layer.cornerRadius = 30
         iv.layer.borderColor = UIColor.black.cgColor
-        iv.layer.borderWidth = 2
+        iv.layer.borderWidth = 1
         return iv
     }()
     
+    let darkView: UIView = {
+       let dk = UIView()
+        dk.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.25)
+        return dk
+    }()
+    
+    let separator: UIView = {
+        let s = UIView()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1.0)
+        return s
+    }()
+    
+    lazy var gradientLayer: CAGradientLayer = {
+       let gl = CAGradientLayer()
+        let firstColor: CGColor = UIColor(red: 0, green: 0.832, blue: 0.557, alpha: 1.0).cgColor
+        let secondColor: CGColor = UIColor(red: 0, green: 0.635, blue: 0.923, alpha: 1.0).cgColor
+        gl.colors = [firstColor, secondColor]
+        gl.locations = [0, 0.5]
+        gl.startPoint = CGPoint(x: 0, y: 0)
+        gl.endPoint = CGPoint(x: 0, y: 1)
+        return gl
+    }()
     
     override func layoutSubviews() {
         super.layoutSubviews()
         //10 for left and right, 50 for size of image
-        textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
         textLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 1
+        detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y + 1
             , width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
+        contentView.layer.insertSublayer(gradientLayer, at: 0)
+        gradientLayer.frame = contentView.frame
+        darkView.frame = contentView.frame
+
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-   
-        gradientLayer.colors = [firstColor, secondColor]
-        gradientLayer.locations = [0, 0.5]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
-        gradientLayer.frame = self.layer.bounds
-        
-        layer.insertSublayer(gradientLayer, at: 0)
-        
         setupViews()
-        
-        
+    }
+    
+    
+    func cellClicked() {
+        contentView.addSubview(darkView)
+    }
+    
+    func cellEndedClick() {
+            darkView.removeFromSuperview()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -147,13 +188,19 @@ class DJCell: UITableViewCell {
     }
     
     func setupViews() {
-        addSubview(profileImageView)
+        contentView.addSubview(profileImageView)
+        contentView.addSubview(separator)
         
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-   
+        profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+       
+        separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 }
 
