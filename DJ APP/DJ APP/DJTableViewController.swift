@@ -87,20 +87,23 @@ class DJTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var cell = tableView.cellForRow(at: indexPath) as! DJCell
-        cell.cellClicked()
-        for i in 0..<users.count {
-            if (i != indexPath.row) {
-                cell = tableView.cellForRow(at: IndexPath(row: i, section: 0)) as! DJCell
-                cell.cellEndedClick()
-            }
-        }
+        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
+        currentCell.cellClicked()
+
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+        
+        let songTableController = SongTableViewController()
+        songTableController.dj = users[indexPath.row]
+        self.navigationController?.pushViewController(songTableController, animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 , execute: {
+            currentCell.cellEndedClick()
+        })
+        
     }
     
-  
 
     func setupNavBar() {
         navigationItem.title = "DJ List"
@@ -177,9 +180,7 @@ class DJCell: UITableViewCell {
     }
     
     func cellEndedClick() {
-        if contentView.subviews.contains(darkView) {
             darkView.removeFromSuperview()
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
