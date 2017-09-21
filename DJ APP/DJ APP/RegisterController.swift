@@ -12,17 +12,9 @@ class RegisterController: UIViewController {
 
     var loginController: LoginController?
     
-    let logoGo: UIImageView = {
+    let headphonesLogo: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "GO")
-        img.translatesAutoresizingMaskIntoConstraints = false
-        img.contentMode = .scaleAspectFill
-        return img
-    }()
-    
-    let logoDJ: UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(named: "DJ")
+        img.image = UIImage(named: "headphones")
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleAspectFill
         return img
@@ -90,7 +82,7 @@ class RegisterController: UIViewController {
         let bi = UIImageView()
         bi.image = UIImage(named: "headphonesImage")
         bi.translatesAutoresizingMaskIntoConstraints = false
-        bi.contentMode = .scaleToFill
+        bi.contentMode = .scaleAspectFill
         bi.layer.masksToBounds = true
         return bi
     }()
@@ -135,26 +127,34 @@ class RegisterController: UIViewController {
     func setupNavigationBar() {
         self.navigationItem.title = "Login Information"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleContinue))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
     }
     
     func setupViews() {
         view.addSubview(backgroundImage)
         view.addSubview(passwordContainer)
         view.addSubview(reenterPasswordContainer)
-        view.addSubview(logoGo)
-        view.addSubview(logoDJ)
         view.addSubview(usernameContainer)
+        view.addSubview(headphonesLogo)
         usernameContainer.addSubview(usernameTextField)
         passwordContainer.addSubview(passwordTextField)
         reenterPasswordContainer.addSubview(reenterPasswordTextField)
 
-        let quarterHeight = view.frame.height / 3
+        //let quarterHeight = view.frame.height / 3
         
         backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         backgroundImage.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        
+        
+        headphonesLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        headphonesLogo.topAnchor.constraint(equalTo: reenterPasswordContainer.bottomAnchor, constant: 115).isActive = true
+        headphonesLogo.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        headphonesLogo.widthAnchor.constraint(equalToConstant: 105).isActive = true
+        
         
         usernameTextField.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 10).isActive = true
         usernameTextField.topAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: 5).isActive = true
@@ -162,7 +162,7 @@ class RegisterController: UIViewController {
         usernameTextField.widthAnchor.constraint(equalTo: usernameContainer.widthAnchor, constant: -15).isActive = true
 
         usernameContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        usernameContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: quarterHeight).isActive = true
+        usernameContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 145).isActive = true
         usernameContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -15).isActive = true
         usernameContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
@@ -186,14 +186,5 @@ class RegisterController: UIViewController {
         reenterPasswordContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -15).isActive = true
         reenterPasswordContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        logoGo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        logoGo.topAnchor.constraint(equalTo: reenterPasswordTextField.bottomAnchor, constant: 63).isActive = true
-        logoGo.heightAnchor.constraint(equalToConstant: 27).isActive = true
-        logoGo.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        
-        logoDJ.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 1).isActive = true
-        logoDJ.topAnchor.constraint(equalTo: logoGo.bottomAnchor, constant: 10).isActive = true
-        logoDJ.heightAnchor.constraint(equalToConstant: 27).isActive = true
-        logoDJ.widthAnchor.constraint(equalToConstant: 70).isActive = true
     }
 }

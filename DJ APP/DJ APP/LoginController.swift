@@ -172,14 +172,14 @@ class LoginController: UIViewController {
         logoGo.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75).isActive = true
         logoGo.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
         logoGo.topAnchor.constraint(equalTo: logoInLogin.topAnchor, constant: 75)
-        logoGo.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        logoGo.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        logoGo.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        logoGo.widthAnchor.constraint(equalToConstant: 75).isActive = true
         
         
         logoDJ.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 75).isActive = true
         logoDJ.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
-        logoDJ.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        logoDJ.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        logoDJ.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        logoDJ.widthAnchor.constraint(equalToConstant: 75).isActive = true
         
         
         logoInLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

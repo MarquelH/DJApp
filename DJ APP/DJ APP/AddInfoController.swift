@@ -32,10 +32,27 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         return pp
     }()
     
+    let logoGo: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "GO")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
+    let logoDJ: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "DJ")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+
+    
     let addPhoto: UIButton = {
         let ap = UIButton()
-        let lightblue = UIColor(colorLiteralRed: 94/255, green: 211/255, blue: 237/255, alpha: 1)
-        ap.setTitleColor(lightblue, for: .normal)
+        let headphoneColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        ap.setTitleColor(headphoneColor, for: .normal)
         ap.setTitleColor(UIColor.white, for: .highlighted)
         ap.titleLabel?.lineBreakMode = .byWordWrapping
         ap.titleLabel?.textAlignment = .center
@@ -46,12 +63,45 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         return ap
     }()
     
+    
     let hometownLabel: UILabel = {
         let ht = UILabel()
         ht.textColor = UIColor.gray
         ht.text = "Hometown:"
         ht.translatesAutoresizingMaskIntoConstraints = false
         return ht
+    }()
+    
+    let headphonesLogo: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "headphones")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
+    let twitterLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = UIColor.gray
+        lbl.text = "Twitter/Instagram:"
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        return lbl
+    }()
+    
+    let twitterSep: UIView = {
+        let sep = UIView()
+        sep.backgroundColor = UIColor.lightGray
+        sep.translatesAutoresizingMaskIntoConstraints = false
+        return sep
+    }()
+    
+    let twitterTextField: UITextField = {
+        let htf = UITextField()
+        htf.textColor = UIColor.white
+        htf.clearButtonMode = .whileEditing
+        htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
+        htf.translatesAutoresizingMaskIntoConstraints = false
+        return htf
     }()
     
     let hometownTextField: UITextField = {
@@ -159,8 +209,10 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     let toolbar: UIToolbar = {
         let tb = UIToolbar()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleToolBarDone))
+        //doneButton.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleToolBarCancel))
+        //cancelButton.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         tb.barTintColor = UIColor.white
         tb.barStyle = .default
         tb.isTranslucent = true
@@ -175,7 +227,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let bi = UIImageView()
         bi.image = UIImage(named: "headphonesImage")
         bi.translatesAutoresizingMaskIntoConstraints = false
-        bi.contentMode = .scaleToFill
+        bi.contentMode = .scaleAspectFill
         bi.layer.masksToBounds = true
         return bi
     }()
@@ -186,6 +238,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         view.backgroundColor = UIColor.black
         setupNavigationBar()
         setupViews()
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
     }
     
     //func handleImageSelection() {
@@ -216,6 +270,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         if let selectedImageFromPicker = selectedImage {
             profilePic.image = selectedImageFromPicker
             addPhoto.setTitle("Edit\nPhoto", for: .normal)
+            let headphonesColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+            addPhoto.setTitleColor(headphonesColor, for: .normal)
         }
         dismiss(animated: true, completion: nil)
     }
@@ -411,7 +467,11 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         view.addSubview(genreLabel)
         view.addSubview(genreTextField)
         view.addSubview(genreSep)
-        
+        view.addSubview(twitterLabel)
+        view.addSubview(twitterSep)
+        view.addSubview(twitterTextField)
+        view.addSubview(logoGo)
+        view.addSubview(logoDJ)
         
         backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -434,6 +494,16 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         hometownLabel.widthAnchor.constraint(equalToConstant: hometownLabel.intrinsicContentSize.width).isActive = true
         hometownLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
         
+        logoGo.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -124).isActive = true
+        logoGo.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 265).isActive = true
+        logoGo.heightAnchor.constraint(equalToConstant: 27).isActive = true
+        logoGo.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        logoDJ.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 120).isActive = true
+        logoDJ.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 265).isActive = true
+        logoDJ.heightAnchor.constraint(equalToConstant: 27).isActive = true
+        logoDJ.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        
         hometownTextField.leftAnchor.constraint(equalTo: hometownLabel.rightAnchor, constant: 12).isActive = true
         hometownTextField.topAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
         hometownTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
@@ -443,6 +513,21 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         hometownSep.topAnchor.constraint(equalTo: hometownLabel.bottomAnchor, constant: 6).isActive = true
         hometownSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         hometownSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        twitterSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        twitterSep.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 6).isActive = true
+        twitterSep.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        twitterSep.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        twitterLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
+        twitterLabel.topAnchor.constraint(equalTo: genreSep.bottomAnchor, constant: 6).isActive = true
+        //twitterLabel.widthAnchor.constraint(equalToConstant: djNameLabel.intrinsicContentSize.width).isActive = true
+        twitterLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        
+        twitterTextField.leftAnchor.constraint(equalTo: twitterLabel.rightAnchor, constant: 12).isActive = true
+        twitterTextField.topAnchor.constraint(equalTo: twitterLabel.topAnchor).isActive = true
+        twitterTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12).isActive = true
+        twitterTextField.heightAnchor.constraint(equalTo: twitterLabel.heightAnchor).isActive = true
         
         
         djNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
