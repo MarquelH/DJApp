@@ -19,11 +19,11 @@
 		D81A66E01F4F6E3E00543A8F /* DJ_APPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66DF1F4F6E3E00543A8F /* DJ_APPUITests.swift */; };
 		D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66F01F4F713F00543A8F /* DJTableViewController.swift */; };
 		D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66F21F4F721D00543A8F /* LoginController.swift */; };
+		D83AFB9E1F75C1C5003B0004 /* SearchTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */; };
 		D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */ = {isa = PBXBuildFile; fileRef = D847BA1E1F6DADAE002C1BE7 /* UserDJ.swift */; };
 		D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86732971F54E31C00270D07 /* AddInfoController.swift */; };
 		D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86732991F54E58E00270D07 /* DJRootViewController.swift */; };
 		D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */; };
-		D8C9B22D1F747A8D0090F10F /* TrackSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9B22C1F747A8D0090F10F /* TrackSearchTableViewController.swift */; };
 		EA9727C810593E59222AF0F7 /* Pods_DJ_APPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7F37CD4B3E866E3B68B5B5 /* Pods_DJ_APPTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,11 +68,11 @@
 		D81A66E11F4F6E3E00543A8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D81A66F01F4F713F00543A8F /* DJTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJTableViewController.swift; sourceTree = "<group>"; };
 		D81A66F21F4F721D00543A8F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackViewController.swift; sourceTree = "<group>"; };
 		D847BA1E1F6DADAE002C1BE7 /* UserDJ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDJ.swift; sourceTree = "<group>"; };
 		D86732971F54E31C00270D07 /* AddInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddInfoController.swift; sourceTree = "<group>"; };
 		D86732991F54E58E00270D07 /* DJRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJRootViewController.swift; sourceTree = "<group>"; };
 		D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewController.swift; sourceTree = "<group>"; };
-		D8C9B22C1F747A8D0090F10F /* TrackSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSearchTableViewController.swift; sourceTree = "<group>"; };
 		DF9E8685B418938DBF98C491 /* Pods-DJ APPUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8B6905941C00083DBA8FAEE /* Pods-DJ APPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,7 +187,7 @@
 				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
 				D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */,
-				D8C9B22C1F747A8D0090F10F /* TrackSearchTableViewController.swift */,
+				D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */,
 				D81A66F21F4F721D00543A8F /* LoginController.swift */,
 				D86732971F54E31C00270D07 /* AddInfoController.swift */,
 				D80A18971F5C867200747022 /* RegisterController.swift */,
@@ -505,8 +505,8 @@
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
 				D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */,
 				D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */,
+				D83AFB9E1F75C1C5003B0004 /* SearchTrackViewController.swift in Sources */,
 				D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */,
-				D8C9B22D1F747A8D0090F10F /* TrackSearchTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

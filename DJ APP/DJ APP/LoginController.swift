@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, UINavigationControllerDelegate {
     
     let djGuestLoginButton: UIButton = {
         let lb = UIButton(type: .system)
@@ -348,6 +348,7 @@ class LoginController: UIViewController {
     func handleGuestEnter() {
         let djTableViewController = DJTableViewController()
         let djTableNavController = UINavigationController(rootViewController: djTableViewController)
+        djTableNavController.delegate = self
         present(djTableNavController, animated: true, completion: nil)
     }
 }
