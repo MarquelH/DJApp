@@ -8,20 +8,20 @@
 
 import UIKit
 
-class SongTableViewController: UITableViewController {
+class SongTableViewController: UITableViewController  {
 
     var dj: UserDJ?
     let trackCellId: String = "trackCellId"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
         setupViews()
     }
 
     func setupViews() {
-        self.navigationItem.title = dj?.djName
         if let name = dj?.djName {
-        self.navigationItem.title = "\(name)" + "'s List"
+            self.navigationItem.title = "\(name)" + "'s List"
         }
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showSearchBar))
@@ -31,11 +31,6 @@ class SongTableViewController: UITableViewController {
         let searchTrackController = SearchTrackViewController()
         self.navigationController?.pushViewController(searchTrackController, animated: true)
     }
- 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -44,7 +39,7 @@ class SongTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
             
-            cell.textLabel?.text = "Track \(indexPath.row - 1)"
+            cell.textLabel?.text = "Track \(indexPath.row)"
             cell.detailTextLabel?.text = "Artist: "
      
         return cell
@@ -52,13 +47,3 @@ class SongTableViewController: UITableViewController {
     
 }
 
-
-class TrackCell: UITableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}

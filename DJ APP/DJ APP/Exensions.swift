@@ -11,10 +11,6 @@ import UIKit
 let imageCache = NSCache<AnyObject, AnyObject>()
 
 extension UIImageView {
-    
-    
-
-    
     func loadImageWithChachfromUrl(urlString: String) {
         
         //Do this if flashing occurs when scrolling. 
@@ -46,6 +42,4 @@ extension UIImageView {
             }).resume()
         }
     }
-    
-    
 }

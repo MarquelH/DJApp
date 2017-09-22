@@ -127,11 +127,11 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         img.contentMode = .scaleAspectFill
         return img
     }()
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     var loginButtonTopAnchor: NSLayoutConstraint?
     
     override func viewDidLoad() {
