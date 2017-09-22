@@ -17,7 +17,7 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        tableView.backgroundColor = UIColor.lightGray
+        tableView.backgroundColor = UIColor.darkGray
         //remove seperators from empty cells
         tableView.separatorStyle = .none
         tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
@@ -96,6 +96,7 @@ class DJTableViewController: UITableViewController {
         
         let songTableController = SongTableViewController()
         songTableController.dj = users[indexPath.row]
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(songTableController, animated: true)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 , execute: {
