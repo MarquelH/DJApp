@@ -20,6 +20,10 @@ class SongTableViewController: UITableViewController {
 
     func setupViews() {
         self.navigationItem.title = dj?.djName
+        if let name = dj?.djName {
+        self.navigationItem.title = "\(name)" + "'s List"
+        }
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showSearchBar))
     }
     
