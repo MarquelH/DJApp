@@ -17,7 +17,7 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        tableView.backgroundColor = UIColor.darkGray
+        tableView.backgroundColor = UIColor.black
         //remove seperators from empty cells
         tableView.separatorStyle = .none
         tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
@@ -69,21 +69,33 @@ class DJTableViewController: UITableViewController {
         
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
+        cell.textLabel?.textColor = UIColor.white
 
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
+            cell.detailTextLabel?.textColor = UIColor.blue
         }
 
         
         if let profileUrl = dj.profilePicURL {
             cell.profileImageView.loadImageWithChachfromUrl(urlString: profileUrl)
         }
-        
+        if (indexPath.row % 3 == 0){
+            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        }
+        else if (indexPath.row % 2 == 0){
+            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
+
+        }
+        else{
+            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.25)
+
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 105
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -109,6 +121,7 @@ class DJTableViewController: UITableViewController {
     func setupNavBar() {
         navigationItem.title = "DJ List"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
     }
 
     func handleLogout() {
@@ -134,14 +147,14 @@ class DJCell: UITableViewCell {
     
     let darkView: UIView = {
        let dk = UIView()
-        dk.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.25)
+        dk.backgroundColor = UIColor.darkGray
         return dk
     }()
     
     let separator: UIView = {
         let s = UIView()
         s.translatesAutoresizingMaskIntoConstraints = false
-        s.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 1.0)
+        s.backgroundColor = UIColor.gray
         return s
     }()
     
@@ -164,8 +177,9 @@ class DJCell: UITableViewCell {
         detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y + 1
             , width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
-        contentView.layer.insertSublayer(gradientLayer, at: 0)
-        gradientLayer.frame = contentView.frame
+        //contentView.layer.insertSublayer(gradientLayer, at: 0)
+        //contentView.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        //gradientLayer.frame = contentView.frame
         darkView.frame = contentView.frame
 
     }
@@ -200,7 +214,7 @@ class DJCell: UITableViewCell {
        
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 0.25).isActive = true
         separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 }
