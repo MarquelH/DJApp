@@ -51,6 +51,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         let tf = UITextField()
         tf.font = UIFont.boldSystemFont(ofSize: 20)
         tf.placeholder = "Email"
+        tf.clearButtonMode = UITextFieldViewMode.whileEditing
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -60,6 +61,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         tf.font = UIFont.boldSystemFont(ofSize: 20)
         tf.isSecureTextEntry = true
         tf.placeholder = "Password"
+        tf.clearButtonMode = UITextFieldViewMode.whileEditing
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
