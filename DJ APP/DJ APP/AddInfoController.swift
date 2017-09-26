@@ -98,6 +98,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     let twitterTextField: UITextField = {
         let htf = UITextField()
         htf.textColor = UIColor.white
+        htf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         htf.clearButtonMode = .whileEditing
         htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         htf.translatesAutoresizingMaskIntoConstraints = false
@@ -108,6 +109,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let htf = UITextField()
         htf.textColor = UIColor.white
         htf.clearButtonMode = .whileEditing
+        htf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         htf.translatesAutoresizingMaskIntoConstraints = false
         return htf
@@ -132,6 +134,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let dtf = UITextField()
         dtf.textColor = UIColor.white
         dtf.clearButtonMode = .whileEditing
+        dtf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         dtf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         dtf.translatesAutoresizingMaskIntoConstraints = false
         return dtf
@@ -156,6 +159,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let atf = UITextField()
         atf.textColor = UIColor.white
         atf.clearButtonMode = .whileEditing
+        atf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         atf.translatesAutoresizingMaskIntoConstraints = false
         atf.addTarget(self, action: #selector(ageClicked), for: UIControlEvents.editingDidBegin)
         return atf

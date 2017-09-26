@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
+		66FDE3481F7A180D00823391 /* Lobster.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3471F7A180D00823391 /* Lobster.otf */; };
+		66FDE34A1F7A184000823391 /* Exo-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3491F7A184000823391 /* Exo-Thin.otf */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
 		D80A18981F5C867200747022 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A18971F5C867200747022 /* RegisterController.swift */; };
 		D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81321EB1F71C9A900C130AD /* Exensions.swift */; };
@@ -53,6 +55,8 @@
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		66FDE3471F7A180D00823391 /* Lobster.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster.otf; sourceTree = "<group>"; };
+		66FDE3491F7A184000823391 /* Exo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-Thin.otf"; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
 		D80A18971F5C867200747022 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		D81321EB1F71C9A900C130AD /* Exensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exensions.swift; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 		D81A66B31F4F6E3D00543A8F = {
 			isa = PBXGroup;
 			children = (
+				66FDE3491F7A184000823391 /* Exo-Thin.otf */,
+				66FDE3471F7A180D00823391 /* Lobster.otf */,
 				D81A66BE1F4F6E3E00543A8F /* DJ APP */,
 				D81A66D31F4F6E3E00543A8F /* DJ APPTests */,
 				D81A66DE1F4F6E3E00543A8F /* DJ APPUITests */,
@@ -336,6 +342,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81A66CA1F4F6E3E00543A8F /* LaunchScreen.storyboard in Resources */,
+				66FDE3481F7A180D00823391 /* Lobster.otf in Resources */,
+				66FDE34A1F7A184000823391 /* Exo-Thin.otf in Resources */,
 				D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */,
 				6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */,
 			);
