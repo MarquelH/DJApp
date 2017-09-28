@@ -65,7 +65,6 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
         
         cell.textLabel?.text = tracks[indexPath.row]
-        
         return cell
     }
     

@@ -356,10 +356,12 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     }
     
     func handleGuestEnter() {
-        let djTableViewController = DJTableViewController()
-        let djTableNavController = UINavigationController(rootViewController: djTableViewController)
-        djTableNavController.delegate = self
-        present(djTableNavController, animated: true, completion: nil)
+        let customTabBarController = CustomTabBarController()
+        //let djTableViewController = DJTableViewController()
+        //let djTableNavController = UINavigationController(rootViewController: djTableViewController)
+        //djTableNavController.delegate = self
+        //present(djTableNavController, animated: true, completion: nil)
+        present(customTabBarController, animated: true, completion: nil)
     }
 }
 

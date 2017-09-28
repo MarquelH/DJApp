@@ -14,34 +14,6 @@ class DJTableViewController: UITableViewController {
     var users = [UserDJ]()
     let cellId = "cellId"
     
-    let homeButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(presentHomeController))
-    let songButton = UIBarButtonItem(title: "Song", style: .plain, target: self, action: #selector(presentSongController))
-    let searchTrackButton = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(presentSearchTrackController))
-    //let bioButton = UIBarButtonItem(title: "Bio", style: .plain, target: self, action: #selector(presentBioController))
-    
-    
-    let songTableController = SongTableViewController()
-    let searchTrackController = SearchTrackViewController()
-    //let bioViewController = BioViewController()
-
-    
-    func presentHomeController() {
-        //Remove all but root and push to root
-        
-    }
-    
-    func presentSongController() {
-        
-    }
-    
-    func presentSearchTrackController() {
-        
-    }
-    
-//    func presentBioController() {
-//        
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
@@ -57,9 +29,7 @@ class DJTableViewController: UITableViewController {
         //view.insertSubview(backgroundImage, at: 0)
         tableView.backgroundView = backgroundImage
         
-
         fetchDjs()
-        
     }
 
     func fetchDjs() {
@@ -141,34 +111,26 @@ class DJTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
-        currentCell.cellClicked()
-
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-        
-        songTableController.dj = users[indexPath.row]
-//        searchTableController.dj = users[indexPath.row]
-        //bioViewController.dj = users[index.row]
-        
-        //setup nav bar
-        self.navigationController?.toolbarItems = [homeButton, songButton, searchTrackButton]//, bioButton]
-        self.navigationController?.setToolbarHidden(false, animated: true)
-        
+        //customTabBarController.dj = users[indexPath.row]
         //Insert views into navigation controller
-        self.navigationController?.viewControllers.append(songTableController)
-        self.navigationController?.viewControllers.append(searchTrackController)
-//        self.navigationController?.viewControllers.append(bioViewController)
         
-        
-        //self.navigationController?.
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 , execute: {
-            currentCell.cellEndedClick()
-        })
-        
+        //self.navigationController?.pushViewController(customTabBarController, animated: true)
     }
+    
+ 
+    //NEED TO CHANGE THE PROFILE IMAGE WHEN SELECTED, WE CAN JUST ADD A VIEW ON TOP OF IT??
+//    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+//        // To highlight when the user clicks
+//        print("Highlighted")
+//        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
+//                currentCell.cellClicked()
+//    }
+//    override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+//        print("UnHighlighted")
+//        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
+//            currentCell.cellEndedClick()
+//
+//    }
     
 
     func setupNavBar() {
@@ -200,7 +162,7 @@ class DJCell: UITableViewCell {
     
     let darkView: UIView = {
        let dk = UIView()
-        dk.backgroundColor = UIColor.darkGray
+        dk.backgroundColor = UIColor.yellow//.withAlphaComponent(0.5)
         return dk
     }()
     
@@ -211,17 +173,6 @@ class DJCell: UITableViewCell {
         return s
     }()
     
-    lazy var gradientLayer: CAGradientLayer = {
-       let gl = CAGradientLayer()
-        let firstColor: CGColor = UIColor(red: 0, green: 0.832, blue: 0.557, alpha: 1.0).cgColor
-        let secondColor: CGColor = UIColor(red: 0, green: 0.635, blue: 0.923, alpha: 1.0).cgColor
-        gl.colors = [firstColor, secondColor]
-        gl.locations = [0, 0.5]
-        gl.startPoint = CGPoint(x: 0, y: 0)
-        gl.endPoint = CGPoint(x: 0, y: 1)
-        return gl
-    }()
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         //10 for left and right, 50 for size of image
@@ -230,9 +181,6 @@ class DJCell: UITableViewCell {
         detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y + 1
             , width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
-        //contentView.layer.insertSublayer(gradientLayer, at: 0)
-        //contentView.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        //gradientLayer.frame = contentView.frame
         darkView.frame = contentView.frame
 
     }
@@ -243,13 +191,13 @@ class DJCell: UITableViewCell {
     }
     
     
-    func cellClicked() {
-        contentView.addSubview(darkView)
-    }
-    
-    func cellEndedClick() {
-            darkView.removeFromSuperview()
-    }
+//    func cellClicked() {
+//        contentView.addSubview(darkView)
+//    }
+//    
+//    func cellEndedClick() {
+//            darkView.removeFromSuperview()
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
