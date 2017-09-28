@@ -45,11 +45,19 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        tableView.backgroundColor = UIColor.black
         //remove seperators from empty cells
         tableView.separatorStyle = .none
         tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
-        navigationController?.setToolbarHidden(true, animated: true)
+
+        
+        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
+        backgroundImage.image = UIImage(named: "headphonesImage")
+        backgroundImage.contentMode = .scaleAspectFill
+        
+        //view.insertSubview(backgroundImage, at: 0)
+        tableView.backgroundView = backgroundImage
+        
+
         fetchDjs()
         
     }
@@ -97,11 +105,14 @@ class DJTableViewController: UITableViewController {
         
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
-        cell.textLabel?.textColor = UIColor.white
+        cell.textLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
+        cell.textLabel?.font = UIFont(name: "Exo-Thin", size: 24)
+        
 
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
-            cell.detailTextLabel?.textColor = UIColor.blue
+            cell.detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
+            cell.detailTextLabel?.font = UIFont(name: "Exo-Thin", size: 15)
         }
 
         
@@ -109,14 +120,17 @@ class DJTableViewController: UITableViewController {
             cell.profileImageView.loadImageWithChachfromUrl(urlString: profileUrl)
         }
         if (indexPath.row % 3 == 0){
-            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+            //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+            cell.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         }
         else if (indexPath.row % 2 == 0){
-            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
+            //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
+            cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.8)
 
         }
         else{
-            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.25)
+            //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.25)
+            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.8)
 
         }
         return cell
@@ -148,7 +162,7 @@ class DJTableViewController: UITableViewController {
 //        self.navigationController?.viewControllers.append(bioViewController)
         
         
-        self.navigationController?.
+        //self.navigationController?.
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 , execute: {
             currentCell.cellEndedClick()
@@ -193,7 +207,7 @@ class DJCell: UITableViewCell {
     let separator: UIView = {
         let s = UIView()
         s.translatesAutoresizingMaskIntoConstraints = false
-        s.backgroundColor = UIColor.gray
+        s.backgroundColor = UIColor.white
         return s
     }()
     
@@ -253,7 +267,7 @@ class DJCell: UITableViewCell {
        
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 0.25).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 }

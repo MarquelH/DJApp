@@ -28,6 +28,11 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Exo-Thin.otf</string>
+		<string>Lobster.otf</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

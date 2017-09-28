@@ -34,6 +34,7 @@ class RegisterController: UIViewController {
     let usernameTextField: UITextField = {
         let htf = UITextField()
         htf.placeholder = "Email"
+        htf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         htf.clearButtonMode = .whileEditing
         htf.translatesAutoresizingMaskIntoConstraints = false
         return htf
@@ -45,6 +46,7 @@ class RegisterController: UIViewController {
         htf.clearButtonMode = .whileEditing
         htf.isSecureTextEntry = true
         htf.translatesAutoresizingMaskIntoConstraints = false
+        htf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         return htf
     }()
     
@@ -64,6 +66,7 @@ class RegisterController: UIViewController {
         htf.placeholder = "Confirm Password"
         htf.clearButtonMode = .whileEditing
         htf.isSecureTextEntry = true
+        htf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         htf.translatesAutoresizingMaskIntoConstraints = false
         return htf
     }()
