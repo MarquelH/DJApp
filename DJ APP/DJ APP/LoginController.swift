@@ -336,15 +336,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
                             return
                         }
                     }
-                
                 })
-                
-                
-           
             }
         })
-        
-        
     }
     
     func handleGuestEnter() {

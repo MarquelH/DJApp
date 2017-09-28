@@ -14,6 +14,34 @@ class DJTableViewController: UITableViewController {
     var users = [UserDJ]()
     let cellId = "cellId"
     
+    let homeButton = UIBarButtonItem(title: "Home", style: .plain, target: self, action: #selector(presentHomeController))
+    let songButton = UIBarButtonItem(title: "Song", style: .plain, target: self, action: #selector(presentSongController))
+    let searchTrackButton = UIBarButtonItem(title: "Search", style: .plain, target: self, action: #selector(presentSearchTrackController))
+    //let bioButton = UIBarButtonItem(title: "Bio", style: .plain, target: self, action: #selector(presentBioController))
+    
+    
+    let songTableController = SongTableViewController()
+    let searchTrackController = SearchTrackViewController()
+    //let bioViewController = BioViewController()
+
+    
+    func presentHomeController() {
+        //Remove all but root and push to root
+        
+    }
+    
+    func presentSongController() {
+        
+    }
+    
+    func presentSearchTrackController() {
+        
+    }
+    
+//    func presentBioController() {
+//        
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
@@ -21,7 +49,7 @@ class DJTableViewController: UITableViewController {
         //remove seperators from empty cells
         tableView.separatorStyle = .none
         tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
-        
+        navigationController?.setToolbarHidden(true, animated: true)
         fetchDjs()
         
     }
@@ -106,10 +134,21 @@ class DJTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
-        let songTableController = SongTableViewController()
         songTableController.dj = users[indexPath.row]
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.navigationController?.pushViewController(songTableController, animated: true)
+//        searchTableController.dj = users[indexPath.row]
+        //bioViewController.dj = users[index.row]
+        
+        //setup nav bar
+        self.navigationController?.toolbarItems = [homeButton, songButton, searchTrackButton]//, bioButton]
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        
+        //Insert views into navigation controller
+        self.navigationController?.viewControllers.append(songTableController)
+        self.navigationController?.viewControllers.append(searchTrackController)
+//        self.navigationController?.viewControllers.append(bioViewController)
+        
+        
+        self.navigationController?.
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 , execute: {
             currentCell.cellEndedClick()

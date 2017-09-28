@@ -81,7 +81,7 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
