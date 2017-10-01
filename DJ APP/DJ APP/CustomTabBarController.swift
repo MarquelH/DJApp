@@ -10,40 +10,34 @@ import UIKit
 
 class CustomTabBarController: UITabBarController {
     var dj: UserDJ?
-
+    let songController = SongTableViewController()
+    let searchTrackController = SearchTrackViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Setup Tab Bar
-        let songController = SongTableViewController()
-        songController.dj = dj
+
+        let songNavController = UINavigationController(rootViewController: songController)
         songController.tabBarItem.title = "Songs"
+        songController.tabBarItem.image = UIImage(named: "listIcon")
+        songController.customTabBarController = self
         
-        let djListController = DJTableViewController()
-        djListController.tabBarItem.title = "DJs"
-        
-        let searchTrackController = SearchTrackViewController()
         searchTrackController.tabBarItem.title = "Search"
+        searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
         
-        viewControllers = [djListController, songController, searchTrackController]
+        viewControllers = [songNavController, searchTrackController]
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        //Show navigation bar
-        self.navigationController?.isNavigationBarHidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        songController.dj = dj
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        //Hide navigation bar
-        self.navigationController?.isNavigationBarHidden = true
+    func dissmissTabBar() {
+        self.dismiss(animated: true, completion: nil)
     }
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if (item.tag == 0) {
-            print("Home Clicked")
-        }
-    }
+    
+
 }

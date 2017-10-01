@@ -16,18 +16,7 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-//    
-//    let backButton: UIButton = {
-//        let bb = UIButton()
-//        bb.setTitle("Back", for: .normal)
-//        bb.translatesAutoresizingMaskIntoConstraints = false
-//        bb.setTitleColor(UIColor.lightGray, for: .normal)
-//        bb.tintColor = UIColor.clear
-//        bb.backgroundColor = UIColor.purple
-//        bb.translatesAutoresizingMaskIntoConstraints = false
-//        bb.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
-//        return bb
-//    }()
+
     
     lazy var searchController: UISearchController = {
        let sc = UISearchController(searchResultsController: nil)
@@ -43,12 +32,7 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
         return sc
     }()
     
-//    lazy var searchView: UIView = {
-//       let sv = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 40))
-//        sv.backgroundColor = UIColor.black
-//        return sv
-//    }()
-//    
+
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -71,21 +55,19 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.purple
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: 0, right: 0)
         setupTableView()
         self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
-        self.navigationController?.extendedLayoutIncludesOpaqueBars = true
     }
     
     
@@ -94,20 +76,8 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
     }
     
     func setupTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.tableHeaderView = searchController.searchBar
         
-//        searchController.searchBar.topAnchor.constraint(equalTo: searchView.topAnchor).isActive = true
-//        searchController.searchBar.rightAnchor.constraint(equalTo: searchView.rightAnchor).isActive = true
-//        searchController.searchBar.widthAnchor.constraint(equalTo: searchView.widthAnchor, multiplier: 5/6).isActive = true
-//        searchController.searchBar.heightAnchor.constraint(equalTo: searchView.heightAnchor).isActive = true
-        
-//        backButton.topAnchor.constraint(equalTo: searchView.topAnchor).isActive = true
-//        backButton.leftAnchor.constraint(equalTo: searchView.leftAnchor).isActive = true
-//        backButton.widthAnchor.constraint(equalTo: searchView.widthAnchor, multiplier: 1/6).isActive = true
-//        backButton.heightAnchor.constraint(equalTo: searchView.heightAnchor).isActive = true
-//        
         let newBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         newBackgroundView.backgroundColor = UIColor.purple
         tableView.backgroundView = newBackgroundView

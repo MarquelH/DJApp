@@ -11,10 +11,12 @@ import UIKit
 class SongTableViewController: UITableViewController  {
 
     var dj: UserDJ?
+    var customTabBarController: CustomTabBarController?
     let trackCellId: String = "trackCellId"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.edgesForExtendedLayout = []
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
         setupViews()
     }
@@ -23,14 +25,13 @@ class SongTableViewController: UITableViewController  {
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s List"
         }
-
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showSearchBar))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
     }
     
-    func showSearchBar() {
-        let searchTrackController = SearchTrackViewController()
-        self.navigationController?.pushViewController(searchTrackController, animated: true)
+    func handleBack() {
+        self.customTabBarController?.dissmissTabBar()
     }
+
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -43,6 +44,11 @@ class SongTableViewController: UITableViewController  {
             cell.detailTextLabel?.text = "Artist: "
      
         return cell
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("hello \(dj?.djName)")
+
     }
     
 }

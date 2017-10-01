@@ -111,11 +111,15 @@ class DJTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //customTabBarController.dj = users[indexPath.row]
-        //Insert views into navigation controller
+        let customTabBarController = CustomTabBarController()
+
+        //send the selected DJ
+        customTabBarController.dj = users[indexPath.row]        
         
-        //self.navigationController?.pushViewController(customTabBarController, animated: true)
-    }
+        //Insert views into navigation controller
+        present(customTabBarController, animated: true, completion: nil)
+        
+        }
     
  
     //NEED TO CHANGE THE PROFILE IMAGE WHEN SELECTED, WE CAN JUST ADD A VIEW ON TOP OF IT??
