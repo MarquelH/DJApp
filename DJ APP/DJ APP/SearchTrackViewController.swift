@@ -61,6 +61,10 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+        
+        if (self.searchController.isActive) {
+            self.searchController.isActive = false
+        }
     }
     
     override func viewDidLoad() {
