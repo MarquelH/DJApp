@@ -16,10 +16,12 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         let songNavController = UINavigationController(rootViewController: songController)
         songController.tabBarItem.title = "Songs"
         songController.tabBarItem.image = UIImage(named: "listIcon")
         songController.customTabBarController = self
+        
         
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")

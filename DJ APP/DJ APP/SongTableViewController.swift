@@ -37,6 +37,11 @@ class SongTableViewController: UITableViewController  {
         // #warning Incomplete implementation, return the number of rows
         return 5
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
             
@@ -47,7 +52,6 @@ class SongTableViewController: UITableViewController  {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("hello \(dj?.djName)")
 
     }
     

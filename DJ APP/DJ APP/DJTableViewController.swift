@@ -164,11 +164,11 @@ class DJCell: UITableViewCell {
         return iv
     }()
     
-    let darkView: UIView = {
-       let dk = UIView()
-        dk.backgroundColor = UIColor.yellow//.withAlphaComponent(0.5)
-        return dk
-    }()
+//    let darkView: UIView = {
+//       let dk = UIView()
+//        dk.backgroundColor = UIColor.yellow//.withAlphaComponent(0.5)
+//        return dk
+//    }()
     
     let separator: UIView = {
         let s = UIView()
@@ -185,7 +185,7 @@ class DJCell: UITableViewCell {
         detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y + 1
             , width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
-        darkView.frame = contentView.frame
+       // darkView.frame = contentView.frame
 
     }
     
