@@ -49,6 +49,7 @@ class SongTableViewController: UITableViewController  {
 <<<<<<< HEAD
         return 105
 =======
+        return 60
 >>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1
 =======
         return 60
