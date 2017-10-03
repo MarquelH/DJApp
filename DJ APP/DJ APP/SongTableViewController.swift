@@ -46,7 +46,10 @@ class SongTableViewController: UITableViewController  {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 <<<<<<< HEAD
+<<<<<<< HEAD
         return 105
+=======
+>>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1
 =======
         return 60
 >>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1

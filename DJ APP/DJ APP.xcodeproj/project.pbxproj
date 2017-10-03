@@ -198,8 +198,12 @@
 			isa = PBXGroup;
 			children = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
 				66F90E031F8203C200CCDC5F /* ProfileViewController.swift */,
+=======
+				D81A66F21F4F721D00543A8F /* LoginController.swift */,
+>>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1
 =======
 				D81A66F21F4F721D00543A8F /* LoginController.swift */,
 >>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1
