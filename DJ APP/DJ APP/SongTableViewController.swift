@@ -50,9 +50,12 @@ class SongTableViewController: UITableViewController  {
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         return 60
 >>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1
 =======
+=======
+>>>>>>> parent of 38cfaa5... Merge branch 'master' of https://github.com/micajuine-ho/DJApp
 =======
 >>>>>>> parent of 38cfaa5... Merge branch 'master' of https://github.com/micajuine-ho/DJApp
 =======
