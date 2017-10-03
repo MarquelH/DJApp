@@ -51,7 +51,10 @@ class SongTableViewController: UITableViewController  {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         return 60
+=======
+>>>>>>> parent of 8e8df35... idk
 >>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1
 =======
 =======
