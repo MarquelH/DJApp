@@ -146,23 +146,14 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
                 print("== \(names)")
             }
         }
-        
-        
-        
-        
-        
-        
-        
+
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
         backgroundImage.contentMode = .scaleAspectFill
         
         view.insertSubview(backgroundImage, at: 0)
 
-        
         setupViews()
-      
-        
     }
 
     func setupViews() {
@@ -203,8 +194,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         logoInLogin.topAnchor.constraint(equalTo: view.topAnchor, constant: 30)
         logoInLogin.heightAnchor.constraint(equalToConstant: 60).isActive = true
         logoInLogin.widthAnchor.constraint(equalToConstant: 125).isActive = true
-        
-        
         
         
         notUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -350,22 +339,18 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
                             return
                         }
                     }
-                
                 })
-                
-                
-           
             }
         })
-        
-        
     }
     
     func handleGuestEnter() {
+        
         let djTableViewController = DJTableViewController()
         let djTableNavController = UINavigationController(rootViewController: djTableViewController)
         djTableNavController.delegate = self
         present(djTableNavController, animated: true, completion: nil)
+        
     }
 }
 
