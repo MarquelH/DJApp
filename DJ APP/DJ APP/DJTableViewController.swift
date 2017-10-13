@@ -127,18 +127,18 @@ class DJTableViewController: UITableViewController {
     
  
     //NEED TO CHANGE THE PROFILE IMAGE WHEN SELECTED, WE CAN JUST ADD A VIEW ON TOP OF IT??
-//    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-//        // To highlight when the user clicks
-//        print("Highlighted")
-//        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
-//                currentCell.cellClicked()
-//    }
-//    override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-//        print("UnHighlighted")
-//        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
-//            currentCell.cellEndedClick()
-//
-//    }
+    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        // To highlight when the user clicks
+        print("Highlighted")
+        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
+                currentCell.cellClicked()
+    }
+    override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        print("UnHighlighted")
+        let currentCell = tableView.cellForRow(at: indexPath) as! DJCell
+            currentCell.cellEndedClick()
+
+    }
     
 
     func setupNavBar() {
@@ -168,11 +168,11 @@ class DJCell: UITableViewCell {
         return iv
     }()
     
-//    let darkView: UIView = {
-//       let dk = UIView()
-//        dk.backgroundColor = UIColor.yellow//.withAlphaComponent(0.5)
-//        return dk
-//    }()
+    let darkView: UIView = {
+       let dk = UIView()
+        dk.backgroundColor = UIColor.yellow//.withAlphaComponent(0.5)
+        return dk
+    }()
     
     let separator: UIView = {
         let s = UIView()
@@ -189,7 +189,7 @@ class DJCell: UITableViewCell {
         detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y + 1
             , width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
-       // darkView.frame = contentView.frame
+        darkView.frame = contentView.frame
 
     }
     
@@ -199,13 +199,13 @@ class DJCell: UITableViewCell {
     }
     
     
-//    func cellClicked() {
-//        contentView.addSubview(darkView)
-//    }
-//    
-//    func cellEndedClick() {
-//            darkView.removeFromSuperview()
-//    }
+    func cellClicked() {
+        contentView.addSubview(darkView)
+    }
+    
+    func cellEndedClick() {
+            darkView.removeFromSuperview()
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

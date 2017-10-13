@@ -9,9 +9,13 @@
 /* Begin PBXBuildFile section */
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
+<<<<<<< HEAD
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		66C97C6E1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		66C97C6F1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
+=======
+		66F90E041F8203C200CCDC5F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F90E031F8203C200CCDC5F /* ProfileViewController.swift */; };
+>>>>>>> eb727d25c43e4faac23d424c78d2aac86efd99df
 		66FDE3481F7A180D00823391 /* Lobster.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3471F7A180D00823391 /* Lobster.otf */; };
 		66FDE34A1F7A184000823391 /* Exo-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3491F7A184000823391 /* Exo-Thin.otf */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
@@ -59,7 +63,11 @@
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
+=======
+		66F90E031F8203C200CCDC5F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+>>>>>>> eb727d25c43e4faac23d424c78d2aac86efd99df
 		66FDE3471F7A180D00823391 /* Lobster.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster.otf; sourceTree = "<group>"; };
 		66FDE3491F7A184000823391 /* Exo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-Thin.otf"; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
@@ -199,7 +207,12 @@
 		D81A66ED1F4F705700543A8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
+				66F90E031F8203C200CCDC5F /* ProfileViewController.swift */,
+=======
 				D81A66F21F4F721D00543A8F /* LoginController.swift */,
+>>>>>>> a96087274615ab185af5110dd80cdb8e2eaab0b1
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
 				D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */,
 				66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */,
@@ -523,6 +536,7 @@
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,
 				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D83AFBA01F75CF31003B0004 /* TrackCell.swift in Sources */,
+				66F90E041F8203C200CCDC5F /* ProfileViewController.swift in Sources */,
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
 				D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */,
 				D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */,
