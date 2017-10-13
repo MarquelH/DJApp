@@ -17,6 +17,10 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 17) as Any]
+        
+        
+
         //remove seperators from empty cells
         tableView.separatorStyle = .none
         tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
@@ -91,16 +95,16 @@ class DJTableViewController: UITableViewController {
         }
         if (indexPath.row % 3 == 0){
             //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-            cell.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+            cell.backgroundColor = UIColor.black.withAlphaComponent(0.9)
         }
         else if (indexPath.row % 2 == 0){
             //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
-            cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.8)
+            cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
 
         }
         else{
             //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.25)
-            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.8)
+            cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
 
         }
         return cell
