@@ -49,7 +49,7 @@ class TrackCell: UITableViewCell {
         
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 3.0).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 3.5).isActive = true
         separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     

@@ -17,7 +17,7 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 17) as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 22) as Any]
         
         
 
@@ -82,7 +82,6 @@ class DJTableViewController: UITableViewController {
         cell.textLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
         cell.textLabel?.font = UIFont(name: "Exo-Thin", size: 24)
         
-
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
             cell.detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
@@ -224,7 +223,7 @@ class DJCell: UITableViewCell {
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        separator.widthAnchor.constraint(equalTo: self.widthAnchor, constant: (3/4))
     }
 }
 
