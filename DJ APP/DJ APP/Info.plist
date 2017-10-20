@@ -30,6 +30,7 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SudegnakNo2.otf</string>
 		<string>Exo-Thin.otf</string>
 		<string>Lobster.otf</string>
 	</array>

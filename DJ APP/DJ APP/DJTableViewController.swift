@@ -17,8 +17,7 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 22) as Any]
-        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
         
 
         //remove seperators from empty cells
@@ -34,6 +33,8 @@ class DJTableViewController: UITableViewController {
         tableView.backgroundView = backgroundImage
         
         fetchDjs()
+        
+        tableView.reloadData()
     }
 
     func fetchDjs() {
@@ -80,12 +81,12 @@ class DJTableViewController: UITableViewController {
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
         cell.textLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-        cell.textLabel?.font = UIFont(name: "Exo-Thin", size: 24)
+        cell.textLabel?.font = UIFont(name: "SudegnakNo2", size: 34)
         
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
             cell.detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-            cell.detailTextLabel?.font = UIFont(name: "Exo-Thin", size: 15)
+            cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 20)
         }
 
         

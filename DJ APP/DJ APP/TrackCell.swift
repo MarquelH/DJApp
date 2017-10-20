@@ -17,7 +17,7 @@ class TrackCell: UITableViewCell {
     let separator: UIView = {
         let s = UIView()
         s.translatesAutoresizingMaskIntoConstraints = false
-        s.backgroundColor = UIColor.gray
+        s.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         return s
     }()
     
