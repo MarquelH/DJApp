@@ -18,7 +18,7 @@ class SongTableViewController: UITableViewController  {
         super.viewDidLoad()
         self.edgesForExtendedLayout = []
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 24) as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
         self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor.black
         self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         setupViews()

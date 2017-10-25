@@ -21,8 +21,8 @@ class DJTableViewController: UITableViewController {
         
 
         //remove seperators from empty cells
-        tableView.separatorStyle = .none
-        tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
+        self.tableView.separatorStyle = .none
+        self.tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
 
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
@@ -30,11 +30,11 @@ class DJTableViewController: UITableViewController {
         backgroundImage.contentMode = .scaleAspectFill
         
         //view.insertSubview(backgroundImage, at: 0)
-        tableView.backgroundView = backgroundImage
+        self.tableView.backgroundView = backgroundImage
         
         fetchDjs()
         
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
 
     func fetchDjs() {
@@ -86,7 +86,7 @@ class DJTableViewController: UITableViewController {
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
             cell.detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-            cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 20)
+            cell.detailTextLabel?.font = UIFont(name: "Exo-Thin", size: 17)
         }
 
         

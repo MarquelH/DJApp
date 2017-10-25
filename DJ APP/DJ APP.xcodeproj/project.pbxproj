@@ -11,8 +11,6 @@
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
-		66C97C6E1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
-		66C97C6F1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		66FDE3481F7A180D00823391 /* Lobster.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3471F7A180D00823391 /* Lobster.otf */; };
 		66FDE34A1F7A184000823391 /* Exo-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3491F7A184000823391 /* Exo-Thin.otf */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
@@ -540,7 +538,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66C97C6E1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */,
 				D81A66D51F4F6E3E00543A8F /* DJ_APPTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,7 +546,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66C97C6F1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */,
 				D81A66E01F4F6E3E00543A8F /* DJ_APPUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -687,6 +683,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "MMAT.DJ-APP";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -701,6 +698,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "MMAT.DJ-APP";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
