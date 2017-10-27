@@ -17,13 +17,12 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 17) as Any]
-        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
         
 
         //remove seperators from empty cells
-        tableView.separatorStyle = .none
-        tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
+        self.tableView.separatorStyle = .none
+        self.tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
 
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
@@ -31,9 +30,11 @@ class DJTableViewController: UITableViewController {
         backgroundImage.contentMode = .scaleAspectFill
         
         //view.insertSubview(backgroundImage, at: 0)
-        tableView.backgroundView = backgroundImage
+        self.tableView.backgroundView = backgroundImage
         
         fetchDjs()
+        
+        self.tableView.reloadData()
     }
 
     func fetchDjs() {
@@ -80,13 +81,12 @@ class DJTableViewController: UITableViewController {
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
         cell.textLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-        cell.textLabel?.font = UIFont(name: "Exo-Thin", size: 24)
+        cell.textLabel?.font = UIFont(name: "SudegnakNo2", size: 34)
         
-
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
             cell.detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-            cell.detailTextLabel?.font = UIFont(name: "Exo-Thin", size: 15)
+            cell.detailTextLabel?.font = UIFont(name: "Exo-Thin", size: 17)
         }
 
         
@@ -224,7 +224,7 @@ class DJCell: UITableViewCell {
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        separator.widthAnchor.constraint(equalTo: self.widthAnchor, constant: (3/4))
     }
 }
 

@@ -207,6 +207,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let ap = UIPickerView()
         ap.dataSource = self
         ap.delegate = self
+        ap.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         return ap
     }()
 

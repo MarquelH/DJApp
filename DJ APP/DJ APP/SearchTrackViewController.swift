@@ -27,7 +27,7 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
         sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
         sc.searchBar.tintColor = UIColor.lightGray
-        sc.searchBar.backgroundColor = UIColor.purple
+        sc.searchBar.backgroundColor = UIColor.black
         sc.searchBar.translatesAutoresizingMaskIntoConstraints = false
         return sc
     }()

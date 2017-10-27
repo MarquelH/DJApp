@@ -46,6 +46,7 @@ class CustomTabBarController: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         songController.dj = dj
+        profileController.dj = dj
     }
     
     func dissmissTabBar() {

@@ -17,7 +17,7 @@ class TrackCell: UITableViewCell {
     let separator: UIView = {
         let s = UIView()
         s.translatesAutoresizingMaskIntoConstraints = false
-        s.backgroundColor = UIColor.gray
+        s.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         return s
     }()
     
@@ -49,7 +49,7 @@ class TrackCell: UITableViewCell {
         
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 3.0).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
         separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     
