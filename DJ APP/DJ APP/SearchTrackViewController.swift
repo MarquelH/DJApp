@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Alamofire
 
-class SearchTrackViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate  {
+//UISearchResultsUpdating,
+class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate  {
 
     let trackCellId = "trackId"
     var tracks = ["Hello", "Goodbye", "Who's the goodest doggo?"]
+    var searchText: String?
+    typealias JSONStandard = [String : AnyObject]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -20,7 +24,7 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
     
     lazy var searchController: UISearchController = {
        let sc = UISearchController(searchResultsController: nil)
-        sc.searchResultsUpdater = self
+        //sc.searchResultsUpdater = self
         sc.searchBar.placeholder = "Search Tracks"
         sc.dimsBackgroundDuringPresentation = false
         sc.definesPresentationContext = true
@@ -28,11 +32,77 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
         sc.searchBar.searchBarStyle = .minimal
         sc.searchBar.tintColor = UIColor.lightGray
         sc.searchBar.backgroundColor = UIColor.black
+        var textField = sc.searchBar.value(forKey: "searchField") as? UITextField
+        textField?.textColor = UIColor.lightGray
         sc.searchBar.translatesAutoresizingMaskIntoConstraints = false
+        sc.searchBar.delegate = self
         return sc
     }()
     
 
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: 0, right: 0)
+        setupTableView()
+        self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
+    }
+    
+    func callAlamo(url: String) {
+        
+    }
+    
+    func search() {
+        guard let text = self.searchText else {
+            return
+        }
+        
+        let query = "https://api.spotify.com/v1/search?q=" + text + "&type=track,artist,album"
+        //print(query)
+        
+        Alamofire.request(query).response(completionHandler: {
+            response in
+            if let data = response.data {
+                self.parseData(JSONData: data)
+            }
+            else {
+                print ("Query Empty")
+            }
+        })
+    }
+    
+    func parseData(JSONData: Data) {
+        do {
+            var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers) as? JSONStandard
+            print(readableJSON!)
+            
+            
+            
+        }
+        catch {
+            print(error)
+        }
+        
+        
+    }
+    
+//    func updateSearchResults(for searchController: UISearchController) {
+//    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
+        self.perform(#selector(search), with: nil, afterDelay: 0.5)
+    }
+    
+    func setupTableView() {
+        tableView.tableHeaderView = searchController.searchBar
+        
+        let newBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        newBackgroundView.backgroundColor = UIColor.purple
+        tableView.backgroundView = newBackgroundView
+    }
+    
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -56,7 +126,7 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.purple
     }
-
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -67,23 +137,4 @@ class SearchTrackViewController: UITableViewController, UISearchResultsUpdating,
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: 0, right: 0)
-        setupTableView()
-        self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
-    }
-    
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        print("I am updating from TrackSearchTableView")
-    }
-    
-    func setupTableView() {
-        tableView.tableHeaderView = searchController.searchBar
-        
-        let newBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        newBackgroundView.backgroundColor = UIColor.purple
-        tableView.backgroundView = newBackgroundView
-    }
 }
