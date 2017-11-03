@@ -48,7 +48,7 @@ class DJPRofileViewController: UIViewController {
         lbl.textColor = UIColor.white
         lbl.font = UIFont(name: "SudegnakNo2", size: 40)
         lbl.backgroundColor = UIColor.clear
-        //lbl.text = "Hello:"
+        lbl.text = "Hello:"
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
