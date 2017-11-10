@@ -339,9 +339,30 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
                         
                         //If user is validated, present DJRootViewController
                         if (validated) {
+                            
+                            //Create DJ variable, and store the dictionary snapshot into it.
+                            
+                            let dj = UserDJ()
+                            
+                            dj.djName = dictionary["djName"] as? String
+                            dj.age = dictionary["age"] as? Int
+                            dj.currentLocation = dictionary["currentLocation"] as? String
+                            dj.email = dictionary["email"] as? String
+                            dj.genere = dictionary["genre"] as? String
+                            dj.hometown = dictionary["hometown"] as? String
+                            dj.validated = dictionary["validated"] as? Bool
+                            dj.profilePicURL = dictionary["profilePicURL"] as? String
+                            
+                            
+                            //Send DJ to DJRootViewController
                             let djRootViewController = DJRootViewController()
+                            djRootViewController.dj = dj
+                            
                             let djNavController = UINavigationController(rootViewController: djRootViewController)
                             self.present(djNavController, animated: true, completion: nil)
+                            
+                            
+                            
                         }
                         else {
                             print ("user is not validated")
