@@ -43,6 +43,7 @@ class DJRootViewController: UIViewController {
     
     func setupNavigationBar() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
     }
     
     
