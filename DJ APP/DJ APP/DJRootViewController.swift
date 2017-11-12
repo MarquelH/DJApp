@@ -11,7 +11,8 @@ import Firebase
 
 class DJRootViewController: UIViewController {
 
-    
+    var dj: UserDJ?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +38,6 @@ class DJRootViewController: UIViewController {
         lbl.font = UIFont(name: "SudegnakNo2", size: 50)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .center
-        //lbl.text = "\(name)"
         return lbl
     }()
     
@@ -51,11 +51,12 @@ class DJRootViewController: UIViewController {
     
     func setupViews() {
         
-        //if let name = dj?.djName {
-          //  welcomeLabel.text = "Welcome \(name) !"
-       // }
+//        if let name = dj?.djName {
+//            welcomeLabel.text = "Welcome \(name) !"
+//        }
         view.addSubview(backgroundImage)
         view.addSubview(welcomeLabel)
+        print(dj?.djName! as Any)
         
         backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
