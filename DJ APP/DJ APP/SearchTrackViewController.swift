@@ -53,11 +53,13 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     func search() {
-        guard let text = self.searchText else {
+        guard let text = self.searchText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return
         }
         
-        let query = "https://api.spotify.com/v1/search?q=" + text + "&type=track,artist,album"
+        
+        //let query = "https://api.spotify.com/v1/search?q=" + text + "&type=track,artist,album"
+        let query = "https://itunes.apples.com/search?term=" + text + "&entity=music&limit=20"
         //print(query)
         
         Alamofire.request(query).response(completionHandler: {

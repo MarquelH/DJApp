@@ -147,14 +147,14 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        for family: String in UIFont.familyNames
-        {
-            print("\(family)")
-            for names: String in UIFont.fontNames(forFamilyName: family)
-            {
-                print("== \(names)")
-            }
-        }
+//        for family: String in UIFont.familyNames
+//        {
+//            print("\(family)")
+//            for names: String in UIFont.fontNames(forFamilyName: family)
+//            {
+//                print("== \(names)")
+//            }
+//        }
 
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
