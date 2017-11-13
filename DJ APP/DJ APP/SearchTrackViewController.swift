@@ -67,24 +67,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             self.results = items
         }
         
-        
-                
-//        //let query = "https://api.spotify.com/v1/search?q=" + text + "&type=track,artist,album"
-//        let query = "https://itunes.apples.com/search?term=" + text + "&entity=music&limit=20"
-//        print(query)
-
-
-        
-//        Alamofire.request(query).response(completionHandler: {
-//            response in
-//            print("Alamo Request Sent")
-//            if let data = response.data {
-//                self.parseData(JSONData: data)
-//            }
-//            else {
-//                print ("Response is Empty")
-//            }
-//        })
     }
     
   
@@ -121,8 +103,15 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
         
-        cell.textLabel?.text = results[indexPath.row].trackName
+        let track = results[indexPath.row]
+        
+        cell.textLabel?.text = track.trackName
+        cell.detailTextLabel?.text = track.trackArtist
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     override func viewWillAppear(_ animated: Bool) {

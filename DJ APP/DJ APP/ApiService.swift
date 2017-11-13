@@ -40,10 +40,8 @@ class ApiService: NSObject {
                     return
                 }
             
-                print ("NO erorr and we have data")
                 var items = [TrackItem]()
                 
-                print("Items size: \(items.count)")
                 
                 guard let jsonDict = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONDict else {
                     print("Problem with json serialization")
@@ -57,20 +55,22 @@ class ApiService: NSObject {
                 
                 for result in results {
                     
-                    print("I am in results ==============================")
                     
                     if let trackName = result["trackName"] as? String,
                         let trackArtist = result["artistName"] as? String,
-                        let trackImageStr = result["artworkUrl100"] as? String {
+                        let trackImageStr = result["artworkUrl100"] as? String,
+                        let kind = result["kind"] as? String {
                         
                         guard let trackImage = URL(string: trackImageStr) else {
                             print("error with track image url")
                             return
                         }
                         
-                    let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage)
-                    items.append(item)
-                        
+                        //Make sure we only add songs
+                        if (kind == "song") {
+                            let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage)
+                            items.append(item)
+                        }
                     print("Items size: \(items.count)")
 
                     }
