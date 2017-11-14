@@ -36,9 +36,11 @@ class TrackCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         //10 for left and right, 50 for size of image
-        textLabel?.frame = CGRect(x: 5, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
-        //textLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.frame = CGRect(x: 5, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        textLabel?.backgroundColor = UIColor.clear
+        
+        detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.backgroundColor = UIColor.clear
         
     }
     
@@ -51,8 +53,8 @@ class TrackCell: UITableViewCell {
         
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true

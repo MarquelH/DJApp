@@ -13,7 +13,7 @@ import Alamofire
 class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate  {
 
     let trackCellId = "trackId"
-    //var tracks = ["Hello", "Goodbye", "Who's the goodest doggo?"]
+
     var results = [TrackItem]() {
         didSet{
             tableView.reloadData()
@@ -48,14 +48,13 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: 0, right: 0)
+        self.tableView.separatorStyle = .none
+        tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
         setupTableView()
         self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
     }
     
-    func callAlamo(url: String) {
-        
-    }
+
     
     func search() {
         print("I am going to call the api service")
