@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
+		667251A01FB94A1C001B6E84 /* SchedulingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */; };
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		66FDE3481F7A180D00823391 /* Lobster.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3471F7A180D00823391 /* Lobster.otf */; };
@@ -58,6 +59,7 @@
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulingViewController.swift; sourceTree = "<group>"; };
 		66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SudegnakNo2.otf; sourceTree = "<group>"; };
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
 		66FDE3471F7A180D00823391 /* Lobster.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster.otf; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				D86732971F54E31C00270D07 /* AddInfoController.swift */,
 				D80A18971F5C867200747022 /* RegisterController.swift */,
 				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
+				6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 			files = (
 				D80A18981F5C867200747022 /* RegisterController.swift in Sources */,
 				D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */,
+				667251A01FB94A1C001B6E84 /* SchedulingViewController.swift in Sources */,
 				D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */,
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,
