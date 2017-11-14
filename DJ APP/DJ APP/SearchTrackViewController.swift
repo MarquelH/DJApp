@@ -13,9 +13,14 @@ import Alamofire
 class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate  {
 
     let trackCellId = "trackId"
-    var tracks = ["Hello", "Goodbye", "Who's the goodest doggo?"]
+    //var tracks = ["Hello", "Goodbye", "Who's the goodest doggo?"]
+    var results = [TrackItem]() {
+        didSet{
+            tableView.reloadData()
+        }
+    }
+    
     var searchText: String?
-    typealias JSONStandard = [String : AnyObject]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -53,40 +58,18 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     func search() {
-        guard let text = self.searchText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+        print("I am going to call the api service")
+        guard let text = self.searchText else {
+            print("text is empty")
             return
         }
+        ApiService.shared.fetchResults(term: text) { items in
+            self.results = items
+        }
         
-        
-        //let query = "https://api.spotify.com/v1/search?q=" + text + "&type=track,artist,album"
-        let query = "https://itunes.apples.com/search?term=" + text + "&entity=music&limit=20"
-        //print(query)
-        
-        Alamofire.request(query).response(completionHandler: {
-            response in
-            if let data = response.data {
-                self.parseData(JSONData: data)
-            }
-            else {
-                print ("Query Empty")
-            }
-        })
     }
     
-    func parseData(JSONData: Data) {
-        do {
-            var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers) as? JSONStandard
-            print(readableJSON!)
-            
-            
-            
-        }
-        catch {
-            print(error)
-        }
-        
-        
-    }
+  
     
 //    func updateSearchResults(for searchController: UISearchController) {
 //    }
@@ -114,14 +97,21 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tracks.count
+        return results.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
         
-        cell.textLabel?.text = tracks[indexPath.row]
+        let track = results[indexPath.row]
+        
+        cell.textLabel?.text = track.trackName
+        cell.detailTextLabel?.text = track.trackArtist
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     override func viewWillAppear(_ animated: Bool) {
