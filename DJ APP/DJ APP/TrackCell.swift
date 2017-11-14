@@ -21,30 +21,38 @@ class TrackCell: UITableViewCell {
         return s
     }()
     
+    let profileImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "usernameIcon")
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.layer.masksToBounds = true
+        iv.layer.cornerRadius = 20
+        iv.layer.borderColor = UIColor.black.cgColor
+        iv.layer.borderWidth = 1
+        return iv
+    }()
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         //10 for left and right, 50 for size of image
         textLabel?.frame = CGRect(x: 5, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
         //textLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.frame = CGRect(x: 5, y: detailTextLabel!.frame.origin.y + 1
-            , width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
-        //detailTextLabel?.backgroundColor = UIColor.clear
-        
-        // darkView.frame = contentView.frame
+        detailTextLabel?.frame = CGRect(x: 5, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         
     }
     
     
-    //    func cellClicked() {
-    //        contentView.addSubview(darkView)
-    //    }
-    //
-    //    func cellEndedClick() {
-    //            darkView.removeFromSuperview()
-    //    }
     
     func setupViews() {
         contentView.addSubview(separator)
+        contentView.addSubview(profileImageView)
+
+        
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -57,3 +65,4 @@ class TrackCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

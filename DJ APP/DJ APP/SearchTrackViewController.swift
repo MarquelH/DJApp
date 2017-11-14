@@ -107,6 +107,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         
         cell.textLabel?.text = track.trackName
         cell.detailTextLabel?.text = track.trackArtist
+        
+        if let imageURL = track.trackImage?.absoluteString {
+            cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
+
+        }
+        
         return cell
     }
     
