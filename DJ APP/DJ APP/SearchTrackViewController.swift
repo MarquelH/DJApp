@@ -128,9 +128,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         tableView.backgroundColor = UIColor.purple
         tableView.backgroundView = noResults
         
-//        let newBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-//        newBackgroundView.backgroundColor = UIColor.purple
-        //tableView.backgroundView = newBackgroundView
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
