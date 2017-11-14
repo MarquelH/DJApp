@@ -27,6 +27,13 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
 
     
+    var noResults: UIImageView = {
+       let nr = UIImageView(image: UIImage(named: "no-results"))
+        nr.translatesAutoresizingMaskIntoConstraints = false
+        nr.contentMode = .scaleAspectFit
+        return nr
+    }()
+    
     lazy var searchController: UISearchController = {
        let sc = UISearchController(searchResultsController: nil)
         //sc.searchResultsUpdater = self
@@ -44,7 +51,8 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         return sc
     }()
     
-
+    
+    //VIEW ---------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +62,24 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.purple
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+        
+        if (self.searchController.isActive) {
+            self.searchController.isActive = false
+        }
+    }
 
+    
+    // HELPERS -------------
     
     func search() {
         print("I am going to call the api service")
@@ -65,34 +90,47 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         ApiService.shared.fetchResults(term: text) { items in
             self.results = items
         }
+        //if nothing from search results then show the NH label
         
     }
     
-  
+
     
-//    func updateSearchResults(for searchController: UISearchController) {
-//    }
+    //SEARCH BAR ------
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchText = searchText
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
-        self.perform(#selector(search), with: nil, afterDelay: 0.5)
+        if (!(searchController.searchBar.text?.isEmpty)!) {
+            self.searchText = searchText
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
+            self.perform(#selector(search), with: nil, afterDelay: 0.5)
+        }
+        else {
+            results.removeAll()
+        }
     }
     
-    func setupTableView() {
-        tableView.tableHeaderView = searchController.searchBar
-        
-        let newBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        newBackgroundView.backgroundColor = UIColor.purple
-        tableView.backgroundView = newBackgroundView
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        results.removeAll()
     }
     
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
     
     func handleBack() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    //TABLE VIEW --------------
+    
+    func setupTableView() {
+        
+        tableView.tableHeaderView = searchController.searchBar
+        tableView.backgroundColor = UIColor.purple
+        tableView.backgroundView = noResults
+        
+//        let newBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+//        newBackgroundView.backgroundColor = UIColor.purple
+        //tableView.backgroundView = newBackgroundView
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,20 +156,4 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.purple
-    }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
-        
-        if (self.searchController.isActive) {
-            self.searchController.isActive = false
-        }
-    }
-    
 }
