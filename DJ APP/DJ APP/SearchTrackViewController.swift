@@ -11,7 +11,7 @@ import UIKit
 //UISearchResultsUpdating,
 class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate  {
 
-    let trackCellId = "trackId"
+    let searchCellId = "searchCellId"
 
     var results = [TrackItem]() {
         didSet{
@@ -37,15 +37,20 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
        let sc = UISearchController(searchResultsController: nil)
         //sc.searchResultsUpdater = self
         sc.searchBar.placeholder = "Search Tracks"
+        
         sc.dimsBackgroundDuringPresentation = false
         sc.definesPresentationContext = true
         sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
-        sc.searchBar.tintColor = UIColor.lightGray
+        sc.searchBar.tintColor = UIColor.white
         sc.searchBar.backgroundColor = UIColor.black
+        //Change color of searching text
         var textField = sc.searchBar.value(forKey: "searchField") as? UITextField
-        textField?.textColor = UIColor.lightGray
-        sc.searchBar.translatesAutoresizingMaskIntoConstraints = false
+        textField?.textColor = UIColor.white
+        
+        //Change color of placeholder text
+        var placeholderTextLabel = textField?.value(forKey: "placeholderLabel") as? UILabel
+        placeholderTextLabel?.textColor = UIColor.white
         sc.searchBar.delegate = self
         return sc
     }()
@@ -55,16 +60,18 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.separatorStyle = .none
-        tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+        
+        //Register reusable cell with class
+        self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
+
         setupTableView()
-        self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.purple
+        //Change status bar background color
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
     }
     
     
@@ -81,7 +88,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     // HELPERS -------------
     
     func search() {
-        print("I am going to call the api service")
         guard let text = self.searchText else {
             print("text is empty")
             return
@@ -89,8 +95,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         ApiService.shared.fetchResults(term: text) { items in
             self.results = items
         }
-        //if nothing from search results then show the NH label
-        
     }
     
 
@@ -123,8 +127,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     func setupTableView() {
         
+        self.tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+        
+        self.tableView.separatorStyle = .none
         tableView.tableHeaderView = searchController.searchBar
-        tableView.backgroundColor = UIColor.purple
+        tableView.backgroundColor = UIColor.darkGray
         tableView.backgroundView = noResults
         
 
@@ -135,7 +142,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: searchCellId, for: indexPath) as! SearchCell
         
         let track = results[indexPath.row]
         

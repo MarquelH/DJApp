@@ -71,7 +71,7 @@ class ApiService: NSObject {
                             let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage)
                             items.append(item)
                         }
-                    print("Items size: \(items.count)")
+                    //print("Items size: \(items.count)")
 
                     }
                     
