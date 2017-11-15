@@ -145,6 +145,36 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
+		D817FAD61FBBCE4D005C8711 /* User Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
+				D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */,
+				66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */,
+				D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */,
+				D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */,
+			);
+			name = "User Controllers";
+			sourceTree = "<group>";
+		};
+		D817FAD71FBBCE69005C8711 /* Register Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D86732971F54E31C00270D07 /* AddInfoController.swift */,
+				D80A18971F5C867200747022 /* RegisterController.swift */,
+			);
+			name = "Register Controllers";
+			sourceTree = "<group>";
+		};
+		D817FAD81FBBCE7E005C8711 /* DJ Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
+				6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */,
+			);
+			name = "DJ Controllers";
+			sourceTree = "<group>";
+		};
 		D81A66B31F4F6E3D00543A8F = {
 			isa = PBXGroup;
 			children = (
@@ -208,15 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				D81A66F21F4F721D00543A8F /* LoginController.swift */,
-				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
-				D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */,
-				66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */,
-				D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */,
-				D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */,
-				D86732971F54E31C00270D07 /* AddInfoController.swift */,
-				D80A18971F5C867200747022 /* RegisterController.swift */,
-				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
-				6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */,
+				D817FAD61FBBCE4D005C8711 /* User Controllers */,
+				D817FAD71FBBCE69005C8711 /* Register Controllers */,
+				D817FAD81FBBCE7E005C8711 /* DJ Controllers */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
