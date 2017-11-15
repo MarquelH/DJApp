@@ -16,6 +16,14 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     var results = [TrackItem]() {
         didSet{
             tableView.reloadData()
+            if (results.count == 0) {
+                tableView.bounces = false
+                tableView.alwaysBounceVertical = false
+            }
+            else {
+                tableView.bounces = true
+                tableView.alwaysBounceVertical = true
+            }
         }
     }
     
@@ -97,6 +105,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         }
     }
     
+    func threeDotsTapped(tapGesture: UITapGestureRecognizer) {
+        let imgView = tapGesture.view as! UIImageView
+        print ("i was tapped")
+    }
+    
 
     
     //SEARCH BAR ------
@@ -109,8 +122,10 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             self.perform(#selector(search), with: nil, afterDelay: 0.5)
         }
         else {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
             results.removeAll()
         }
+        
     }
     
     
@@ -151,8 +166,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         
         if let imageURL = track.trackImage?.absoluteString {
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
-
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(threeDotsTapped(tapGesture:)))
+        tapGesture.numberOfTapsRequired = 1
+        cell.threeDots.addGestureRecognizer(tapGesture)
         
         return cell
     }

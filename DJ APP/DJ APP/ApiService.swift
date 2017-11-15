@@ -25,7 +25,7 @@ class ApiService: NSObject {
         if let url = URL(string: "\(baseURL)\(termWithEscapedCharacters)&media=music") {
             URLSession.shared.invalidateAndCancel()
             
-            print("I created the URL: \(url.absoluteString)")
+            //print("I created the URL: \(url.absoluteString)")
           
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 

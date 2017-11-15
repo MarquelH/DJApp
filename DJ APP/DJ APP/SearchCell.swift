@@ -13,6 +13,7 @@ class SearchCell: TrackCell {
     let threeDots: UIImageView = {
         let td = UIImageView(image: UIImage(named: "3 dots"))
         td.translatesAutoresizingMaskIntoConstraints = false
+        td.isUserInteractionEnabled = true
         td.contentMode = .scaleAspectFit
         return td
     }()
