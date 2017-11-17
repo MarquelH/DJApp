@@ -113,16 +113,16 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             selectedTrack.track = results[index]
             
             
-            if let presented = self.presentedViewController {
+            if let presented = presentedViewController {
                 presented.removeFromParentViewController()
                 print("removed")
             }
-            if self.presentedViewController == nil  {
+            if presentedViewController == nil  {
                 print("presenting")
                 present(selectedTrack, animated: true, completion: nil)
             }
             else {
-                print(self.presentedViewController?.title)
+                print(presentedViewController?.title)
             }
             //present new view 
         }
@@ -159,8 +159,8 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     //TABLE VIEW --------------
     
     func setupTableView() {
-        
-        self.tableView.contentInset = UIEdgeInsets(top: UIApplication.shared.statusBarFrame.height, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+        //UIApplication.shared.statusBarFrame.height
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
         
         self.tableView.separatorStyle = .none
         tableView.tableHeaderView = searchController.searchBar
