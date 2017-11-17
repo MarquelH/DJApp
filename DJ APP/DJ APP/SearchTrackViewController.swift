@@ -17,16 +17,15 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         didSet{
             tableView.reloadData()
             if (results.count == 0) {
-                tableView.bounces = false
-                tableView.alwaysBounceVertical = false
+                turnScrollAndBouncOff()
             }
             else {
-                tableView.bounces = true
-                tableView.alwaysBounceVertical = true
+                turnScrollAndBounceOn()
             }
         }
     }
     
+   
     var searchText: String?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -36,7 +35,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     var noResults: UIImageView = {
        let nr = UIImageView(image: UIImage(named: "no-results"))
-        nr.translatesAutoresizingMaskIntoConstraints = false
+        //nr.translatesAutoresizingMaskIntoConstraints = false
         nr.contentMode = .scaleAspectFit
         return nr
     }()
@@ -70,11 +69,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         super.viewDidLoad()
         
         definesPresentationContext = true
-        
+
         //Register reusable cell with class
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
 
         setupTableView()
+        turnScrollAndBouncOff()
     }
     
     
@@ -119,7 +119,15 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         }
     }
     
-
+    func turnScrollAndBouncOff() {
+        tableView.bounces = false
+        tableView.alwaysBounceVertical = false
+    }
+    
+    func turnScrollAndBounceOn() {
+        tableView.bounces = true
+        tableView.alwaysBounceVertical = true
+    }
     
     //SEARCH BAR ------
     

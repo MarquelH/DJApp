@@ -21,6 +21,7 @@ class CustomTabBarController: UITabBarController {
 
         
         let songNavController = UINavigationController(rootViewController: songController)
+      
         songController.tabBarItem.title = "Songs"
         songController.tabBarItem.image = UIImage(named: "listIcon")
         songController.customTabBarController = self

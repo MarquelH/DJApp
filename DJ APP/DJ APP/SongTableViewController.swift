@@ -14,32 +14,45 @@ class SongTableViewController: UITableViewController  {
     var customTabBarController: CustomTabBarController?
     let trackCellId: String = "trackCellId"
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = []
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
-        self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor.black
-        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        self.edgesForExtendedLayout = []
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.automaticallyAdjustsScrollViewInsets = true
+        
+        //self.tableView.backgroundColor = UIColor.black
         setupViews()
-        tableView.backgroundColor = UIColor.black
-        tableView.separatorStyle = .none
-        //self.tabBarController?.tabBar.barTintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+
     }
 
     func setupViews() {
+        //Fonts
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
+        self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor.black
+        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"
         }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        tableView.separatorStyle = .none
     }
     
     func handleBack() {
         self.customTabBarController?.dissmissTabBar()
     }
 
+   
+    
 
+
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 5
@@ -71,9 +84,7 @@ class SongTableViewController: UITableViewController  {
         return cell
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-
-    }
+    
     
 }
 
