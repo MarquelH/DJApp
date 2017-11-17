@@ -23,20 +23,25 @@ class CustomTabBarController: UITabBarController {
         let songNavController = UINavigationController(rootViewController: songController)
         songController.tabBarItem.title = "Songs"
         songController.tabBarItem.image = UIImage(named: "listIcon")
-        //UITabBarItem(tabBarSystemItem: .Bookmarks, tag: 1)
         songController.customTabBarController = self
-        songController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
+        //songController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
         
+        
+        //Not a Navigation Controller
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
+        //searchTrackController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
+        
+        
+        
         
         let profileViewController = UINavigationController(rootViewController: profileController)
         profileController.tabBarItem.title = "DJ Profile"
         profileController.tabBarItem.image = UIImage(named: "bioIcon")
         profileController.customTabBarController = self
-        profileController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha: 0.5)
+        //profileController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha: 0.5)
         
-        viewControllers = [songNavController, searchTrackController,profileViewController]
+        viewControllers = [songNavController, searchTrackController, profileViewController]
     }
 
     override func didReceiveMemoryWarning() {

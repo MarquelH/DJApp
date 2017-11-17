@@ -10,12 +10,23 @@ import UIKit
 
 class SelectedTrackViewController: UIViewController {
 
-    var selectedTrack: TrackItem?
+    var track: TrackItem?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    let mainview: UIView = {
+       let mv = UIView()
+        mv.translatesAutoresizingMaskIntoConstraints = false
+        mv.backgroundColor = UIColor.purple
+        return mv
+    }()
  
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //definesPresentationContext = true
         
         setupViews()
         // Do any additional setup after loading the view.
@@ -27,6 +38,13 @@ class SelectedTrackViewController: UIViewController {
     }
     
     func setupViews() {
+        self.view.addSubview(mainview)
+        
+        mainview.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        mainview.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        mainview.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        mainview.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
+        
         
     }
 
