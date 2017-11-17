@@ -69,6 +69,8 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        definesPresentationContext = true
+        
         //Register reusable cell with class
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
 
@@ -111,19 +113,8 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
        
             let selectedTrack = SelectedTrackViewController()
             selectedTrack.track = results[index]
-            
-            
-            if let presented = presentedViewController {
-                presented.removeFromParentViewController()
-                print("removed")
-            }
-            if presentedViewController == nil  {
-                print("presenting")
-                present(selectedTrack, animated: true, completion: nil)
-            }
-            else {
-                print(presentedViewController?.title)
-            }
+            present(selectedTrack, animated: true, completion: nil)
+
             //present new view 
         }
     }
