@@ -106,8 +106,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     func threeDotsTapped(tapGesture: UITapGestureRecognizer) {
-        let imgView = tapGesture.view as! UIImageView
-        print ("i was tapped")
+        if let index = tapGesture.view?.tag {
+//            selectedTrack = results[index]
+        
+            //present new view 
+        }
     }
     
 
@@ -170,6 +173,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(threeDotsTapped(tapGesture:)))
         tapGesture.numberOfTapsRequired = 1
+        cell.threeDots.tag = indexPath.row
         cell.threeDots.addGestureRecognizer(tapGesture)
         
         return cell
