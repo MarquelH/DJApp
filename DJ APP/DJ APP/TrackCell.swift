@@ -36,11 +36,22 @@ class TrackCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         //10 for left and right, 50 for size of image
-        textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+
+        //Check if it will run off, then change the width of the text label, so that
+        //when we truncate it by character, is stops at the edge of the screen
+        if (textLabel?.frame.width)! > self.frame.width - 70 {
+            let difference = (textLabel?.frame.width)! - self.frame.width + 70
+            textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
+        }
+        else {
+            textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        }
         textLabel?.backgroundColor = UIColor.clear
+        textLabel?.lineBreakMode = .byTruncatingTail
         
         detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
+        detailTextLabel?.lineBreakMode = .byTruncatingTail
         
     }
     
