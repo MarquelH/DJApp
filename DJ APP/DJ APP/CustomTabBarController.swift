@@ -18,31 +18,33 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        
-        let songNavController = UINavigationController(rootViewController: songController)
       
         songController.tabBarItem.title = "Songs"
         songController.tabBarItem.image = UIImage(named: "listIcon")
         songController.customTabBarController = self
-        //songController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
         
+        songController.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
+        songController.navigationController?.tabBarController?.tabBar.barTintColor = UIColor.black
+        songController.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        let songNavController = UINavigationController()
+        songNavController.viewControllers = [songController]
+
         
         //Not a Navigation Controller
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
-        //searchTrackController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
         
+    
         
-        
-        
-        let profileViewController = UINavigationController(rootViewController: profileController)
         profileController.tabBarItem.title = "DJ Profile"
         profileController.tabBarItem.image = UIImage(named: "bioIcon")
-        profileController.customTabBarController = self
         //profileController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha: 0.5)
+        let profileViewController = UINavigationController()
+        profileViewController.viewControllers = [profileController]
         
-        viewControllers = [songNavController, searchTrackController, profileViewController]
+        
+        viewControllers = [songNavController,searchTrackController,profileViewController]
     }
 
     override func didReceiveMemoryWarning() {

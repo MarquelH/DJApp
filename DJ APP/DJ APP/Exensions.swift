@@ -44,8 +44,9 @@ extension UIImageView {
     }
 }
 
-extension UIApplication {
-    var statusBarView: UIView? {
-        return value(forKey: "statusBar") as? UIView
-    }
-}
+//extension UIApplication {
+//    var statusBarView: UIView? {
+//        return value(forKey: "statusBar") as? UIView
+//    }
+//}
+

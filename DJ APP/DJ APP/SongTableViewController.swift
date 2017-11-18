@@ -20,21 +20,20 @@ class SongTableViewController: UITableViewController  {
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
         
         self.edgesForExtendedLayout = []
-        self.navigationController?.navigationBar.isTranslucent = false
+        //self.navigationController?.navigationBar.isTranslucent = false
         self.extendedLayoutIncludesOpaqueBars = true
         self.automaticallyAdjustsScrollViewInsets = true
         
-        //self.tableView.backgroundColor = UIColor.black
         setupViews()
 
     }
 
     func setupViews() {
         //Fonts
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
-        self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor.black
-        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
+//        self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor.black
+//        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+//
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"
         }

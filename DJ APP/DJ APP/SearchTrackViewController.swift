@@ -28,9 +28,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
    
     var searchText: String?
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .lightContent
+//    }
 
     
     var noResults: UIImageView = {
@@ -81,13 +81,13 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
         
         if (self.searchController.isActive) {
             self.searchController.isActive = false
@@ -159,9 +159,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     func setupTableView() {
         //UIApplication.shared.statusBarFrame.height
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
         
-        self.tableView.separatorStyle = .none
+        tableView.separatorStyle = .none
         tableView.tableHeaderView = searchController.searchBar
         tableView.backgroundColor = UIColor.darkGray
         tableView.backgroundView = noResults

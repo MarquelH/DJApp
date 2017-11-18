@@ -14,6 +14,14 @@ class DJTableViewController: UITableViewController {
     var users = [UserDJ]()
     let cellId = "cellId"
     
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()

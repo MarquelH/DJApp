@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
+        UIApplication.shared.statusBarStyle = .lightContent
         window?.rootViewController = LoginController()
         
         return true

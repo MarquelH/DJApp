@@ -139,14 +139,15 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         return img
     }()
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .lightContent
+//    }
     
     var loginButtonTopAnchor: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //show all fonts
 //        for family: String in UIFont.familyNames
 //        {
 //            print("\(family)")
