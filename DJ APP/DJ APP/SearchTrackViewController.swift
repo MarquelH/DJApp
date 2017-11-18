@@ -28,23 +28,16 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
    
     var searchText: String?
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .lightContent
-//    }
-
     
     var noResults: UIImageView = {
        let nr = UIImageView(image: UIImage(named: "no-results"))
-        //nr.translatesAutoresizingMaskIntoConstraints = false
         nr.contentMode = .scaleAspectFit
         return nr
     }()
     
     lazy var searchController: UISearchController = {
        let sc = UISearchController(searchResultsController: nil)
-        //sc.searchResultsUpdater = self
         sc.searchBar.placeholder = "Search Tracks"
-        
         sc.dimsBackgroundDuringPresentation = false
         sc.definesPresentationContext = true
         sc.hidesNavigationBarDuringPresentation = false

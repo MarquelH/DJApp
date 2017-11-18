@@ -20,9 +20,7 @@ class DJPRofileViewController: UIViewController {
         
         setupViews()
         self.view.backgroundColor = UIColor.black
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.isTranslucent = true
+
     }
     lazy var profilePic: UIImageView = {
         let pp = UIImageView()
