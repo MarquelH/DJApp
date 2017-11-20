@@ -144,10 +144,11 @@ class DJTableViewController: UITableViewController {
 //            appDelegate.window?.rootViewController = customTabBarController
 //        })
         
-        
-        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {() in
+            tableView.deselectRow(at: indexPath, animated: false)
+        })
     
-    
+    }
 
     func setupNavBar() {
         navigationItem.title = "DJ List"
