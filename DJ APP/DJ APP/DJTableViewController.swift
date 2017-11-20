@@ -132,8 +132,18 @@ class DJTableViewController: UITableViewController {
         //send the selected DJ
         customTabBarController.dj = users[indexPath.row]        
         
+
+        
         //Insert views into navigation controller
         present(customTabBarController, animated: true, completion: nil)
+        
+        
+        //Set app delage here -- Maybe we dont need this now?
+//        self.present(customTabBarController, animated: true, completion: {() in
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            appDelegate.window?.rootViewController = customTabBarController
+//        })
+        
         
         }
     

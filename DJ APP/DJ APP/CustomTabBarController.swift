@@ -19,41 +19,40 @@ class CustomTabBarController: UITabBarController {
         super.viewDidLoad()
         
       
-        songController.tabBarItem.title = "Songs"
-        songController.tabBarItem.image = UIImage(named: "listIcon")
-        songController.customTabBarController = self
-        
+        songController.dj = dj
+
         let songNavController = UINavigationController()
+        songNavController.tabBarItem.title = "Songs"
+        songNavController.tabBarItem.image = UIImage(named: "listIcon")
         songNavController.viewControllers = [songController]
 
         
-        //Not a Navigation Controller
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
         
-    
-        
         profileController.tabBarItem.title = "DJ Profile"
         profileController.tabBarItem.image = UIImage(named: "bioIcon")
-        //profileController.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha: 0.5)
- 
-        
+        profileController.dj = dj
+    
+        tabBar.barTintColor = UIColor.black
+        tabBar.tintColor = UIColor.purple
+
+//        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+
         
         viewControllers = [songNavController,searchTrackController,profileController]
     }
 
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        songController.dj = dj
-        profileController.dj = dj
-    }
     
-    func dissmissTabBar() {
-        self.dismiss(animated: true, completion: nil)
-    }
+//    func dissmissTabBar() {
+//        self.dismiss(animated: true, completion: nil)
+//    }
     
 
 }

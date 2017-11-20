@@ -11,7 +11,6 @@ import UIKit
 class SongTableViewController: UITableViewController  {
 
     var dj: UserDJ?
-    var customTabBarController: CustomTabBarController?
     let trackCellId: String = "trackCellId"
 
 
@@ -31,9 +30,7 @@ class SongTableViewController: UITableViewController  {
     func setupViews() {
         //Fonts
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
-        self.navigationController?.tabBarController?.tabBar.barTintColor = UIColor.black
-        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-
+     
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"
         }
@@ -44,13 +41,10 @@ class SongTableViewController: UITableViewController  {
     }
     
     func handleBack() {
-        self.customTabBarController?.dissmissTabBar()
+        self.parent?.dismiss(animated: true, completion: nil)
     }
 
    
-    
-
-
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -77,9 +71,7 @@ class SongTableViewController: UITableViewController  {
             cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 25)
         
             cell.backgroundColor = UIColor.black
-            
         
-     
         return cell
     }
     
