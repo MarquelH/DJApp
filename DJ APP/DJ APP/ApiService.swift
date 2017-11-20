@@ -17,8 +17,11 @@ class ApiService: NSObject {
     private let baseURL = "https://itunes.apple.com/search?term="
     
     func fetchResults (term: String, completion: @escaping ([TrackItem]) -> ()) {
+       
+        DispatchQueue.main.async(execute: {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let termWithEscapedCharacters = term.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.lowercased()
         //print(termWithEscapedCharacters)
         
@@ -78,8 +81,8 @@ class ApiService: NSObject {
                 }
                 DispatchQueue.main.async(execute: {
                     completion(items)
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 })
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 
             }
             task.resume()
