@@ -37,6 +37,11 @@ class CustomTabBarController: UITabBarController {
         
         viewControllers = [songNavController,searchTrackController,profileController]
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
 
 
     override func didReceiveMemoryWarning() {

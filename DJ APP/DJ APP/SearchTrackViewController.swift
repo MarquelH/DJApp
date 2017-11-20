@@ -38,7 +38,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         sc.searchBar.placeholder = "Search Tracks"
         sc.dimsBackgroundDuringPresentation = false
         sc.definesPresentationContext = true
-        sc.hidesNavigationBarDuringPresentation = false
+        //sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
         sc.searchBar.tintColor = UIColor.white
         sc.searchBar.backgroundColor = UIColor.darkGray
@@ -59,8 +59,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        definesPresentationContext = true
-
         //Register reusable cell with class
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
 
@@ -69,11 +67,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        //Change status bar background color
-//        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //Change status bar background color
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+    }
     
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -122,8 +120,13 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     //SEARCH BAR ------
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("I was tapped")
+    }
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
         if (!(searchController.searchBar.text?.isEmpty)!) {
             self.searchText = searchText
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
@@ -142,9 +145,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     
-    func handleBack() {
-        self.navigationController?.popViewController(animated: true)
-    }
     
     //TABLE VIEW --------------
     
