@@ -37,12 +37,13 @@ class CustomTabBarController: UITabBarController {
         
         viewControllers = [songNavController,searchTrackController,profileController]
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
 
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        let index = item.index(ofAccessibilityElement: item)
+        if (index != 1) {
+            searchTrackController.results.removeAll()
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

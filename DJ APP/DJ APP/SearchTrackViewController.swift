@@ -77,13 +77,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
-        
+
         if (self.searchController.isActive) {
             self.searchController.isActive = false
         }
     }
 
-    
     // HELPERS -------------
     
     func search() {
@@ -119,14 +118,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     //SEARCH BAR ------
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("I was tapped")
-    }
-    
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
         if (!(searchController.searchBar.text?.isEmpty)!) {
             self.searchText = searchText
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
