@@ -59,6 +59,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Need this to display the next screen
+        self.definesPresentationContext = true
+        
         //Register reusable cell with class
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
 
@@ -70,17 +73,18 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
-        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
 
         if (self.searchController.isActive) {
             self.searchController.isActive = false
         }
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+
     }
 
     // HELPERS -------------

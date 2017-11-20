@@ -25,14 +25,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         return lb
     }()
     
-    let scriptLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "GoDJ"
-        lbl.font = UIFont(name: "SudegnakNo2", size: 20)
-        lbl.textColor = UIColor.white
-        lbl.textAlignment = .center
-        return lbl
-    }()
     
     let usernameContainer: UIView = {
         let cv = UIView()
