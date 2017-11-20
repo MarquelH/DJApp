@@ -12,6 +12,7 @@ import UIKit
 class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate  {
 
     let searchCellId = "searchCellId"
+    var searchText: String?
 
     var results = [TrackItem]() {
         didSet{
@@ -24,9 +25,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             }
         }
     }
-    
-   
-    var searchText: String?
     
     
     var noResults: UIImageView = {
@@ -43,7 +41,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
         sc.searchBar.tintColor = UIColor.white
-        sc.searchBar.backgroundColor = UIColor.black
+        sc.searchBar.backgroundColor = UIColor.darkGray
         //Change color of searching text
         var textField = sc.searchBar.value(forKey: "searchField") as? UITextField
         textField?.textColor = UIColor.white
@@ -71,11 +69,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //Change status bar background color
-        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        //Change status bar background color
+//        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+//    }
     
     
     override func viewWillDisappear(_ animated: Bool) {

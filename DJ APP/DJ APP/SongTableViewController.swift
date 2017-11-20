@@ -16,6 +16,8 @@ class SongTableViewController: UITableViewController  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
         
         self.edgesForExtendedLayout = []
@@ -23,21 +25,33 @@ class SongTableViewController: UITableViewController  {
         self.extendedLayoutIncludesOpaqueBars = true
         self.automaticallyAdjustsScrollViewInsets = true
         
+        setupNavigationBar()
         setupViews()
 
     }
-
-    func setupViews() {
-        //Fonts
+    
+    func setupNavigationBar() {
+        
+        //Back button
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        //Bar
+        self.navigationController?.navigationBar.barTintColor = UIColor.darkGray
+        //Bar text
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purple]
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
-     
+        
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"
         }
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        
+        else {
+            print("Nothing to see here")
+        }
+    }
+
+    func setupViews() {
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.darkGray
     }
     
     func handleBack() {

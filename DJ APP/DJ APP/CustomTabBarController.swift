@@ -10,29 +10,24 @@ import UIKit
 
 class CustomTabBarController: UITabBarController {
     var dj: UserDJ?
+    
     let songController = SongTableViewController()
     let searchTrackController = SearchTrackViewController()
     let profileController = DJPRofileViewController()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-      
-        songController.dj = dj
 
         let songNavController = UINavigationController()
         songNavController.tabBarItem.title = "Songs"
         songNavController.tabBarItem.image = UIImage(named: "listIcon")
         songNavController.viewControllers = [songController]
-
         
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
         
         profileController.tabBarItem.title = "DJ Profile"
         profileController.tabBarItem.image = UIImage(named: "bioIcon")
-        profileController.dj = dj
     
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
@@ -43,16 +38,8 @@ class CustomTabBarController: UITabBarController {
         viewControllers = [songNavController,searchTrackController,profileController]
     }
 
-    
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    
-//    func dissmissTabBar() {
-//        self.dismiss(animated: true, completion: nil)
-//    }
-    
-
 }

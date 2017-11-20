@@ -130,8 +130,9 @@ class DJTableViewController: UITableViewController {
         let customTabBarController = CustomTabBarController()
 
         //send the selected DJ
-        customTabBarController.dj = users[indexPath.row]        
-        
+        customTabBarController.profileController.dj = users[indexPath.row]
+        customTabBarController.songController.dj = users[indexPath.row]
+
 
         
         //Insert views into navigation controller
