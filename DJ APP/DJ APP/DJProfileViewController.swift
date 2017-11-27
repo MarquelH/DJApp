@@ -13,15 +13,13 @@ class DJPRofileViewController: UIViewController {
     
     var dj: UserDJ?
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         self.view.backgroundColor = UIColor.black
-
     }
+    
     lazy var profilePic: UIImageView = {
         let pp = UIImageView()
         pp.alpha = 0.85
@@ -59,7 +57,7 @@ class DJPRofileViewController: UIViewController {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.clear
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lbl.font = UIFont(name: "Exo-Thin", size : 20)
+        lbl.font = UIFont(name: "SudegnakNo2", size : 26)
         lbl.text = "Hometown:"
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
@@ -87,7 +85,7 @@ class DJPRofileViewController: UIViewController {
         let lbl = UILabel()
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         lbl.text = "Twitter/Instagram:"
-        lbl.font = UIFont(name: "Exo-Thin", size : 17)
+        lbl.font = UIFont(name: "SudegnakNo2", size : 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -109,7 +107,7 @@ class DJPRofileViewController: UIViewController {
     let ageLabel: UILabel = {
         let al = UILabel()
         al.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        al.font = UIFont(name: "Exo-Thin", size: 20)
+        al.font = UIFont(name: "SudegnakNo2", size: 26)
         al.text = "Age:"
         al.translatesAutoresizingMaskIntoConstraints = false
         return al
@@ -127,7 +125,7 @@ class DJPRofileViewController: UIViewController {
         let gl = UILabel()
         gl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         gl.text = "Main Genre:"
-        gl.font = UIFont(name: "Exo-Thin", size: 20)
+        gl.font = UIFont(name: "SudegnakNo2", size: 26)
         gl.translatesAutoresizingMaskIntoConstraints = false
         return gl
     }()
@@ -200,9 +198,9 @@ class DJPRofileViewController: UIViewController {
         headphonesLogo.widthAnchor.constraint(equalToConstant: 95).isActive = true
         
         dmDJButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        dmDJButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant:-55).isActive = true
         dmDJButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         dmDJButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        dmDJButton.topAnchor.constraint(equalTo: headphonesLogo.bottomAnchor).isActive = true
         
         twitterSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         twitterSep.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 15).isActive = true

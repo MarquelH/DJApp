@@ -39,7 +39,7 @@ class SongTableViewController: UITableViewController  {
         self.navigationController?.navigationBar.barTintColor = UIColor.darkGray
         //Bar text
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purple]
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "Exo-Thin", size : 21) as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 25) as Any]
         
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"

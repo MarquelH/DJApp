@@ -94,7 +94,7 @@ class DJTableViewController: UITableViewController {
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
             cell.detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-            cell.detailTextLabel?.font = UIFont(name: "Exo-Thin", size: 17)
+            cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 27)
         }
 
         
