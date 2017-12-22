@@ -9,8 +9,21 @@
 /* Begin PBXBuildFile section */
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
-		667251A01FB94A1C001B6E84 /* SchedulingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */; };
+		66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */; };
+		66A41DA51FEC16F0004D31FB /* schedulingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */; };
+		66A41DAD1FEC2909004D31FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */; };
+		66A41DAF1FEC291F004D31FB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAE1FEC291F004D31FB /* CFNetwork.framework */; };
+		66A41DB11FEC2933004D31FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DB01FEC2932004D31FB /* CoreLocation.framework */; };
+		66A41DB31FEC2940004D31FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DB21FEC2940004D31FB /* CoreGraphics.framework */; };
+		66A41DB51FEC2950004D31FB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DB41FEC2950004D31FB /* QuartzCore.framework */; };
+		66A41DB71FEC2963004D31FB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DB61FEC2962004D31FB /* Security.framework */; };
+		66A41DB91FEC2970004D31FB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DB81FEC2970004D31FB /* StoreKit.framework */; };
+		66A41DBB1FEC297B004D31FB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBA1FEC297B004D31FB /* SystemConfiguration.framework */; };
+		66A41DBD1FEC2993004D31FB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBC1FEC2993004D31FB /* libz.tbd */; };
+		66A41DBF1FEC29A9004D31FB /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBE1FEC29A9004D31FB /* libsqlite3.tbd */; };
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
+		66BB35081FED5D01002CE07D /* DJTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB35071FED5D01002CE07D /* DJTabController.swift */; };
+		66BB350A1FED6953002CE07D /* addNewEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB35091FED6953002CE07D /* addNewEventController.swift */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		66FDE3481F7A180D00823391 /* Lobster.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3471F7A180D00823391 /* Lobster.otf */; };
 		66FDE34A1F7A184000823391 /* Exo-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3491F7A184000823391 /* Exo-Thin.otf */; };
@@ -63,8 +76,21 @@
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulingViewController.swift; sourceTree = "<group>"; };
+		66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScehdulingStoryboard.storyboard; sourceTree = "<group>"; };
+		66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedulingViewController.swift; sourceTree = "<group>"; };
+		66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		66A41DAE1FEC291F004D31FB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		66A41DB01FEC2932004D31FB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		66A41DB21FEC2940004D31FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		66A41DB41FEC2950004D31FB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		66A41DB61FEC2962004D31FB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		66A41DB81FEC2970004D31FB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		66A41DBA1FEC297B004D31FB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		66A41DBC1FEC2993004D31FB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		66A41DBE1FEC29A9004D31FB /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SudegnakNo2.otf; sourceTree = "<group>"; };
+		66BB35071FED5D01002CE07D /* DJTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJTabController.swift; sourceTree = "<group>"; };
+		66BB35091FED6953002CE07D /* addNewEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addNewEventController.swift; sourceTree = "<group>"; };
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
 		66FDE3471F7A180D00823391 /* Lobster.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster.otf; sourceTree = "<group>"; };
 		66FDE3491F7A184000823391 /* Exo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-Thin.otf"; sourceTree = "<group>"; };
@@ -104,6 +130,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A41DBF1FEC29A9004D31FB /* libsqlite3.tbd in Frameworks */,
+				66A41DBD1FEC2993004D31FB /* libz.tbd in Frameworks */,
+				66A41DBB1FEC297B004D31FB /* SystemConfiguration.framework in Frameworks */,
+				66A41DB91FEC2970004D31FB /* StoreKit.framework in Frameworks */,
+				66A41DB71FEC2963004D31FB /* Security.framework in Frameworks */,
+				66A41DB51FEC2950004D31FB /* QuartzCore.framework in Frameworks */,
+				66A41DB31FEC2940004D31FB /* CoreGraphics.framework in Frameworks */,
+				66A41DB11FEC2933004D31FB /* CoreLocation.framework in Frameworks */,
+				66A41DAF1FEC291F004D31FB /* CFNetwork.framework in Frameworks */,
+				66A41DAD1FEC2909004D31FB /* AudioToolbox.framework in Frameworks */,
 				4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,8 +211,11 @@
 		D817FAD81FBBCE7E005C8711 /* DJ Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */,
+				66BB35071FED5D01002CE07D /* DJTabController.swift */,
 				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
-				6672519F1FB94A1C001B6E84 /* SchedulingViewController.swift */,
+				66BB35091FED6953002CE07D /* addNewEventController.swift */,
+				66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */,
 			);
 			name = "DJ Controllers";
 			sourceTree = "<group>";
@@ -271,6 +310,16 @@
 		EDBA060BA86FF40F2DE1B23A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66A41DBE1FEC29A9004D31FB /* libsqlite3.tbd */,
+				66A41DBC1FEC2993004D31FB /* libz.tbd */,
+				66A41DBA1FEC297B004D31FB /* SystemConfiguration.framework */,
+				66A41DB81FEC2970004D31FB /* StoreKit.framework */,
+				66A41DB61FEC2962004D31FB /* Security.framework */,
+				66A41DB41FEC2950004D31FB /* QuartzCore.framework */,
+				66A41DB21FEC2940004D31FB /* CoreGraphics.framework */,
+				66A41DB01FEC2932004D31FB /* CoreLocation.framework */,
+				66A41DAE1FEC291F004D31FB /* CFNetwork.framework */,
+				66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */,
 				01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */,
 				4C7F37CD4B3E866E3B68B5B5 /* Pods_DJ_APPTests.framework */,
 				1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */,
@@ -403,6 +452,7 @@
 				66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */,
 				D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */,
 				6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */,
+				66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,16 +633,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A41DA51FEC16F0004D31FB /* schedulingViewController.swift in Sources */,
 				D89A345B1FBA2D8D00D5E2F2 /* TrackItem.swift in Sources */,
 				D80A18981F5C867200747022 /* RegisterController.swift in Sources */,
+				66BB350A1FED6953002CE07D /* addNewEventController.swift in Sources */,
 				D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */,
-				667251A01FB94A1C001B6E84 /* SchedulingViewController.swift in Sources */,
 				D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */,
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,
 				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D83AFBA01F75CF31003B0004 /* TrackCell.swift in Sources */,
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
+				66BB35081FED5D01002CE07D /* DJTabController.swift in Sources */,
 				D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */,
 				D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */,
 				D89437161FBE8E60002D0E7F /* SelectedTrackViewController.swift in Sources */,
@@ -760,6 +812,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 97RQYDCCB8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DJ\\ APP/**",
+				);
 				INFOPLIST_FILE = "DJ APP/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MMAT.DJ-APP";
@@ -775,6 +831,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 97RQYDCCB8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DJ\\ APP/**",
+				);
 				INFOPLIST_FILE = "DJ APP/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "MMAT.DJ-APP";

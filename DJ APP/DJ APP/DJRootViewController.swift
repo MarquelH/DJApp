@@ -154,8 +154,13 @@ class DJRootViewController: UIViewController {
     }
     
     func handleSchedulingEnter(){
-        let scheduleview = SchedulingViewController()
-        present(scheduleview, animated: true, completion: nil)
+        
+        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "djScheduleNav")
+        self.present(controller, animated: true, completion: nil)
+        
+        //let tabController = DJTabController()
+        //present(tabController, animated: true, completion: nil)
     }
     
     func handleLogout() {
