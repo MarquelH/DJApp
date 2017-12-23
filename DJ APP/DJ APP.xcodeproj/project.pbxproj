@@ -30,6 +30,7 @@
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
 		D80A18981F5C867200747022 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A18971F5C867200747022 /* RegisterController.swift */; };
 		D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81321EB1F71C9A900C130AD /* Exensions.swift */; };
+		D8158AED1FEF0A3100C45946 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8158AEC1FEF0A3000C45946 /* HomeViewController.swift */; };
 		D819CF891FBCC67300D60B93 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D819CF881FBCC67300D60B93 /* SearchCell.swift */; };
 		D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66BF1F4F6E3E00543A8F /* AppDelegate.swift */; };
 		D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D81A66C61F4F6E3E00543A8F /* Assets.xcassets */; };
@@ -97,6 +98,7 @@
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
 		D80A18971F5C867200747022 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		D81321EB1F71C9A900C130AD /* Exensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exensions.swift; sourceTree = "<group>"; };
+		D8158AEC1FEF0A3000C45946 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D819CF881FBCC67300D60B93 /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		D81A66BC1F4F6E3E00543A8F /* DJ APP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DJ APP.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81A66BF1F4F6E3E00543A8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 			children = (
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
 				D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */,
+				D8158AEC1FEF0A3000C45946 /* HomeViewController.swift */,
 				D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */,
 				D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */,
 				D89437151FBE8E60002D0E7F /* SelectedTrackViewController.swift */,
@@ -638,6 +641,7 @@
 				D80A18981F5C867200747022 /* RegisterController.swift in Sources */,
 				66BB350A1FED6953002CE07D /* addNewEventController.swift in Sources */,
 				D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */,
+				D8158AED1FEF0A3100C45946 /* HomeViewController.swift in Sources */,
 				D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */,
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,

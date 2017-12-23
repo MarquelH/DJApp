@@ -14,6 +14,7 @@ class CustomTabBarController: UITabBarController {
     let songController = SongTableViewController()
     let searchTrackController = SearchTrackViewController()
     let profileController = DJPRofileViewController()
+    let homeController = HomeViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,9 @@ class CustomTabBarController: UITabBarController {
         
         profileController.tabBarItem.title = "DJ Profile"
         profileController.tabBarItem.image = UIImage(named: "bioIcon")
+        
+        homeController.tabBarItem.title = "Home"
+       // homeController.tabBarItem.image = UIImage(named: "")
     
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
@@ -35,12 +39,15 @@ class CustomTabBarController: UITabBarController {
 //        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
 
         
-        viewControllers = [songNavController,searchTrackController,profileController]
+        viewControllers = [homeController, songNavController, searchTrackController, profileController]
+        
+        self.selectedIndex = 1;
+        
     }
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let index = item.index(ofAccessibilityElement: item)
-        if (index != 1) {
+        if (index != 2) {
             searchTrackController.results.removeAll()
         }
     }
