@@ -99,30 +99,46 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         }
     }
     
-    func threeDotsTapped(tapGesture: UITapGestureRecognizer) {
-        print ("I was tapped")
-        if let index = tapGesture.view?.tag {
+    func presentSelectedTrackController(index: Int) {
+        let selectedTrack = SelectedTrackViewController()
+        if self.presentedViewController == nil {
             
-            let selectedTrack = SelectedTrackViewController()
-            if self.presentedViewController == nil {
-                
-                selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                selectedTrack.track = results[index]
-                present(selectedTrack, animated: true, completion: nil)
-            }
-            else {
-                print ("Something being presented")
-                print(self.presentedViewController?.title)
-                self.dismiss(animated: true, completion: nil)
-                selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-                selectedTrack.track = results[index]
-                present(selectedTrack, animated: true, completion: nil)
-            }
-
-            //present new view 
+            selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            selectedTrack.track = results[index]
+            present(selectedTrack, animated: true, completion: nil)
+        }
+        else {
+            
+            self.dismiss(animated: true, completion: nil)
+            selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            selectedTrack.track = results[index]
+            present(selectedTrack, animated: true, completion: nil)
         }
     }
     
+//    func threeDotsTapped(tapGesture: UITapGestureRecognizer) {
+//        print ("I was tapped")
+//        if let index = tapGesture.view?.tag {
+//
+//            let selectedTrack = SelectedTrackViewController()
+//            if self.presentedViewController == nil {
+//
+//                selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//                selectedTrack.track = results[index]
+//                present(selectedTrack, animated: true, completion: nil)
+//            }
+//            else {
+//
+//                self.dismiss(animated: true, completion: nil)
+//                selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//                selectedTrack.track = results[index]
+//                present(selectedTrack, animated: true, completion: nil)
+//            }
+//
+//            //present new view
+//        }
+//    }
+//
     func turnScrollAndBouncOff() {
         tableView.bounces = false
         tableView.alwaysBounceVertical = false
@@ -172,6 +188,10 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         return results.count
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presentSelectedTrackController(index: indexPath.row)
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: searchCellId, for: indexPath) as! SearchCell
         
@@ -187,11 +207,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
         }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(threeDotsTapped(tapGesture:)))
-        tapGesture.numberOfTapsRequired = 1
-        cell.threeDots.tag = indexPath.row
-        cell.threeDots.addGestureRecognizer(tapGesture)
-        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(threeDotsTapped(tapGesture:)))
+//        tapGesture.numberOfTapsRequired = 1
+//        cell.threeDots.tag = indexPath.row
+//        cell.threeDots.addGestureRecognizer(tapGesture)
+//        
         return cell
     }
     

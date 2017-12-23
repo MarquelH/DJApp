@@ -54,17 +54,13 @@ class SelectedTrackViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //definesPresentationContext = true
-        print("selected Track view controller shown")
         setupViews()
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
-        print("shoudl have changed status bar color")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
