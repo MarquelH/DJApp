@@ -102,10 +102,22 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     func threeDotsTapped(tapGesture: UITapGestureRecognizer) {
         print ("I was tapped")
         if let index = tapGesture.view?.tag {
-       
+            
             let selectedTrack = SelectedTrackViewController()
-            selectedTrack.track = results[index]
-            present(selectedTrack, animated: true, completion: nil)
+            if self.presentedViewController == nil {
+                
+                selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                selectedTrack.track = results[index]
+                present(selectedTrack, animated: true, completion: nil)
+            }
+            else {
+                print ("Something being presented")
+                print(self.presentedViewController?.title)
+                self.dismiss(animated: true, completion: nil)
+                selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                selectedTrack.track = results[index]
+                present(selectedTrack, animated: true, completion: nil)
+            }
 
             //present new view 
         }
