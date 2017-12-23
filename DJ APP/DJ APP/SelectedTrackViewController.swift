@@ -22,6 +22,31 @@ class SelectedTrackViewController: UIViewController {
         return mv
     }()
     
+    let trackImageView: UIImageView = {
+        let tiv = UIImageView()
+        tiv.translatesAutoresizingMaskIntoConstraints = false
+        tiv.contentMode = .scaleAspectFill
+        return tiv
+    }()
+    
+    let trackName: UILabel = {
+       let tn = UILabel()
+        tn.textColor = UIColor.white
+        tn.textAlignment = .center
+        tn.font = UIFont.boldSystemFont(ofSize: 24)
+        tn.translatesAutoresizingMaskIntoConstraints = false
+        return tn
+    }()
+    
+    let trackArtist: UILabel = {
+        let ta = UILabel()
+        ta.textColor = UIColor.white
+        ta.textAlignment = .center
+        ta.font = UIFont.boldSystemFont(ofSize: 16)
+        ta.translatesAutoresizingMaskIntoConstraints = false
+        return ta
+    }()
+    
     let addButton: UIButton = {
        let ab = UIButton(type: .system)
         ab.setTitle("Add To Queue", for: .normal)
@@ -87,10 +112,46 @@ class SelectedTrackViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    func setTrackImage(urlString: String) {
+        
+            
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
+            if let error = error {
+                print("Adding values error: \n")
+                print(error.localizedDescription)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if let imageData = data, let downloadedImage = UIImage(data: imageData) {
+                    self.trackImageView.image = downloadedImage
+                }
+            }
+            
+        }).resume()
+        
+    }
+    
     func setupViews() {
         self.view.addSubview(mainview)
+        if let trackImageAbsString = track?.trackImage?.addHTTPS()?.absoluteString.replaceWith600() {
+            setTrackImage(urlString: trackImageAbsString)
+        }
+        else {
+            print("Problem with absolute string")
+        }
+        trackName.text = track?.trackName
+        trackArtist.text = track?.trackArtist
         mainview.addSubview(addButton)
         mainview.addSubview(cancelButton)
+        mainview.addSubview(trackImageView)
+        mainview.addSubview(trackName)
+        mainview.addSubview(trackArtist)
+        
+        
 
         mainview.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         mainview.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
@@ -98,9 +159,24 @@ class SelectedTrackViewController: UIViewController {
         mainview.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
         
         
+        trackImageView.centerXAnchor.constraint(equalTo: mainview.centerXAnchor).isActive = true
+        trackImageView.topAnchor.constraint(equalTo: mainview.topAnchor, constant: 75).isActive = true
+        trackImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        trackImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        trackName.centerXAnchor.constraint(equalTo: mainview.centerXAnchor).isActive = true
+        trackName.topAnchor.constraint(equalTo: trackImageView.bottomAnchor, constant: 24).isActive = true
+        trackName.widthAnchor.constraint(equalTo: mainview.widthAnchor, constant: -24).isActive = true
+        trackName.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
+        trackArtist.centerXAnchor.constraint(equalTo: mainview.centerXAnchor).isActive = true
+        trackArtist.topAnchor.constraint(equalTo: trackName.bottomAnchor, constant: 8).isActive = true
+        trackArtist.widthAnchor.constraint(equalTo: mainview.widthAnchor, constant: -24).isActive = true
+        trackArtist.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
         addButton.centerXAnchor.constraint(equalTo: mainview.centerXAnchor).isActive = true
-        addButton.centerYAnchor.constraint(equalTo: mainview.centerYAnchor).isActive = true
-        addButton.widthAnchor.constraint(equalTo: mainview.widthAnchor, constant: -24).isActive = true
+        addButton.topAnchor.constraint(equalTo: trackArtist.bottomAnchor, constant: 36).isActive = true
+        addButton.widthAnchor.constraint(equalTo: mainview.widthAnchor, constant: -72).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
         cancelButton.centerXAnchor.constraint(equalTo: mainview.centerXAnchor).isActive = true

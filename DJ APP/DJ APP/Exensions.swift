@@ -72,4 +72,12 @@ extension UIApplication {
         return value(forKey: "statusBar") as? UIView
     }
 }
+extension String {
+    func replaceWith600() -> String{
+        //Not very safe, change to range
+        let replaced = self.replacingOccurrences(of: "100x100", with: "600x600")
+        return replaced
+    }
+    
+}
 
