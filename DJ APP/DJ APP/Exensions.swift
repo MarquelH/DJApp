@@ -10,7 +10,22 @@ import UIKit
 
 let imageCache = NSCache<AnyObject, AnyObject>()
 
+extension URL {
+    
+    func addHTTPS() -> URL? {
+        var components = URLComponents(url: self, resolvingAgainstBaseURL: true)
+        components?.scheme = "https"
+        if let host = components?.host {
+            components?.host = host.replacingOccurrences(of: ".", with: "-ssl.", options: .caseInsensitive, range: host.range(of: "."))
+        }
+        return components?.url
+    }
+    
+}
+
 extension UIImageView {
+    
+   
     func loadImageWithChachfromUrl(urlString: String) {
         
         //Do this if flashing occurs when scrolling. 
