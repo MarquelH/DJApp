@@ -21,9 +21,9 @@ class TrackCell: UITableViewCell {
         return s
     }()
     
-    let profileImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "usernameIcon")
+    let profileImageView: ProfileImageView = {
+        let iv = ProfileImageView()
+        //iv.image = UIImage(named: "usernameIcon")
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.layer.masksToBounds = true

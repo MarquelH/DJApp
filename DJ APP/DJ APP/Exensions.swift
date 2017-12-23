@@ -23,13 +23,18 @@ extension URL {
     
 }
 
-extension UIImageView {
+class ProfileImageView: UIImageView {
     
-   
+    var imageUrlString: String?
+    
     func loadImageWithChachfromUrl(urlString: String) {
         
         //Do this if flashing occurs when scrolling. 
         //self.image =nil
+        
+        imageUrlString = urlString
+        
+        image = nil
         
         //check cache for image
         if let cachedImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
@@ -49,8 +54,11 @@ extension UIImageView {
                 DispatchQueue.main.async {
                     
                     if let downloadedImage = UIImage(data: data!) {
+                        if self.imageUrlString == urlString {
+                            self.image = downloadedImage
+                        }
+                        
                         imageCache.setObject(downloadedImage, forKey: urlString as AnyObject)
-                        self.image = downloadedImage
                     }
                 }
                 

@@ -166,8 +166,8 @@ class DJTableViewController: UITableViewController {
 
 class DJCell: UITableViewCell {
     
-    let profileImageView: UIImageView = {
-       let iv = UIImageView()
+    let profileImageView: ProfileImageView = {
+       let iv = ProfileImageView()
         iv.image = UIImage(named: "usernameIcon")
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false

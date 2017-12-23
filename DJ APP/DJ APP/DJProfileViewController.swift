@@ -20,8 +20,8 @@ class DJPRofileViewController: UIViewController {
         self.view.backgroundColor = UIColor.black
     }
     
-    lazy var profilePic: UIImageView = {
-        let pp = UIImageView()
+    lazy var profilePic: ProfileImageView = {
+        let pp = ProfileImageView()
         pp.alpha = 0.85
         //pp.image = UIImage(named: "usernameIcon")
         pp.contentMode = .scaleAspectFill
