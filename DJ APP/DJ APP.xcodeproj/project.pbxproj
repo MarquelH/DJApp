@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
+		665700631FEF5600009676E7 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665700621FEF5600009676E7 /* EventCell.swift */; };
+		665700651FEF57FB009676E7 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665700641FEF57FB009676E7 /* EventsTableViewController.swift */; };
 		66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */; };
 		66A41DA51FEC16F0004D31FB /* schedulingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */; };
 		66A41DAD1FEC2909004D31FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */; };
@@ -25,8 +27,6 @@
 		66BB35081FED5D01002CE07D /* DJTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB35071FED5D01002CE07D /* DJTabController.swift */; };
 		66BB350A1FED6953002CE07D /* addNewEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB35091FED6953002CE07D /* addNewEventController.swift */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
-		66FDE3481F7A180D00823391 /* Lobster.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3471F7A180D00823391 /* Lobster.otf */; };
-		66FDE34A1F7A184000823391 /* Exo-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66FDE3491F7A184000823391 /* Exo-Thin.otf */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
 		D80A18981F5C867200747022 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A18971F5C867200747022 /* RegisterController.swift */; };
 		D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81321EB1F71C9A900C130AD /* Exensions.swift */; };
@@ -77,6 +77,8 @@
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		665700621FEF5600009676E7 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		665700641FEF57FB009676E7 /* EventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
 		66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScehdulingStoryboard.storyboard; sourceTree = "<group>"; };
 		66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedulingViewController.swift; sourceTree = "<group>"; };
 		66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -93,8 +95,6 @@
 		66BB35071FED5D01002CE07D /* DJTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJTabController.swift; sourceTree = "<group>"; };
 		66BB35091FED6953002CE07D /* addNewEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addNewEventController.swift; sourceTree = "<group>"; };
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
-		66FDE3471F7A180D00823391 /* Lobster.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lobster.otf; sourceTree = "<group>"; };
-		66FDE3491F7A184000823391 /* Exo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-Thin.otf"; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
 		D80A18971F5C867200747022 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		D81321EB1F71C9A900C130AD /* Exensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exensions.swift; sourceTree = "<group>"; };
@@ -184,6 +184,7 @@
 				D81321EB1F71C9A900C130AD /* Exensions.swift */,
 				D83AFB9F1F75CF31003B0004 /* TrackCell.swift */,
 				D819CF881FBCC67300D60B93 /* SearchCell.swift */,
+				665700621FEF5600009676E7 /* EventCell.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -216,6 +217,7 @@
 			children = (
 				66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */,
 				66BB35071FED5D01002CE07D /* DJTabController.swift */,
+				665700641FEF57FB009676E7 /* EventsTableViewController.swift */,
 				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
 				66BB35091FED6953002CE07D /* addNewEventController.swift */,
 				66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */,
@@ -226,9 +228,7 @@
 		D81A66B31F4F6E3D00543A8F = {
 			isa = PBXGroup;
 			children = (
-				66FDE3491F7A184000823391 /* Exo-Thin.otf */,
 				66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */,
-				66FDE3471F7A180D00823391 /* Lobster.otf */,
 				D81A66BE1F4F6E3E00543A8F /* DJ APP */,
 				D81A66D31F4F6E3E00543A8F /* DJ APPTests */,
 				D81A66DE1F4F6E3E00543A8F /* DJ APPUITests */,
@@ -450,8 +450,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81A66CA1F4F6E3E00543A8F /* LaunchScreen.storyboard in Resources */,
-				66FDE34A1F7A184000823391 /* Exo-Thin.otf in Resources */,
-				66FDE3481F7A180D00823391 /* Lobster.otf in Resources */,
 				66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */,
 				D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */,
 				6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */,
@@ -647,6 +645,7 @@
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,
 				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D83AFBA01F75CF31003B0004 /* TrackCell.swift in Sources */,
+				665700651FEF57FB009676E7 /* EventsTableViewController.swift in Sources */,
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
 				66BB35081FED5D01002CE07D /* DJTabController.swift in Sources */,
 				D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */,
@@ -655,6 +654,7 @@
 				D89A345F1FBA2F7500D5E2F2 /* ApiService.swift in Sources */,
 				66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */,
 				D83AFB9E1F75C1C5003B0004 /* SearchTrackViewController.swift in Sources */,
+				665700631FEF5600009676E7 /* EventCell.swift in Sources */,
 				D819CF891FBCC67300D60B93 /* SearchCell.swift in Sources */,
 				D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */,
 			);
