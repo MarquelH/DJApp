@@ -10,6 +10,7 @@ import UIKit
 
 class CustomTabBarController: UITabBarController {
     var dj: UserDJ?
+    var djUID: String?
     
     let songController = SongTableViewController()
     let searchTrackController = SearchTrackViewController()
@@ -18,6 +19,7 @@ class CustomTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
 
         let songNavController = UINavigationController()
         songNavController.tabBarItem.title = "Songs"
@@ -30,15 +32,14 @@ class CustomTabBarController: UITabBarController {
         profileController.tabBarItem.title = "DJ Profile"
         profileController.tabBarItem.image = UIImage(named: "bioIcon")
         
-        homeController.tabBarItem.title = "Home"
-       // homeController.tabBarItem.image = UIImage(named: "")
+        homeController.tabBarItem.title = "DJ List"
+        homeController.tabBarItem.image = UIImage(named: "Home-50")
     
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
 
 //        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
 
-        
         viewControllers = [homeController, songNavController, searchTrackController, profileController]
         
         self.selectedIndex = 1;

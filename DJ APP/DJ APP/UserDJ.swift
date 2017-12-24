@@ -17,5 +17,6 @@ class UserDJ: NSObject {
     var hometown: String?
     var validated: Bool?
     var profilePicURL: String?
+    var uid: String?
     
 }

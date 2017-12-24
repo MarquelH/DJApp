@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class SelectedTrackViewController: UIViewController {
 
     var track: TrackItem?
-    
+    var dj: UserDJ?
+    var refSongList: DatabaseReference!
    
     let mainview: UIView = {
        let mv = UIView()
@@ -79,6 +81,12 @@ class SelectedTrackViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let uidKey = dj?.uid {
+            refSongList = Database.database().reference().child("SongList").child(uidKey)
+        }
+        else {
+            print("DJ does not have uid")
+        }
         setupViews()
     }
     
@@ -92,13 +100,39 @@ class SelectedTrackViewController: UIViewController {
         
         super.viewWillDisappear(animated)
         //Change status bar background color
+        print("Selected will disappear")
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
+        dismiss(animated: true, completion: nil)
     }
     
     
     // HELPERS --------------------
     func handleAdd() {
         print ("add")
+        //song object must be a name, artist, url, upvotes, downvotes, sum votes, experation time?
+        //Song List must be hash of name+artist to song object
+        //find the uid in Song List, save it to a dictionary
+        //check if it has the song object using the hash 
+            //if it does, then change the up value of it and replace it
+            //if it doesn't, then add the song to it
+        
+        
+        
+        
+        //Generate new key inside SongList node and return it
+        let key = self.refSongList.childByAutoId().key
+        
+        //Create song object, and insert into node
+        if let name = track?.trackName, let artist = track?.trackArtist, let artwork = track?.trackImage?.absoluteString {
+            
+            let song = ["id": key, "name":name, "artist":artist, "artwork":artwork, "upvotes": 1, "downvotes":0, "totalvotes":1] as [String : Any]
+            
+            refSongList.child(key).setValue(song)
+        }
+        else {
+            print("Track has no info in it")
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     

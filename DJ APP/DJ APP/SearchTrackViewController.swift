@@ -13,7 +13,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
 
     let searchCellId = "searchCellId"
     var searchText: String?
+    var dj: UserDJ?
 
+    
     var results = [TrackItem]() {
         didSet{
             tableView.reloadData()
@@ -79,7 +81,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
+        searchController.searchBar.text = ""
         if (self.searchController.isActive) {
             self.searchController.isActive = false
         }
@@ -112,7 +114,8 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             self.dismiss(animated: true, completion: nil)
             selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
             selectedTrack.track = results[index]
-            present(selectedTrack, animated: true, completion: nil)
+            selectedTrack.dj = dj
+            self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
         }
     }
     

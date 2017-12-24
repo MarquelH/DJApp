@@ -51,7 +51,8 @@ class DJTableViewController: UITableViewController {
         
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 
-                for (_,value) in dictionary {
+                for (key,value) in dictionary {
+                    
                     let dj = UserDJ()
                     
                     dj.djName = value["djName"] as? String
@@ -62,6 +63,7 @@ class DJTableViewController: UITableViewController {
                     dj.hometown = value["hometown"] as? String
                     dj.validated = value["validated"] as? Bool
                     dj.profilePicURL = value["profilePicURL"] as? String
+                    dj.uid = key
                     
                     self.users.append(dj)
                     DispatchQueue.main.async {
@@ -132,19 +134,14 @@ class DJTableViewController: UITableViewController {
         //send the selected DJ
         customTabBarController.profileController.dj = users[indexPath.row]
         customTabBarController.songController.dj = users[indexPath.row]
-
+        customTabBarController.searchTrackController.dj = users[indexPath.row]
 
         
         //Insert views into navigation controller
         present(customTabBarController, animated: true, completion: nil)
         
         
-        //Set app delage here -- Maybe we dont need this now?
-//        self.present(customTabBarController, animated: true, completion: {() in
-//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//            appDelegate.window?.rootViewController = customTabBarController
-//        })
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {() in
             tableView.deselectRow(at: indexPath, animated: false)
         })
