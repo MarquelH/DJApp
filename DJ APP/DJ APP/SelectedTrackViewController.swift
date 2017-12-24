@@ -9,11 +9,19 @@
 import UIKit
 import Firebase
 
-class SelectedTrackViewController: UIViewController {
+protocol SearchToSelectedProtocol {
+    
+    //Pass back dj reference
+    func setSeachDJ(dj: UserDJ)
+    
+}
 
+class SelectedTrackViewController: UIViewController {
+    var delegate : SearchToSelectedProtocol?
     var track: TrackItem?
     var dj: UserDJ?
     var refSongList: DatabaseReference!
+    
    
     let mainview: UIView = {
        let mv = UIView()
@@ -81,6 +89,7 @@ class SelectedTrackViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
         }
@@ -100,9 +109,7 @@ class SelectedTrackViewController: UIViewController {
         
         super.viewWillDisappear(animated)
         //Change status bar background color
-        print("Selected will disappear")
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
-        dismiss(animated: true, completion: nil)
     }
     
     
@@ -116,10 +123,16 @@ class SelectedTrackViewController: UIViewController {
             //if it does, then change the up value of it and replace it
             //if it doesn't, then add the song to it
         
-        
-        
-        
-        //Generate new key inside SongList node and return it
+        addToList()
+
+        dismiss(animated: true, completion: {
+            //change this
+            self.delegate?.setSeachDJ(dj: self.dj!)
+        })
+    }
+    
+    func addToList() {
+        //        Generate new key inside SongList node and return it
         let key = self.refSongList.childByAutoId().key
         
         //Create song object, and insert into node
@@ -132,8 +145,6 @@ class SelectedTrackViewController: UIViewController {
         else {
             print("Track has no info in it")
         }
-        
-        dismiss(animated: true, completion: nil)
     }
     
     func handleCancel() {

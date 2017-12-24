@@ -9,7 +9,8 @@
 import UIKit
 
 //UISearchResultsUpdating,
-class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate  {
+class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate, SearchToSelectedProtocol  {
+    
 
     let searchCellId = "searchCellId"
     var searchText: String?
@@ -71,7 +72,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         turnScrollAndBouncOff()
     }
     
-    
+    //When Selected Track is dissmissed, this is not triggered
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
@@ -90,6 +91,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
 
     // HELPERS -------------
+    func setSeachDJ(dj: UserDJ) {
+        self.dj = dj
+    }
     
     func search() {
         guard let text = self.searchText else {
@@ -103,20 +107,15 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     func presentSelectedTrackController(index: Int) {
         let selectedTrack = SelectedTrackViewController()
-        if self.presentedViewController == nil {
-            
-            selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            selectedTrack.track = results[index]
-            present(selectedTrack, animated: true, completion: nil)
-        }
-        else {
-            
+        if self.presentedViewController != nil {
+            //do i have to keep this? w
             self.dismiss(animated: true, completion: nil)
-            selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            selectedTrack.track = results[index]
-            selectedTrack.dj = dj
-            self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
         }
+        selectedTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        selectedTrack.track = results[index]
+        selectedTrack.dj = dj
+        selectedTrack.delegate = self
+        self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
     }
     
 
