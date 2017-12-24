@@ -116,25 +116,96 @@ class SelectedTrackViewController: UIViewController {
     // HELPERS --------------------
     func handleAdd() {
         print ("add")
-        //song object must be a name, artist, url, upvotes, downvotes, sum votes, experation time?
-        //Song List must be hash of name+artist to song object
-        //find the uid in Song List, save it to a dictionary
-        //check if it has the song object using the hash 
-            //if it does, then change the up value of it and replace it
-            //if it doesn't, then add the song to it
         
-        addToList()
+        //Add experation time?
 
+        //Check if in the list, if not add it
+        if !isInSongListAndUpdateIfPossible() {
+            addToList()
+        }
+        
         dismiss(animated: true, completion: {
             //change this
             self.delegate?.setSeachDJ(dj: self.dj!)
         })
     }
+    //Function that tries to find the song in the Song List and then call UpdateSongList if true
+    //Structuring like this so that we don't have to do extra work looking at the song list twice
+    func isInSongListAndUpdateIfPossible() -> Bool {
+        var isIn: Bool
+        isIn = false
+        var name: String?
+        var artwork: String?
+        var artist: String?
+        var id: String?
+        var upvotes: Int?
+        var downvotes: Int?
+        var totalvotes: Int?
+
+        
+        refSongList.observe(.value, with: {(snapshot) in
+            print("I observed an event")
+            if snapshot.childrenCount > 0 {
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    
+                    for (key, value) in dictionary {
+                        if (value["name"] as? String == self.track?.trackName && value["artist"] as? String == self.track?.trackArtist) {
+                            isIn = true
+                            
+                            print("Found the track in \(self.dj?.djName ?? "Dj")'s Songlist")
+                            
+                            name = value["name"] as? String
+                            artwork = value["artwork"] as? String
+                            artist = value["artist"] as? String
+                            id = key
+                            upvotes = value["upvotes"] as? Int
+                            downvotes = value["downvotes"] as? Int
+                            totalvotes = value["totalvotes"] as? Int
+                            
+                            print("Upvotes: \(upvotes ?? -1)\nTotalvotes: \(totalvotes ?? -1)\nID: \(id ?? "key")\n\n")
+
+                       
+                        }
+                    }
+                }
+                else {
+                    print("Snapshot.value is nil")
+                }
+                
+            }
+            else {
+                print("snapshot has no children")
+            }
+            
+            
+        })
+        //Have to make call here, outside of the ref.observe, so not continuously chaning
+        if isIn == true, let nameFound = name, let artistFound = artist, let artworkFound = artwork, let idFound = id, let upvotesFound = upvotes, let downvotesFound = downvotes, let totalvotesFound = totalvotes {
+            
+            print ("Is in is true about to call update song list\n")
+            self.updateSongList(name: nameFound, artist: artistFound, artwork: artworkFound, upvotes: upvotesFound, downvotes: downvotesFound, totalvotes: totalvotesFound, id: idFound)
+            
+        }
+        return isIn
+    }
+    
+    func updateSongList(name: String, artist: String, artwork: String, upvotes: Int, downvotes: Int, totalvotes: Int, id: String) {
+        let newUpvotes = upvotes + 1
+        let newTotalvotes = totalvotes + 1
+        
+        print("New Upvotes: \(newUpvotes)\nNew Totalvotes: \(newTotalvotes)")
+
+        
+        let song = ["id": id, "name":name, "artist":artist, "artwork":artwork, "upvotes": newUpvotes, "downvotes":downvotes, "totalvotes":newTotalvotes] as [String : Any]
+        
+        refSongList.child(id).setValue(song)
+    }
     
     func addToList() {
-        //        Generate new key inside SongList node and return it
+        print("Added to list \n")
+        //Generate new key inside SongList node and return it
         let key = self.refSongList.childByAutoId().key
-        
+        print("key is: \(key)\n")
         //Create song object, and insert into node
         if let name = track?.trackName, let artist = track?.trackArtist, let artwork = track?.trackImage?.absoluteString {
             
