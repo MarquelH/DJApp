@@ -53,22 +53,16 @@ class DJTableViewController: UITableViewController {
                 
                 for (key,value) in dictionary {
                     
-                    let dj = UserDJ()
+                    if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
                     
-                    dj.djName = value["djName"] as? String
-                    dj.age = value["age"] as? Int
-                    dj.currentLocation = value["currentLocation"] as? String
-                    dj.email = value["email"] as? String
-                    dj.genere = value["genre"] as? String
-                    dj.hometown = value["hometown"] as? String
-                    dj.validated = value["validated"] as? Bool
-                    dj.profilePicURL = value["profilePicURL"] as? String
-                    dj.uid = key
-                    
-                    self.users.append(dj)
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key)
+                        
+                        self.users.append(dj)
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
+                    
                 }
                 
             }

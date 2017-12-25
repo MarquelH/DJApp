@@ -13,10 +13,22 @@ class UserDJ: NSObject {
     var currentLocation: String?
     var djName: String?
     var email: String?
-    var genere: String?
+    var genre: String?
     var hometown: String?
     var validated: Bool?
     var profilePicURL: String?
     var uid: String?
+    
+    init(age: Int, currentLocation: String, djName: String, email: String, genre: String, hometown: String, validated: Bool, profilePicURL: String, uid: String) {
+        self.age = age
+        self.currentLocation = currentLocation
+        self.djName = djName
+        self.email = email
+        self.genre = genre
+        self.hometown = hometown
+        self.validated = validated
+        self.profilePicURL = profilePicURL
+        self.uid = uid
+    }
     
 }

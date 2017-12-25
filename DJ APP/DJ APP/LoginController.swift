@@ -84,7 +84,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     }()
     
     lazy var djOrGuestSegmentedControl: UISegmentedControl = {
-        let sc = UISegmentedControl(items: ["DJ Login", "Guest Login"])
+        let sc = UISegmentedControl(items: [ "Guest Login","DJ Login",])
         sc.backgroundColor = UIColor.blue.withAlphaComponent(0.25)
         sc.tintColor = UIColor.white
         sc.selectedSegmentIndex = 0
@@ -156,102 +156,14 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         view.insertSubview(backgroundImage, at: 0)
 
         setupViews()
+        handleLoginEnterChange()
     }
 
-    func setupViews() {
-        view.addSubview(djGuestLoginButton)
-        view.addSubview(usernameContainer)
-        view.addSubview(passwordContainer)
-        view.addSubview(djOrGuestSegmentedControl)
-        view.addSubview(notUserLabel)
-        view.addSubview(logoInLogin)
-        view.addSubview(logoGo)
-        view.addSubview(logoDJ)
-        usernameContainer.addSubview(usernameTextField)
-        usernameContainer.addSubview(usernameImage)
-        passwordContainer.addSubview(passwordTextField)
-        passwordContainer.addSubview(passwordImage)
-        
-        //ios 9 constraints x,y,w,h
-        usernameContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        usernameContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        usernameContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        usernameContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        
-        logoGo.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75).isActive = true
-        logoGo.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
-        logoGo.topAnchor.constraint(equalTo: logoInLogin.topAnchor, constant: 75)
-        logoGo.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        logoGo.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        
-        
-        logoDJ.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 75).isActive = true
-        logoDJ.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
-        logoDJ.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        logoDJ.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        
-        
-        logoInLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        logoInLogin.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -65).isActive = true
-        logoInLogin.topAnchor.constraint(equalTo: view.topAnchor, constant: 30)
-        logoInLogin.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        logoInLogin.widthAnchor.constraint(equalToConstant: 125).isActive = true
-        
-        
-        notUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        notUserLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        notUserLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        notUserLabel.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor).isActive = true
-        
-        
-        djOrGuestSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        djOrGuestSegmentedControl.bottomAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: -15).isActive = true
-        djOrGuestSegmentedControl.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        djOrGuestSegmentedControl.heightAnchor.constraint(equalToConstant: 24).isActive = true
-
-        
-        passwordContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        passwordContainer.topAnchor.constraint(equalTo: usernameContainer.bottomAnchor, constant: 12).isActive = true
-        passwordContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        passwordContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        
-        
-        djGuestLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        //have to se this to a variable to change it later
-        loginButtonTopAnchor = djGuestLoginButton.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 50)
-        loginButtonTopAnchor?.isActive = true
-        djGuestLoginButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        djGuestLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        
-        
-        usernameImage.centerYAnchor.constraint(equalTo: usernameContainer.centerYAnchor).isActive = true
-        usernameImage.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 12).isActive = true
-        usernameImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        usernameImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        
-        
-        passwordImage.centerYAnchor.constraint(equalTo: passwordContainer.centerYAnchor).isActive = true
-        passwordImage.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 12).isActive = true
-        passwordImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        passwordImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        
-        
-        usernameTextField.topAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: 5).isActive = true
-        usernameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        usernameTextField.rightAnchor.constraint(equalTo: usernameContainer.rightAnchor, constant: -12).isActive = true
-        usernameTextField.leftAnchor.constraint(equalTo: usernameImage.rightAnchor, constant: 12).isActive = true
-        
-        
-        passwordTextField.topAnchor.constraint(equalTo: passwordContainer.topAnchor, constant: 5).isActive = true
-        passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        passwordTextField.rightAnchor.constraint(equalTo: passwordContainer.rightAnchor, constant: -12).isActive = true
-        passwordTextField.leftAnchor.constraint(equalTo: passwordImage.rightAnchor, constant: 12).isActive = true
-    }
     
     
     //Handle what shows when you hit login or enter (UISegmentedController)
     func handleLoginEnterChange() {
-        if (djOrGuestSegmentedControl.selectedSegmentIndex == 0) {
+        if (djOrGuestSegmentedControl.selectedSegmentIndex == 1) {
             djGuestLoginButton.setTitle("Login", for: .normal)
           //  djGuestLoginButton.setTitleColor(UIColor.blue, for: .normal)
           //  usernameContainer.isHidden = false
@@ -276,10 +188,10 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         }
     }
     
-    //Handle what happens when you hit login/enter button 
+    //Handle what happens when you hit login/enter button
     func handleLoginEnter() {
         //login was hit
-        if (djOrGuestSegmentedControl.selectedSegmentIndex == 0){
+        if (djOrGuestSegmentedControl.selectedSegmentIndex == 1){
             handleLogin()
         }
         //Guest enter was hit
@@ -334,26 +246,22 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
                         if (validated) {
                             
                             //Create DJ variable, and store the dictionary snapshot into it.
-                            
-                            let dj = UserDJ()
-                            
-                            dj.djName = dictionary["djName"] as? String
-                            dj.age = dictionary["age"] as? Int
-                            dj.currentLocation = dictionary["currentLocation"] as? String
-                            dj.email = dictionary["email"] as? String
-                            dj.genere = dictionary["genre"] as? String
-                            dj.hometown = dictionary["hometown"] as? String
-                            dj.validated = dictionary["validated"] as? Bool
-                            dj.profilePicURL = dictionary["profilePicURL"] as? String
-                            
-                            
-                            //Send DJ to DJRootViewController
-                            let djRootViewController = DJRootViewController()
-                            djRootViewController.dj = dj
-                            
-                            let djNavController = UINavigationController(rootViewController: djRootViewController)
-                            self.present(djNavController, animated: true, completion: nil)
-                            
+                            if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
+                                
+                                let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)
+                                
+                                //Send DJ to DJRootViewController
+                                let djRootViewController = DJRootViewController()
+                                djRootViewController.dj = dj
+                                
+                                let djNavController = UINavigationController(rootViewController: djRootViewController)
+                                self.present(djNavController, animated: true, completion: nil)
+                                
+                            }
+                            else {
+                                print("Parsing the DJ went wrong")
+                            }
+           
                             
                             
                         }
@@ -375,6 +283,98 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         present(djTableNavController, animated: true, completion: nil)
         
     }
+    
+    func setupViews() {
+        view.addSubview(djGuestLoginButton)
+        view.addSubview(usernameContainer)
+        view.addSubview(passwordContainer)
+        view.addSubview(djOrGuestSegmentedControl)
+        view.addSubview(notUserLabel)
+        view.addSubview(logoInLogin)
+        view.addSubview(logoGo)
+        view.addSubview(logoDJ)
+        usernameContainer.addSubview(usernameTextField)
+        usernameContainer.addSubview(usernameImage)
+        passwordContainer.addSubview(passwordTextField)
+        passwordContainer.addSubview(passwordImage)
+        
+        //ios 9 constraints x,y,w,h
+        usernameContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        usernameContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        usernameContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        usernameContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        
+        logoGo.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -75).isActive = true
+        logoGo.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
+        logoGo.topAnchor.constraint(equalTo: logoInLogin.topAnchor, constant: 75)
+        logoGo.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        logoGo.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        
+        logoDJ.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 75).isActive = true
+        logoDJ.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -25).isActive = true
+        logoDJ.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        logoDJ.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        
+        logoInLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logoInLogin.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -65).isActive = true
+        logoInLogin.topAnchor.constraint(equalTo: view.topAnchor, constant: 30)
+        logoInLogin.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        logoInLogin.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        
+        
+        notUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        notUserLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        notUserLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        notUserLabel.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor).isActive = true
+        
+        
+        djOrGuestSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        djOrGuestSegmentedControl.bottomAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: -15).isActive = true
+        djOrGuestSegmentedControl.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        djOrGuestSegmentedControl.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
+        
+        passwordContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        passwordContainer.topAnchor.constraint(equalTo: usernameContainer.bottomAnchor, constant: 12).isActive = true
+        passwordContainer.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        passwordContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        
+        
+        djGuestLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        //have to se this to a variable to change it later
+        loginButtonTopAnchor = djGuestLoginButton.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 50)
+        loginButtonTopAnchor?.isActive = true
+        djGuestLoginButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        djGuestLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        
+        
+        usernameImage.centerYAnchor.constraint(equalTo: usernameContainer.centerYAnchor).isActive = true
+        usernameImage.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 12).isActive = true
+        usernameImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        usernameImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        
+        passwordImage.centerYAnchor.constraint(equalTo: passwordContainer.centerYAnchor).isActive = true
+        passwordImage.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 12).isActive = true
+        passwordImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        passwordImage.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        
+        usernameTextField.topAnchor.constraint(equalTo: usernameContainer.topAnchor, constant: 5).isActive = true
+        usernameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        usernameTextField.rightAnchor.constraint(equalTo: usernameContainer.rightAnchor, constant: -12).isActive = true
+        usernameTextField.leftAnchor.constraint(equalTo: usernameImage.rightAnchor, constant: 12).isActive = true
+        
+        
+        passwordTextField.topAnchor.constraint(equalTo: passwordContainer.topAnchor, constant: 5).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        passwordTextField.rightAnchor.constraint(equalTo: passwordContainer.rightAnchor, constant: -12).isActive = true
+        passwordTextField.leftAnchor.constraint(equalTo: passwordImage.rightAnchor, constant: 12).isActive = true
+    }
+    
+    
+    
 }
-
 
