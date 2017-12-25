@@ -7,14 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
-//UISearchResultsUpdating,
 class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate, SearchToSelectedProtocol  {
     
-
     let searchCellId = "searchCellId"
     var searchText: String?
     var dj: UserDJ?
+    var currentSnapshot: [String: AnyObject]?
 
     
     var results = [TrackItem]() {
@@ -68,6 +68,8 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         //Register reusable cell with class
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
 
+        
+        
         setupTableView()
         turnScrollAndBouncOff()
     }
@@ -91,6 +93,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
 
     // HELPERS -------------
+    
     func setSeachDJ(dj: UserDJ) {
         self.dj = dj
     }
@@ -115,6 +118,14 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         selectedTrack.track = results[index]
         selectedTrack.dj = dj
         selectedTrack.delegate = self
+        guard let x = self.currentSnapshot else {
+            print("Presenting Selected Track Controller, with snapshot = nil")
+            return
+        }
+        print("Presenting Selected Track Controller, with snapshot: ")
+        dump(x)
+        selectedTrack.currentSnapshot = x
+        
         self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
     }
     

@@ -14,11 +14,24 @@ struct TrackItem {
     var trackArtist: String?
     
     var trackImage: URL?
+    var upvotes: Int?
+    var downvotes: Int?
+    var totalvotes: Int?
+    var id: String?
     
     init(trackName: String, trackArtist: String, trackImage: URL) {
         self.trackName = trackName
         self.trackArtist = trackArtist
         self.trackImage = trackImage
+        id = ""
+        upvotes = 0
+        downvotes = 0
+        totalvotes = 0
+        
+    }
+    
+    init() {
+        
     }
     
 }

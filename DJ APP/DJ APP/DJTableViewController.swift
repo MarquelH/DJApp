@@ -135,7 +135,6 @@ class DJTableViewController: UITableViewController {
         customTabBarController.profileController.dj = users[indexPath.row]
         customTabBarController.songController.dj = users[indexPath.row]
         customTabBarController.searchTrackController.dj = users[indexPath.row]
-
         
         //Insert views into navigation controller
         present(customTabBarController, animated: true, completion: nil)

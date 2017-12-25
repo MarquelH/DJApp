@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import Firebase
+
 
 class SongTableViewController: UITableViewController  {
 
     var dj: UserDJ?
     let trackCellId: String = "trackCellId"
-
+    var currentSnapshot: [String: AnyObject]?
+    var refSongList: DatabaseReference!
+    var tableSongList = [TrackItem]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,9 +29,82 @@ class SongTableViewController: UITableViewController  {
         self.extendedLayoutIncludesOpaqueBars = true
         self.automaticallyAdjustsScrollViewInsets = true
         
+        //Set the reference to the dj selected
+        if let uidKey = dj?.uid {
+            refSongList = Database.database().reference().child("SongList").child(uidKey)
+        }
+        else {
+            print("DJ does not have uid")
+        }
+        
         setupNavigationBar()
         setupViews()
+        fetchSongList()
 
+
+    }
+    
+    //HELPERS -------------------------
+    func fetchSongList() {
+        print("Will now fetch songlist")
+        refSongList.observe(.value, with: {(snapshot) in
+            print("Recieved Snapshot")
+            if snapshot.exists() {
+                print("Snapshot exists")
+            }
+            else {
+                print("Snapshot does not exist")
+            }
+            
+            //Make sure snapshot is there
+            guard let workingSnap = snapshot.value as? [String: AnyObject] else {
+                print("Snapshot.value is not OK")
+                return
+            }
+            //Assign working snap to current snap
+            self.currentSnapshot = workingSnap
+            print("SongTable working snap: ")
+            dump(workingSnap)
+            //Tell delegate to assign its current snap to be our working/current snap
+            if let searchTrackTabController = self.tabBarController?.viewControllers?[2] as? SearchTrackViewController {
+                searchTrackTabController.currentSnapshot = workingSnap
+                
+            }
+            else {
+                print("Something wrong with tabbar controller")
+            }
+            
+            
+            //Change occured so remove all of the songs in tableSongList
+            self.tableSongList.removeAll()
+            
+            for (key, value) in workingSnap {
+                
+                var newTrack = TrackItem()
+                
+                newTrack.trackName = value["name"] as? String
+                newTrack.trackArtist = value["artist"] as? String
+                newTrack.id = key
+                newTrack.downvotes = value["downvotes"] as? Int
+                newTrack.upvotes = value["upvotes"] as? Int
+                newTrack.totalvotes = value["totalvotes"] as? Int
+                if let artwork = value["artwork"] as? String {
+                    newTrack.trackImage = URL.init(string: artwork)
+                }
+                else {
+                    print("artwork field for song \(newTrack.trackName ?? "trackName"), is nil")
+                }
+                
+                self.tableSongList.append(newTrack)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            
+        }, withCancel: {(error) in
+            print("\(error.localizedDescription)")
+        })
+        
     }
     
     func setupNavigationBar() {

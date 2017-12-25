@@ -9,6 +9,8 @@
 import UIKit
 
 class CustomTabBarController: UITabBarController {
+ 
+    
     var dj: UserDJ?
     var djUID: String?
     
@@ -45,7 +47,10 @@ class CustomTabBarController: UITabBarController {
         self.selectedIndex = 1;
         
     }
+    
 
+    //Remove all results from search table when you move to a different screen... maybe not the best if I
+    //Can't clear the text from search bar
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let index = item.index(ofAccessibilityElement: item)
         if (index != 2) {
