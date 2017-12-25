@@ -116,114 +116,66 @@ class SelectedTrackViewController: UIViewController {
     
     // HELPERS --------------------
     
-    func songIsPresentInCurrentSnapshot() -> Bool {
-        guard let x = currentSnapshot else {
+    func songIsPresentInCurrentSnapshot() -> (isPresent: Bool, key: String) {
+
+        guard let workingSnap = currentSnapshot else {
             print("Selected Track add, nothing in current snapshot")
-            return false
+            return (false, "")
         }
-        print("Selected Track add snapshot: ")
-        dump(x)
         
-        return true
+        for (key,value) in workingSnap {
+            
+            if value["name"] as? String == track?.trackName && value["artist"] as? String == track?.trackArtist {
+                return (true, key)
+            }
+        }
+        
+        return (false, "")
     }
     
     func handleAdd() {
         print ("add")
         
-        _ = songIsPresentInCurrentSnapshot()
-        //Add experation time?
+        let isPresentTuple = songIsPresentInCurrentSnapshot()
+        //it is present in the songlist
+        if isPresentTuple.0 {
+            print("the Key of the song to be updated is: \(isPresentTuple.1)")
+            updateSongList(key: isPresentTuple.1)
+            
+        }
+        //it isn't present in the songlist
+        else {
+            addToList()
 
+        }
         
-        //Check if in the list, if not add it
-//        if !isInSongListAndUpdateIfPossible() {
-//            addToList()
-//        }
-        
+
         dismiss(animated: true, completion: {
             //change this
             self.delegate?.setSeachDJ(dj: self.dj!)
         })
     }
-    //Function that tries to find the song in the Song List and then call UpdateSongList if true
-    //Structuring like this so that we don't have to do extra work looking at the song list twice
-//    func isInSongListAndUpdateIfPossible() -> Bool {
-//        var isIn: Bool
-//        isIn = false
-//        print("About to call observer")
-//
-//        var handle: UInt = 0
-//        handle = refSongList.observe(.value, with: {(snapshot) in
-//            if snapshot.exists() {
-//                print("snapshot exist")
-//            }
-//            else {
-//                print("Snap doesn't exist")
-//            }
-//
-//            print("I observed an event")
-//            if snapshot.childrenCount > 0 {
-//                if let dictionary = snapshot.value as? [String: AnyObject] {
-//
-//                    for (key, value) in dictionary {
-//
-////                        print("Key: \(key)\nName: \(value["name"] as? String  ?? "name")\nArtist:\(value["artist"] as? String ?? "artist")\n\n")
-////
-////                        print("Track Info:")
-////                        print("Name: \(self.track?.trackName ?? "name")\nArtist:\(self.track?.trackArtist ?? "artist")")
-//
-//                        if (value["name"] as? String == self.track?.trackName && value["artist"] as? String == self.track?.trackArtist) {
-//                            isIn = true
-//
-//                            print("Found the track in \(self.dj?.djName ?? "Dj")'s Songlist")
-//
-//                            if let nameFound = value["name"] as? String, let artistFound = value["artist"] as? String, let artworkFound = value["artwork"] as? String, let upvotesFound = value["upvotes"] as? Int, let downvotesFound = value["downvotes"] as? Int, let totalvotesFound = value["totalvotes"] as? Int {
-//
-//                                print("Upvotes: \(upvotesFound)\nTotalvotes: \(totalvotesFound)\nID: \(key)\n\n")
-//
-//
-//                                self.updateSongList(name: nameFound, artist: artistFound, artwork: artworkFound, upvotes: upvotesFound, downvotes: downvotesFound, totalvotes: totalvotesFound, id: key)
-//                                break
-//                            }
-//
-//
-//
-//                        }
-//                    }
-//                }
-//                else {
-//                    print("Snapshot.value is nil")
-//                }
-//
-//            }
-//            else {
-//                print("snapshot has no children")
-//            }
-//            self.refSongList.removeObserver(withHandle: handle)
-//        }, withCancel: {(error) in
-//            print("\(error.localizedDescription)")
-//        })
-//
-//
-//        return isIn
-//    }
-    
-    func updateSongList(name: String, artist: String, artwork: String, upvotes: Int, downvotes: Int, totalvotes: Int, id: String) {
-        let newUpvotes = upvotes + 1
-        let newTotalvotes = totalvotes + 1
-        
-        print("New Upvotes: \(newUpvotes)\nNew Totalvotes: \(newTotalvotes)")
 
+    
+    func updateSongList(key: String) {
         
-        let song = ["id": id, "name":name, "artist":artist, "artwork":artwork, "upvotes": newUpvotes, "downvotes":downvotes, "totalvotes":newTotalvotes] as [String : AnyObject]
+        guard let workingSnap = self.currentSnapshot, let workingSong = workingSnap[key], var upvotes = workingSong["upvotes"] as? Int, var totalvotes = workingSong["totalvotes"] as? Int, let downvotes = workingSong["downvotes"] as? Int, let name = workingSong["name"] as? String, let artist = workingSong["artist"] as? String, let artwork = workingSong["artwork"] as? String, let id = workingSong["id"] as? String else {
+            
+            print("Current snapshot is empty.")
+            return
+        }
+        upvotes = upvotes + 1
+        totalvotes = totalvotes + 1
+
+        let song = ["id": id, "name":name, "artist":artist, "artwork":artwork, "upvotes": upvotes, "downvotes":downvotes, "totalvotes":totalvotes] as [String : AnyObject]
         
-        refSongList.child(id).setValue(song)
+        refSongList.child(key).setValue(song)
     }
     
     func addToList() {
-        print("Added to list \n")
         //Generate new key inside SongList node and return it
         let key = self.refSongList.childByAutoId().key
-        print("key is: \(key)\n")
+
         //Create song object, and insert into node
         if let name = track?.trackName, let artist = track?.trackArtist, let artwork = track?.trackImage?.absoluteString {
             

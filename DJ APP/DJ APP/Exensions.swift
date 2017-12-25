@@ -79,5 +79,11 @@ extension String {
         return replaced
     }
     
+    func replaceWith60() -> String{
+        //Not very safe, change to range
+        let replaced = self.replacingOccurrences(of: "100x100", with: "60x60")
+        return replaced
+    }
+    
 }
 

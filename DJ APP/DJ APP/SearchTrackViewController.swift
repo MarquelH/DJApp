@@ -118,13 +118,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         selectedTrack.track = results[index]
         selectedTrack.dj = dj
         selectedTrack.delegate = self
-        guard let x = self.currentSnapshot else {
+        guard let workingSnap = self.currentSnapshot else {
             print("Presenting Selected Track Controller, with snapshot = nil")
             return
         }
-        print("Presenting Selected Track Controller, with snapshot: ")
-        dump(x)
-        selectedTrack.currentSnapshot = x
+     
+        selectedTrack.currentSnapshot = workingSnap
         
         self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
     }
@@ -195,9 +194,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         
         
         
-        if let imageURL = track.trackImage?.addHTTPS()?.absoluteString {
+        if let imageURL = track.trackImage?.addHTTPS()?.absoluteString.replaceWith60() {
 
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
+        }
+        else {
+            print("problem with URL parsing")
         }
         
         return cell

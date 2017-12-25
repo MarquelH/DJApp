@@ -16,7 +16,11 @@ class SongTableViewController: UITableViewController  {
     let trackCellId: String = "trackCellId"
     var currentSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
-    var tableSongList = [TrackItem]()
+    var tableSongList = [TrackItem]() {
+        didSet{
+            tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,9 +67,9 @@ class SongTableViewController: UITableViewController  {
             }
             //Assign working snap to current snap
             self.currentSnapshot = workingSnap
-            print("SongTable working snap: ")
-            dump(workingSnap)
-            //Tell delegate to assign its current snap to be our working/current snap
+    
+        
+            //Assign selectedTrack current snap to be our working/current snap
             if let searchTrackTabController = self.tabBarController?.viewControllers?[2] as? SearchTrackViewController {
                 searchTrackTabController.currentSnapshot = workingSnap
                 
@@ -139,29 +143,44 @@ class SongTableViewController: UITableViewController  {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return tableSongList.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105
+        return 60
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
+        
+        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage else {
             
-            cell.textLabel?.text = "Track \(indexPath.row)"
-            cell.detailTextLabel?.text = "Artist: "
+            print("Issue parsing from tableSongList")
+            return cell
+        }
         
-            cell.textLabel?.backgroundColor = UIColor.clear
-            cell.detailTextLabel?.backgroundColor = UIColor.clear
+        cell.textLabel?.text = "\(name)"
+        cell.detailTextLabel?.text = "Artist: \(artist)"
         
-            cell.detailTextLabel?.textColor = UIColor.white
-            cell.textLabel?.textColor = UIColor.white
+        if let imageURL = artwork.addHTTPS()?.absoluteString.replaceWith60() {
+            
+            cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
+        }
+        else {
+            print("problem with URL parsing")
+        }
         
-            cell.textLabel?.font = UIFont(name: "SudegnakNo2", size: 45)
-            cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 25)
-        
-            cell.backgroundColor = UIColor.black
+    
+        cell.textLabel?.backgroundColor = UIColor.clear
+        cell.detailTextLabel?.backgroundColor = UIColor.clear
+    
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.textLabel?.textColor = UIColor.white
+    
+        cell.textLabel?.font = UIFont(name: "SudegnakNo2", size: 45)
+        cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 25)
+    
+        cell.backgroundColor = UIColor.black
         
         return cell
     }

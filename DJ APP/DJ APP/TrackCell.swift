@@ -35,7 +35,7 @@ class TrackCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //10 for left and right, 50 for size of image
+        //15 for left and right, 50 for size of image
 
         //Check if it will run off, then change the width of the text label, so that
         //when we truncate it by character, is stops at the edge of the screen
