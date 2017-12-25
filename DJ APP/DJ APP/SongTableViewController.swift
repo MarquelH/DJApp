@@ -19,8 +19,6 @@ class SongTableViewController: UITableViewController  {
     var tableSongList = [TrackItem]() {
         //do i have to dispatch main
         didSet{
-            print(tableSongList)
-            print(tableSongList.reversed())
             tableView.reloadData()
         }
     }
@@ -95,7 +93,7 @@ class SongTableViewController: UITableViewController  {
                     
                     let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes)
                     
-                    self.tableSongList.append(newTrack)
+                    self.tableSongList.insert(newTrack, at: 0)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -106,12 +104,6 @@ class SongTableViewController: UITableViewController  {
         }, withCancel: {(error) in
             print("\(error.localizedDescription)")
         })
-//        tableSongList = tableSongList.reversed()
-//        print(tableSongList)
-//        DispatchQueue.main.async {
-//            self.tableView.reloadData()
-//        }
-        
     }
     
     func setupNavigationBar() {
