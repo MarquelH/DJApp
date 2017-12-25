@@ -27,29 +27,44 @@ class TrackCell: UITableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.layer.masksToBounds = true
-        iv.layer.cornerRadius = 20
-        iv.layer.borderColor = UIColor.black.cgColor
+        iv.layer.cornerRadius = 30
+        iv.layer.borderColor = UIColor.white.cgColor
         iv.layer.borderWidth = 1
         return iv
     }()
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //15 for left and right, 50 for size of image
-
+        
+        
+        textLabel?.backgroundColor = UIColor.clear
+        detailTextLabel?.backgroundColor = UIColor.clear
+        
+        detailTextLabel?.textColor = UIColor.white
+        textLabel?.textColor = UIColor.white
+        
+        textLabel?.font = UIFont(name: "SudegnakNo2", size: 20)
+        detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 12)
+        
+        backgroundColor = UIColor.black
+        
+        
         //Check if it will run off, then change the width of the text label, so that
         //when we truncate it by character, is stops at the edge of the screen
-        if (textLabel?.frame.width)! > self.frame.width - 70 {
-            let difference = (textLabel?.frame.width)! - self.frame.width + 70
-            textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
+        //80 is from 10 for left and right, 60 for size of image
+        if (textLabel?.frame.width)! > self.frame.width - 80 {
+            let difference = (textLabel?.frame.width)! - self.frame.width + 80
+            textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
         }
         else {
-            textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+            textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y, width: textLabel!.frame.width, height: textLabel!.frame.height)
         }
         textLabel?.backgroundColor = UIColor.clear
         textLabel?.lineBreakMode = .byTruncatingTail
         
-        detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+        
+        //Do I have to check if this guy will run off too?
+        detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
         detailTextLabel?.lineBreakMode = .byTruncatingTail
         
@@ -64,8 +79,8 @@ class TrackCell: UITableViewCell {
         
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true

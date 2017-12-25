@@ -168,7 +168,7 @@ class DJCell: UITableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.layer.masksToBounds = true
-        iv.layer.cornerRadius = 30
+        iv.layer.cornerRadius = 35
         iv.layer.borderColor = UIColor.black.cgColor
         iv.layer.borderWidth = 1
         return iv
@@ -184,10 +184,10 @@ class DJCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //10 for left and right, 60 for size of image
-        textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        //10 for left and right, 70 for size of image
+        textLabel?.frame = CGRect(x: 90, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
         textLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 90, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
 
     }
@@ -208,8 +208,8 @@ class DJCell: UITableViewCell {
         
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
        
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true

@@ -147,7 +147,7 @@ class SongTableViewController: UITableViewController  {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 80
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -169,19 +169,7 @@ class SongTableViewController: UITableViewController  {
         else {
             print("problem with URL parsing")
         }
-        
-    
-        cell.textLabel?.backgroundColor = UIColor.clear
-        cell.detailTextLabel?.backgroundColor = UIColor.clear
-    
-        cell.detailTextLabel?.textColor = UIColor.white
-        cell.textLabel?.textColor = UIColor.white
-    
-        cell.textLabel?.font = UIFont(name: "SudegnakNo2", size: 45)
-        cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 25)
-    
-        cell.backgroundColor = UIColor.black
-        
+                
         return cell
     }
     
