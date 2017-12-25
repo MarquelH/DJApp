@@ -119,6 +119,16 @@ class SelectedTrackViewController: UIViewController {
         
         //Add experation time?
 
+        refSongList.observeSingleEvent(of: .value, with: {(snapshot) in
+            if snapshot.exists() {
+                print(" handle add, oberserver exists")
+            }
+            else {
+                print ("handle add, oberver does not exist")
+            }
+        })
+        
+        
         //Check if in the list, if not add it
         if !isInSongListAndUpdateIfPossible() {
             addToList()
@@ -134,37 +144,44 @@ class SelectedTrackViewController: UIViewController {
     func isInSongListAndUpdateIfPossible() -> Bool {
         var isIn: Bool
         isIn = false
-        var name: String?
-        var artwork: String?
-        var artist: String?
-        var id: String?
-        var upvotes: Int?
-        var downvotes: Int?
-        var totalvotes: Int?
-
+        print("About to call observer")
         
-        refSongList.observe(.value, with: {(snapshot) in
+        var handle: UInt = 0
+        handle = refSongList.observe(.value, with: {(snapshot) in
+            if snapshot.exists() {
+                print("snapshot exist")
+            }
+            else {
+                print("Snap doesn't exist")
+            }
+            
             print("I observed an event")
             if snapshot.childrenCount > 0 {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     
                     for (key, value) in dictionary {
+                        
+//                        print("Key: \(key)\nName: \(value["name"] as? String  ?? "name")\nArtist:\(value["artist"] as? String ?? "artist")\n\n")
+//                        
+//                        print("Track Info:")
+//                        print("Name: \(self.track?.trackName ?? "name")\nArtist:\(self.track?.trackArtist ?? "artist")")
+                        
                         if (value["name"] as? String == self.track?.trackName && value["artist"] as? String == self.track?.trackArtist) {
                             isIn = true
                             
                             print("Found the track in \(self.dj?.djName ?? "Dj")'s Songlist")
                             
-                            name = value["name"] as? String
-                            artwork = value["artwork"] as? String
-                            artist = value["artist"] as? String
-                            id = key
-                            upvotes = value["upvotes"] as? Int
-                            downvotes = value["downvotes"] as? Int
-                            totalvotes = value["totalvotes"] as? Int
+                            if let nameFound = value["name"] as? String, let artistFound = value["artist"] as? String, let artworkFound = value["artwork"] as? String, let upvotesFound = value["upvotes"] as? Int, let downvotesFound = value["downvotes"] as? Int, let totalvotesFound = value["totalvotes"] as? Int {
+                                
+                                print("Upvotes: \(upvotesFound)\nTotalvotes: \(totalvotesFound)\nID: \(key)\n\n")
+                                
+                                
+                                self.updateSongList(name: nameFound, artist: artistFound, artwork: artworkFound, upvotes: upvotesFound, downvotes: downvotesFound, totalvotes: totalvotesFound, id: key)
+                                break
+                            }
                             
-                            print("Upvotes: \(upvotes ?? -1)\nTotalvotes: \(totalvotes ?? -1)\nID: \(id ?? "key")\n\n")
-
-                       
+                            
+                            
                         }
                     }
                 }
@@ -176,16 +193,12 @@ class SelectedTrackViewController: UIViewController {
             else {
                 print("snapshot has no children")
             }
-            
-            
+            self.refSongList.removeObserver(withHandle: handle)
+        }, withCancel: {(error) in
+            print("\(error.localizedDescription)")
         })
-        //Have to make call here, outside of the ref.observe, so not continuously chaning
-        if isIn == true, let nameFound = name, let artistFound = artist, let artworkFound = artwork, let idFound = id, let upvotesFound = upvotes, let downvotesFound = downvotes, let totalvotesFound = totalvotes {
-            
-            print ("Is in is true about to call update song list\n")
-            self.updateSongList(name: nameFound, artist: artistFound, artwork: artworkFound, upvotes: upvotesFound, downvotes: downvotesFound, totalvotes: totalvotesFound, id: idFound)
-            
-        }
+        
+        
         return isIn
     }
     
