@@ -34,4 +34,15 @@ struct TrackItem {
         
     }
     
+    init(trackName: String, trackArtist: String, trackImage: String, id: String, upvotes: Int, downvotes: Int, totalvotes: Int) {
+        self.trackName = trackName
+        self.trackArtist = trackArtist
+        self.id = id
+        self.upvotes = upvotes
+        self.downvotes = downvotes
+        self.totalvotes = totalvotes
+        let trackImageURL = URL.init(string: trackImage)
+        self.trackImage = trackImageURL
+    }
+    
 }

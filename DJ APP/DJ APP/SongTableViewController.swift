@@ -17,7 +17,10 @@ class SongTableViewController: UITableViewController  {
     var currentSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
     var tableSongList = [TrackItem]() {
+        //do i have to dispatch main
         didSet{
+            print(tableSongList)
+            print(tableSongList.reversed())
             tableView.reloadData()
         }
     }
@@ -51,8 +54,11 @@ class SongTableViewController: UITableViewController  {
     //HELPERS -------------------------
     func fetchSongList() {
         print("Will now fetch songlist")
-        refSongList.observe(.value, with: {(snapshot) in
-            print("Recieved Snapshot")
+        //order by total votes so we can append to the table in order
+        
+     
+        refSongList.queryOrdered(byChild: "totalvotes").observe(.value, with: {(snapshot) in
+         
             if snapshot.exists() {
                 print("Snapshot exists")
             }
@@ -82,32 +88,29 @@ class SongTableViewController: UITableViewController  {
             //Change occured so remove all of the songs in tableSongList
             self.tableSongList.removeAll()
             
-            for (key, value) in workingSnap {
+            //for (key, value) in workingSnap {
+            for snap in snapshot.children.allObjects as! [DataSnapshot] {
                 
-                var newTrack = TrackItem()
-                
-                newTrack.trackName = value["name"] as? String
-                newTrack.trackArtist = value["artist"] as? String
-                newTrack.id = key
-                newTrack.downvotes = value["downvotes"] as? Int
-                newTrack.upvotes = value["upvotes"] as? Int
-                newTrack.totalvotes = value["totalvotes"] as? Int
-                if let artwork = value["artwork"] as? String {
-                    newTrack.trackImage = URL.init(string: artwork)
-                }
-                else {
-                    print("artwork field for song \(newTrack.trackName ?? "trackName"), is nil")
-                }
-                
-                self.tableSongList.append(newTrack)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int {
+                    
+                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes)
+                    
+                    self.tableSongList.append(newTrack)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                    
                 }
             }
             
         }, withCancel: {(error) in
             print("\(error.localizedDescription)")
         })
+//        tableSongList = tableSongList.reversed()
+//        print(tableSongList)
+//        DispatchQueue.main.async {
+//            self.tableView.reloadData()
+//        }
         
     }
     
