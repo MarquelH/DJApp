@@ -2,17 +2,13 @@
 //  EventsTableViewController.swift
 //  DJ APP
 //
-//  Created by Marquel Hendricks on 12/23/17.
+//  Created by Marquel Hendricks on 12/24/17.
 //  Copyright © 2017 Marquel and Micajuine App Team. All rights reserved.
 //
 
 import UIKit
-import Firebase
 
 class EventsTableViewController: UITableViewController {
-
-    let userID = Auth.auth().currentUser?.uid
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +19,7 @@ class EventsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

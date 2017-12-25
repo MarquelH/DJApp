@@ -61,9 +61,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="eventDateAndTimeLabel" destination="gRW-pc-tdG" id="KBo-fg-ddl"/>
-                                    <outlet property="eventImage" destination="FYt-4h-Gj0" id="xV4-vb-kkf"/>
-                                    <outlet property="eventLocationLabel" destination="HvD-AR-daH" id="g7K-b9-xPt"/>
+                                    <outlet property="eventDateAndTime" destination="gRW-pc-tdG" id="Dux-x3-VZ1"/>
+                                    <outlet property="eventImage" destination="FYt-4h-Gj0" id="JUq-Lf-Wy9"/>
+                                    <outlet property="eventLocation" destination="HvD-AR-daH" id="yrf-DL-FFX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -120,7 +120,7 @@
         <!--New Event-->
         <scene sceneID="lOK-NI-VI2">
             <objects>
-                <viewController storyboardIdentifier="addNewEventController" id="QZS-pM-8h7" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addNewEventController" id="QZS-pM-8h7" customClass="addEventViewController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9hl-7w-XQc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -148,6 +148,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="535647547.04095399">
                                     <!--2017-12-22 14:59:07 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="datePickerChanged:" destination="QZS-pM-8h7" eventType="valueChanged" id="RwO-Wd-h79"/>
+                                </connections>
                             </datePicker>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VFr-Vw-RVO">
                                 <rect key="frame" x="67" y="426" width="240" height="128"/>
@@ -161,6 +164,9 @@
                                 <state key="normal" title="Click to add image">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="addImageButtonTapped:" destination="QZS-pM-8h7" eventType="touchUpInside" id="dZL-HR-Lx6"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8e-mN-idt">
                                 <rect key="frame" x="16" y="175" width="36" height="21"/>
@@ -208,6 +214,13 @@
                         <viewLayoutGuide key="safeArea" id="pDU-ne-9Ag"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="New Event" image="Create New-50" selectedImage="Create New-50" id="UgQ-tC-aqq"/>
+                    <connections>
+                        <outlet property="addImageButton" destination="uI3-mF-wob" id="blQ-PG-bh5"/>
+                        <outlet property="eventDatePicker" destination="Zk3-gw-6x2" id="eOJ-XG-vwi"/>
+                        <outlet property="eventImage" destination="VFr-Vw-RVO" id="mge-sn-iVf"/>
+                        <outlet property="eventLocation" destination="KVn-7d-BIR" id="sBc-JK-fSv"/>
+                        <outlet property="eventToAddDateAndTime" destination="nlI-07-z31" id="NT9-xM-7dh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ro1-YC-SRo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

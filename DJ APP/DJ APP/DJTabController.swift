@@ -11,7 +11,7 @@ import UIKit
 class DJTabController: UITabBarController {
     
     let homeController = schedulingViewController()
-    let addEventCont = addNewEventController()
+    let addEventCont = addEventViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
