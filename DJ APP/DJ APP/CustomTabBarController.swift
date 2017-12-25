@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CustomTabBarController: UITabBarController {
  
@@ -60,5 +61,16 @@ class CustomTabBarController: UITabBarController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    //remove observers from SongTableViewController
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let uid = dj?.uid, let name = dj?.djName, let handle = songController.handle {
+            Database.database().reference().child("SongList").child(uid).removeObserver(withHandle: handle)
+        }
+        else {
+            print("tabbar being removed does not have dj")
+        }
     }
 }

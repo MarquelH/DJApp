@@ -22,6 +22,8 @@ class SongTableViewController: UITableViewController  {
             tableView.reloadData()
         }
     }
+    var handle: UInt?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,18 +53,8 @@ class SongTableViewController: UITableViewController  {
     
     //HELPERS -------------------------
     func fetchSongList() {
-        print("Will now fetch songlist")
-        //order by total votes so we can append to the table in order
-        
      
-        refSongList.queryOrdered(byChild: "totalvotes").observe(.value, with: {(snapshot) in
-         
-            if snapshot.exists() {
-                print("Snapshot exists")
-            }
-            else {
-                print("Snapshot does not exist")
-            }
+        handle = refSongList.queryOrdered(byChild: "totalvotes").observe(.value, with: {(snapshot) in
             
             //Make sure snapshot is there
             guard let workingSnap = snapshot.value as? [String: AnyObject] else {

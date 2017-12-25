@@ -60,7 +60,7 @@ class SelectedTrackViewController: UIViewController {
     
     let addButton: UIButton = {
        let ab = UIButton(type: .system)
-        ab.setTitle("Add To Queue", for: .normal)
+        ab.setTitle("Request", for: .normal)
         ab.setTitleColor(UIColor.white, for: .normal)
         ab.backgroundColor = UIColor.darkGray
         ab.layer.cornerRadius = 24

@@ -129,7 +129,7 @@ class DJTableViewController: UITableViewController {
         customTabBarController.profileController.dj = users[indexPath.row]
         customTabBarController.songController.dj = users[indexPath.row]
         customTabBarController.searchTrackController.dj = users[indexPath.row]
-        
+        customTabBarController.dj = users[indexPath.row]
         //Insert views into navigation controller
         present(customTabBarController, animated: true, completion: nil)
         
@@ -154,63 +154,6 @@ class DJTableViewController: UITableViewController {
    
 }
 
-class DJCell: UITableViewCell {
-    
-    let profileImageView: ProfileImageView = {
-       let iv = ProfileImageView()
-        iv.image = UIImage(named: "usernameIcon")
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.masksToBounds = true
-        iv.layer.cornerRadius = 35
-        iv.layer.borderColor = UIColor.black.cgColor
-        iv.layer.borderWidth = 1
-        return iv
-    }()
-    
-    
-    let separator: UIView = {
-        let s = UIView()
-        s.translatesAutoresizingMaskIntoConstraints = false
-        s.backgroundColor = UIColor.white
-        return s
-    }()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        //10 for left and right, 70 for size of image
-        textLabel?.frame = CGRect(x: 90, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
-        textLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.frame = CGRect(x: 90, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
-        detailTextLabel?.backgroundColor = UIColor.clear
 
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupViews() {
-        contentView.addSubview(profileImageView)
-        contentView.addSubview(separator)
-        
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
-       
-        separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.widthAnchor.constraint(equalTo: self.widthAnchor, constant: (3/4))
-    }
-}
 
 
