@@ -13,7 +13,7 @@ class CustomTabBarController: UITabBarController {
  
     
     var dj: UserDJ?
-    var djUID: String?
+    var guestID: String?
     
     let songController = SongTableViewController()
     let searchTrackController = SearchTrackViewController()
@@ -23,7 +23,7 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+   
         let songNavController = UINavigationController()
         songNavController.tabBarItem.title = "Songs"
         songNavController.tabBarItem.image = UIImage(named: "listIcon")
@@ -62,6 +62,20 @@ class CustomTabBarController: UITabBarController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    func setGuestID(id: String) {
+        songController.guestID = id
+        searchTrackController.guestID = id
+        profileController.guestID = id
+    }
+    
+    func setDJs(dj: UserDJ) {
+        profileController.dj = dj
+        songController.dj = dj
+        searchTrackController.dj = dj
+        self.dj = dj
+    }
+    
     
     //remove observers from SongTableViewController
     override func viewWillDisappear(_ animated: Bool) {

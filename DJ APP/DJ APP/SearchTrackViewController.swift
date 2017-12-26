@@ -14,6 +14,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     let searchCellId = "searchCellId"
     var searchText: String?
     var dj: UserDJ?
+    var guestID: String?
     var currentSnapshot: [String: AnyObject]?
 
     
@@ -62,6 +63,14 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let id = self.guestID {
+            print("Guest ID in Search viewDidLoad: \(id)")
+        }
+        else {
+            print("Guest ID is not in Search viewDidLoad")
+        }
+
+        
         //Need this to display the next screen
         self.definesPresentationContext = true
         
@@ -74,11 +83,17 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         turnScrollAndBouncOff()
     }
     
-    //When Selected Track is dissmissed, this is not triggered
+    //When Selected Track is dissmissed, this is not triggered, so have to use protcol to pass info
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
+        if let id = self.guestID {
+            print("Guest ID in Search ViewWillAppear: \(id)")
+        }
+        else {
+            print("Guest ID is not in Search ViewWillAppear")
+        }
     }
     
     
@@ -94,8 +109,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
 
     // HELPERS -------------
     
-    func setSeachDJ(dj: UserDJ) {
+    func setSeachDJandGuestID(dj: UserDJ, guestID: String) {
         self.dj = dj
+        self.guestID = guestID
     }
     
     func search() {
@@ -118,7 +134,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         selectedTrack.track = results[index]
         selectedTrack.dj = dj
         selectedTrack.delegate = self
-       
+        if let workingID = guestID {
+            selectedTrack.guestID = workingID
+        }
+        else {
+            print("NO Guest ID being sent to Selected Track")
+        }
         //Don't use if let or guard let here becaues snap could be nil if it is the first song
         selectedTrack.currentSnapshot = self.currentSnapshot
         

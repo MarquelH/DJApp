@@ -12,7 +12,8 @@ import FirebaseDatabase
 class DJPRofileViewController: UIViewController {
     
     var dj: UserDJ?
-    
+    var guestID: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

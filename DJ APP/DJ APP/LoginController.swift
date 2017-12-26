@@ -332,8 +332,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     func isFound(guestEmail: String) ->(found: Bool, key: String) {
         if let workingSnap = self.guestSnapshot {
             for (k,v) in workingSnap {
-                print("K: \(k)")
-                print("V: \(v)")
                 if let email = v["email"] as? String, email == guestEmail {
                     return (true, k)
                 }

@@ -12,7 +12,7 @@ import Firebase
 protocol SearchToSelectedProtocol {
     
     //Pass back dj reference
-    func setSeachDJ(dj: UserDJ)
+    func setSeachDJandGuestID(dj: UserDJ, guestID: String)
     
 }
 
@@ -21,6 +21,7 @@ class SelectedTrackViewController: UIViewController {
     var delegate : SearchToSelectedProtocol?
     var track: TrackItem?
     var dj: UserDJ?
+    var guestID: String?
     var refSongList: DatabaseReference!
     var currentSnapshot: [String: AnyObject]?
    
@@ -91,6 +92,13 @@ class SelectedTrackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let id = self.guestID {
+            print("Guest ID in Selected viewDidLoad: \(id)")
+        }
+        else {
+            print("Guest ID is not in Selected viewDidLoad")
+        }
+        
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
         }
@@ -104,6 +112,13 @@ class SelectedTrackViewController: UIViewController {
         super.viewWillAppear(animated)
         //Change status bar background color
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+        if let id = self.guestID {
+            print("Guest ID in Selected viewWillAppear: \(id)")
+        }
+        else {
+            print("Guest ID is not in Selected viewWillAppear")
+        }
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -151,8 +166,12 @@ class SelectedTrackViewController: UIViewController {
         
 
         dismiss(animated: true, completion: {
-            //change this
-            self.delegate?.setSeachDJ(dj: self.dj!)
+            if let dj = self.dj, let guestID = self.guestID {
+                self.delegate?.setSeachDJandGuestID(dj: dj, guestID: guestID)
+            }
+            else {
+                print("No DJ or Guest ID when selected Track being dismissed")
+            }
         })
     }
 

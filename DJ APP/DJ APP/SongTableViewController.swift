@@ -13,6 +13,7 @@ import Firebase
 class SongTableViewController: UITableViewController {
 
     var dj: UserDJ?
+    var guestID: String?
     let trackCellId: String = "trackCellId"
     var currentSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
@@ -26,10 +27,25 @@ class SongTableViewController: UITableViewController {
     var upvoteIDs: [String] = []
     var downvoteIDs: [String] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let id = self.guestID {
+            print("Guest ID in SongTable ViewWillAppear: \(id)")
+        }
+        else {
+            print("Guest ID is not in SongTable ViewWillAppear")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let id = self.guestID {
+            print("Guest ID in SongTable viewDidLoad: \(id)")
+        }
+        else {
+            print("Guest ID is not in SongTable viewDidLoad")
+        }
 
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
         
