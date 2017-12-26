@@ -13,6 +13,14 @@ class TrackCell: BaseCell {
     let upArrowImage: UIImage = UIImage(named: "UpArrow")!
     let downArrowImage: UIImage = UIImage(named: "DownArrow")!
 
+    let totalvotesLabel: UILabel = {
+       let tvl = UILabel()
+        tvl.translatesAutoresizingMaskIntoConstraints = false
+        tvl.textColor = UIColor.lightGray
+        tvl.font = UIFont.boldSystemFont(ofSize: 18)
+        return tvl
+    }()
+    
     lazy var upArrowImageView: ProfileImageView = {
         let iv = ProfileImageView()
         iv.contentMode = .scaleAspectFill
@@ -32,11 +40,19 @@ class TrackCell: BaseCell {
     func upArrowSelected() {
         upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.green)
         downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.lightGray)
+        totalvotesLabel.textColor = UIColor.green
     }
     
     func downArrowSelected() {
         upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.lightGray)
         downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.red)
+        totalvotesLabel.textColor = UIColor.red
+    }
+    
+    func noSelection() {
+        upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.lightGray)
+        downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.lightGray)
+        totalvotesLabel.textColor = UIColor.lightGray
     }
 
 
@@ -87,6 +103,7 @@ class TrackCell: BaseCell {
         contentView.addSubview(profileImageView)
         contentView.addSubview(upArrowImageView)
         contentView.addSubview(downArrowImageView)
+        contentView.addSubview(totalvotesLabel)
 
         
         profileImageView.layer.cornerRadius = 30
@@ -95,16 +112,22 @@ class TrackCell: BaseCell {
         profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        upArrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -15).isActive = true
+        upArrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -20).isActive = true
         upArrowImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
         upArrowImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         upArrowImageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
         
         
-        downArrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 15).isActive = true
+        downArrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 20).isActive = true
         downArrowImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
         downArrowImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         downArrowImageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        
+        totalvotesLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        totalvotesLabel.centerXAnchor.constraint(equalTo: downArrowImageView.centerXAnchor, constant: 3).isActive = true
+        totalvotesLabel.widthAnchor.constraint(equalToConstant: 15).isActive = true
+       
+        totalvotesLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
     }
     
 //    required init?(coder aDecoder: NSCoder) {

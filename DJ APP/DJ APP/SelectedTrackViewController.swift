@@ -140,7 +140,7 @@ class SelectedTrackViewController: UIViewController {
         //it is present in the songlist
         if isPresentTuple.0 {
             print("the Key of the song to be updated is: \(isPresentTuple.1)")
-            updateSongList(key: isPresentTuple.1)
+            addUpvoteToSong(key: isPresentTuple.1)
             
         }
         //it isn't present in the songlist
@@ -157,19 +157,17 @@ class SelectedTrackViewController: UIViewController {
     }
 
     
-    func updateSongList(key: String) {
-        
-        guard let workingSnap = self.currentSnapshot, let workingSong = workingSnap[key], var upvotes = workingSong["upvotes"] as? Int, var totalvotes = workingSong["totalvotes"] as? Int, let downvotes = workingSong["downvotes"] as? Int, let name = workingSong["name"] as? String, let artist = workingSong["artist"] as? String, let artwork = workingSong["artwork"] as? String, let id = workingSong["id"] as? String else {
+    func addUpvoteToSong(key: String) {
+       
+        if let workingSnapshot = self.currentSnapshot {
             
-            print("Current snapshot is empty.")
-            return
-        }
-        upvotes = upvotes + 1
-        totalvotes = totalvotes + 1
+            let song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, num: 1)
+            refSongList.child(key).setValue(song)
 
-        let song = ["id": id, "name":name, "artist":artist, "artwork":artwork, "upvotes": upvotes, "downvotes":downvotes, "totalvotes":totalvotes] as [String : AnyObject]
-        
-        refSongList.child(key).setValue(song)
+        }
+        else {
+            print("Attempting to upvote: snapshot is empty")
+        }
     }
     
     func addToList() {

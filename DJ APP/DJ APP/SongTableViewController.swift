@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 
-class SongTableViewController: UITableViewController  {
+class SongTableViewController: UITableViewController {
 
     var dj: UserDJ?
     let trackCellId: String = "trackCellId"
@@ -23,6 +23,8 @@ class SongTableViewController: UITableViewController  {
         }
     }
     var handle: UInt?
+    var upvoteIDs: [String] = []
+    var downvoteIDs: [String] = []
     
 
     override func viewDidLoad() {
@@ -101,14 +103,87 @@ class SongTableViewController: UITableViewController  {
     
     func upArrowTapped(tapGesture: UITapGestureRecognizer) {
         print("Up Arrow was tapped")
+        //Add song id to index array -> eventually store this array in firebase
+        //to stop from closing out and reopening and upvoting again
         
-        
+        let taplocation = tapGesture.location(in: self.tableView)
+        if let indexPath = self.tableView.indexPathForRow(at: taplocation), let workingSnapshot = self.currentSnapshot, let key = tableSongList[indexPath.row].id  {
+  
+
+            //Does not have an upvote for this song
+            if !(upvoteIDs.contains(key)) {
+                
+                //Has a downvote, so remove from downvote
+                if downvoteIDs.contains(key) {
+                    if let index = downvoteIDs.index(of: key) {
+                        downvoteIDs.remove(at: index)
+                    }
+                    else {
+                        print("Downvote said it contained key, but it can't find index")
+                    }
+                }
+                
+                    //does not have either, so add to upvote
+                else {
+                    upvoteIDs.append(key)
+                }
+                
+                let song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, num: 1)
+                refSongList.child(key).setValue(song)
+                print("1 upvote added")
+            }
+            //Already has an upvote
+            else {
+                print("Already upvoted this guy, cannot upvote again. ")
+            }
+
+        }
+        else {
+            print("Issue with finding index path, workingSnapshot, or key from index path")
+        }
     }
     
     func downArrowTapped(tapGesture: UITapGestureRecognizer) {
         print("Down Arrow was tapped")
+        print("Up Arrow was tapped")
+        //Add song id to index array -> eventually store this array in firebase
+        //to stop from closing out and reopening and upvoting again
         
-        
+        let taplocation = tapGesture.location(in: self.tableView)
+        if let indexPath = self.tableView.indexPathForRow(at: taplocation), let workingSnapshot = self.currentSnapshot, let key = tableSongList[indexPath.row].id  {
+            
+            
+            ///Does not have an downvote for this song
+            if !(downvoteIDs.contains(key)) {
+                
+                //Has a upvote, so remove from upvote
+                if upvoteIDs.contains(key) {
+                    if let index = upvoteIDs.index(of: key) {
+                        upvoteIDs.remove(at: index)
+                    }
+                    else {
+                        print("Upvote said it contained key, but it can't find index")
+                    }
+                }
+                    
+                    //does not have either, so add to upvote
+                else {
+                    downvoteIDs.append(key)
+                }
+                
+                let song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, num: -1)
+                refSongList.child(key).setValue(song)
+                print("1 downvote added")
+            }
+            //Already has downvote
+            else {
+                print("Already downvoted this guy, cannot downvote again. ")
+            }
+            
+        }
+        else {
+            print("Issue with finding index path, workingSnapshot, or key from index path")
+        }
     }
     
     func setupNavigationBar() {
@@ -153,36 +228,47 @@ class SongTableViewController: UITableViewController  {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
         
-        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage else {
+        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let key = tableSongList[indexPath.row].id else {
             
-            print("Issue parsing from tableSongList")
+            print("Issue parsing from tableSongList, or upvote/downvoteIDs")
             return cell
         }
         
         cell.textLabel?.text = "\(name)"
         cell.detailTextLabel?.text = "Artist: \(artist)"
+        cell.totalvotesLabel.text = "\(totalvotes)"
+    
         
         if let imageURL = artwork.addHTTPS()?.absoluteString.replaceWith60() {
-            
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
         }
         else {
             print("problem with URL parsing")
         }
         
+        //If the upvoteIDs or downvoteIDs array contains the key, do not add tapGesture
+        if upvoteIDs.contains(key) {
+            
+            cell.upArrowSelected()
+        }
+        else if downvoteIDs.contains(key) {
+            cell.downArrowSelected()
+        }
+        else {
+            cell.noSelection()
+        }
+            
         let tapGestureUp = UITapGestureRecognizer(target: self, action: #selector(upArrowTapped(tapGesture:)))
         tapGestureUp.numberOfTapsRequired = 1
         
         let tapGestureDown = UITapGestureRecognizer(target: self, action: #selector(downArrowTapped(tapGesture:)))
         tapGestureDown.numberOfTapsRequired = 1
         
-        cell.upArrowImageView.tag = indexPath.row
-        cell.downArrowImageView.tag = indexPath.row
         
         cell.upArrowImageView.addGestureRecognizer(tapGestureUp)
         cell.downArrowImageView.addGestureRecognizer(tapGestureDown)
-
-                
+        
+    
         return cell
     }
     

@@ -118,12 +118,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         selectedTrack.track = results[index]
         selectedTrack.dj = dj
         selectedTrack.delegate = self
-        guard let workingSnap = self.currentSnapshot else {
-            print("Presenting Selected Track Controller, with snapshot = nil")
-            return
-        }
-     
-        selectedTrack.currentSnapshot = workingSnap
+       
+        //Don't use if let or guard let here becaues snap could be nil if it is the first song
+        selectedTrack.currentSnapshot = self.currentSnapshot
         
         self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
     }

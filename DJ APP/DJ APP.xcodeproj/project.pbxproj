@@ -52,6 +52,7 @@
 		D8AF5C851FF04D1C0095C914 /* RunTimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF5C841FF04D1C0095C914 /* RunTimeError.swift */; };
 		D8C9D65D1FF1AC26005384CF /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D65C1FF1AC25005384CF /* BaseCell.swift */; };
 		D8C9D65F1FF1B11C005384CF /* DJCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D65E1FF1B11C005384CF /* DJCell.swift */; };
+		D8C9D6631FF1DD3D005384CF /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D6621FF1DD3D005384CF /* SnapshotHelper.swift */; };
 		EA9727C810593E59222AF0F7 /* Pods_DJ_APPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7F37CD4B3E866E3B68B5B5 /* Pods_DJ_APPTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +130,7 @@
 		D8AF5C841FF04D1C0095C914 /* RunTimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTimeError.swift; sourceTree = "<group>"; };
 		D8C9D65C1FF1AC25005384CF /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		D8C9D65E1FF1B11C005384CF /* DJCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJCell.swift; sourceTree = "<group>"; };
+		D8C9D6621FF1DD3D005384CF /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		DF9E8685B418938DBF98C491 /* Pods-DJ APPUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8B6905941C00083DBA8FAEE /* Pods-DJ APPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +192,7 @@
 				66AA668A1FF0977F001ECA58 /* EventCell.swift */,
 				D8C9D6611FF1B4A9005384CF /* User Cells */,
 				D81321EB1F71C9A900C130AD /* Exensions.swift */,
+				D8C9D6621FF1DD3D005384CF /* SnapshotHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D83AFBA01F75CF31003B0004 /* TrackCell.swift in Sources */,
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
+				D8C9D6631FF1DD3D005384CF /* SnapshotHelper.swift in Sources */,
 				66BB35081FED5D01002CE07D /* DJTabController.swift in Sources */,
 				D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */,
 				D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */,
