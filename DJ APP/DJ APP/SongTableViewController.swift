@@ -98,6 +98,19 @@ class SongTableViewController: UITableViewController  {
         })
     }
     
+    
+    func upArrowTapped(tapGesture: UITapGestureRecognizer) {
+        print("Up Arrow was tapped")
+        
+        
+    }
+    
+    func downArrowTapped(tapGesture: UITapGestureRecognizer) {
+        print("Down Arrow was tapped")
+        
+        
+    }
+    
     func setupNavigationBar() {
         
         //Back button
@@ -156,6 +169,19 @@ class SongTableViewController: UITableViewController  {
         else {
             print("problem with URL parsing")
         }
+        
+        let tapGestureUp = UITapGestureRecognizer(target: self, action: #selector(upArrowTapped(tapGesture:)))
+        tapGestureUp.numberOfTapsRequired = 1
+        
+        let tapGestureDown = UITapGestureRecognizer(target: self, action: #selector(downArrowTapped(tapGesture:)))
+        tapGestureDown.numberOfTapsRequired = 1
+        
+        cell.upArrowImageView.tag = indexPath.row
+        cell.downArrowImageView.tag = indexPath.row
+        
+        cell.upArrowImageView.addGestureRecognizer(tapGestureUp)
+        cell.downArrowImageView.addGestureRecognizer(tapGestureDown)
+
                 
         return cell
     }

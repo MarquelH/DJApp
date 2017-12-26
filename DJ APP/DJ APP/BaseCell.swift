@@ -10,14 +10,7 @@ import UIKit
 
 class BaseCell: UITableViewCell {
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+  
     let separator: UIView = {
         let s = UIView()
         s.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +41,13 @@ class BaseCell: UITableViewCell {
         separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
 //    override func awakeFromNib() {
