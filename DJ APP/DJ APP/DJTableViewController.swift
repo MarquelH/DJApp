@@ -13,6 +13,7 @@ class DJTableViewController: UITableViewController {
 
     var users = [UserDJ]()
     let cellId = "cellId"
+    var guestID: String?
     
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .default

@@ -276,12 +276,76 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     }
     
     func handleGuestEnter() {
+        guard let email = usernameTextField.text, email != "" else {
+            print("Username is empty")
+            return
+        }
         
         let djTableViewController = DJTableViewController()
         let djTableNavController = UINavigationController(rootViewController: djTableViewController)
         djTableNavController.delegate = self
-        present(djTableNavController, animated: true, completion: nil)
         
+        
+        //check if the email already exists in the database
+        let isFoundTuple = guestIsPresentInDatabase(guestEmail: email)
+        
+        //Found in database
+        if isFoundTuple.0 {
+            print("Found")
+            djTableViewController.guestID = isFoundTuple.key
+        }
+        //Not found in database, add it in
+        else {
+            print("Not found in database")
+            let ref = Database.database().reference().child("guests")
+            let key = ref.childByAutoId().key
+            djTableViewController.guestID = key
+            let values = ["email":email]
+            ref.child(key).setValue(values)
+        }
+        
+        present(djTableNavController, animated: true, completion: nil)
+    }
+    
+    func guestIsPresentInDatabase(guestEmail: String) -> (isPresent: Bool, key: String) {
+        var foundKey: String = ""
+        var found: Bool = false
+        
+        
+//        Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
+//            
+//            for x in snapshot.children {
+//                print(x)
+//            }
+//            
+//        }, withCancel: nil)
+        
+        Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
+            if snapshot.exists() {
+                print("snap exists")
+            }
+            else {
+                print("No exist")
+            }
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+
+                for (key,value) in dictionary {
+                    dump(key)
+                    dump(value)
+                    if let email = value["email"] as? String, email == guestEmail {
+                        print("Guestemail: \(guestEmail)\nDB Email:\(email)")
+                        //return (true, key)
+                        foundKey = key
+                        found = true
+                    }
+
+                }
+
+            }
+
+        }, withCancel: nil)
+//        Database.database().reference().child("guests").removeAllObservers()
+        return (found, foundKey)
     }
     
     func setupViews() {
