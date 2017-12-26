@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SnapshotHelper: NSObject {
 
@@ -35,6 +36,5 @@ class SnapshotHelper: NSObject {
         let song = ["id": id, "name":name, "artist":artist, "artwork":artwork, "upvotes": upvotes, "downvotes":downvotes, "totalvotes":totalvotes] as [String : AnyObject]
         
         return song
-        
     }
 }

@@ -42,7 +42,12 @@ class DJTableViewController: UITableViewController {
         self.tableView.backgroundView = backgroundImage
         
         fetchDjs()
-        
+        if let id = guestID {
+            print("Guest ID: \(id)")
+        }
+        else {
+            print("No guest ID")
+        }
         self.tableView.reloadData()
     }
 

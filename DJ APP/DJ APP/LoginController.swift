@@ -11,6 +11,8 @@ import Firebase
 
 class LoginController: UIViewController, UINavigationControllerDelegate {
     
+    var guestSnapshot: [String: AnyObject]?
+    
     let djGuestLoginButton: UIButton = {
         let lb = UIButton(type: .system)
         lb.setTitle("Login", for: .normal)
@@ -158,8 +160,28 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         setupViews()
         handleLoginEnterChange()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getGuestSnapshot()
+    }
 
     
+    func getGuestSnapshot() {
+        Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
+            if snapshot.exists() {
+                print("snap exists")
+            }
+            else {
+                print("No exist")
+            }
+            DispatchQueue.main.async {
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.guestSnapshot = dictionary
+                }
+            }
+        }, withCancel: nil)
+    }
     
     //Handle what shows when you hit login or enter (UISegmentedController)
     func handleLoginEnterChange() {
@@ -276,8 +298,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     }
     
     func handleGuestEnter() {
+        
         guard let email = usernameTextField.text, email != "" else {
-            print("Username is empty")
+            print("Username is empty, or snap did not load")
             return
         }
         
@@ -286,17 +309,16 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         djTableNavController.delegate = self
         
         
-        //check if the email already exists in the database
-        let isFoundTuple = guestIsPresentInDatabase(guestEmail: email)
+
+        
         
         //Found in database
+        let isFoundTuple = isFound(guestEmail: email)
         if isFoundTuple.0 {
-            print("Found")
             djTableViewController.guestID = isFoundTuple.key
         }
         //Not found in database, add it in
         else {
-            print("Not found in database")
             let ref = Database.database().reference().child("guests")
             let key = ref.childByAutoId().key
             djTableViewController.guestID = key
@@ -307,46 +329,23 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         present(djTableNavController, animated: true, completion: nil)
     }
     
-    func guestIsPresentInDatabase(guestEmail: String) -> (isPresent: Bool, key: String) {
-        var foundKey: String = ""
-        var found: Bool = false
-        
-        
-//        Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
-//            
-//            for x in snapshot.children {
-//                print(x)
-//            }
-//            
-//        }, withCancel: nil)
-        
-        Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
-            if snapshot.exists() {
-                print("snap exists")
-            }
-            else {
-                print("No exist")
-            }
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-
-                for (key,value) in dictionary {
-                    dump(key)
-                    dump(value)
-                    if let email = value["email"] as? String, email == guestEmail {
-                        print("Guestemail: \(guestEmail)\nDB Email:\(email)")
-                        //return (true, key)
-                        foundKey = key
-                        found = true
-                    }
-
+    func isFound(guestEmail: String) ->(found: Bool, key: String) {
+        if let workingSnap = self.guestSnapshot {
+            for (k,v) in workingSnap {
+                print("K: \(k)")
+                print("V: \(v)")
+                if let email = v["email"] as? String, email == guestEmail {
+                    return (true, k)
                 }
-
+               
             }
-
-        }, withCancel: nil)
-//        Database.database().reference().child("guests").removeAllObservers()
-        return (found, foundKey)
+        }
+        else {
+            print("Guest Snap did not load")
+        }
+        return (false, "")
     }
+   
     
     func setupViews() {
         view.addSubview(djGuestLoginButton)
