@@ -221,7 +221,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         tb.barTintColor = UIColor.white
         tb.barStyle = .default
         tb.isTranslucent = true
-        tb.tintColor = UIColor(colorLiteralRed: 75/255, green: 215/255, blue: 100/255, alpha: 1)
+        tb.tintColor = UIColor(red: 75/255, green: 215/255, blue: 100/255, alpha: 1)
         tb.sizeToFit()
         tb.setItems([cancelButton, spacer, doneButton], animated: true)
         return tb
