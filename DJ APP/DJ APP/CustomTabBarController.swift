@@ -67,6 +67,8 @@ class CustomTabBarController: UITabBarController {
         songController.guestID = id
         searchTrackController.guestID = id
         profileController.guestID = id
+        self.guestID = id
+        
     }
     
     func setDJs(dj: UserDJ) {
@@ -77,11 +79,14 @@ class CustomTabBarController: UITabBarController {
     }
     
     
-    //remove observers from SongTableViewController
+    //remove observers from SongTableViewController (SongList and Guests)
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if let uid = dj?.uid, let name = dj?.djName, let handle = songController.handle {
-            Database.database().reference().child("SongList").child(uid).removeObserver(withHandle: handle)
+        if let uid = dj?.uid, let songListHandle = songController.songListHandle, let id = guestID, let guestHandle = songController.guestHandle {
+            
+            Database.database().reference().child("SongList").child(uid).removeObserver(withHandle: songListHandle)
+            
+             Database.database().reference().child("guests").child(id).removeObserver(withHandle: guestHandle)
         }
         else {
             print("tabbar being removed does not have dj")

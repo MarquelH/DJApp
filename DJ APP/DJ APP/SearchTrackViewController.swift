@@ -16,6 +16,8 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     var dj: UserDJ?
     var guestID: String?
     var currentSnapshot: [String: AnyObject]?
+    var guestSnapshot: [String: AnyObject]?
+
 
     
     var results = [TrackItem]() {
@@ -63,13 +65,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let id = self.guestID {
-            print("Guest ID in Search viewDidLoad: \(id)")
-        }
-        else {
-            print("Guest ID is not in Search viewDidLoad")
-        }
-
         
         //Need this to display the next screen
         self.definesPresentationContext = true
@@ -88,12 +83,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         super.viewWillAppear(animated)
         //Change status bar background color
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
-        if let id = self.guestID {
-            print("Guest ID in Search ViewWillAppear: \(id)")
-        }
-        else {
-            print("Guest ID is not in Search ViewWillAppear")
-        }
     }
     
     
@@ -142,6 +131,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         }
         //Don't use if let or guard let here becaues snap could be nil if it is the first song
         selectedTrack.currentSnapshot = self.currentSnapshot
+        selectedTrack.guestSnapshot = self.guestSnapshot
         
         self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
     }

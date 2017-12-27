@@ -37,4 +37,24 @@ class SnapshotHelper: NSObject {
         
         return song
     }
+    
+    //Function that retruns the new object of guest votes to be added
+    func updateGuestVote (key: String, array: [String], addOrDelete: Int) -> [String]{
+       
+        var newArray = array
+        //Add to list
+        if addOrDelete == 1 {
+            newArray.append(key)
+        }
+        //Delete from list
+        else {
+            if let index = newArray.index(of: key) {
+                newArray.remove(at: index)
+            }
+            else {
+                print("error with find the index of the ")
+            }
+        }
+        return newArray
+    }
 }

@@ -24,6 +24,8 @@ class SelectedTrackViewController: UIViewController {
     var guestID: String?
     var refSongList: DatabaseReference!
     var currentSnapshot: [String: AnyObject]?
+    var guestSnapshot: [String: AnyObject]?
+
    
     let mainview: UIView = {
        let mv = UIView()
