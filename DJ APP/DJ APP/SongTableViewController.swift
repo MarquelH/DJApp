@@ -232,7 +232,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     }
     
     func changeCellScore(index: Int, amount: Int) {
-        var track = self.tableSongList[index]
+        let track = self.tableSongList[index]
         if let upvotes = track.upvotes, let downvotes = track.downvotes, let totalvotes = track.totalvotes {
             var result = SnapshotHelper.shared.changeAllScore(upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, amount: amount)
             self.tableSongList[index].upvotes = result[0]
@@ -250,8 +250,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             print("Fetching songlist and up/downvotes ")
             //Set the as the delegate
             homeTabController.songTableDelegate = self
-            homeTabController.fetchSongList()
             homeTabController.fetchGuestUpVotesAndDownVotes()
+            homeTabController.fetchSongList()
         }
         else {
             print("Something wrong with tabbar controller")
