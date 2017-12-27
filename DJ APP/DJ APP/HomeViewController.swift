@@ -126,9 +126,7 @@ class HomeViewController: UIViewController {
     func fetchGuestUpVotesAndDownVotes() {
         
         guestHandle = refGuestByDJ.observe(.value, with: {(snapshot) in
-        
-            print("Votes will be reloaded")
-            
+                    
             self.upvoteIDs.removeAll()
             self.downvoteIDs.removeAll()
             

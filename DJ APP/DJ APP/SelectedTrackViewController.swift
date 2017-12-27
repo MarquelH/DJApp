@@ -16,115 +16,59 @@ protocol SearchToSelectedProtocol {
     
 }
 
-class SelectedTrackViewController: UIViewController {
-    
+class SelectedTrackViewController: UIViewController, FetchDataForSelectedTrack {
+
     var delegate : SearchToSelectedProtocol?
     var track: TrackItem?
     var dj: UserDJ?
     var guestID: String?
     var refSongList: DatabaseReference!
+    var refGuestByDJ: DatabaseReference!
+    var tableSongList = [TrackItem]()
+    var upvoteIDs: [String] = []
+    var downvoteIDs: [String] = []
     var currentSnapshot: [String: AnyObject]?
-    var guestSnapshot: [String: AnyObject]?
-
-   
-    let mainview: UIView = {
-       let mv = UIView()
-        mv.translatesAutoresizingMaskIntoConstraints = false
-        mv.backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        mv.isOpaque = false
-        
-        return mv
-    }()
-    
-    let trackImageView: UIImageView = {
-        let tiv = UIImageView()
-        tiv.translatesAutoresizingMaskIntoConstraints = false
-        tiv.contentMode = .scaleAspectFill
-        return tiv
-    }()
-    
-    let trackName: UILabel = {
-       let tn = UILabel()
-        tn.textColor = UIColor.white
-        tn.textAlignment = .center
-        tn.font = UIFont.boldSystemFont(ofSize: 24)
-        tn.translatesAutoresizingMaskIntoConstraints = false
-        return tn
-    }()
-    
-    let trackArtist: UILabel = {
-        let ta = UILabel()
-        ta.textColor = UIColor.white
-        ta.textAlignment = .center
-        ta.font = UIFont.boldSystemFont(ofSize: 16)
-        ta.translatesAutoresizingMaskIntoConstraints = false
-        return ta
-    }()
-    
-    let addButton: UIButton = {
-       let ab = UIButton(type: .system)
-        ab.setTitle("Request", for: .normal)
-        ab.setTitleColor(UIColor.white, for: .normal)
-        ab.backgroundColor = UIColor.darkGray
-        ab.layer.cornerRadius = 24
-        ab.layer.borderWidth = 1
-        ab.layer.borderColor = UIColor.purple.cgColor
-        ab.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        ab.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
-        ab.translatesAutoresizingMaskIntoConstraints = false
-        
-        return ab
-    }()
-    let cancelButton: UIButton = {
-        let cb = UIButton(type: .system)
-        cb.setTitle("Cancel", for: .normal)
-        cb.setTitleColor(UIColor.white, for: .normal)
-        cb.backgroundColor = UIColor.darkGray
-        cb.layer.cornerRadius = 24
-        cb.layer.borderWidth = 1
-        cb.layer.borderColor = UIColor.purple.cgColor
-        cb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        cb.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
-        cb.translatesAutoresizingMaskIntoConstraints = false
-        
-        return cb
-    }()
- 
+    var homeTabController: HomeViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let id = self.guestID {
-            print("Guest ID in Selected viewDidLoad: \(id)")
-        }
-        else {
-            print("Guest ID is not in Selected viewDidLoad")
-        }
-        
+        //Set the reference to the dj selected
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
+            //Set the reference to the guest
+            if let id = self.guestID {
+                refGuestByDJ = Database.database().reference().child("guests").child(id).child(uidKey)
+                
+            }
+            else {
+                print("Guest ID is not in SongTable viewDidLoad")
+            }
+            
         }
         else {
             print("DJ does not have uid")
         }
         setupViews()
+        
+        guard let homeController = homeTabController else {
+            print("Something wrong with tabbar controller")
+            return
+        }
+        
+        //Inital set up for SongList, Snapshot, and UP/Downvotes
+        homeController.selectedTrackDelegate = self
+        homeController.fetchSongList()
+        homeController.fetchGuestUpVotesAndDownVotes()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
-        if let id = self.guestID {
-            print("Guest ID in Selected viewWillAppear: \(id)")
-        }
-        else {
-            print("Guest ID is not in Selected viewWillAppear")
-        }
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
         super.viewWillDisappear(animated)
         //Change status bar background color
         UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
@@ -132,6 +76,67 @@ class SelectedTrackViewController: UIViewController {
     
     
     // HELPERS --------------------
+    
+    func setSongList(fetchedSnapshot: [String : AnyObject], songTableList: [TrackItem]) {
+        self.currentSnapshot = fetchedSnapshot
+        self.tableSongList = songTableList
+    }
+    
+    func setGuestByDJ(fetchedUpvote: [String], fetchedDownvote: [String]) {
+        self.upvoteIDs = fetchedUpvote
+        self.downvoteIDs = fetchedDownvote
+    }
+    
+    //Might have to change this to pull data just before we add.
+    func handleAdd() {
+        print ("add")
+        
+        let isPresentTuple = songIsPresentInCurrentSnapshot()
+        //it is present in the songlist
+        if isPresentTuple.0 {
+            
+            //check if not in upvote
+            if !upvoteIDs.contains(isPresentTuple.1) {
+                
+                //check if in downvote, if it is, then upvote by two and add to upvote
+                if downvoteIDs.contains(isPresentTuple.1) {
+                    if let index = downvoteIDs.index(of: isPresentTuple.1) {
+                        downvoteIDs.remove(at: index)
+                        upvoteIDs.append(isPresentTuple.1)
+                        updateRefGuestByDJ()
+                        addUpvoteToSong(key: isPresentTuple.1, amount: 2)
+
+                    }
+                }
+                //else in neither, add to upvote and upvote by 1
+                else {
+                    upvoteIDs.append(isPresentTuple.1)
+                    updateRefGuestByDJ()
+                    addUpvoteToSong(key: isPresentTuple.1, amount: 1)
+
+                }
+            }
+            //it is in upvote -> can't upvote again -> exit
+        }
+        //it isn't present in the songlist, so no upvotes or downvotes
+        else {
+            print("Song not present, must add")
+            addToList()
+        }
+        dismiss(animated: true, completion: {
+            if let dj = self.dj, let guestID = self.guestID {
+                self.delegate?.setSeachDJandGuestID(dj: dj, guestID: guestID)
+            }
+            else {
+                print("No DJ or Guest ID when selected Track being dismissed")
+            }
+        })
+    }
+    
+    func updateRefGuestByDJ() {
+        let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
+        refGuestByDJ.setValue(value)
+    }
     
     func songIsPresentInCurrentSnapshot() -> (isPresent: Bool, key: String) {
 
@@ -150,40 +155,12 @@ class SelectedTrackViewController: UIViewController {
         return (false, "")
     }
     
-    func handleAdd() {
-        print ("add")
-        
-        let isPresentTuple = songIsPresentInCurrentSnapshot()
-        //it is present in the songlist
-        if isPresentTuple.0 {
-            print("the Key of the song to be updated is: \(isPresentTuple.1)")
-            addUpvoteToSong(key: isPresentTuple.1)
-            
-        }
-        //it isn't present in the songlist
-        else {
-            print("Song not present, must add")
-            addToList()
-
-        }
-        
-
-        dismiss(animated: true, completion: {
-            if let dj = self.dj, let guestID = self.guestID {
-                self.delegate?.setSeachDJandGuestID(dj: dj, guestID: guestID)
-            }
-            else {
-                print("No DJ or Guest ID when selected Track being dismissed")
-            }
-        })
-    }
-
-    
-    func addUpvoteToSong(key: String) {
+    //Adds either 1 (or 2, and removes a downvote) upvotes to the Songlist through snapshot helper
+    func addUpvoteToSong(key: String, amount: Int) {
        
         if let workingSnapshot = self.currentSnapshot {
             
-            let song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, num: 1)
+            let song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: amount)
             refSongList.child(key).setValue(song)
 
         }
@@ -202,6 +179,10 @@ class SelectedTrackViewController: UIViewController {
             let song = ["id": key, "name":name, "artist":artist, "artwork":artwork, "upvotes": 1, "downvotes":0, "totalvotes":1] as [String : AnyObject]
             
             refSongList.child(key).setValue(song)
+            
+            //update the upvoteIDs
+            upvoteIDs.append(key)
+            updateRefGuestByDJ()
         }
         else {
             print("Track has no info in it")
@@ -210,7 +191,14 @@ class SelectedTrackViewController: UIViewController {
     
     func handleCancel() {
         print ("cancel")
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: {
+            if let dj = self.dj, let guestID = self.guestID {
+                self.delegate?.setSeachDJandGuestID(dj: dj, guestID: guestID)
+            }
+            else {
+                print("No DJ or Guest ID when selected Track being dismissed")
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -256,9 +244,8 @@ class SelectedTrackViewController: UIViewController {
         mainview.addSubview(trackImageView)
         mainview.addSubview(trackName)
         mainview.addSubview(trackArtist)
-        
-        
 
+        
         mainview.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         mainview.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         mainview.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
@@ -291,6 +278,72 @@ class SelectedTrackViewController: UIViewController {
         cancelButton.heightAnchor.constraint(equalTo: addButton.heightAnchor).isActive = true
         
     }
+    
+    
+    
+    let mainview: UIView = {
+        let mv = UIView()
+        mv.translatesAutoresizingMaskIntoConstraints = false
+        mv.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        mv.isOpaque = false
+        
+        return mv
+    }()
+    
+    let trackImageView: UIImageView = {
+        let tiv = UIImageView()
+        tiv.translatesAutoresizingMaskIntoConstraints = false
+        tiv.contentMode = .scaleAspectFill
+        return tiv
+    }()
+    
+    let trackName: UILabel = {
+        let tn = UILabel()
+        tn.textColor = UIColor.white
+        tn.textAlignment = .center
+        tn.font = UIFont.boldSystemFont(ofSize: 24)
+        tn.translatesAutoresizingMaskIntoConstraints = false
+        return tn
+    }()
+    
+    let trackArtist: UILabel = {
+        let ta = UILabel()
+        ta.textColor = UIColor.white
+        ta.textAlignment = .center
+        ta.font = UIFont.boldSystemFont(ofSize: 16)
+        ta.translatesAutoresizingMaskIntoConstraints = false
+        return ta
+    }()
+    
+    let addButton: UIButton = {
+        let ab = UIButton(type: .system)
+        ab.setTitle("Request", for: .normal)
+        ab.setTitleColor(UIColor.white, for: .normal)
+        ab.backgroundColor = UIColor.darkGray
+        ab.layer.cornerRadius = 24
+        ab.layer.borderWidth = 1
+        ab.layer.borderColor = UIColor.purple.cgColor
+        ab.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        ab.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
+        ab.translatesAutoresizingMaskIntoConstraints = false
+        
+        return ab
+    }()
+    let cancelButton: UIButton = {
+        let cb = UIButton(type: .system)
+        cb.setTitle("Cancel", for: .normal)
+        cb.setTitleColor(UIColor.white, for: .normal)
+        cb.backgroundColor = UIColor.darkGray
+        cb.layer.cornerRadius = 24
+        cb.layer.borderWidth = 1
+        cb.layer.borderColor = UIColor.purple.cgColor
+        cb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        cb.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        cb.translatesAutoresizingMaskIntoConstraints = false
+        
+        return cb
+    }()
+    
 
 
 }
