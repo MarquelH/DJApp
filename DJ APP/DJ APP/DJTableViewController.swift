@@ -15,8 +15,16 @@ class DJTableViewController: UITableViewController {
     let cellId = "cellId"
     var guestID: String?
     
+    lazy var refreshController: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(self.fetchDjs), for: UIControlEvents.valueChanged)
+        rc.tintColor = UIColor.blue.withAlphaComponent(0.75)
+        return rc
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = .default
+        fetchDjs()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -26,13 +34,15 @@ class DJTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
+        setupTableView()
+        self.tableView.reloadData()
         
+    }
 
-        //remove seperators from empty cells
-        self.tableView.separatorStyle = .none
+    func setupTableView() {
+        //Register cells and remove seperators
         self.tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
-
+        self.tableView.separatorStyle = .none
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "headphonesImage")
@@ -41,16 +51,10 @@ class DJTableViewController: UITableViewController {
         //view.insertSubview(backgroundImage, at: 0)
         self.tableView.backgroundView = backgroundImage
         
-        fetchDjs()
-        if let id = guestID {
-            print("Guest ID: \(id)")
-        }
-        else {
-            print("No guest ID")
-        }
-        self.tableView.reloadData()
+        //Set refresh controller
+        self.tableView.refreshControl = refreshController
     }
-
+    
     func fetchDjs() {
         
         Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -74,7 +78,7 @@ class DJTableViewController: UITableViewController {
             }
             
         }, withCancel: nil)
-        
+        refreshController.endRefreshing()
     }
     
 
@@ -152,6 +156,7 @@ class DJTableViewController: UITableViewController {
         navigationItem.title = "DJ List"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
     }
 
     func handleLogout() {

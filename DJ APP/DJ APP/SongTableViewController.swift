@@ -29,6 +29,13 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     var upvoteIDs: [String] = []
     var downvoteIDs: [String] = []
     
+    lazy var refreshController: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(self.refreshData), for: UIControlEvents.valueChanged)
+        rc.tintColor = UIColor.blue.withAlphaComponent(0.75)
+        return rc
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.refreshData()
@@ -38,6 +45,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         super.viewDidLoad()
         print("SongTable viewDidLoad")
 
+        
         //Set the reference to the dj selected
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
@@ -256,6 +264,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         else {
             print("Something wrong with tabbar controller")
         }
+        refreshController.endRefreshing()
     }
     
     
@@ -283,6 +292,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     func setupViews() {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.black
+        tableView.refreshControl = refreshController
+
     }
     
     func handleBack() {
@@ -308,7 +319,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             return cell
         }
         
-        print("totalvotes: \(tableSongList[indexPath.row].totalvotes)")
         cell.textLabel?.text = "\(name)"
         cell.detailTextLabel?.text = "Artist: \(artist)"
         cell.totalvotesLabel.text = "\(totalvotes)"
