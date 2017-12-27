@@ -22,12 +22,32 @@ class DJTableViewController: UITableViewController {
         return rc
     }()
     
+    let noDJLabel: UILabel = {
+        let nrl = UILabel()
+        nrl.translatesAutoresizingMaskIntoConstraints = false
+        nrl.textColor = UIColor.blue
+        nrl.text = "No DJs are playing right now\nCheck again later"
+        nrl.textAlignment = .center
+        nrl.font = UIFont.boldSystemFont(ofSize: 20)
+        nrl.lineBreakMode = .byWordWrapping
+        nrl.numberOfLines = 0
+        return nrl
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .default
+        noDJLabel.isHidden = true
         fetchDjs()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        displayLabel()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
@@ -53,6 +73,21 @@ class DJTableViewController: UITableViewController {
         
         //Set refresh controller
         self.tableView.refreshControl = refreshController
+        
+        self.tableView.addSubview(noDJLabel)
+        noDJLabel.centerXAnchor.constraint(equalTo: self.tableView.centerXAnchor).isActive = true
+        noDJLabel.centerYAnchor.constraint(equalTo: self.tableView.centerYAnchor).isActive = true
+        noDJLabel.widthAnchor.constraint(equalTo: self.tableView.widthAnchor).isActive = true
+        noDJLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
+    }
+    
+    func displayLabel() {
+        if users.isEmpty {
+            noDJLabel.isHidden = false
+        }
+        else {
+            noDJLabel.isHidden = true
+        }
     }
     
     func fetchDjs() {

@@ -36,6 +36,18 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         return rc
     }()
     
+    let noRequestLabel: UILabel = {
+        let nrl = UILabel()
+        nrl.translatesAutoresizingMaskIntoConstraints = false
+        nrl.textColor = UIColor.white
+        nrl.text = "No songs requested\nBe the first to request a song!"
+        nrl.textAlignment = .center
+        nrl.font = UIFont.boldSystemFont(ofSize: 20)
+        nrl.lineBreakMode = .byWordWrapping
+        nrl.numberOfLines = 0
+        return nrl
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.refreshData()
@@ -43,34 +55,22 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("SongTable viewDidLoad")
 
         
-        //Set the reference to the dj selected
+        //Set the reference to the dj selected & to the guest
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
-            //Set the reference to the guest
             if let id = self.guestID {
                 refGuestByDJ = Database.database().reference().child("guests").child(id).child(uidKey)
-                
             }
             else {
                 print("Guest ID is not in SongTable viewDidLoad")
             }
-            
         }
         else {
             print("DJ does not have uid")
         }
-        
-        
-        tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
-        
-        self.edgesForExtendedLayout = []
-        //self.navigationController?.navigationBar.isTranslucent = false
-        self.extendedLayoutIncludesOpaqueBars = true
-        self.automaticallyAdjustsScrollViewInsets = true
-        
+
         setupNavigationBar()
         setupViews()
     }
@@ -87,6 +87,9 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+
+        displayLabel()
+        refreshController.endRefreshing()
     }
     
     func upArrowTapped(tapGesture: UITapGestureRecognizer) {
@@ -159,7 +162,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             print("Issue with finding index path, workingSnapshot, or key from index path")
         }
         
-        print("Relaoding Table")
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -255,7 +257,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     
     func refreshData() {
         if let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController  {
-            print("Fetching songlist and up/downvotes ")
             //Set the as the delegate
             homeTabController.songTableDelegate = self
             homeTabController.fetchGuestUpVotesAndDownVotes()
@@ -264,7 +265,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         else {
             print("Something wrong with tabbar controller")
         }
-        refreshController.endRefreshing()
+        
     }
     
     
@@ -290,10 +291,30 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     }
 
     func setupViews() {
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.black
-        tableView.refreshControl = refreshController
-
+        self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
+        self.tableView.separatorStyle = .none
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.refreshControl = refreshController
+        
+        self.edgesForExtendedLayout = []
+        //self.navigationController?.navigationBar.isTranslucent = false
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.automaticallyAdjustsScrollViewInsets = true
+        
+        self.tableView.addSubview(noRequestLabel)
+        noRequestLabel.centerXAnchor.constraint(equalTo: self.tableView.centerXAnchor).isActive = true
+        noRequestLabel.centerYAnchor.constraint(equalTo: self.tableView.centerYAnchor).isActive = true
+        noRequestLabel.widthAnchor.constraint(equalTo: self.tableView.widthAnchor).isActive = true
+        noRequestLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
+    }
+    
+    func displayLabel() {
+        if tableSongList.isEmpty {
+            noRequestLabel.isHidden = false
+        }
+        else {
+            noRequestLabel.isHidden = true
+        }
     }
     
     func handleBack() {
@@ -356,8 +377,5 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     
         return cell
     }
-    
-    
-    
 }
 

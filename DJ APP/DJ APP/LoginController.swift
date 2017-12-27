@@ -182,25 +182,18 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     func handleLoginEnterChange() {
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 1) {
             djGuestLoginButton.setTitle("Login", for: .normal)
-          //  djGuestLoginButton.setTitleColor(UIColor.blue, for: .normal)
-          //  usernameContainer.isHidden = false
             passwordContainer.isHidden = false
-          //  usernameImage.isHidden = false
             passwordImage.isHidden = false
             passwordTextField.isHidden = false
-           // usernameTextField.isHidden = false
             notUserLabel.isHidden = false
             loginButtonTopAnchor?.constant = 25
         }
         else {
             loginButtonTopAnchor?.constant = -55
             notUserLabel.isHidden = true
-          //  usernameContainer.isHidden = true
             passwordContainer.isHidden = true
-         //   usernameImage.isHidden = true
             passwordImage.isHidden = true
             passwordTextField.isHidden = true
-          //  usernameTextField.isHidden = true
             djGuestLoginButton.setTitle("Enter", for: .normal)
         }
     }
