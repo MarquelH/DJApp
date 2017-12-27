@@ -9,49 +9,16 @@
 import UIKit
 import Firebase
 
-class addEventViewController: UIViewController, UIPickerViewDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class addEventViewController: UIViewController {
 
+    var eventSnapshot: [String: AnyObject]?
+    
     var dj: UserDJ?
     var refEventList: DatabaseReference!
-    
-    @IBOutlet weak var eventImage: UIImageView!
-    @IBOutlet weak var addImageButton: UIButton!
     
     @IBOutlet weak var eventLocation: UITextField!
     @IBOutlet weak var eventDatePicker: UIDatePicker!
     @IBOutlet weak var eventToAddDateAndTime: UITextField!
-    
-    
-    
-    @IBAction func addImageButtonTapped(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        present(imagePicker, animated: true, completion: nil)
-    }
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        var selectedImage: UIImage?
-        
-        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-            selectedImage = editedImage
-        } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            selectedImage = originalImage
-        }
-        
-        if let selectedImageFromPicker = selectedImage {
-            eventImage.image = selectedImageFromPicker
-            addImageButton.setTitle("Edit Photo", for: .normal)
-            let headphonesColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-            addImageButton.setTitleColor(headphonesColor, for: .normal)
-            addImageButton.backgroundColor = UIColor.clear
-        }
-        dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func dpConfig(_ sender: UITextField) {
             let datePickerView = UIDatePicker()
@@ -75,41 +42,84 @@ class addEventViewController: UIViewController, UIPickerViewDelegate, UIScrollVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.black
+        self.view.backgroundColor = UIColor.gray
+        
+        if let uidKey = dj?.uid {
+            refEventList = Database.database().reference().child("Events").child(uidKey)
+        }
+        else {
+            print("DJ does not have uid")
+        }
+        
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getEventSnapshot()
+    }
+    
+    func getEventSnapshot(){
+        Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
+            if snapshot.exists() {
+                print("snap exists")
+            }
+            else {
+                print("snap does not exist")
+            }
+            DispatchQueue.main.async {
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.eventSnapshot = dictionary
+                }
+            }
+        }, withCancel: nil)
+    }
+    
+    func isFound(eventDateAndTime: String) ->(found: Bool, key: String) {
+        if let workingSnap = self.eventSnapshot {
+            for (k,v) in workingSnap {
+                if let dateAndTime = v["DateAndTime"] as? String, dateAndTime == eventDateAndTime {
+                    return (true, k)
+                }
+                
+            }
+        }
+        else {
+            print("Guest Snap did not load")
+        }
+        return (false, "")
+    }
+    
+    @IBAction func addEvent(_ sender: Any) {
+        handleEntry()
+    }
     
     func handleEntry(){
-        print("Added to list \n")
+        guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "" else {
+            print("date & time is empty, or snap did not load")
+            return
+        }
+        
+        guard let location = eventLocation.text, location != "" else {
+            print("location is empty, or snap did not load")
+            return
+        }
+        
+        let isFoundTuple = isFound(eventDateAndTime: dateAndTime)
+        if isFoundTuple.0 { //Checking for event at same date and time
+            print("something is already scheduled at that time")
+            return
+        }
+        else{
         //Generate new key inside EventList node and return it
         let key = self.refEventList.childByAutoId().key
         print("key is: \(key)\n")
-        
-        let imageName = NSUUID().uuidString
-        let storageRef = Storage.storage().reference().child("\(imageName).jpg")
-        
-        
-        //Image Compression for optimization
-        if let EVENTSImage = self.eventImage.image, let uploadData = UIImageJPEGRepresentation(EVENTSImage, 0.075) {
-            
-            
-            storageRef.putData(uploadData, metadata: nil, completion: {
-                (metadata, error) in
-                if let error = error{
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                if let eventImageUrl = metadata?.downloadURL()?.absoluteString{
-                    let event = ["id": key, "location":self.eventLocation.text!, "DateAndTime":self.eventToAddDateAndTime.text!,
-                                 "eventPicURL":eventImageUrl] as [String : Any]
+
+                    let event = ["id": key, "location":self.eventLocation.text!, "DateAndTime":self.eventToAddDateAndTime.text!] as [String : Any]
                     
                     self.refEventList.child(key).setValue(event)
-                }
-    })
+            }
         }
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -25,7 +25,7 @@ class DJTabController: UITabBarController {
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        
+        self.present(addEventCont, animated: true, completion: nil)
     }
     
     
