@@ -61,8 +61,8 @@ class TrackCell: BaseCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textLabel?.font = UIFont(name: "SudegnakNo2", size: 20)
-        detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 12)
+        textLabel?.font = UIFont(name: "SudegnakNo2", size: 26)
+        detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 24)
         
         textLabel?.backgroundColor = UIColor.clear
         detailTextLabel?.backgroundColor = UIColor.clear

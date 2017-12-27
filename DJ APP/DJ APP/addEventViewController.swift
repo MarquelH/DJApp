@@ -18,8 +18,10 @@ class addEventViewController: UIViewController, UIPickerViewDelegate, UIScrollVi
     @IBOutlet weak var addImageButton: UIButton!
     
     @IBOutlet weak var eventLocation: UITextField!
-    @IBOutlet weak var eventToAddDateAndTime: UITextField!
     @IBOutlet weak var eventDatePicker: UIDatePicker!
+    @IBOutlet weak var eventToAddDateAndTime: UITextField!
+    
+    
     
     @IBAction func addImageButtonTapped(_ sender: Any) {
         let imagePicker = UIImagePickerController()
@@ -43,14 +45,23 @@ class addEventViewController: UIViewController, UIPickerViewDelegate, UIScrollVi
         
         if let selectedImageFromPicker = selectedImage {
             eventImage.image = selectedImageFromPicker
-            addImageButton.setTitle("Edit\nPhoto", for: .normal)
+            addImageButton.setTitle("Edit Photo", for: .normal)
             let headphonesColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
             addImageButton.setTitleColor(headphonesColor, for: .normal)
+            addImageButton.backgroundColor = UIColor.clear
         }
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func datePickerChanged(_ sender: Any) {
+    @IBAction func dpConfig(_ sender: UITextField) {
+            let datePickerView = UIDatePicker()
+            datePickerView.datePickerMode = .date
+            sender.inputView = datePickerView
+            datePickerView.addTarget(self, action: #selector(datePickerChanged(_:)), for: .valueChanged)
+    }
+    
+    
+    @IBAction func datePickerChanged(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.short
@@ -64,8 +75,7 @@ class addEventViewController: UIViewController, UIPickerViewDelegate, UIScrollVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEntry))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.view.backgroundColor = UIColor.black
         // Do any additional setup after loading the view.
     }
     

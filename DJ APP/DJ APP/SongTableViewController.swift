@@ -290,13 +290,10 @@ class SongTableViewController: UITableViewController {
     func setupNavigationBar() {
         
         //Back button
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleBack))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        //Bar
-        self.navigationController?.navigationBar.barTintColor = UIColor.darkGray
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purple]
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 25) as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any]
         
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"
@@ -308,7 +305,7 @@ class SongTableViewController: UITableViewController {
 
     func setupViews() {
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.darkGray
+        tableView.backgroundColor = UIColor.black
     }
     
     func handleBack() {

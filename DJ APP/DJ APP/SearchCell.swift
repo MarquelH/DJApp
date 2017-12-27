@@ -12,7 +12,7 @@ class SearchCell: BaseCell {
 
     override func setupViews() {
         super.setupViews()
-        contentView.backgroundColor = UIColor.purple
+        contentView.backgroundColor = UIColor.black
         
         contentView.addSubview(profileImageView)
 
@@ -28,8 +28,11 @@ class SearchCell: BaseCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textLabel?.font = UIFont(name: "SudegnakNo2", size: 18)
-        detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 12)
+        textLabel?.font = UIFont(name: "SudegnakNo2", size: 26)
+        detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 24)
+        
+        textLabel?.textColor = UIColor.white
+        detailTextLabel?.textColor = UIColor.white
         
         textLabel?.backgroundColor = UIColor.clear
         detailTextLabel?.backgroundColor = UIColor.clear

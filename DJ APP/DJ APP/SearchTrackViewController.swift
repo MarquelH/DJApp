@@ -176,10 +176,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         
         tableView.separatorStyle = .none
         tableView.tableHeaderView = searchController.searchBar
-        tableView.backgroundColor = UIColor.darkGray
+        tableView.backgroundColor = UIColor.black
         tableView.backgroundView = noResults
-        
-
+        tableView.separatorColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -201,7 +200,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         cell.detailTextLabel?.text = track.trackArtist
         
         
-        
         if let imageURL = track.trackImage?.addHTTPS()?.absoluteString.replaceWith60() {
 
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
@@ -214,6 +212,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 105
     }
 }

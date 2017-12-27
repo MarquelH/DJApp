@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -102,7 +102,17 @@
             <objects>
                 <tabBarController storyboardIdentifier="DJTabController" automaticallyAdjustsScrollViewInsets="NO" id="Eam-iq-EQ2" customClass="DJTabController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="eTy-Le-kAO"/>
+                    <navigationItem key="navigationItem" id="eTy-Le-kAO">
+                        <barButtonItem key="leftBarButtonItem" systemItem="rewind" id="e10-Bh-vf9">
+                            <color key="tintColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Pdq-dZ-BjD">
+                            <color key="tintColor" red="0.85490196078431369" green="0.10588235294117647" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="addTapped:" destination="Eam-iq-EQ2" id="vrz-2j-kZE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hLQ-DN-WPG">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -120,6 +130,7 @@
         <!--New Event-->
         <scene sceneID="lOK-NI-VI2">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ro1-YC-SRo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="addNewEventController" id="QZS-pM-8h7" customClass="addEventViewController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9hl-7w-XQc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -131,7 +142,7 @@
                                     <constraint firstAttribute="height" constant="21" id="BcI-X5-jyd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="RJ Bentleys" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KVn-7d-BIR">
@@ -143,8 +154,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Zk3-gw-6x2">
-                                <rect key="frame" x="0.0" y="256" width="375" height="162"/>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="Zk3-gw-6x2">
+                                <rect key="frame" x="0.0" y="256" width="375" height="118"/>
                                 <date key="date" timeIntervalSinceReferenceDate="535647547.04095399">
                                     <!--2017-12-22 14:59:07 +0000-->
                                 </date>
@@ -153,13 +164,13 @@
                                 </connections>
                             </datePicker>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VFr-Vw-RVO">
-                                <rect key="frame" x="67" y="426" width="240" height="128"/>
+                                <rect key="frame" x="67" y="382" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="3ht-OO-Uep"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uI3-mF-wob">
-                                <rect key="frame" x="67" y="426" width="240" height="128"/>
+                                <rect key="frame" x="67" y="382" width="240" height="128"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Click to add image">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -174,7 +185,7 @@
                                     <constraint firstAttribute="height" constant="21" id="3W8-Vw-C4n"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nlI-07-z31">
@@ -185,7 +196,18 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="dpConfig:" destination="QZS-pM-8h7" eventType="editingDidEnd" id="c73-AJ-jOj"/>
+                                </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C81-bh-HPV">
+                                <rect key="frame" x="16" y="536" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Add Event">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -214,15 +236,16 @@
                         <viewLayoutGuide key="safeArea" id="pDU-ne-9Ag"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="New Event" image="Create New-50" selectedImage="Create New-50" id="UgQ-tC-aqq"/>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addImageButton" destination="uI3-mF-wob" id="blQ-PG-bh5"/>
                         <outlet property="eventDatePicker" destination="Zk3-gw-6x2" id="eOJ-XG-vwi"/>
                         <outlet property="eventImage" destination="VFr-Vw-RVO" id="mge-sn-iVf"/>
                         <outlet property="eventLocation" destination="KVn-7d-BIR" id="sBc-JK-fSv"/>
-                        <outlet property="eventToAddDateAndTime" destination="nlI-07-z31" id="NT9-xM-7dh"/>
+                        <outlet property="eventToAddDateAndTime" destination="nlI-07-z31" id="jt9-vc-4Ng"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ro1-YC-SRo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="477.60000000000002" y="548.27586206896558"/>
         </scene>

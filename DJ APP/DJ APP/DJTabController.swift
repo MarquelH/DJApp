@@ -24,6 +24,9 @@ class DJTabController: UITabBarController {
         //viewControllers = [homeController,addEventCont]
     }
     
+    @IBAction func addTapped(_ sender: Any) {
+        
+    }
     
     
 }
