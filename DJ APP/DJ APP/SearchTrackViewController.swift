@@ -123,15 +123,14 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         selectedTrack.track = results[index]
         selectedTrack.dj = dj
         selectedTrack.delegate = self
-        if let workingID = guestID {
+  
+        if let workingID = guestID, let homeController = self.tabBarController?.viewControllers?[0] as? HomeViewController {
             selectedTrack.guestID = workingID
+            selectedTrack.homeTabController = homeController
         }
         else {
-            print("NO Guest ID being sent to Selected Track")
+            print("NO Guest ID or homeTabController being sent to Selected Track")
         }
-        //Don't use if let or guard let here becaues snap could be nil if it is the first song
-        selectedTrack.currentSnapshot = self.currentSnapshot
-        selectedTrack.guestSnapshot = self.guestSnapshot
         
         self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
     }

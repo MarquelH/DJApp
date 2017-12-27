@@ -309,9 +309,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         djTableNavController.delegate = self
         
         
-
-        
-        
         //Found in database
         let isFoundTuple = isFound(guestEmail: email)
         if isFoundTuple.0 {

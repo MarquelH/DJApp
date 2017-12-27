@@ -17,7 +17,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     let trackCellId: String = "trackCellId"
     //Used for up and down arrows to send to database
     var currentSnapshot: [String: AnyObject]?
-    var guestSnapshot: [String: AnyObject]?
+    //var guestSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
     var refGuestByDJ: DatabaseReference!
     var tableSongList = [TrackItem]() {
@@ -38,8 +38,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         //Set the reference to the dj selected
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
@@ -57,6 +55,11 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             print("DJ does not have uid")
         }
         
+        guard let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController else {
+            print("Something wrong with tabbar controller")
+            return
+        }
+        
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
         
         self.edgesForExtendedLayout = []
@@ -64,19 +67,14 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         self.extendedLayoutIncludesOpaqueBars = true
         self.automaticallyAdjustsScrollViewInsets = true
         
-     
-        
         setupNavigationBar()
         setupViews()
         
-        guard let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController else {
-            print("Something wrong with tabbar controller")
-            return
-        }
-        
+        //Inital setup for SongList, Snapshot, and UP/Downvotes
         homeTabController.songTableDelegate = self
         homeTabController.fetchSongList()
         homeTabController.fetchGuestUpVotesAndDownVotes()
+        
 //        fetchSongList()
 //        fetchGuestUpVotesAndDownVotes()
     }
@@ -206,37 +204,68 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     func upArrowTapped(tapGesture: UITapGestureRecognizer) {
 
         let taplocation = tapGesture.location(in: self.tableView)
+        var song: [String:AnyObject]?
         
         if let indexPath = self.tableView.indexPathForRow(at: taplocation), let workingSnapshot = self.currentSnapshot, let key = tableSongList[indexPath.row].id  {
   
             //Does not have an upvote for this song
             if !(self.upvoteIDs.contains(key)) {
                 
-                //Has a downvote, so remove from downvote
+                //Has a downvote, so remove from downvote, and add to upvote (add 2 upvotes)
                 if self.downvoteIDs.contains(key) {
+                    
+                    print("2")
+                    
                     if let index = self.downvoteIDs.index(of: key) {
                         self.downvoteIDs.remove(at: index)
+                        self.upvoteIDs.append(key)
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
+                        song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 2)
                     }
                     else {
                         print("Downvote said it contained key, but it can't find index")
                     }
                 }
                 
-                    //does not have either, so add to upvote
+                //does not have either, so add to upvote
                 else {
+                    
+                    print("1")
+                    
                     self.upvoteIDs.append(key)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
+                    song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 1)
                 }
                 
-                let song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, num: 1)
-                refSongList.child(key).setValue(song)
+                if let workingSong = song {
+                    refSongList.child(key).setValue(workingSong)
+                }
+                else {
+                    print("Adding total values to song was not successful")
+                }
             }
-            //Already has an upvote
+            //Already has an upvote -> remove it
             else {
-                print("Already upvoted this guy, cannot upvote again. ")
+                print("3")
+                if let index = self.upvoteIDs.index(of: key) {
+                    self.upvoteIDs.remove(at: index)
+                    let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
+                    refGuestByDJ.setValue(value)
+                    song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 3)
+                }
+                else {
+                    print("Upvote said it contained key, but it can't find index")
+                }
+                //store the change
+                if let workingSong = song {
+                    refSongList.child(key).setValue(workingSong)
+                }
+                else {
+                    print("Adding totalvotes was unsucessful for downvote")
+                }
+                
             }
 
         }
@@ -248,17 +277,21 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     func downArrowTapped(tapGesture: UITapGestureRecognizer) {
   
         let taplocation = tapGesture.location(in: self.tableView)
+        var song: [String: AnyObject]?
+        
         if let indexPath = self.tableView.indexPathForRow(at: taplocation), let workingSnapshot = self.currentSnapshot, let key = tableSongList[indexPath.row].id  {
             
             ///Does not have an downvote for this song
             if !(self.downvoteIDs.contains(key)) {
                 
-                //Has a upvote, so remove from upvote
+                //Has a upvote, so remove from upvote and add to downvote (add 2 to downvote)
                 if self.upvoteIDs.contains(key) {
                     if let index = self.upvoteIDs.index(of: key) {
                         self.upvoteIDs.remove(at: index)
+                        self.downvoteIDs.append(key)
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
+                        song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -2)
                     }
                     else {
                         print("Upvote said it contained key, but it can't find index")
@@ -270,14 +303,34 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     self.downvoteIDs.append(key)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
+                    song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -1)
                 }
                 
-                let song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, num: -1)
-                refSongList.child(key).setValue(song)
+                if let workingSong = song {
+                    refSongList.child(key).setValue(workingSong)
+                }
+                else {
+                    print("Adding totalvotes was unsucessful for downvote")
+                }
             }
-            //Already has downvote
+            //Already has downvote, so remove it
             else {
-                print("Already downvoted this guy, cannot downvote again. ")
+                if let index = self.downvoteIDs.index(of: key) {
+                    self.downvoteIDs.remove(at: index)
+                    let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
+                    refGuestByDJ.setValue(value)
+                    song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -3)
+                }
+                else {
+                    print("Downvote said it contained key, but it can't find index")
+                }
+                //store the change
+                if let workingSong = song {
+                    refSongList.child(key).setValue(workingSong)
+                }
+                else {
+                    print("Adding totalvotes was unsucessful for downvote")
+                }
             }
             
         }
