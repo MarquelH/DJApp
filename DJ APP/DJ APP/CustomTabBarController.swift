@@ -87,17 +87,17 @@ class CustomTabBarController: UITabBarController {
  
     
     
-    //remove observers from SongTableViewController (SongList and Guests)
+    //remove observers: don't need this anymore since we are taking only single event snapshots
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if let uid = dj?.uid, let songListHandle = homeController.songListHandle, let id = guestID, let guestHandle = homeController.guestHandle {
-            
-            Database.database().reference().child("SongList").child(uid).removeObserver(withHandle: songListHandle)
-            
-             Database.database().reference().child("guests").child(id).removeObserver(withHandle: guestHandle)
-        }
-        else {
-            print("tabbar being removed does not have dj")
-        }
+//        if let uid = dj?.uid, let songListHandle = homeController.songListHandle, let id = guestID, let guestHandle = homeController.guestHandle {
+//
+//            Database.database().reference().child("SongList").child(uid).removeObserver(withHandle: songListHandle)
+//
+//             Database.database().reference().child("guests").child(id).removeObserver(withHandle: guestHandle)
+//        }
+//        else {
+//            print("tabbar being removed does not have dj")
+//        }
     }
 }

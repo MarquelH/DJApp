@@ -30,7 +30,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("SongTable View will Appear")
+        self.refreshData()
     }
 
     override func viewDidLoad() {
@@ -54,10 +54,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             print("DJ does not have uid")
         }
         
-        guard let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController else {
-            print("Something wrong with tabbar controller")
-            return
-        }
         
         tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
         
@@ -68,11 +64,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         
         setupNavigationBar()
         setupViews()
-        
-        //Inital setup for SongList, Snapshot, and UP/Downvotes
-        homeTabController.songTableDelegate = self
-        homeTabController.fetchSongList()
-        homeTabController.fetchGuestUpVotesAndDownVotes()
     }
     
     //HELPERS -------------------------
@@ -108,6 +99,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
                         song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 2)
+                        changeCellScore(index: indexPath.row, amount: 2)
                     }
                     else {
                         print("Downvote said it contained key, but it can't find index")
@@ -121,6 +113,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 1)
+                    changeCellScore(index: indexPath.row, amount: 1)
                 }
                 
                 if let workingSong = song {
@@ -137,6 +130,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 3)
+                    changeCellScore(index: indexPath.row, amount: 3)
                 }
                 else {
                     print("Upvote said it contained key, but it can't find index")
@@ -154,6 +148,11 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         }
         else {
             print("Issue with finding index path, workingSnapshot, or key from index path")
+        }
+        
+        print("Relaoding Table")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     
@@ -175,6 +174,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
                         song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -2)
+                        changeCellScore(index: indexPath.row, amount: -2)
                     }
                     else {
                         print("Upvote said it contained key, but it can't find index")
@@ -187,6 +187,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -1)
+                    changeCellScore(index: indexPath.row, amount: -1)
+
                 }
                 
                 if let workingSong = song {
@@ -203,6 +205,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -3)
+                    changeCellScore(index: indexPath.row, amount: -3)
                 }
                 else {
                     print("Downvote said it contained key, but it can't find index")
@@ -215,15 +218,46 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     print("Adding totalvotes was unsucessful for downvote")
                 }
             }
-            
+            print("Before Reload U: \(self.tableSongList[indexPath.row].upvotes) D: \(self.tableSongList[indexPath.row].downvotes) T: \(self.tableSongList[indexPath.row].totalvotes)")
         }
         else {
             print("Issue with finding index path, workingSnapshot, or key from index path")
         }
+        
+        print("Relaoding Table")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func changeCellScore(index: Int, amount: Int) {
+        var track = self.tableSongList[index]
+        if let upvotes = track.upvotes, let downvotes = track.downvotes, let totalvotes = track.totalvotes {
+            print("Before Change: U: \(upvotes) D: \(downvotes) T: \(totalvotes)")
+            var result = SnapshotHelper.shared.changeAllScore(upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, amount: amount)
+            track.upvotes = result[0]
+            track.downvotes = result[1]
+            track.totalvotes = result[2]
+            print("After Change: U: \(track.upvotes) D: \(track.downvotes) T: \(track.totalvotes)")
+
+        }
+        else {
+            print("Change Cell Score no data in track")
+        }
+        
     }
     
     func refreshData() {
-        print("Refresh was called. ")
+        if let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController  {
+            print("Fetching songlist and up/downvotes ")
+            //Set the as the delegate
+            homeTabController.songTableDelegate = self
+            homeTabController.fetchSongList()
+            homeTabController.fetchGuestUpVotesAndDownVotes()
+        }
+        else {
+            print("Something wrong with tabbar controller")
+        }
     }
     
     

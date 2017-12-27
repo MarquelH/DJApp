@@ -169,12 +169,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     
     func getGuestSnapshot() {
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
-            if snapshot.exists() {
-                print("snap exists")
-            }
-            else {
-                print("No exist")
-            }
+
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.guestSnapshot = dictionary

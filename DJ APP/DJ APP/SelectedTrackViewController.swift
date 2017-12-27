@@ -50,7 +50,6 @@ class SelectedTrackViewController: UIViewController, FetchDataForSelectedTrack {
             print("DJ does not have uid")
         }
         setupViews()
-        
         guard let homeController = homeTabController else {
             print("Something wrong with tabbar controller")
             return
@@ -87,7 +86,7 @@ class SelectedTrackViewController: UIViewController, FetchDataForSelectedTrack {
         self.downvoteIDs = fetchedDownvote
     }
     
-    //Might have to change this to pull data just before we add.
+    //Might have to change this to pull data just before we add. But if we do this, not guarenteed to get the correct data
     func handleAdd() {
         
         let isPresentTuple = songIsPresentInCurrentSnapshot()
