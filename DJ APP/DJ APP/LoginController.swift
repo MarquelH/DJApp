@@ -267,7 +267,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
                         //If user is validated, present DJRootViewController
                         if (validated) {
                             
-                            //Create DJ variable, and store the dictionary snapshot into it.
+                            //Create DJ object, and store the dictionary snapshot into it.
                             if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
                                 
                                 let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)

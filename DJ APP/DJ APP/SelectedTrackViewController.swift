@@ -89,7 +89,6 @@ class SelectedTrackViewController: UIViewController, FetchDataForSelectedTrack {
     
     //Might have to change this to pull data just before we add.
     func handleAdd() {
-        print ("add")
         
         let isPresentTuple = songIsPresentInCurrentSnapshot()
         //it is present in the songlist
@@ -141,7 +140,6 @@ class SelectedTrackViewController: UIViewController, FetchDataForSelectedTrack {
     func songIsPresentInCurrentSnapshot() -> (isPresent: Bool, key: String) {
 
         guard let workingSnap = currentSnapshot else {
-            print("Selected Track add, nothing in current snapshot")
             return (false, "")
         }
         
