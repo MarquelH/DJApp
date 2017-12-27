@@ -131,12 +131,9 @@ class DJTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let customTabBarController = CustomTabBarController()
 
-        //send the selected DJ to new views
-        customTabBarController.setDJs(dj: users[indexPath.row])
-
-        //Send user id to new views
+        //Send selected DJ and guest id to new views
         if let workingID = self.guestID {
-            customTabBarController.setGuestID(id: workingID)
+            customTabBarController.setDJsAndGuestID(dj: users[indexPath.row], id: workingID)
         }
   
         
