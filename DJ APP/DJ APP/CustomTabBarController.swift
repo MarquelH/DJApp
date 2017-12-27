@@ -10,8 +10,7 @@ import UIKit
 import Firebase
 
 class CustomTabBarController: UITabBarController {
- 
-    
+
     var dj: UserDJ?
     var guestID: String?
     
@@ -40,6 +39,7 @@ class CustomTabBarController: UITabBarController {
     
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
+        
 
 //        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
 
@@ -63,20 +63,28 @@ class CustomTabBarController: UITabBarController {
         super.didReceiveMemoryWarning()
     }
     
-    func setGuestID(id: String) {
-        songController.guestID = id
-        searchTrackController.guestID = id
-        profileController.guestID = id
-        self.guestID = id
-        
-    }
-    
-    func setDJs(dj: UserDJ) {
+    func setDJsAndGuestID(dj: UserDJ, id: String) {
         profileController.dj = dj
         songController.dj = dj
         searchTrackController.dj = dj
+        homeController.djID = dj.uid
         self.dj = dj
+        
+        songController.guestID = id
+        searchTrackController.guestID = id
+        profileController.guestID = id
+        homeController.guestID = id
+        self.guestID = id
+        
+        if let uid = dj.uid {
+            homeController.setUpRefs(uidKey: uid, id: id)
+        }
+        else {
+            print("dj from set did not have uid")
+        }
     }
+    
+ 
     
     
     //remove observers from SongTableViewController (SongList and Guests)
