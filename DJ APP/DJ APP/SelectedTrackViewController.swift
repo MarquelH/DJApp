@@ -162,6 +162,7 @@ class SelectedTrackViewController: UIViewController {
         }
         //it isn't present in the songlist
         else {
+            print("Song not present, must add")
             addToList()
 
         }

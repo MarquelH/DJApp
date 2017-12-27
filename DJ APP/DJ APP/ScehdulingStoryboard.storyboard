@@ -79,6 +79,7 @@
         <!--Navigation Controller-->
         <scene sceneID="0dG-lC-P9t">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QHv-2F-5jA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="djScheduleNav" automaticallyAdjustsScrollViewInsets="NO" id="5h5-D8-4OS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tuX-dV-tzM">
@@ -90,7 +91,6 @@
                         <segue destination="Eam-iq-EQ2" kind="relationship" relationship="rootViewController" id="xbh-IZ-Ckw"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QHv-2F-5jA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-676" y="-99"/>
         </scene>
@@ -102,6 +102,9 @@
                     <navigationItem key="navigationItem" id="eTy-Le-kAO">
                         <barButtonItem key="leftBarButtonItem" systemItem="rewind" id="e10-Bh-vf9">
                             <color key="tintColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="backTapped:" destination="Eam-iq-EQ2" id="G7Y-GO-iaV"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Pdq-dZ-BjD">
                             <color key="tintColor" red="0.85490196078431369" green="0.10588235294117647" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -127,7 +130,6 @@
         <!--New Event-->
         <scene sceneID="lOK-NI-VI2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ro1-YC-SRo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="addNewEventController" id="QZS-pM-8h7" customClass="addEventViewController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9hl-7w-XQc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -244,6 +246,7 @@
                         <outlet property="eventToAddDateAndTime" destination="nlI-07-z31" id="jt9-vc-4Ng"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ro1-YC-SRo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="477.60000000000002" y="548.27586206896558"/>
         </scene>

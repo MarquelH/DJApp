@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 class DJTabController: UITabBarController {
     
     let homeController = schedulingViewController()
     let addEventCont = addEventViewController()
+    let djRoot = DJRootViewController()
+    let eventsTable = EventsTableViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +24,17 @@ class DJTabController: UITabBarController {
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
         
-        //viewControllers = [homeController,addEventCont]
+        //viewControllers = [eventsTable,addEventCont]
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        self.present(addEventCont, animated: true, completion: nil)
+        present(addEventCont, animated: true, completion: nil)
     }
+    
+    @IBAction func backTapped(_ sender: Any) {
+        present(djRoot, animated: true, completion: nil)
+    }
+    
     
     
 }

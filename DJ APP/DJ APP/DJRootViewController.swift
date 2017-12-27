@@ -105,12 +105,19 @@ class DJRootViewController: UIViewController {
     
     
     func setupViews() {
+        print("Entering setupViews")
         
         if let name = dj?.djName {
             welcomeLabel.text = "Welcome \(name)!"
         }
+        else{
+            print("DJ did not have an ID for name this time")
+        }
         if let profileUrl = dj?.profilePicURL {
             profilePic.loadImageWithChachfromUrl(urlString: profileUrl)
+        }
+        else{
+            print("DJ did not have an ID for pic this time")
         }
         
         view.addSubview(welcomeLabel)
