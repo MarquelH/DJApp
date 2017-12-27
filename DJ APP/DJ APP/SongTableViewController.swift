@@ -19,7 +19,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     var currentSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
     var refGuestByDJ: DatabaseReference!
-    var tableSongList = [TrackItem]() {
+    var tableSongList = [TrackItem]()
+    {
         //do i have to dispatch main
         didSet{
             tableView.reloadData()
@@ -218,7 +219,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     print("Adding totalvotes was unsucessful for downvote")
                 }
             }
-            print("Before Reload U: \(self.tableSongList[indexPath.row].upvotes) D: \(self.tableSongList[indexPath.row].downvotes) T: \(self.tableSongList[indexPath.row].totalvotes)")
+         
         }
         else {
             print("Issue with finding index path, workingSnapshot, or key from index path")
@@ -233,18 +234,15 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     func changeCellScore(index: Int, amount: Int) {
         var track = self.tableSongList[index]
         if let upvotes = track.upvotes, let downvotes = track.downvotes, let totalvotes = track.totalvotes {
-            print("Before Change: U: \(upvotes) D: \(downvotes) T: \(totalvotes)")
             var result = SnapshotHelper.shared.changeAllScore(upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, amount: amount)
-            track.upvotes = result[0]
-            track.downvotes = result[1]
-            track.totalvotes = result[2]
-            print("After Change: U: \(track.upvotes) D: \(track.downvotes) T: \(track.totalvotes)")
+            self.tableSongList[index].upvotes = result[0]
+            self.tableSongList[index].downvotes = result[1]
+            self.tableSongList[index].totalvotes = result[2]
 
         }
         else {
             print("Change Cell Score no data in track")
         }
-        
     }
     
     func refreshData() {
@@ -310,6 +308,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             return cell
         }
         
+        print("totalvotes: \(tableSongList[indexPath.row].totalvotes)")
         cell.textLabel?.text = "\(name)"
         cell.detailTextLabel?.text = "Artist: \(artist)"
         cell.totalvotesLabel.text = "\(totalvotes)"
