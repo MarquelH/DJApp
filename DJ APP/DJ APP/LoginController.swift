@@ -169,12 +169,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     
     func getGuestSnapshot() {
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
-            if snapshot.exists() {
-                print("snap exists")
-            }
-            else {
-                print("No exist")
-            }
+
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.guestSnapshot = dictionary
@@ -187,25 +182,18 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
     func handleLoginEnterChange() {
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 1) {
             djGuestLoginButton.setTitle("Login", for: .normal)
-          //  djGuestLoginButton.setTitleColor(UIColor.blue, for: .normal)
-          //  usernameContainer.isHidden = false
             passwordContainer.isHidden = false
-          //  usernameImage.isHidden = false
             passwordImage.isHidden = false
             passwordTextField.isHidden = false
-           // usernameTextField.isHidden = false
             notUserLabel.isHidden = false
             loginButtonTopAnchor?.constant = 25
         }
         else {
             loginButtonTopAnchor?.constant = -55
             notUserLabel.isHidden = true
-          //  usernameContainer.isHidden = true
             passwordContainer.isHidden = true
-         //   usernameImage.isHidden = true
             passwordImage.isHidden = true
             passwordTextField.isHidden = true
-          //  usernameTextField.isHidden = true
             djGuestLoginButton.setTitle("Enter", for: .normal)
         }
     }
@@ -267,7 +255,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
                         //If user is validated, present DJRootViewController
                         if (validated) {
                             
-                            //Create DJ variable, and store the dictionary snapshot into it.
+                            //Create DJ object, and store the dictionary snapshot into it.
                             if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
                                 
                                 let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)

@@ -17,66 +17,62 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     let trackCellId: String = "trackCellId"
     //Used for up and down arrows to send to database
     var currentSnapshot: [String: AnyObject]?
-    //var guestSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
     var refGuestByDJ: DatabaseReference!
-    var tableSongList = [TrackItem]() {
+    var tableSongList = [TrackItem]()
+    {
         //do i have to dispatch main
         didSet{
             tableView.reloadData()
         }
     }
-    var songListHandle: UInt?
-    var guestHandle: UInt?
     var upvoteIDs: [String] = []
     var downvoteIDs: [String] = []
     
+    lazy var refreshController: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(self.refreshData), for: UIControlEvents.valueChanged)
+        rc.tintColor = UIColor.blue.withAlphaComponent(0.75)
+        return rc
+    }()
+    
+    let noRequestLabel: UILabel = {
+        let nrl = UILabel()
+        nrl.translatesAutoresizingMaskIntoConstraints = false
+        nrl.textColor = UIColor.white
+        nrl.text = "No songs requested\nBe the first to request a song!"
+        nrl.textAlignment = .center
+        nrl.font = UIFont.boldSystemFont(ofSize: 20)
+        nrl.lineBreakMode = .byWordWrapping
+        nrl.numberOfLines = 0
+        return nrl
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.refreshData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
-        //Set the reference to the dj selected
+        //Set the reference to the dj selected & to the guest
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
-            //Set the reference to the guest
             if let id = self.guestID {
                 refGuestByDJ = Database.database().reference().child("guests").child(id).child(uidKey)
-                
             }
             else {
                 print("Guest ID is not in SongTable viewDidLoad")
             }
-            
         }
         else {
             print("DJ does not have uid")
         }
-        
-        guard let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController else {
-            print("Something wrong with tabbar controller")
-            return
-        }
-        
-        tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
-        
-        self.edgesForExtendedLayout = []
-        //self.navigationController?.navigationBar.isTranslucent = false
-        self.extendedLayoutIncludesOpaqueBars = true
-        self.automaticallyAdjustsScrollViewInsets = true
-        
+
         setupNavigationBar()
         setupViews()
-        
-        //Inital setup for SongList, Snapshot, and UP/Downvotes
-        homeTabController.songTableDelegate = self
-        homeTabController.fetchSongList()
-        homeTabController.fetchGuestUpVotesAndDownVotes()
-        
-//        fetchSongList()
-//        fetchGuestUpVotesAndDownVotes()
     }
     
     //HELPERS -------------------------
@@ -91,130 +87,55 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-    }
-    
-//    func fetchGuestUpVotesAndDownVotes() {
-//
-//        guestHandle = refGuestByDJ.observe(.value, with: {(snapshot) in
-//
-//
-//            print("Votes will be reloaded")
-//
-//            self.upvoteIDs.removeAll()
-//            self.downvoteIDs.removeAll()
-//
-//            //No snap -> remove all from guessSnapShot unless none to begin with
-//            guard let workingSnapshot = snapshot.value as? [String: AnyObject] else {
-//
-//                if var currSnap = self.guestSnapshot {
-//                     currSnap.removeAll()
-//                }
-//
-////                searchTrackTabController.guestSnapshot = self.guestSnapshot
-//                return
-//            }
-//
-//            //Assign working snapshot to guest snapshot
-//            self.guestSnapshot = workingSnapshot
-//
-//            print("Current snapshot:")
-//            dump(self.guestSnapshot)
-//
-//            //Assign selectedTrack guest snap to be our guestsnap
-////            searchTrackTabController.guestSnapshot = self.guestSnapshot
-//
-//            //Guests -> GuestID -> DJ ID -> [String:[Strubg]]
-//            if let value = workingSnapshot as? [String: [String]] {
-//
-//                if let currUpvotes = value["upvotes"] {
-//                    self.upvoteIDs = currUpvotes
-//                }
-//                if let currDownvotes = value["downvotes"] {
-//                    self.downvoteIDs =  currDownvotes
-//                }
-//
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//
-//            }
-//            else {
-//                print("The types for fetching are wrong")
-//            }
-//
-//
-//
-//            }, withCancel: {(error) in
-//                print(error.localizedDescription)})
-//    }
-    
 
-    
-//    func fetchSongList() {
-//
-//        songListHandle = refSongList.queryOrdered(byChild: "totalvotes").observe(.value, with: {(snapshot) in
-////            guard let searchTrackTabController = self.tabBarController?.viewControllers?[2] as? SearchTrackViewController else {
-////
-////                print("Something wrong with tabbar controller")
-////                return
-////            }
-//
-//            //Change occured so remove all of the songs in tableSongList
-//            self.tableSongList.removeAll()
-//
-//            //No Snap for Song list -> Remove all songs from song list, unless it was empty to begin with
-//            guard let workingSnap = snapshot.value as? [String: AnyObject] else {
-//                if var currSnap = self.currentSnapshot {
-//                    currSnap.removeAll()
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
-//                }
-////                searchTrackTabController.currentSnapshot = self.currentSnapshot
-//                return
-//            }
-//            //Assign working snap to current snap
-//            self.currentSnapshot = workingSnap
-//
-//            //Assign selectedTrack current snap to be our working/current snap
-////            searchTrackTabController.currentSnapshot = workingSnap
-//
-//
-//            //SongList -> DJ ID -> [String: AnyObject]
-//            for snap in snapshot.children.allObjects as! [DataSnapshot] {
-//
-//                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int {
-//
-//                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes)
-//
-//                    self.tableSongList.insert(newTrack, at: 0)
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
-//
-//                }
-//            }
-//
-//        }, withCancel: {(error) in
-//            print("\(error.localizedDescription)")
-//        })
-//    }
-    
+        displayLabel()
+        refreshController.endRefreshing()
+    }
     
     func upArrowTapped(tapGesture: UITapGestureRecognizer) {
 
         let taplocation = tapGesture.location(in: self.tableView)
-        var song: [String:AnyObject]?
         
-        if let indexPath = self.tableView.indexPathForRow(at: taplocation), let workingSnapshot = self.currentSnapshot, let key = tableSongList[indexPath.row].id  {
+        if let indexPath = self.tableView.indexPathForRow(at: taplocation)  {
+            addUpvote(index: indexPath.row)
+        }
+        else {
+            print("Issue with finding index path")
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func downArrowTapped(tapGesture: UITapGestureRecognizer) {
   
-            //Does not have an upvote for this song
+        let taplocation = tapGesture.location(in: self.tableView)
+        
+        if let indexPath = self.tableView.indexPathForRow(at: taplocation) {
+            addDownvote(index: indexPath.row)
+        }
+        else {
+            print("Issue with finding index path")
+        }
+        
+        print("Relaoding Table")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    //Reusable function to add upvotes into the arrays and to the database
+    func addUpvote(index: Int) {
+        print("Add up Vote!")
+        var song: [String: AnyObject]?
+
+        if let workingSnapshot = self.currentSnapshot, let key = tableSongList[index].id {
+        //Does not have an upvote for this song
             if !(self.upvoteIDs.contains(key)) {
                 
                 //Has a downvote, so remove from downvote, and add to upvote (add 2 upvotes)
                 if self.downvoteIDs.contains(key) {
-                    
-                    print("2")
                     
                     if let index = self.downvoteIDs.index(of: key) {
                         self.downvoteIDs.remove(at: index)
@@ -222,21 +143,21 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
                         song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 2)
+                        changeCellScore(index: index, amount: 2)
                     }
                     else {
                         print("Downvote said it contained key, but it can't find index")
                     }
                 }
-                
-                //does not have either, so add to upvote
-                else {
                     
-                    print("1")
+                    //does not have either, so add to upvote
+                else {
                     
                     self.upvoteIDs.append(key)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 1)
+                    changeCellScore(index: index, amount: 1)
                 }
                 
                 if let workingSong = song {
@@ -246,14 +167,14 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     print("Adding total values to song was not successful")
                 }
             }
-            //Already has an upvote -> remove it
+                //Already has an upvote -> remove it
             else {
-                print("3")
                 if let index = self.upvoteIDs.index(of: key) {
                     self.upvoteIDs.remove(at: index)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 3)
+                    changeCellScore(index: index, amount: 3)
                 }
                 else {
                     print("Upvote said it contained key, but it can't find index")
@@ -267,21 +188,20 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                 }
                 
             }
-
         }
         else {
-            print("Issue with finding index path, workingSnapshot, or key from index path")
+            print("Error with key or snapshot")
         }
+
     }
     
-    func downArrowTapped(tapGesture: UITapGestureRecognizer) {
-  
-        let taplocation = tapGesture.location(in: self.tableView)
+    //Reusable function to add downvotes into the arrays and to the database
+    func addDownvote(index: Int) {
+        print("Add down Vote!")
         var song: [String: AnyObject]?
-        
-        if let indexPath = self.tableView.indexPathForRow(at: taplocation), let workingSnapshot = self.currentSnapshot, let key = tableSongList[indexPath.row].id  {
-            
-            ///Does not have an downvote for this song
+
+        if let workingSnapshot = self.currentSnapshot, let key = tableSongList[index].id {
+        ///Does not have an downvote for this song
             if !(self.downvoteIDs.contains(key)) {
                 
                 //Has a upvote, so remove from upvote and add to downvote (add 2 to downvote)
@@ -292,18 +212,21 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
                         song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -2)
+                        changeCellScore(index: index, amount: -2)
                     }
                     else {
                         print("Upvote said it contained key, but it can't find index")
                     }
                 }
                     
-                //does not have either, so add to downvote
+                    //does not have either, so add to downvote
                 else {
                     self.downvoteIDs.append(key)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -1)
+                    changeCellScore(index: index, amount: -1)
+                    
                 }
                 
                 if let workingSong = song {
@@ -313,13 +236,14 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     print("Adding totalvotes was unsucessful for downvote")
                 }
             }
-            //Already has downvote, so remove it
+                //Already has downvote, so remove it
             else {
                 if let index = self.downvoteIDs.index(of: key) {
                     self.downvoteIDs.remove(at: index)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -3)
+                    changeCellScore(index: index, amount: -3)
                 }
                 else {
                     print("Downvote said it contained key, but it can't find index")
@@ -332,18 +256,50 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     print("Adding totalvotes was unsucessful for downvote")
                 }
             }
-            
         }
         else {
-            print("Issue with finding index path, workingSnapshot, or key from index path")
+            print("Error with snapshot or key")
         }
     }
+    
+    func changeCellScore(index: Int, amount: Int) {
+        let track = self.tableSongList[index]
+        if let upvotes = track.upvotes, let downvotes = track.downvotes, let totalvotes = track.totalvotes {
+            var result = SnapshotHelper.shared.changeAllScore(upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, amount: amount)
+            self.tableSongList[index].upvotes = result[0]
+            self.tableSongList[index].downvotes = result[1]
+            self.tableSongList[index].totalvotes = result[2]
+
+        }
+        else {
+            print("Change Cell Score no data in track")
+        }
+    }
+    
+    func refreshData() {
+        if let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController  {
+            //Set the as the delegate
+            homeTabController.songTableDelegate = self
+            homeTabController.fetchGuestUpVotesAndDownVotes()
+            homeTabController.fetchSongList()
+        }
+        else {
+            print("Something wrong with tabbar controller")
+        }
+        
+    }
+    
     
     func setupNavigationBar() {
         
         //Back button
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleBack))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        //Refresh button
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshData))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
         //Bar text
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any]
         
@@ -351,21 +307,58 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             self.navigationItem.title = "\(name)" + "'s Requests"
         }
         else {
-            print("Nothing to see here")
+            print("Dj Passed in has no name")
         }
     }
 
     func setupViews() {
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.black
+        self.tableView.register(TrackCell.self, forCellReuseIdentifier: trackCellId)
+        self.tableView.separatorStyle = .none
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.refreshControl = refreshController
+        
+        self.edgesForExtendedLayout = []
+        //self.navigationController?.navigationBar.isTranslucent = false
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.automaticallyAdjustsScrollViewInsets = true
+        
+        self.tableView.addSubview(noRequestLabel)
+        noRequestLabel.centerXAnchor.constraint(equalTo: self.tableView.centerXAnchor).isActive = true
+        noRequestLabel.centerYAnchor.constraint(equalTo: self.tableView.centerYAnchor).isActive = true
+        noRequestLabel.widthAnchor.constraint(equalTo: self.tableView.widthAnchor).isActive = true
+        noRequestLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
+    }
+    
+    func displayLabel() {
+        if tableSongList.isEmpty {
+            noRequestLabel.isHidden = false
+        }
+        else {
+            noRequestLabel.isHidden = true
+        }
     }
     
     func handleBack() {
         self.parent?.dismiss(animated: true, completion: nil)
     }
 
-   
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedSongTrack = SongSelectedTrackController()
+        if self.presentedViewController != nil {
+            //do i have to keep this? w
+            self.dismiss(animated: true, completion: nil)
+        }
+        selectedSongTrack.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        selectedSongTrack.track = tableSongList[indexPath.row]
+        selectedSongTrack.songTableController = self
+        selectedSongTrack.index = indexPath.row
+        self.tabBarController?.present(selectedSongTrack, animated: true, completion: {() in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {() in
+                self.tableView.deselectRow(at: indexPath, animated: false)
+            })
+        })
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return tableSongList.count
@@ -421,8 +414,5 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     
         return cell
     }
-    
-    
-    
 }
 

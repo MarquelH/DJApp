@@ -15,24 +15,54 @@ class DJTableViewController: UITableViewController {
     let cellId = "cellId"
     var guestID: String?
     
+    lazy var refreshController: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(self.fetchDjs), for: UIControlEvents.valueChanged)
+        rc.tintColor = UIColor.blue.withAlphaComponent(0.75)
+        return rc
+    }()
+    
+    let noDJLabel: UILabel = {
+        let nrl = UILabel()
+        nrl.translatesAutoresizingMaskIntoConstraints = false
+        nrl.textColor = UIColor.blue
+        nrl.text = "No DJs are playing right now\nCheck again later"
+        nrl.textAlignment = .center
+        nrl.font = UIFont.boldSystemFont(ofSize: 20)
+        nrl.lineBreakMode = .byWordWrapping
+        nrl.numberOfLines = 0
+        return nrl
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .default
+        noDJLabel.isHidden = true
+        fetchDjs()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        displayLabel()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
+        setupTableView()
+        self.tableView.reloadData()
         
+    }
 
-        //remove seperators from empty cells
-        self.tableView.separatorStyle = .none
+    func setupTableView() {
+        //Register cells and remove seperators
         self.tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
-
+        self.tableView.separatorStyle = .none
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "headphonesImage")
@@ -41,16 +71,25 @@ class DJTableViewController: UITableViewController {
         //view.insertSubview(backgroundImage, at: 0)
         self.tableView.backgroundView = backgroundImage
         
-        fetchDjs()
-        if let id = guestID {
-            print("Guest ID: \(id)")
+        //Set refresh controller
+        self.tableView.refreshControl = refreshController
+        
+        self.tableView.addSubview(noDJLabel)
+        noDJLabel.centerXAnchor.constraint(equalTo: self.tableView.centerXAnchor).isActive = true
+        noDJLabel.centerYAnchor.constraint(equalTo: self.tableView.centerYAnchor).isActive = true
+        noDJLabel.widthAnchor.constraint(equalTo: self.tableView.widthAnchor).isActive = true
+        noDJLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
+    }
+    
+    func displayLabel() {
+        if users.isEmpty {
+            noDJLabel.isHidden = false
         }
         else {
-            print("No guest ID")
+            noDJLabel.isHidden = true
         }
-        self.tableView.reloadData()
     }
-
+    
     func fetchDjs() {
         
         Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -74,7 +113,7 @@ class DJTableViewController: UITableViewController {
             }
             
         }, withCancel: nil)
-        
+        refreshController.endRefreshing()
     }
     
 
@@ -152,6 +191,7 @@ class DJTableViewController: UITableViewController {
         navigationItem.title = "DJ List"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
     }
 
     func handleLogout() {

@@ -44,8 +44,8 @@ class HomeViewController: UIViewController {
     
     func fetchSongList() {
         
-        songListHandle = refSongList.queryOrdered(byChild: "totalvotes").observe(.value, with: {(snapshot) in
-        
+        refSongList.queryOrdered(byChild: "totalvotes").observeSingleEvent(of: .value, with: {(snapshot) in
+            
             self.tableSongList.removeAll()
             
             //No Snap for Song list -> Remove all songs from song list, unless it was empty to begin with
@@ -85,9 +85,9 @@ class HomeViewController: UIViewController {
             //SongList -> DJ ID -> [String: AnyObject]
             for snap in snapshot.children.allObjects as! [DataSnapshot] {
                 
-                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int {
+                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String {
                     
-                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes)
+                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album)
                     
                     self.tableSongList.insert(newTrack, at: 0)
                     //Delegate call here
@@ -119,14 +119,18 @@ class HomeViewController: UIViewController {
                 print("Selected Track delegate not set.")
             }
         }, withCancel: {(error) in
-            print("\(error.localizedDescription)")
+            print(error.localizedDescription)
         })
+        
+//        songListHandle = refSongList.queryOrdered(byChild: "totalvotes").observe(.value, with: {(snapshot) in
+//
+//        }, withCancel: {(error) in
+//            print("\(error.localizedDescription)")
+//        })
     }
     
     func fetchGuestUpVotesAndDownVotes() {
-        
-        guestHandle = refGuestByDJ.observe(.value, with: {(snapshot) in
-                    
+        refGuestByDJ.observeSingleEvent(of: .value, with: {(snapshot) in
             self.upvoteIDs.removeAll()
             self.downvoteIDs.removeAll()
             
@@ -147,7 +151,7 @@ class HomeViewController: UIViewController {
                 }
                 return
             }
-
+            
             
             //Guests -> GuestID -> DJ ID -> [String:[Strubg]]
             if let value = workingSnapshot as? [String: [String]] {
@@ -159,7 +163,7 @@ class HomeViewController: UIViewController {
                     self.downvoteIDs =  currDownvotes
                 }
                 
-            //Delegate call here
+                //Delegate call here
                 if let delegate = self.songTableDelegate {
                     delegate.setGuestByDJ(fetchedUpvote: self.upvoteIDs, fetchedDownvote: self.downvoteIDs)
                 }
@@ -179,7 +183,15 @@ class HomeViewController: UIViewController {
             }
 
         }, withCancel: {(error) in
-            print(error.localizedDescription)})
+            print(error.localizedDescription)
+        })
+        
+        //Observe
+//       guestHandle = refGuestByDJ.observe(.value, with: {(snapshot) in
+//
+//
+//        }, withCancel: {(error) in
+//            print(error.localizedDescription)})
     }
     
     

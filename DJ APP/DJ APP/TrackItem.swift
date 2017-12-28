@@ -12,17 +12,18 @@ struct TrackItem {
     
     var trackName: String?
     var trackArtist: String?
-    
+    var trackAlbum: String?
     var trackImage: URL?
     var upvotes: Int?
     var downvotes: Int?
     var totalvotes: Int?
     var id: String?
     
-    init(trackName: String, trackArtist: String, trackImage: URL) {
+    init(trackName: String, trackArtist: String, trackImage: URL, trackAlbum: String) {
         self.trackName = trackName
         self.trackArtist = trackArtist
         self.trackImage = trackImage
+        self.trackAlbum = trackAlbum
         id = ""
         upvotes = 0
         downvotes = 0
@@ -34,7 +35,7 @@ struct TrackItem {
         
     }
     
-    init(trackName: String, trackArtist: String, trackImage: String, id: String, upvotes: Int, downvotes: Int, totalvotes: Int) {
+    init(trackName: String, trackArtist: String, trackImage: String, id: String, upvotes: Int, downvotes: Int, totalvotes: Int, trackAlbum: String) {
         self.trackName = trackName
         self.trackArtist = trackArtist
         self.id = id
@@ -43,6 +44,7 @@ struct TrackItem {
         self.totalvotes = totalvotes
         let trackImageURL = URL.init(string: trackImage)
         self.trackImage = trackImageURL
+        self.trackAlbum = trackAlbum
     }
     
 }

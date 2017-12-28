@@ -17,43 +17,53 @@ class SnapshotHelper: NSObject {
     //snapshot and value passed in
     func updateTotalvotes(key: String, currentSnapshot: [String: AnyObject], amount: Int) -> [String: AnyObject]{
         
-        guard let workingSong = currentSnapshot[key], var upvotes = workingSong["upvotes"] as? Int, var totalvotes = workingSong["totalvotes"] as? Int, var downvotes = workingSong["downvotes"] as? Int, let name = workingSong["name"] as? String, let artist = workingSong["artist"] as? String, let artwork = workingSong["artwork"] as? String, let id = workingSong["id"] as? String else {
+        guard let workingSong = currentSnapshot[key], let upvotes = workingSong["upvotes"] as? Int, let totalvotes = workingSong["totalvotes"] as? Int, let downvotes = workingSong["downvotes"] as? Int, let name = workingSong["name"] as? String, let artist = workingSong["artist"] as? String, let artwork = workingSong["artwork"] as? String, let id = workingSong["id"] as? String, let album = workingSong["album"] as? String else {
             
             print("Current snapshot is empty.")
             return [:]
         }
         
-        //down clicked again -> remove down
-        if (amount == -3) {
-            totalvotes = totalvotes + 1
-            downvotes = downvotes - 1
-        }
-        //up clicked again -> remove up
-        else if (amount == 3) {
-            totalvotes = totalvotes - 1
-            upvotes = upvotes - 1
-        }
-        //if amount gt 0 then add amount to upvote, if down then amount number of downvotes
-        else if (amount > 0) {
-            upvotes = upvotes + 1
-            totalvotes = totalvotes + amount
-            if amount == 2 {
-                downvotes = downvotes - 1
-            }
-        }
-        else {
-            downvotes = downvotes - 1
-            totalvotes = totalvotes + amount
-            if amount == -2 {
-                upvotes = upvotes - 1
-            }
-            
-        }
+        let changedScores = changeAllScore(upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, amount: amount)
         
-        print("Snapshothelper: U: \(upvotes)  D: \(downvotes)  T: \(totalvotes)")
-        let song = ["id": id, "name":name, "artist":artist, "artwork":artwork, "upvotes": upvotes, "downvotes":downvotes, "totalvotes":totalvotes] as [String : AnyObject]
+        let song = ["id": id, "name":name, "artist":artist,"album": album, "artwork":artwork, "upvotes": changedScores[0], "downvotes":changedScores[1], "totalvotes":changedScores[2]] as [String : AnyObject]
         
         return song
     }
 
+    func changeAllScore(upvotes: Int, downvotes: Int, totalvotes: Int, amount: Int) -> [Int] {
+        var newTotal: Int = totalvotes
+        var newUp: Int = upvotes
+        var newDown: Int = downvotes
+        
+        //down clicked again -> remove down
+        if (amount == -3) {
+            newTotal = newTotal + 1
+            newDown = newDown - 1
+        }
+            //up clicked again -> remove up
+        else if (amount == 3) {
+            newTotal = newTotal - 1
+            newUp = newUp - 1
+        }
+            //if amount gt 0 then add amount to upvote, if down then amount number of downvotes
+        else if (amount > 0) {
+            newUp = newUp + 1
+            newTotal = newTotal + amount
+            if (amount == 2) {
+                newDown = newDown - 1
+            }
+        }
+        else {
+            newDown = newDown - 1
+            newTotal = newTotal + amount
+            if (amount == -2) {
+                newUp = newUp - 1
+            }
+            
+        }
+        
+        return [newUp, newDown, newTotal]
+        
+    }
+    
 }
