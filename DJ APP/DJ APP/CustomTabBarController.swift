@@ -49,7 +49,7 @@ class CustomTabBarController: UITabBarController {
         
     }
     
-
+    
     //Remove all results from search table when you move to a different screen... maybe not the best if I
     //Can't clear the text from search bar
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {

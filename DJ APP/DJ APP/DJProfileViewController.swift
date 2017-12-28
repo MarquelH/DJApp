@@ -201,7 +201,7 @@ class DJPRofileViewController: UIViewController {
         dmDJButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         dmDJButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         dmDJButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        dmDJButton.topAnchor.constraint(equalTo: headphonesLogo.bottomAnchor).isActive = true
+        dmDJButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         twitterSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         twitterSep.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 15).isActive = true

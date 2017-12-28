@@ -28,6 +28,8 @@ class addEventViewController: UIViewController {
     }
     
     
+    
+    
     @IBAction func datePickerChanged(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         
@@ -42,7 +44,7 @@ class addEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.gray
+        //self.view.backgroundColor = UIColor.gray
         
         if let uidKey = dj?.uid {
             refEventList = Database.database().reference().child("Events").child(uidKey)
