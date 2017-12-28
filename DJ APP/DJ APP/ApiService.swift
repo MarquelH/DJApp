@@ -62,7 +62,7 @@ class ApiService: NSObject {
                     if let trackName = result["trackName"] as? String,
                         let trackArtist = result["artistName"] as? String,
                         let trackImageStr = result["artworkUrl100"] as? String,
-                        let kind = result["kind"] as? String {
+                        let kind = result["kind"] as? String, let trackAlbum = result["collectionName"] as? String {
                         
                         guard let trackImage = URL(string: trackImageStr) else {
                             print("error with track image url")
@@ -71,7 +71,7 @@ class ApiService: NSObject {
                         
                         //Make sure we only add songs
                         if (kind == "song") {
-                            let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage)
+                            let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage, trackAlbum: trackAlbum)
                             items.append(item)
                         }
                     //print("Items size: \(items.count)")

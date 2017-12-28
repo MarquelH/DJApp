@@ -17,7 +17,7 @@ class SnapshotHelper: NSObject {
     //snapshot and value passed in
     func updateTotalvotes(key: String, currentSnapshot: [String: AnyObject], amount: Int) -> [String: AnyObject]{
         
-        guard let workingSong = currentSnapshot[key], let upvotes = workingSong["upvotes"] as? Int, let totalvotes = workingSong["totalvotes"] as? Int, let downvotes = workingSong["downvotes"] as? Int, let name = workingSong["name"] as? String, let artist = workingSong["artist"] as? String, let artwork = workingSong["artwork"] as? String, let id = workingSong["id"] as? String else {
+        guard let workingSong = currentSnapshot[key], let upvotes = workingSong["upvotes"] as? Int, let totalvotes = workingSong["totalvotes"] as? Int, let downvotes = workingSong["downvotes"] as? Int, let name = workingSong["name"] as? String, let artist = workingSong["artist"] as? String, let artwork = workingSong["artwork"] as? String, let id = workingSong["id"] as? String, let album = workingSong["album"] as? String else {
             
             print("Current snapshot is empty.")
             return [:]
@@ -25,7 +25,7 @@ class SnapshotHelper: NSObject {
         
         let changedScores = changeAllScore(upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, amount: amount)
         
-        let song = ["id": id, "name":name, "artist":artist, "artwork":artwork, "upvotes": changedScores[0], "downvotes":changedScores[1], "totalvotes":changedScores[2]] as [String : AnyObject]
+        let song = ["id": id, "name":name, "artist":artist,"album": album, "artwork":artwork, "upvotes": changedScores[0], "downvotes":changedScores[1], "totalvotes":changedScores[2]] as [String : AnyObject]
         
         return song
     }
