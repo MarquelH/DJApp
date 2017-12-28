@@ -1,4 +1,16 @@
 PODS:
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - FBSDKCoreKit (4.28.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.28.0):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.28.0):
+    - FBSDKCoreKit
   - Firebase/Auth (4.6.0):
     - Firebase/Core
     - FirebaseAuth (= 4.3.2)
@@ -51,12 +63,19 @@ PODS:
   - nanopb/encode (0.3.8)
 
 DEPENDENCIES:
+  - FBSDKCoreKit
+  - FBSDKLoginKit
+  - FBSDKShareKit
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
   - JTAppleCalendar (~> 7.0)
 
 SPEC CHECKSUMS:
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
+  FBSDKLoginKit: b077381c27d800f21661757e8140cf2c80a91e4a
+  FBSDKShareKit: 4f525556e0df4cf0f574cb3f01c675434f29d477
   Firebase: 27321a925aa85520618255a7c630859e0502ccbd
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
   FirebaseAuth: e58563adb207a43910a2ed87fecb9fa7d556df5a
@@ -67,9 +86,9 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   JTAppleCalendar: aaeee95e939e0b0a381fb51eb77738bd26bb10f6
-  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  leveldb-library: 4f9eedf84ab46b4fa3b7893bf30714b2a1a74022
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
 
-PODFILE CHECKSUM: fd78bda6c7532c2dbeebd3d394d5aac127a8ef34
+PODFILE CHECKSUM: 71c14014a7bd2cabfe1c442c3b3ff67b56b96f04
 
 COCOAPODS: 1.3.1

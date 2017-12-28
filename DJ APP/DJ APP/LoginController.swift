@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 
-class LoginController: UIViewController, UINavigationControllerDelegate {
+class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLoginButtonDelegate {
     
     var guestSnapshot: [String: AnyObject]?
     
@@ -132,6 +133,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         img.contentMode = .scaleAspectFill
         return img
     }()
+    
+    let fbLoginButton = FBSDKLoginButton()
+    
 
 //    override var preferredStatusBarStyle: UIStatusBarStyle {
 //        return .lightContent
@@ -161,6 +165,33 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         handleLoginEnterChange()
     }
     
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if error != nil  {
+            print("Error occured with the login")
+        }
+        else {
+            print("Facebook did login")
+        }
+        getEmailAddress()
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        print("Did logout")
+    }
+    
+
+    func getEmailAddress() {
+        
+        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, error) in
+            if error != nil {
+                print("Failed to start graph request:", error)
+                return
+            }
+            print (result)
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getGuestSnapshot()
@@ -186,6 +217,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
             passwordImage.isHidden = false
             passwordTextField.isHidden = false
             notUserLabel.isHidden = false
+            fbLoginButton.isHidden = true
             loginButtonTopAnchor?.constant = 25
         }
         else {
@@ -194,6 +226,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
             passwordContainer.isHidden = true
             passwordImage.isHidden = true
             passwordTextField.isHidden = true
+            fbLoginButton.isHidden = false
             djGuestLoginButton.setTitle("Enter", for: .normal)
         }
     }
@@ -339,10 +372,14 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         view.addSubview(logoInLogin)
         view.addSubview(logoGo)
         view.addSubview(logoDJ)
+        view.addSubview(fbLoginButton)
+
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)
         passwordContainer.addSubview(passwordTextField)
         passwordContainer.addSubview(passwordImage)
+
+        setupFbButton()
         
         //ios 9 constraints x,y,w,h
         usernameContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -418,9 +455,22 @@ class LoginController: UIViewController, UINavigationControllerDelegate {
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         passwordTextField.rightAnchor.constraint(equalTo: passwordContainer.rightAnchor, constant: -12).isActive = true
         passwordTextField.leftAnchor.constraint(equalTo: passwordImage.rightAnchor, constant: 12).isActive = true
+        
+        fbLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        fbLoginButton.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor, constant: 24).isActive = true
+        fbLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        fbLoginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
-    
+    func setupFbButton() {
+        fbLoginButton.translatesAutoresizingMaskIntoConstraints = false
+        fbLoginButton.delegate = self
+        fbLoginButton.readPermissions = ["email"]
+        fbLoginButton.layer.borderColor = UIColor.white.cgColor
+        fbLoginButton.layer.masksToBounds = true
+        fbLoginButton.layer.cornerRadius = 20
+        fbLoginButton.layer.borderWidth = 2
+    }
     
 }
 
