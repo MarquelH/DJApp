@@ -1,5 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, ’10.0’
+source 'https://github.com/CocoaPods/Specs.git'
 
 target 'DJ APP' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -10,13 +11,14 @@ target 'DJ APP' do
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
-
-
+pod 'JTAppleCalendar','~> 7.0'
 
   target 'DJ APPTests' do
     inherit! :search_paths
     # Pods for testing
   end
+
+
 
   target 'DJ APPUITests' do
     inherit! :search_paths

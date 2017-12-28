@@ -24,7 +24,7 @@ class DJTabController: UITabBarController {
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
         
-        //viewControllers = [eventsTable,addEventCont]
+        viewControllers = [eventsTable,addEventCont]
     }
     
     @IBAction func addTapped(_ sender: Any) {
