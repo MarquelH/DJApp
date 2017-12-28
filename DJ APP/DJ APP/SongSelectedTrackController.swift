@@ -19,6 +19,7 @@ class SongSelectedTrackController: BaseTrackViewController {
         tn.textAlignment = .center
         tn.font = UIFont.boldSystemFont(ofSize: 14)
         tn.translatesAutoresizingMaskIntoConstraints = false
+        tn.isUserInteractionEnabled = true
         return tn
     }()
     
@@ -40,12 +41,6 @@ class SongSelectedTrackController: BaseTrackViewController {
     
     let thumbsUpImage: UIImage = UIImage(named: "ThumbsUp")!
     let thumbsDownImage: UIImage = UIImage(named: "ThumbsDown")!
-
-//    let upTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(thumbsUpTapped(tapGestureRecognizer:)))
-//    upTapGestureRecognizer.numberOfTapsRequired = 1
-    
-    //    let downTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(thumbsDownTapped(tapGestureRecognizer:)))
-//    upTapGestureRecognizer.numberOfTapsRequired
     
     lazy var upTapGestureRecognizer: UITapGestureRecognizer = {
         let gr = UITapGestureRecognizer(target: self, action: #selector(self.thumbsUpTapped(tapGestureRecognizer:)))
@@ -58,18 +53,28 @@ class SongSelectedTrackController: BaseTrackViewController {
         gr.numberOfTapsRequired = 1
         return gr
     }()
+    
+    lazy var artistTapGestureRecognizer: UITapGestureRecognizer = {
+        let gr = UITapGestureRecognizer(target: self, action: #selector(self.artistTapped(tapGestureRecognizer:)))
+        gr.numberOfTapsRequired = 1
+        return gr
+    }()
 
-
+    lazy var albumTapGestureRecognizer: UITapGestureRecognizer = {
+        let gr = UITapGestureRecognizer(target: self, action: #selector(self.albumTapped(tapGestureRecognizer:)))
+        gr.numberOfTapsRequired = 1
+        return gr
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        trackArtist.isUserInteractionEnabled = true
         setupViews()
     }
     
     func thumbsUpTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         thumbsUp.image = thumbsUpImage.maskWithColor(color: UIColor.lightGray)
         thumbsUp.layer.borderColor = UIColor.lightGray.cgColor
-        print("Up was tapped")
         self.dismiss(animated: true, completion: {() in
 
             if let parent = self.songTableController, let index = self.index {
@@ -84,7 +89,6 @@ class SongSelectedTrackController: BaseTrackViewController {
     func thumbsDownTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         thumbsDown.image = thumbsDownImage.maskWithColor(color: UIColor.lightGray)
         thumbsDown.layer.borderColor = UIColor.lightGray.cgColor
-        print("Down was tapped")
         self.dismiss(animated: true, completion: {() in
             if let parent = self.songTableController, let index = self.index {
                 parent.addDownvote(index: index)
@@ -95,6 +99,14 @@ class SongSelectedTrackController: BaseTrackViewController {
         })
 
     }
+    
+    func artistTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        print("artist tapped")
+    }
+    func albumTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        print("album tapped")
+    }
+    
     
     override func setupViews() {
         super.setupViews()
@@ -110,6 +122,8 @@ class SongSelectedTrackController: BaseTrackViewController {
         thumbsDown.image = thumbsDownImage.maskWithColor(color: UIColor.red)
         thumbsUp.addGestureRecognizer(upTapGestureRecognizer)
         thumbsDown.addGestureRecognizer(downTapGestureRecognizer)
+        trackArtist.addGestureRecognizer(artistTapGestureRecognizer)
+        trackAlbum.addGestureRecognizer(albumTapGestureRecognizer)
         cancelButton.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
     }
     

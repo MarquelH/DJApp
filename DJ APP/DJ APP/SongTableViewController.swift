@@ -24,6 +24,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         //do i have to dispatch main
         didSet{
             tableView.reloadData()
+            
+
         }
     }
     var upvoteIDs: [String] = []
@@ -113,6 +115,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         let taplocation = tapGesture.location(in: self.tableView)
         
         if let indexPath = self.tableView.indexPathForRow(at: taplocation) {
+       
             addDownvote(index: indexPath.row)
         }
         else {
@@ -131,14 +134,14 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         var song: [String: AnyObject]?
 
         if let workingSnapshot = self.currentSnapshot, let key = tableSongList[index].id {
+            
         //Does not have an upvote for this song
             if !(self.upvoteIDs.contains(key)) {
                 
                 //Has a downvote, so remove from downvote, and add to upvote (add 2 upvotes)
                 if self.downvoteIDs.contains(key) {
-                    
-                    if let index = self.downvoteIDs.index(of: key) {
-                        self.downvoteIDs.remove(at: index)
+                    if let removeIndex = self.downvoteIDs.index(of: key) {
+                        self.downvoteIDs.remove(at: removeIndex)
                         self.upvoteIDs.append(key)
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
@@ -152,7 +155,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     
                     //does not have either, so add to upvote
                 else {
-                    
+
                     self.upvoteIDs.append(key)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
@@ -169,8 +172,9 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             }
                 //Already has an upvote -> remove it
             else {
-                if let index = self.upvoteIDs.index(of: key) {
-                    self.upvoteIDs.remove(at: index)
+
+                if let removeIndex = self.upvoteIDs.index(of: key) {
+                    self.upvoteIDs.remove(at: removeIndex)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: 3)
@@ -206,8 +210,9 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                 
                 //Has a upvote, so remove from upvote and add to downvote (add 2 to downvote)
                 if self.upvoteIDs.contains(key) {
-                    if let index = self.upvoteIDs.index(of: key) {
-                        self.upvoteIDs.remove(at: index)
+                    
+                    if let removeIndex = self.upvoteIDs.index(of: key) {
+                        self.upvoteIDs.remove(at: removeIndex)
                         self.downvoteIDs.append(key)
                         let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                         refGuestByDJ.setValue(value)
@@ -221,6 +226,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     
                     //does not have either, so add to downvote
                 else {
+                    
+
                     self.downvoteIDs.append(key)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
@@ -238,8 +245,9 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             }
                 //Already has downvote, so remove it
             else {
-                if let index = self.downvoteIDs.index(of: key) {
-                    self.downvoteIDs.remove(at: index)
+
+                if let removeIndex = self.downvoteIDs.index(of: key) {
+                    self.downvoteIDs.remove(at: removeIndex)
                     let value = ["upvotes": self.upvoteIDs, "downvotes": self.downvoteIDs]
                     refGuestByDJ.setValue(value)
                     song = SnapshotHelper.shared.updateTotalvotes(key: key, currentSnapshot: workingSnapshot, amount: -3)
