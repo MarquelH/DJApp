@@ -130,7 +130,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     
     //Reusable function to add upvotes into the arrays and to the database
     func addUpvote(index: Int) {
-        print("Add up Vote!")
         var song: [String: AnyObject]?
 
         if let workingSnapshot = self.currentSnapshot, let key = tableSongList[index].id {
@@ -201,7 +200,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     
     //Reusable function to add downvotes into the arrays and to the database
     func addDownvote(index: Int) {
-        print("Add down Vote!")
         var song: [String: AnyObject]?
 
         if let workingSnapshot = self.currentSnapshot, let key = tableSongList[index].id {
@@ -294,6 +292,21 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         else {
             print("Something wrong with tabbar controller")
         }
+    }
+    
+    func callSearch(str: String) {
+        
+        if let tabbar = self.tabBarController, let searchController = tabbar.viewControllers![2] as? SearchTrackViewController {
+            print("inside call search's if")
+            searchController.searchText = str
+            searchController.searchController.searchBar.placeholder = str
+            searchController.search()
+            tabbar.selectedIndex = 2
+
+        }
+        else {
+            print("Call search: something happened with unwrapping the tab bar vc")
+        }
         
     }
     
@@ -361,7 +374,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         selectedSongTrack.songTableController = self
         selectedSongTrack.index = indexPath.row
         self.tabBarController?.present(selectedSongTrack, animated: true, completion: {() in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {() in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {() in
                 self.tableView.deselectRow(at: indexPath, animated: false)
             })
         })
