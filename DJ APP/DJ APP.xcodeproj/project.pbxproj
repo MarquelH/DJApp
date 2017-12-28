@@ -211,7 +211,6 @@
 				D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */,
 				D89437151FBE8E60002D0E7F /* SelectedTrackViewController.swift */,
 				D801FE0B1FF46CB8003C2258 /* SongSelectedTrackController.swift */,
-				D801FE091FF45707003C2258 /* BaseTrackViewController.swift */,
 				66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */,
 			);
 			name = "User Controllers";
@@ -313,6 +312,7 @@
 				D847BA1E1F6DADAE002C1BE7 /* UserDJ.swift */,
 				D8AF5C841FF04D1C0095C914 /* RunTimeError.swift */,
 				D89A345A1FBA2D8D00D5E2F2 /* TrackItem.swift */,
+				D801FE091FF45707003C2258 /* BaseTrackViewController.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

@@ -132,6 +132,7 @@ class BaseTrackViewController: UIViewController {
         ta.textAlignment = .center
         ta.font = UIFont.boldSystemFont(ofSize: 18)
         ta.translatesAutoresizingMaskIntoConstraints = false
+        ta.isUserInteractionEnabled = true
         return ta
     }()
     

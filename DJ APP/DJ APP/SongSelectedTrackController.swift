@@ -13,63 +13,62 @@ class SongSelectedTrackController: BaseTrackViewController {
     var songTableController: SongTableViewController?
     var index: Int?
     
-    let trackAlbum: UILabel = {
-        let tn = UILabel()
-        tn.textColor = UIColor.white
-        tn.textAlignment = .center
-        tn.font = UIFont.boldSystemFont(ofSize: 14)
-        tn.translatesAutoresizingMaskIntoConstraints = false
-        return tn
-    }()
+//    let trackAlbum: UILabel = {
+//        let tn = UILabel()
+//        tn.textColor = UIColor.white
+//        tn.textAlignment = .center
+//        tn.font = UIFont.boldSystemFont(ofSize: 14)
+//        tn.translatesAutoresizingMaskIntoConstraints = false
+//        tn.isUserInteractionEnabled = true
+//        return tn
+//    }()
     
-    lazy var thumbsUp: ProfileImageView = {
-        let iv = ProfileImageView()
+    let thumbsUp: UIButton = {
+        let iv = UIButton()
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.isUserInteractionEnabled = true
+        if let image = UIImage(named: "ThumbsUp"), let newImage = image.maskWithColor(color: UIColor.green) {
+            iv.setImage(newImage, for: .normal)
+        }
+        iv.addTarget(self, action: #selector(thumbsUpTapped), for: .touchUpInside)
         return iv
     }()
     
-    lazy var thumbsDown: ProfileImageView = {
-        let iv = ProfileImageView()
+    let thumbsDown: UIButton = {
+        let iv = UIButton()
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.isUserInteractionEnabled = true
+        if let image = UIImage(named: "ThumbsDown"), let newImage = image.maskWithColor(color: UIColor.red) {
+            iv.setImage(newImage, for: .normal)
+        }
+        iv.addTarget(self, action: #selector(thumbsDownTapped), for: .touchUpInside)
         return iv
     }()
     
-    let thumbsUpImage: UIImage = UIImage(named: "ThumbsUp")!
-    let thumbsDownImage: UIImage = UIImage(named: "ThumbsDown")!
+    let trackAlbum: UIButton = {
+        let iv = UIButton()
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.addTarget(self, action: #selector(albumTapped), for: .touchUpInside)
+        return iv
+    }()
+    
 
-//    let upTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(thumbsUpTapped(tapGestureRecognizer:)))
-//    upTapGestureRecognizer.numberOfTapsRequired = 1
-    
-    //    let downTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(thumbsDownTapped(tapGestureRecognizer:)))
-//    upTapGestureRecognizer.numberOfTapsRequired
-    
-    lazy var upTapGestureRecognizer: UITapGestureRecognizer = {
-        let gr = UITapGestureRecognizer(target: self, action: #selector(self.thumbsUpTapped(tapGestureRecognizer:)))
+
+    lazy var artistTapGestureRecognizer: UITapGestureRecognizer = {
+        let gr = UITapGestureRecognizer(target: self, action: #selector(self.artistTapped(tapGestureRecognizer:)))
         gr.numberOfTapsRequired = 1
         return gr
     }()
-    
-    lazy var downTapGestureRecognizer: UITapGestureRecognizer = {
-        let gr = UITapGestureRecognizer(target: self, action: #selector(self.thumbsDownTapped(tapGestureRecognizer:)))
-        gr.numberOfTapsRequired = 1
-        return gr
-    }()
-
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        trackArtist.isUserInteractionEnabled = true
         setupViews()
     }
     
-    func thumbsUpTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        thumbsUp.image = thumbsUpImage.maskWithColor(color: UIColor.lightGray)
-        thumbsUp.layer.borderColor = UIColor.lightGray.cgColor
-        print("Up was tapped")
+    func thumbsUpTapped() {
         self.dismiss(animated: true, completion: {() in
 
             if let parent = self.songTableController, let index = self.index {
@@ -81,10 +80,7 @@ class SongSelectedTrackController: BaseTrackViewController {
         })
     }
     
-    func thumbsDownTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        thumbsDown.image = thumbsDownImage.maskWithColor(color: UIColor.lightGray)
-        thumbsDown.layer.borderColor = UIColor.lightGray.cgColor
-        print("Down was tapped")
+    func thumbsDownTapped() {
         self.dismiss(animated: true, completion: {() in
             if let parent = self.songTableController, let index = self.index {
                 parent.addDownvote(index: index)
@@ -96,20 +92,42 @@ class SongSelectedTrackController: BaseTrackViewController {
 
     }
     
+    func artistTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: {() in
+            if let parent = self.songTableController, let artist = self.track?.trackArtist {
+                parent.callSearch(str: artist)
+            }
+            else {
+                print("Parent or track sent was invalid")
+            }
+        })
+    }
+    
+    func albumTapped() {
+        self.dismiss(animated: true, completion: {() in
+            if let parent = self.songTableController, let album = self.track?.trackAlbum {
+                parent.callSearch(str: album)
+            }
+            else {
+                print("Parent or track sent was invalid")
+            }
+        })
+    }
+    
+    
     override func setupViews() {
         super.setupViews()
         
         if let track = self.track {
-            trackAlbum.text = track.trackAlbum
+            trackAlbum.setTitle(track.trackAlbum, for: .normal)
         }
         else {
             print("Song Selected no track passed in")
         }
         
-        thumbsUp.image = thumbsUpImage.maskWithColor(color: UIColor.green)
-        thumbsDown.image = thumbsDownImage.maskWithColor(color: UIColor.red)
-        thumbsUp.addGestureRecognizer(upTapGestureRecognizer)
-        thumbsDown.addGestureRecognizer(downTapGestureRecognizer)
+
+        trackArtist.addGestureRecognizer(artistTapGestureRecognizer)
+        
         cancelButton.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
     }
     
