@@ -16,32 +16,157 @@ class DJPRofileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupViews()
         self.view.backgroundColor = UIColor.black
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let name = dj?.djName {
+            print("Dj name is: \(name)")
+        }
+        else {
+            print("Dj was not passed through")
+        }
+        setupViews()
+    }
+
+    func handleDM() {
+        print("DM was pressed")
+    }
+    
+    func setupViews() {
+        if let name = dj?.djName, let hometown = dj?.hometown, let profileUrl = dj?.profilePicURL, let age = dj?.age {
+            djNameLabel.text = "Name: \(name)"
+            profilePic.loadImageWithChachfromUrl(urlString: profileUrl)
+            djHometownText.text = "Hometown: \(hometown)"
+            ageLabel.text = "Age: \(age)"
+        }
+        else {
+           print("No DJ at setupViews")
+        }
+       
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(profilePic)
+        scrollView.addSubview(djNameLabel)
+        
+        //scrollView.contentInset = UIEdgeInsets(top:0, left:0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+     
+        
+        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        scrollView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        
+        profilePic.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        profilePic.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
+        profilePic.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        profilePic.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        djNameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
+        djNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 18).isActive = true
+        djNameLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 16).isActive = true
+        djNameLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        
+//        view.addSubview(profilePic)
+//        view.addSubview(hometownLabel)
+//        view.addSubview(djNameLabel)
+//        view.addSubview(hometownSep)
+//        view.addSubview(genreLabel)
+//        view.addSubview(ageLabel)
+//        view.addSubview(twitterLabel)
+//        view.addSubview(twitterSep)
+//        view.addSubview(dmDJButton)
+//        view.addSubview(headphonesLogo)
+//        view.addSubview(djHometownText)
+        
+        
+//        //djHometownText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        //djHometownText.bottomAnchor.constraint(equalTo: hometownLabel.bottomAnchor).isActive = true
+//        djHometownText.leftAnchor.constraint(equalTo: hometownLabel.rightAnchor).isActive = true
+//        djHometownText.widthAnchor.constraint(equalToConstant: 235).isActive = true
+//        djHometownText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        djHometownText.topAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
+//
+//        headphonesLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        headphonesLogo.topAnchor.constraint(equalTo: twitterSep.bottomAnchor, constant:40).isActive = true
+//        headphonesLogo.heightAnchor.constraint(equalToConstant: 20).isActive = true
+//        headphonesLogo.widthAnchor.constraint(equalToConstant: 95).isActive = true
+//
+//        dmDJButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        dmDJButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+//        dmDJButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+//        dmDJButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//
+//        twitterSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        twitterSep.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 15).isActive = true
+//        //hometownSep.bottomAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
+//        twitterSep.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
+//        twitterSep.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//
+//        twitterLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        twitterLabel.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 27).isActive = true
+//        twitterLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//
+//        ageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        ageLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 27).isActive = true
+//        ageLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//
+//        genreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        genreLabel.topAnchor.constraint(equalTo: hometownLabel.bottomAnchor, constant: 27).isActive = true
+//        genreLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//
+//        hometownSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        hometownSep.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor).isActive = true
+//        //hometownSep.bottomAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
+//        hometownSep.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
+//        hometownSep.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//
+//        profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        profilePic.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+//        profilePic.widthAnchor.constraint(equalToConstant: 140).isActive = true
+//        profilePic.heightAnchor.constraint(equalToConstant: 150).isActive = true
+//
+//        hometownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        hometownLabel.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 20).isActive = true
+//        hometownLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//
+//        djNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        djNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 8).isActive = true
+//        djNameLabel.widthAnchor.constraint(equalToConstant: 235).isActive = true
+//        djNameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
+    let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.backgroundColor = UIColor.lightGray
+        return sv
+    }()
+    
     lazy var profilePic: ProfileImageView = {
         let pp = ProfileImageView()
-        pp.alpha = 0.85
-        //pp.image = UIImage(named: "usernameIcon")
         pp.contentMode = .scaleAspectFill
-        pp.layer.cornerRadius = 30
+        pp.layer.cornerRadius = 60
+        pp.layer.masksToBounds = true
         pp.clipsToBounds = true
         pp.layer.borderWidth = 1.0
         pp.layer.borderColor = UIColor.black.cgColor
         pp.translatesAutoresizingMaskIntoConstraints = false
-        //pp.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageSelection)))
         return pp
     }()
     
-
+    
     let djHometownText: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor.white
         lbl.font = UIFont(name: "SudegnakNo2", size: 40)
         lbl.backgroundColor = UIColor.clear
-        lbl.text = "Hello:"
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -64,13 +189,12 @@ class DJPRofileViewController: UIViewController {
         return lbl
     }()
     
-    let DjNameLabel: UILabel = {
+    let djNameLabel: UILabel = {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.clear
         lbl.textColor = UIColor.white
-        lbl.font = UIFont(name: "SudegnakNo2", size: 50)
+        lbl.font = UIFont(name: "SudegnakNo2", size: 24)
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.textAlignment = .center
         return lbl
     }()
     
@@ -137,14 +261,15 @@ class DJPRofileViewController: UIViewController {
         lb.setTitleColor(UIColor.white, for: .normal)
         lb.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         lb.layer.cornerRadius = 40
-        //lb.layer.borderWidth = 1
-        //lb.layer.borderColor = UIColor.white.cgColor
+        lb.layer.masksToBounds = true
+        lb.layer.borderWidth = 1
+        lb.layer.borderColor = UIColor.white.cgColor
         lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 35)
-        //lb.addTarget(self, action: #selector(handleLoginEnter), for: .touchUpInside)
+        lb.addTarget(self, action: #selector(handleDM), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
-
+    
     
     
     let genreSep: UIView = {
@@ -153,96 +278,6 @@ class DJPRofileViewController: UIViewController {
         gs.translatesAutoresizingMaskIntoConstraints = false
         return gs
     }()
-    
-
-    //hometown, dj name, genre, twitter/IG, age
-
-    
-    func setupViews() {
-        if let name = dj?.djName {
-        DjNameLabel.text = "\(name)"
-        }
-        if let hometown = dj?.hometown {
-            djHometownText.text = "\(hometown)"
-        }
-        else{
-            djHometownText.text = "Hometown:"
-        }
-        if let profileUrl = dj?.profilePicURL {
-            profilePic.loadImageWithChachfromUrl(urlString: profileUrl)
-        }
-        
-        
-        view.addSubview(profilePic)
-        view.addSubview(hometownLabel)
-        view.addSubview(DjNameLabel)
-        view.addSubview(hometownSep)
-        view.addSubview(genreLabel)
-        view.addSubview(ageLabel)
-        view.addSubview(twitterLabel)
-        view.addSubview(twitterSep)
-        view.addSubview(dmDJButton)
-        view.addSubview(headphonesLogo)
-        view.addSubview(djHometownText)
-        
-        
-        //djHometownText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        //djHometownText.bottomAnchor.constraint(equalTo: hometownLabel.bottomAnchor).isActive = true
-        djHometownText.leftAnchor.constraint(equalTo: hometownLabel.rightAnchor).isActive = true
-        djHometownText.widthAnchor.constraint(equalToConstant: 235).isActive = true
-        djHometownText.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        djHometownText.topAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
-        
-        headphonesLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        headphonesLogo.topAnchor.constraint(equalTo: twitterSep.bottomAnchor, constant:40).isActive = true
-        headphonesLogo.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        headphonesLogo.widthAnchor.constraint(equalToConstant: 95).isActive = true
-        
-        dmDJButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        dmDJButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        dmDJButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        dmDJButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        twitterSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        twitterSep.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 15).isActive = true
-        //hometownSep.bottomAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
-        twitterSep.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
-        twitterSep.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        
-        twitterLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        twitterLabel.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 27).isActive = true
-        twitterLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        
-        ageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        ageLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 27).isActive = true
-        ageLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        
-        genreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        genreLabel.topAnchor.constraint(equalTo: hometownLabel.bottomAnchor, constant: 27).isActive = true
-        genreLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        
-        hometownSep.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        hometownSep.topAnchor.constraint(equalTo: DjNameLabel.bottomAnchor).isActive = true
-        //hometownSep.bottomAnchor.constraint(equalTo: hometownLabel.topAnchor).isActive = true
-        hometownSep.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
-        hometownSep.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        
-        profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profilePic.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-        profilePic.widthAnchor.constraint(equalToConstant: 140).isActive = true
-        profilePic.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        
-        hometownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        hometownLabel.topAnchor.constraint(equalTo: DjNameLabel.bottomAnchor, constant: 20).isActive = true
-        hometownLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        
-        DjNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        DjNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 8).isActive = true
-        DjNameLabel.widthAnchor.constraint(equalToConstant: 235).isActive = true
-        DjNameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        
-    }
     
     
 }
