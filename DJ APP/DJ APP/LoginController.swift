@@ -136,7 +136,13 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     
     let fbLoginButton = FBSDKLoginButton()
     
-
+    let customFBLogin: UIButton =  {
+        let cb = UIButton(type: .system)
+        cb.setTitle("FB Login", for: .normal)
+        cb.addTarget(self, action: #selector(handleCustomLogin), for: .touchUpInside)
+        cb.translatesAutoresizingMaskIntoConstraints = false
+        return cb
+    }()
 //    override var preferredStatusBarStyle: UIStatusBarStyle {
 //        return .lightContent
 //    }
@@ -179,12 +185,26 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         print("Did logout")
     }
     
+    func handleCustomLogin () {
+        FBSDKLoginManager().logIn(withReadPermissions: ["email"], from: self) { (result, error) in
+            if error != nil {
+                print("Custom login error: \(error?.localizedDescription)")
+            }
+            else {
+                self.getEmailAddress()
+            }
+        }
+    }
 
     func getEmailAddress() {
-        
+        let accessToken = FBSDKAccessToken.current()
+        guard let token = accessToken?.tokenString else {
+            return
+        }
+        print("Access token: \(token)")
         FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, error) in
             if error != nil {
-                print("Failed to start graph request:", error)
+                print("Failed to start graph request: \(error ?? "-1" as! Error)")
                 return
             }
             print (result)
@@ -373,6 +393,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         view.addSubview(logoGo)
         view.addSubview(logoDJ)
         view.addSubview(fbLoginButton)
+        view.addSubview(customFBLogin)
 
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)
@@ -460,6 +481,11 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         fbLoginButton.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor, constant: 24).isActive = true
         fbLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         fbLoginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    
+        customFBLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        customFBLogin.topAnchor.constraint(equalTo: fbLoginButton.bottomAnchor, constant: 24).isActive = true
+        customFBLogin.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        customFBLogin.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     func setupFbButton() {
