@@ -195,7 +195,14 @@ class DJTableViewController: UITableViewController {
     }
 
     func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+        }
+        catch let error as NSError {
+            print("Error with signing out of firebase: \(error.localizedDescription)")
+        }
         dismiss(animated: true, completion: nil)
+
     }
 
    

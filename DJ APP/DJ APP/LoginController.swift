@@ -141,6 +141,12 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         cb.setTitle("FB Login", for: .normal)
         cb.addTarget(self, action: #selector(handleCustomLogin), for: .touchUpInside)
         cb.translatesAutoresizingMaskIntoConstraints = false
+        cb.layer.borderWidth = 2
+        cb.layer.borderColor = UIColor.white.cgColor
+        cb.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        cb.layer.masksToBounds = false
+        cb.layer.cornerRadius = 20
+        cb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         return cb
     }()
 //    override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -169,20 +175,23 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
 
         setupViews()
         handleLoginEnterChange()
+        
+      
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         if error != nil  {
             print("Error occured with the login")
+            return
         }
         else {
             print("Facebook did login")
         }
-        getEmailAddress()
+        signInWithEmailAddress()
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        print("Did logout")
+        //nothing to do here
     }
     
     func handleCustomLogin () {
@@ -191,24 +200,54 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 print("Custom login error: \(error?.localizedDescription)")
             }
             else {
-                self.getEmailAddress()
+                //Handle issue if they hit log in with fb then hit cancel to permissions.
+                self.signInWithEmailAddress()
             }
         }
     }
 
-    func getEmailAddress() {
-        let accessToken = FBSDKAccessToken.current()
-        guard let token = accessToken?.tokenString else {
-            return
-        }
-        print("Access token: \(token)")
-        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, error) in
-            if error != nil {
-                print("Failed to start graph request: \(error ?? "-1" as! Error)")
+    func signInWithEmailAddress() {
+
+        let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+        Auth.auth().signIn(with: credential) { (user, error) in
+            if let error = error {
+                print("Problem signing into firebase with FB credientials: \(error.localizedDescription)")
                 return
             }
-            print (result)
+            //User is signed in
+            //Show next DJ List view controller
+            
+            FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, error) in
+                if error != nil {
+                    print("Failed to start graph request: \(error ?? "-1" as! Error)")
+                    return
+                }
+                //print (result)
+                if let result = result as? [String: AnyObject], let email = result["email"] as? String {
+                    //send to check database
+                    print("Successfully parsed email")
+                    let isFoundTuple = self.isFound(guestEmail: email)
+                    //user is present in database
+                    if isFoundTuple.0 {
+                        //Send to new view with email
+                        self.presentDJTableView(guestID: isFoundTuple.key)
+                    }
+                    //Add them into the database and send to new view with email
+                    else {
+                        let ref = Database.database().reference().child("guests")
+                        let key = ref.childByAutoId().key
+                        let values = ["email":email]
+                        ref.child(key).setValue(values)
+                        self.presentDJTableView(guestID: key)
+                    }
+                }
+                else {
+                    print("Parsing Results was unsuccessful")
+                }
+            }
         }
+        
+       
     }
     
     
@@ -217,6 +256,28 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         getGuestSnapshot()
     }
 
+    func checkIfUserIsAlreadyLoggedIn() {
+        //If user is currently signed in, then his stuff is in the database, so find it
+        if Auth.auth().currentUser != nil {
+            if let email = Auth.auth().currentUser?.email {
+                print(email)
+                let isFoundTuple = isFound(guestEmail: email)
+                if (isFoundTuple.0) {
+                    presentDJTableView(guestID: isFoundTuple.key)
+                }
+                else {
+                    print("User was logged in but not found in database.")
+                }
+            }
+            else {
+                print("Error with already signed in ")
+            }
+            
+        }
+        else {
+            print("no user logged in")
+        }
+    }
     
     func getGuestSnapshot() {
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -225,6 +286,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.guestSnapshot = dictionary
                 }
+                self.checkIfUserIsAlreadyLoggedIn()
             }
         }, withCancel: nil)
     }
@@ -237,7 +299,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
             passwordImage.isHidden = false
             passwordTextField.isHidden = false
             notUserLabel.isHidden = false
-            fbLoginButton.isHidden = true
+            customFBLogin.isHidden = true
             loginButtonTopAnchor?.constant = 25
         }
         else {
@@ -246,7 +308,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
             passwordContainer.isHidden = true
             passwordImage.isHidden = true
             passwordTextField.isHidden = true
-            fbLoginButton.isHidden = false
+            customFBLogin.isHidden = false
             djGuestLoginButton.setTitle("Enter", for: .normal)
         }
     }
@@ -324,9 +386,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                             else {
                                 print("Parsing the DJ went wrong")
                             }
-           
-                            
-                            
                         }
                         else {
                             print ("user is not validated")
@@ -344,26 +403,52 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
             print("Username is empty, or snap did not load")
             return
         }
-        
-        let djTableViewController = DJTableViewController()
-        let djTableNavController = UINavigationController(rootViewController: djTableViewController)
-        djTableNavController.delegate = self
-        
+        var guestID: String = ""
+    
+
         
         //Found in database
         let isFoundTuple = isFound(guestEmail: email)
         if isFoundTuple.0 {
-            djTableViewController.guestID = isFoundTuple.key
+            Auth.auth().signIn(withEmail: email, password: "123456", completion: { (user, error) in
+                if let error = error {
+                    print("Error signing in with the user from email: \(error.localizedDescription)")
+                    return
+                }
+                else {
+                    print("successful login of user from email")
+                }
+            })
+            guestID = isFoundTuple.key
         }
         //Not found in database, add it in
         else {
             let ref = Database.database().reference().child("guests")
             let key = ref.childByAutoId().key
-            djTableViewController.guestID = key
             let values = ["email":email]
             ref.child(key).setValue(values)
+            guestID = key
+
+            //Also signs them in
+            Auth.auth().createUser(withEmail: email, password: "123456", completion: { (user, error) in
+                if let error = error {
+                    print("Error creating user and logging in from the user from email: \(error.localizedDescription)")
+                    return
+                }
+                else {
+                    print("successful creation and loggin in of user from email")
+                }
+            })
+            
         }
-        
+        presentDJTableView(guestID: guestID)
+    }
+    
+    func presentDJTableView (guestID: String) {
+        let djTableViewController = DJTableViewController()
+        let djTableNavController = UINavigationController(rootViewController: djTableViewController)
+        djTableNavController.delegate = self
+        djTableViewController.guestID = guestID
         present(djTableNavController, animated: true, completion: nil)
     }
     
@@ -392,7 +477,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         view.addSubview(logoInLogin)
         view.addSubview(logoGo)
         view.addSubview(logoDJ)
-        view.addSubview(fbLoginButton)
+//        view.addSubview(fbLoginButton)
         view.addSubview(customFBLogin)
 
         usernameContainer.addSubview(usernameTextField)
@@ -400,7 +485,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         passwordContainer.addSubview(passwordTextField)
         passwordContainer.addSubview(passwordImage)
 
-        setupFbButton()
+//        setupFbButton()
         
         //ios 9 constraints x,y,w,h
         usernameContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -477,26 +562,26 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         passwordTextField.rightAnchor.constraint(equalTo: passwordContainer.rightAnchor, constant: -12).isActive = true
         passwordTextField.leftAnchor.constraint(equalTo: passwordImage.rightAnchor, constant: 12).isActive = true
         
-        fbLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        fbLoginButton.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor, constant: 24).isActive = true
-        fbLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        fbLoginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    
+//        fbLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        fbLoginButton.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor, constant: 24).isActive = true
+//        fbLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+//        fbLoginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//
         customFBLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        customFBLogin.topAnchor.constraint(equalTo: fbLoginButton.bottomAnchor, constant: 24).isActive = true
+        customFBLogin.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor, constant: 24).isActive = true
         customFBLogin.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         customFBLogin.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
-    func setupFbButton() {
-        fbLoginButton.translatesAutoresizingMaskIntoConstraints = false
-        fbLoginButton.delegate = self
-        fbLoginButton.readPermissions = ["email"]
-        fbLoginButton.layer.borderColor = UIColor.white.cgColor
-        fbLoginButton.layer.masksToBounds = true
-        fbLoginButton.layer.cornerRadius = 20
-        fbLoginButton.layer.borderWidth = 2
-    }
+//    func setupFbButton() {
+//        fbLoginButton.translatesAutoresizingMaskIntoConstraints = false
+//        fbLoginButton.delegate = self
+//        fbLoginButton.readPermissions = ["email"]
+//        fbLoginButton.layer.borderColor = UIColor.white.cgColor
+//        fbLoginButton.layer.masksToBounds = true
+//        fbLoginButton.layer.cornerRadius = 20
+//        fbLoginButton.layer.borderWidth = 2
+//    }
     
 }
 
