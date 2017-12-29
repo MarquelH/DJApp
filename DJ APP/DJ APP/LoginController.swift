@@ -187,7 +187,8 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         else {
             print("Facebook did login")
         }
-        signInWithEmailAddress()
+        print("I was pressed2")
+        signInWithFBEmailAddress()
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
@@ -201,12 +202,13 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
             }
             else {
                 //Handle issue if they hit log in with fb then hit cancel to permissions.
-                self.signInWithEmailAddress()
+                print("I was pressed")
+                self.signInWithFBEmailAddress()
             }
         }
     }
 
-    func signInWithEmailAddress() {
+    func signInWithFBEmailAddress() {
 
         let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
         Auth.auth().signIn(with: credential) { (user, error) in
@@ -403,8 +405,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
             print("Username is empty, or snap did not load")
             return
         }
-        var guestID: String = ""
-    
 
         
         //Found in database
@@ -417,18 +417,13 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 }
                 else {
                     print("successful login of user from email")
+                    self.presentDJTableView(guestID: isFoundTuple.key)
+
                 }
             })
-            guestID = isFoundTuple.key
         }
-        //Not found in database, add it in
+        //Not found in database, check if its well formed and then add it in
         else {
-            let ref = Database.database().reference().child("guests")
-            let key = ref.childByAutoId().key
-            let values = ["email":email]
-            ref.child(key).setValue(values)
-            guestID = key
-
             //Also signs them in
             Auth.auth().createUser(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
@@ -437,11 +432,17 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 }
                 else {
                     print("successful creation and loggin in of user from email")
+                    let ref = Database.database().reference().child("guests")
+                    let key = ref.childByAutoId().key
+                    let values = ["email":email]
+                    ref.child(key).setValue(values)
+                    self.presentDJTableView(guestID: key)
+
                 }
             })
             
         }
-        presentDJTableView(guestID: guestID)
+
     }
     
     func presentDJTableView (guestID: String) {
