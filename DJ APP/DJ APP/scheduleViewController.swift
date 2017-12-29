@@ -26,7 +26,7 @@ class scheduleViewController: UIViewController {
 
 }
 
-/*extension scheduleViewController: JTAppleCalendarViewDelegate,JTAppleCalendarViewDataSource {
+extension scheduleViewController: JTAppleCalendarViewDelegate,JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         formatter.dateFormat = "yyyy MM dd"
         formatter.timeZone = Calendar.current.timeZone
@@ -45,4 +45,4 @@ class scheduleViewController: UIViewController {
         
         
     }
-}*/
+}

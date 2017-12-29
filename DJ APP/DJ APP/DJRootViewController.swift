@@ -163,18 +163,7 @@ class DJRootViewController: UIViewController {
     func handleSchedulingEnter(){
         
         let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
-<<<<<<< HEAD
         let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView")
-        
-=======
-        let controller = storyboard.instantiateViewController(withIdentifier: "djScheduleNav") as! UINavigationController
-        let arr = controller.tabBarController?.viewControllers
-        
-        print(arr)
-    
-        //let createController = arr![1] as! addEventViewController
-        //createController.dj = dj
->>>>>>> 21700e0aa7c0519aace7503f9fb9bed56d2f7a16
         self.present(controller, animated: true, completion: nil)
         
         
