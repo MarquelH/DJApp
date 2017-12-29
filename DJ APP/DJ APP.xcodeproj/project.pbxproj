@@ -10,7 +10,6 @@
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
 		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
 		66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */; };
-		66A41DA51FEC16F0004D31FB /* schedulingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */; };
 		66A41DAD1FEC2909004D31FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */; };
 		66A41DAF1FEC291F004D31FB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAE1FEC291F004D31FB /* CFNetwork.framework */; };
 		66A41DB11FEC2933004D31FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DB01FEC2932004D31FB /* CoreLocation.framework */; };
@@ -22,12 +21,13 @@
 		66A41DBD1FEC2993004D31FB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBC1FEC2993004D31FB /* libz.tbd */; };
 		66A41DBF1FEC29A9004D31FB /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBE1FEC29A9004D31FB /* libsqlite3.tbd */; };
 		66AA66891FF096CF001ECA58 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AA66881FF096CF001ECA58 /* EventsTableViewController.swift */; };
-		66AA668B1FF0977F001ECA58 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AA668A1FF0977F001ECA58 /* EventCell.swift */; };
 		66AA668D1FF097B4001ECA58 /* addEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AA668C1FF097B4001ECA58 /* addEventViewController.swift */; };
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
 		66BB35081FED5D01002CE07D /* DJTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB35071FED5D01002CE07D /* DJTabController.swift */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
+		C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */; };
+		C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */; };
 		D801FE0A1FF45707003C2258 /* BaseTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D801FE091FF45707003C2258 /* BaseTrackViewController.swift */; };
 		D801FE0C1FF46CB8003C2258 /* SongSelectedTrackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D801FE0B1FF46CB8003C2258 /* SongSelectedTrackController.swift */; };
 		D80A18981F5C867200747022 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A18971F5C867200747022 /* RegisterController.swift */; };
@@ -84,7 +84,6 @@
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScehdulingStoryboard.storyboard; sourceTree = "<group>"; };
-		66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = schedulingViewController.swift; sourceTree = "<group>"; };
 		66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		66A41DAE1FEC291F004D31FB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		66A41DB01FEC2932004D31FB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -96,12 +95,13 @@
 		66A41DBC1FEC2993004D31FB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		66A41DBE1FEC29A9004D31FB /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		66AA66881FF096CF001ECA58 /* EventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
-		66AA668A1FF0977F001ECA58 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		66AA668C1FF097B4001ECA58 /* addEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addEventViewController.swift; sourceTree = "<group>"; };
 		66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SudegnakNo2.otf; sourceTree = "<group>"; };
 		66BB35071FED5D01002CE07D /* DJTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJTabController.swift; sourceTree = "<group>"; };
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
+		C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduleViewController.swift; sourceTree = "<group>"; };
+		C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		D801FE091FF45707003C2258 /* BaseTrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTrackViewController.swift; sourceTree = "<group>"; };
 		D801FE0B1FF46CB8003C2258 /* SongSelectedTrackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectedTrackController.swift; sourceTree = "<group>"; };
 		D80A18971F5C867200747022 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
@@ -131,6 +131,7 @@
 		D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		D89A345A1FBA2D8D00D5E2F2 /* TrackItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackItem.swift; sourceTree = "<group>"; };
 		D89A345E1FBA2F7500D5E2F2 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		D8AC84791FF5935E001566EA /* DJ APP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DJ APP.entitlements"; sourceTree = "<group>"; };
 		D8AF5C841FF04D1C0095C914 /* RunTimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTimeError.swift; sourceTree = "<group>"; };
 		D8C9D65C1FF1AC25005384CF /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		D8C9D65E1FF1B11C005384CF /* DJCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJCell.swift; sourceTree = "<group>"; };
@@ -193,10 +194,10 @@
 		D81321EA1F71C98E00C130AD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				66AA668A1FF0977F001ECA58 /* EventCell.swift */,
 				D8C9D6611FF1B4A9005384CF /* User Cells */,
 				D81321EB1F71C9A900C130AD /* Exensions.swift */,
 				D8C9D6621FF1DD3D005384CF /* SnapshotHelper.swift */,
+				C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -230,10 +231,10 @@
 			children = (
 				66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */,
 				66AA66881FF096CF001ECA58 /* EventsTableViewController.swift */,
+				C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */,
 				66AA668C1FF097B4001ECA58 /* addEventViewController.swift */,
 				66BB35071FED5D01002CE07D /* DJTabController.swift */,
 				D86732991F54E58E00270D07 /* DJRootViewController.swift */,
-				66A41DA41FEC16F0004D31FB /* schedulingViewController.swift */,
 			);
 			name = "DJ Controllers";
 			sourceTree = "<group>";
@@ -264,6 +265,7 @@
 		D81A66BE1F4F6E3E00543A8F /* DJ APP */ = {
 			isa = PBXGroup;
 			children = (
+				D8AC84791FF5935E001566EA /* DJ APP.entitlements */,
 				D81A66BF1F4F6E3E00543A8F /* AppDelegate.swift */,
 				D89A345D1FBA2F5B00D5E2F2 /* Services */,
 				D847BA1D1F6DAD66002C1BE7 /* Model */,
@@ -435,6 +437,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 97RQYDCCB8;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					D81A66CF1F4F6E3E00543A8F = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -522,6 +529,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
@@ -530,6 +541,10 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
@@ -662,18 +677,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66A41DA51FEC16F0004D31FB /* schedulingViewController.swift in Sources */,
 				D89A345B1FBA2D8D00D5E2F2 /* TrackItem.swift in Sources */,
 				D80A18981F5C867200747022 /* RegisterController.swift in Sources */,
 				D8AF5C851FF04D1C0095C914 /* RunTimeError.swift in Sources */,
 				D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */,
 				D8C9D65F1FF1B11C005384CF /* DJCell.swift in Sources */,
 				D8158AED1FEF0A3100C45946 /* HomeViewController.swift in Sources */,
+				C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */,
 				D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */,
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
 				66AA66891FF096CF001ECA58 /* EventsTableViewController.swift in Sources */,
 				D801FE0C1FF46CB8003C2258 /* SongSelectedTrackController.swift in Sources */,
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,
+				C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */,
 				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D83AFBA01F75CF31003B0004 /* TrackCell.swift in Sources */,
 				D81A66C01F4F6E3E00543A8F /* AppDelegate.swift in Sources */,
@@ -687,7 +703,6 @@
 				D89A345F1FBA2F7500D5E2F2 /* ApiService.swift in Sources */,
 				66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */,
 				D83AFB9E1F75C1C5003B0004 /* SearchTrackViewController.swift in Sources */,
-				66AA668B1FF0977F001ECA58 /* EventCell.swift in Sources */,
 				D819CF891FBCC67300D60B93 /* SearchCell.swift in Sources */,
 				D8C9D65D1FF1AC26005384CF /* BaseCell.swift in Sources */,
 				D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */,
@@ -849,6 +864,7 @@
 			baseConfigurationReference = 7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "DJ APP/DJ APP.entitlements";
 				DEVELOPMENT_TEAM = 97RQYDCCB8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -868,6 +884,7 @@
 			baseConfigurationReference = 188BB2A11CC44D1AE4E80D2F /* Pods-DJ APP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "DJ APP/DJ APP.entitlements";
 				DEVELOPMENT_TEAM = 97RQYDCCB8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

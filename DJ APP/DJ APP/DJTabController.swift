@@ -11,7 +11,7 @@ import Firebase
 
 class DJTabController: UITabBarController {
     
-    let homeController = schedulingViewController()
+    //let homeController = schedulingViewController()
     let addEventCont = addEventViewController()
     let djRoot = DJRootViewController()
     let eventsTable = EventsTableViewController()
