@@ -12,9 +12,7 @@ import Firebase
 class DJTabController: UITabBarController {
     
     //let homeController = schedulingViewController()
-    let addEventCont = addEventViewController()
-    let djRoot = DJRootViewController()
-    let eventsTable = EventsTableViewController()
+    let scheduleController = scheduleViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,16 +22,17 @@ class DJTabController: UITabBarController {
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
         
-        viewControllers = [eventsTable,addEventCont]
+        //viewControllers = [scheduleController]
     }
     
-    @IBAction func addTapped(_ sender: Any) {
+    /*@IBAction func addTapped(_ sender: Any) {
         present(addEventCont, animated: true, completion: nil)
     }
     
     @IBAction func backTapped(_ sender: Any) {
         present(djRoot, animated: true, completion: nil)
     }
+    */
     
     
     

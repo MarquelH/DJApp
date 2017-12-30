@@ -20,7 +20,6 @@
 		66A41DBB1FEC297B004D31FB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBA1FEC297B004D31FB /* SystemConfiguration.framework */; };
 		66A41DBD1FEC2993004D31FB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBC1FEC2993004D31FB /* libz.tbd */; };
 		66A41DBF1FEC29A9004D31FB /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DBE1FEC29A9004D31FB /* libsqlite3.tbd */; };
-		66AA66891FF096CF001ECA58 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AA66881FF096CF001ECA58 /* EventsTableViewController.swift */; };
 		66AA668D1FF097B4001ECA58 /* addEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AA668C1FF097B4001ECA58 /* addEventViewController.swift */; };
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
 		66BB35081FED5D01002CE07D /* DJTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB35071FED5D01002CE07D /* DJTabController.swift */; };
@@ -94,7 +93,6 @@
 		66A41DBA1FEC297B004D31FB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		66A41DBC1FEC2993004D31FB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		66A41DBE1FEC29A9004D31FB /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		66AA66881FF096CF001ECA58 /* EventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
 		66AA668C1FF097B4001ECA58 /* addEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addEventViewController.swift; sourceTree = "<group>"; };
 		66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SudegnakNo2.otf; sourceTree = "<group>"; };
 		66BB35071FED5D01002CE07D /* DJTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJTabController.swift; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 			isa = PBXGroup;
 			children = (
 				66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */,
-				66AA66881FF096CF001ECA58 /* EventsTableViewController.swift */,
 				C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */,
 				66AA668C1FF097B4001ECA58 /* addEventViewController.swift */,
 				66BB35071FED5D01002CE07D /* DJTabController.swift */,
@@ -686,7 +683,6 @@
 				C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */,
 				D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */,
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
-				66AA66891FF096CF001ECA58 /* EventsTableViewController.swift in Sources */,
 				D801FE0C1FF46CB8003C2258 /* SongSelectedTrackController.swift in Sources */,
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,
 				C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */,
