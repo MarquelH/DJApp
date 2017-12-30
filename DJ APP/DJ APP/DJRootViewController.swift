@@ -27,10 +27,10 @@ class DJRootViewController: UIViewController {
         pp.alpha = 0.85
         //pp.image = UIImage(named: "usernameIcon")
         pp.contentMode = .scaleAspectFill
-        pp.layer.cornerRadius = 30
+        pp.layer.cornerRadius = 33
         pp.clipsToBounds = true
-        pp.layer.borderWidth = 1.0
-        pp.layer.borderColor = UIColor.black.cgColor
+        pp.layer.borderWidth = 2.5
+        pp.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
         pp.translatesAutoresizingMaskIntoConstraints = false
         //pp.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageSelection)))
         return pp

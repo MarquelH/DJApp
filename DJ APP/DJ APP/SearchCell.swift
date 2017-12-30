@@ -28,8 +28,8 @@ class SearchCell: BaseCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textLabel?.font = UIFont(name: "SudegnakNo2", size: 26)
-        detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 24)
+        //textLabel?.font = UIFont(name: "SudegnakNo2", size: 26)
+        //detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 24)
         
         textLabel?.textColor = UIColor.white
         detailTextLabel?.textColor = UIColor.white

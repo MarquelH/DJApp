@@ -8,7 +8,6 @@
 
 import UIKit
 import JTAppleCalendar
-import Firebase
 
 class CalendarCell: JTAppleCell {
     @IBOutlet weak var dateLabel: UILabel!
