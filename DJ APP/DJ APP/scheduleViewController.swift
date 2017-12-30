@@ -11,18 +11,62 @@ import JTAppleCalendar
 
 class scheduleViewController: UIViewController {
 
+    @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var year: UILabel!
+    @IBOutlet weak var month: UILabel!
+    
+    @IBOutlet weak var scheduleNavBar: UINavigationBar!
+    
+    
     let formatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupCalendarView()
+        self.navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
+        self.navigationController?.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
+    }
+    
+    func handleAdd(){
+        
+    }
+    func setupCalendarView() {
+        calendarView.minimumLineSpacing = 0
+        calendarView.minimumInteritemSpacing = 0
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    func handleCellSelected(view: JTAppleCell?, cellState: CellState){
+        guard let validCell = view as! CalendarCell?
+            else{return}
+        if cellState.isSelected {
+            validCell.selectedView.isHidden = false
+        }
+        else{
+            validCell.selectedView.isHidden = true
+        }
+    }
+    
+    func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
+        guard let validCell = view as! CalendarCell? else{return}
+        
+        if cellState.isSelected {
+            validCell.dateLabel.textColor = UIColor.black
+        }
+        else{
+            if cellState.dateBelongsTo == .thisMonth{
+                validCell.dateLabel.textColor = UIColor.white
+            }
+            else{
+                validCell.dateLabel.textColor = UIColor.darkGray
+            }
+        }
+    }
+    
 }
 
 extension scheduleViewController: JTAppleCalendarViewDataSource {
@@ -42,16 +86,34 @@ extension scheduleViewController: JTAppleCalendarViewDataSource {
 
 extension scheduleViewController: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        let calCell = cell as! CalendarCell
+        _ = cell as! CalendarCell
     }
     
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "calCell", for: indexPath) as! CalendarCell
         cell.dateLabel.text = cellState.text
+        handleCellSelected(view: cell, cellState: cellState)
+        handleCellTextColor(view: cell, cellState: cellState)
         return cell
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        handleCellSelected(view: cell, cellState: cellState)
+        handleCellTextColor(view: cell, cellState: cellState)
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        handleCellSelected(view: cell, cellState: cellState)
+        handleCellTextColor(view: cell, cellState: cellState)
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+        let date = visibleDates.monthDates.first!.date
         
+        formatter.dateFormat = "yyyy"
+        year.text = formatter.string(from: date)
+        
+        formatter.dateFormat = "MMMM"
+        month.text = formatter.string(from: date)
     }
 }
