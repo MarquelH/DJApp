@@ -30,8 +30,21 @@ class DJPRofileViewController: UIViewController {
         setupViews()
     }
 
+    //Present new collectionview controller as rootview of navigation controller from tabbar controller
     func handleDM() {
         print("DM was pressed")
+        let chatController = GuestChatViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatController.dj = self.dj
+        chatController.guestID = self.guestID
+        
+        let chatNavigationController = UINavigationController(rootViewController: chatController)
+        
+        if self.presentedViewController != nil {
+            //do i have to keep this?
+            self.dismiss(animated: true, completion: nil)
+        }
+        self.tabBarController?.present(chatNavigationController, animated: true, completion: nil)
+
     }
     
     func setupViews() {
