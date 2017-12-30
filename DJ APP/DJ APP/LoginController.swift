@@ -401,7 +401,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     
     func handleGuestEnter() {
         
-        guard let email = usernameTextField.text, email != "" else {
+        guard let email = usernameTextField.text?.lowercased(), email != "" else {
             print("Username is empty, or snap did not load")
             return
         }
