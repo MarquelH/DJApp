@@ -26,12 +26,20 @@ class MessageCell: UICollectionViewCell {
        let tv = UITextView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.textColor = UIColor.white
-        tv.layer.borderColor = UIColor.black.cgColor
-        tv.layer.borderWidth = 1
-        tv.layer.cornerRadius = 10
-        tv.layer.masksToBounds = true
-        tv.textAlignment = .center
+        tv.backgroundColor = UIColor.clear
+        tv.textAlignment = .left
+        tv.textContainerInset = .zero
         return tv
+    }()
+    
+    let textBubble: UIView = {
+        let tb = UIView()
+        tb.translatesAutoresizingMaskIntoConstraints = false
+        tb.layer.borderColor = UIColor.black.cgColor
+        tb.layer.borderWidth = 1
+        tb.layer.cornerRadius = 6
+        tb.layer.masksToBounds = true
+        return tb
     }()
     
     override init(frame: CGRect) {
@@ -39,7 +47,8 @@ class MessageCell: UICollectionViewCell {
     }
     
     func setupChatBubble() {
-        addSubview(textView)
+        addSubview(textBubble)
+        textBubble.addSubview(textView)
         
         if let textGuestID = message?.guestID, let id = guestID {
             
@@ -54,23 +63,29 @@ class MessageCell: UICollectionViewCell {
         else {
             print("Problem with cell message guest ID or guest ID")
         }
+        textView.leftAnchor.constraint(equalTo: textBubble.leftAnchor, constant: 8).isActive = true
+        textView.topAnchor.constraint(equalTo: textBubble.topAnchor, constant: 6).isActive = true
+        textView.widthAnchor.constraint(equalTo: textBubble.widthAnchor, constant: -8).isActive = true
+        textView.heightAnchor.constraint(equalTo: textBubble.heightAnchor, constant: -6).isActive = true
+        
     }
     
     func setupGuestBubble() {
-        textView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 10).isActive = true
-        textView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        textBubble.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12).isActive = true
+        textBubble.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         //textView.widthAnchor.constraint(equalToConstant: 125).isActive = true
-        textView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -20).isActive = true
+        //textView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -20).isActive = true
         
-        textView.backgroundColor = UIColor.blue
+        textBubble.backgroundColor = UIColor.blue
     }
     func setupDJBubble() {
-        textView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
-        textView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        //left with positive constant moves it to the right, right with positive constant moves it to the right
+        textBubble.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12).isActive = true
+        textBubble.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         //textView.widthAnchor.constraint(equalToConstant: 125).isActive = true
-        textView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -20).isActive = true
+        //textView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -20).isActive = true
         
-        textView.backgroundColor = UIColor.darkGray
+        textBubble.backgroundColor = UIColor.darkGray
     }
     
     required init?(coder aDecoder: NSCoder) {

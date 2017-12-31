@@ -68,6 +68,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         }
         if let height = tabbarHeight  {
             collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+            collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         }
         else {
             print("Tabbar height was not passed in.")
@@ -95,7 +96,10 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         cell.message = messages[indexPath.row]
         if let id = guestID, let text = cell.message?.message {
             cell.guestID = id
-            cell.textView.widthAnchor.constraint(equalToConstant: estimateFrameForText(text: text).width + 32)
+            cell.textBubble.widthAnchor.constraint(equalToConstant: estimateFrameForText(text: text).width + 16).isActive = true
+            cell.textBubble.heightAnchor.constraint(equalToConstant: estimateFrameForText(text: text).height + 8).isActive = true
+           
+
         }
         else {
             print("Loading table problem with GuestID")
@@ -111,9 +115,9 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         
         var height: CGFloat = 80
         if let text = messages[indexPath.row].message {
-            height = estimateFrameForText(text: text).height + 20
+            height = estimateFrameForText(text: text).height + 12
         }
-        
+
         return CGSize(width: view.frame.width, height: height)
     }
     
@@ -121,6 +125,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
     fileprivate func estimateFrameForText(text: String) -> CGRect {
         let size = CGSize(width: 200, height: 100)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        print("\(NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)], context: nil).height)")
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)], context: nil)
     }
     
