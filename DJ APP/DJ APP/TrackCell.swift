@@ -18,6 +18,8 @@ class TrackCell: BaseCell {
         tvl.translatesAutoresizingMaskIntoConstraints = false
         tvl.textColor = UIColor.lightGray
         tvl.font = UIFont.boldSystemFont(ofSize: 18)
+        tvl.backgroundColor = UIColor.clear
+        tvl.textAlignment = .center
         return tvl
     }()
     
@@ -26,6 +28,7 @@ class TrackCell: BaseCell {
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.isUserInteractionEnabled = true
+        iv.backgroundColor = UIColor.clear
         return iv
     }()
     
@@ -34,6 +37,7 @@ class TrackCell: BaseCell {
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.isUserInteractionEnabled = true
+        iv.backgroundColor = UIColor.clear
         return iv
     }()
     
@@ -72,6 +76,7 @@ class TrackCell: BaseCell {
         
         
         textLabel?.lineBreakMode = .byTruncatingTail
+        detailTextLabel?.lineBreakMode = .byTruncatingTail
         
         
         //Check if it will run off, then change the width of the text label, so that
@@ -80,16 +85,12 @@ class TrackCell: BaseCell {
         if (textLabel?.frame.width)! > self.frame.width - 135 {
             let difference = (textLabel?.frame.width)! - self.frame.width + 135
             textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
+            detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width - difference, height: textLabel!.frame.height)
         }
         else {
             textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y, width: textLabel!.frame.width, height: textLabel!.frame.height)
+            detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         }
-        
-        
-        //Do I have to check if this guy will run off too? Yes...
-        detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
-        detailTextLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.lineBreakMode = .byTruncatingTail
     }
     
     
@@ -106,7 +107,7 @@ class TrackCell: BaseCell {
         contentView.addSubview(totalvotesLabel)
 
         
-        profileImageView.layer.cornerRadius = 30
+        profileImageView.layer.cornerRadius = 3
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
@@ -123,11 +124,11 @@ class TrackCell: BaseCell {
         downArrowImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
         downArrowImageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
         
-        totalvotesLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        totalvotesLabel.centerXAnchor.constraint(equalTo: downArrowImageView.centerXAnchor, constant: 3).isActive = true
-        totalvotesLabel.widthAnchor.constraint(equalToConstant: 15).isActive = true
+        totalvotesLabel.topAnchor.constraint(equalTo: upArrowImageView.topAnchor).isActive = true
+        totalvotesLabel.bottomAnchor.constraint(equalTo: downArrowImageView.bottomAnchor, constant: 3).isActive = true
+        totalvotesLabel.leftAnchor.constraint(equalTo: downArrowImageView.leftAnchor).isActive = true
        
-        totalvotesLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        totalvotesLabel.rightAnchor.constraint(equalTo: downArrowImageView.rightAnchor).isActive = true
     }
     
 //    required init?(coder aDecoder: NSCoder) {

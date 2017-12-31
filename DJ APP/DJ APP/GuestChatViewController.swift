@@ -125,8 +125,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
     fileprivate func estimateFrameForText(text: String) -> CGRect {
         let size = CGSize(width: 200, height: 100)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        print("\(NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)], context: nil).height)")
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)], context: nil)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 14)], context: nil)
     }
     
   

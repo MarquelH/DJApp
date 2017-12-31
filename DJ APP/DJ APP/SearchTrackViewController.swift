@@ -211,6 +211,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105
+        return 60
     }
 }

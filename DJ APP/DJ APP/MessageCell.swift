@@ -29,6 +29,7 @@ class MessageCell: UICollectionViewCell {
         tv.backgroundColor = UIColor.clear
         tv.textAlignment = .left
         tv.textContainerInset = .zero
+        tv.font = UIFont.systemFont(ofSize: 14)
         return tv
     }()
     
