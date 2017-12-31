@@ -8,6 +8,7 @@
 
 import UIKit
 import JTAppleCalendar
+import Firebase
 
 class scheduleViewController: UIViewController {
 
@@ -15,8 +16,22 @@ class scheduleViewController: UIViewController {
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
     
-    @IBOutlet weak var scheduleNavBar: UINavigationBar!
     
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        let rootController = DJRootViewController()
+        rootController.dj = dj
+        self.present(rootController, animated: true, completion: nil)
+    }
+    
+    @IBAction func addTapped(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "addEventView") as! addEventViewController
+        controller.dj = dj
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    var dj: UserDJ?
     
     let formatter = DateFormatter()
     
@@ -24,16 +39,28 @@ class scheduleViewController: UIViewController {
         super.viewDidLoad()
 
         setupCalendarView()
-        self.navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAdd))
-        self.navigationController?.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
     }
     
-    func handleAdd(){
+    func setupViewsOfCalendar(from visibleDates: DateSegmentInfo){
+        let date = visibleDates.monthDates.first!.date
         
+        self.formatter.dateFormat = "yyyy"
+        self.year.text = formatter.string(from: date)
+        
+        self.formatter.dateFormat = "MMMM"
+        self.month.text = formatter.string(from: date)
     }
+    
     func setupCalendarView() {
+        //Set up calendar spacing
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
+        
+        //Set up labels
+        calendarView.visibleDates { (visibleDates) in
+            self.setupViewsOfCalendar(from: visibleDates)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,10 +71,10 @@ class scheduleViewController: UIViewController {
         guard let validCell = view as! CalendarCell?
             else{return}
         if cellState.isSelected {
-            validCell.selectedView.isHidden = false
+            validCell.selectedView.isHidden = false //Not showing selected circle.
         }
         else{
-            validCell.selectedView.isHidden = true
+            validCell.selectedView.isHidden = true //Showing selected circle.
         }
     }
     

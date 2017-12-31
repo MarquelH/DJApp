@@ -17,14 +17,14 @@ class addEventViewController: UIViewController {
     var refEventList: DatabaseReference!
     
     @IBOutlet weak var eventLocation: UITextField!
-    @IBOutlet weak var eventDatePicker: UIDatePicker!
     @IBOutlet weak var eventToAddDateAndTime: UITextField!
+    @IBOutlet weak var eventDatePicker: UIDatePicker!
     
-    @IBAction func dpConfig(_ sender: UITextField) {
-            let datePickerView = UIDatePicker()
-            datePickerView.datePickerMode = .date
-            sender.inputView = datePickerView
-            datePickerView.addTarget(self, action: #selector(datePickerChanged(_:)), for: .valueChanged)
+    @IBAction func pickerConfig(_ sender: UITextView) {
+        let datePickerView = UIDatePicker()
+        datePickerView.datePickerMode = .date
+        sender.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(datePickerChanged), for: .valueChanged)
     }
     
     
@@ -47,6 +47,7 @@ class addEventViewController: UIViewController {
         //self.view.backgroundColor = UIColor.gray
         
         if let uidKey = dj?.uid {
+            print("DJ has uid")
             refEventList = Database.database().reference().child("Events").child(uidKey)
         }
         else {
@@ -94,6 +95,10 @@ class addEventViewController: UIViewController {
     
     @IBAction func addEvent(_ sender: Any) {
         handleEntry()
+        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView") as! scheduleViewController
+        controller.dj = dj
+        self.present(controller, animated: true, completion: nil)
     }
     
     func handleEntry(){

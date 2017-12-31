@@ -60,7 +60,7 @@ class DJRootViewController: UIViewController {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.clear
         lbl.textColor = UIColor.white
-        lbl.font = UIFont(name: "SudegnakNo2", size: 40)
+        //lbl.font = UIFont(name: "SudegnakNo2", size: 40)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .center
         lbl.text = "What would you like to do?"
@@ -70,12 +70,12 @@ class DJRootViewController: UIViewController {
     let GoLiveBtn: UIButton = {
         let lb = UIButton(type: .system)
         lb.setTitle("Go Live", for: .normal)
-        lb.setTitleColor(UIColor.white, for: .normal)
+        lb.setTitleColor(UIColor.green, for: .normal)
         lb.backgroundColor = UIColor.clear
         lb.layer.cornerRadius = 30
-        lb.layer.borderWidth = 1
+        lb.layer.borderWidth = 3
         lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
-        lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 45)
+        //lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 45)
         //lb.addTarget(self, action: #selector(handleLoginEnter), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
@@ -83,14 +83,28 @@ class DJRootViewController: UIViewController {
     
     let SchedulingBtn: UIButton = {
         let lb = UIButton(type: .system)
-        lb.setTitle("Schdedule A Gig", for: .normal)
-        lb.setTitleColor(UIColor.white, for: .normal)
+        lb.setTitle("Schedule Events", for: .normal)
+        lb.setTitleColor(UIColor.blue, for: .normal)
         lb.backgroundColor = UIColor.clear
         lb.layer.cornerRadius = 30
-        lb.layer.borderWidth = 1
+        lb.layer.borderWidth = 3
         lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
-        lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 33)
+        //lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 33)
         lb.addTarget(self, action: #selector(handleSchedulingEnter), for: .touchUpInside)
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    let ProfileBtn: UIButton = {
+        let lb = UIButton(type: .system)
+        lb.setTitle("Go To DJ Profile", for: .normal)
+        lb.setTitleColor(UIColor.blue, for: .normal)
+        lb.backgroundColor = UIColor.clear
+        lb.layer.cornerRadius = 30
+        lb.layer.borderWidth = 3
+        lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
+        //lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 33)
+        lb.addTarget(self, action: #selector(handleDJProfileEnter), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -125,6 +139,7 @@ class DJRootViewController: UIViewController {
         view.addSubview(questionLabel)
         view.addSubview(profilePic)
         view.addSubview(SchedulingBtn)
+        view.addSubview(ProfileBtn)
         //print(dj?.djName! as Any)
         
         //backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -141,6 +156,11 @@ class DJRootViewController: UIViewController {
         SchedulingBtn.heightAnchor.constraint(equalToConstant: 80).isActive = true
         SchedulingBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 5).isActive = true
         SchedulingBtn.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        ProfileBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        ProfileBtn.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        ProfileBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 120).isActive = true
+        ProfileBtn.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
         profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profilePic.topAnchor.constraint(equalTo: view.topAnchor, constant: 90).isActive = true
@@ -163,10 +183,9 @@ class DJRootViewController: UIViewController {
     func handleSchedulingEnter(){
         
         let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView")
+        let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView") as! scheduleViewController
+        controller.dj = dj
         self.present(controller, animated: true, completion: nil)
-        
-        
     }
     
     func handleLogout() {
@@ -180,6 +199,10 @@ class DJRootViewController: UIViewController {
         
         let loginController = LoginController()
         present(loginController, animated: true, completion: nil)
+    }
+    
+    func handleDJProfileEnter(){
+        
     }
 
 
