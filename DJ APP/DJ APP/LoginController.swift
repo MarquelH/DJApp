@@ -268,7 +268,13 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                     presentDJTableView(guestID: isFoundTuple.key)
                 }
                 else {
-                    print("User was logged in but not found in database.")
+                    print("User was logged in but not found in database. So will now logout")
+                    do {
+                        try Auth.auth().signOut()
+                    }
+                    catch let error as NSError {
+                        print("Error with signing out of firebase: \(error.localizedDescription)")
+                    }
                 }
             }
             else {

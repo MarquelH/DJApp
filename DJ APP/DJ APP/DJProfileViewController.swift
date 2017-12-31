@@ -36,6 +36,12 @@ class DJPRofileViewController: UIViewController {
         let chatController = GuestChatViewController(collectionViewLayout: UICollectionViewFlowLayout())
         chatController.dj = self.dj
         chatController.guestID = self.guestID
+        if let height = tabBarController?.tabBar.frame.height {
+            chatController.tabbarHeight = height
+        }
+        else {
+            print("DJ Profile view does not have a tabbarcontroller height to send in")
+        }
         
         let chatNavigationController = UINavigationController(rootViewController: chatController)
         

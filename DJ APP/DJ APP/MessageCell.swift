@@ -57,18 +57,18 @@ class MessageCell: UICollectionViewCell {
     }
     
     func setupGuestBubble() {
-        textView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        textView.widthAnchor.constraint(equalToConstant: 125).isActive = true
-        textView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        textView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 10).isActive = true
+        textView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        //textView.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        textView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -20).isActive = true
         
         textView.backgroundColor = UIColor.blue
     }
     func setupDJBubble() {
-        textView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        textView.widthAnchor.constraint(equalToConstant: 125).isActive = true
-        textView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        textView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+        textView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        //textView.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        textView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -20).isActive = true
         
         textView.backgroundColor = UIColor.darkGray
     }

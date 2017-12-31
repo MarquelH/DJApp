@@ -21,7 +21,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
    // var messagesRef: DatabaseReference!
     var messages = [Message]()
     var handle: UInt?
-    var messageCount: Int = -1
+    var tabbarHeight: CGFloat?
     
     let sendContanier: UIView = {
        let sc = UIView()
@@ -59,16 +59,24 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         super.viewWillAppear(animated)
         if let uid = dj?.uid, let id = guestID {
             ref = Database.database().reference().child("messages").child(id).child(uid)
+
             //messagesRef = Database.database().reference().child("messages").child(id)
             getMessages()
         }
         else {
             print("Chat will appear guestID or Dj not passed in")
         }
+        if let height = tabbarHeight  {
+            collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        }
+        else {
+            print("Tabbar height was not passed in.")
+        }
     }
     
     override func viewDidLoad() {
         setupNavigationBar()
+        
         
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor.white
@@ -85,59 +93,100 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MessageCell
         
         cell.message = messages[indexPath.row]
-        if let id = guestID {
+        if let id = guestID, let text = cell.message?.message {
             cell.guestID = id
+            cell.textView.widthAnchor.constraint(equalToConstant: estimateFrameForText(text: text).width + 32)
         }
         else {
             print("Loading table problem with GuestID")
         }
         
+    
+        
         return cell
     }
     
+    //Estimate height of cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 40)
+        
+        var height: CGFloat = 80
+        if let text = messages[indexPath.row].message {
+            height = estimateFrameForText(text: text).height + 20
+        }
+        
+        return CGSize(width: view.frame.width, height: height)
+    }
+    
+    //Estimate height of text
+    fileprivate func estimateFrameForText(text: String) -> CGRect {
+        let size = CGSize(width: 200, height: 100)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)], context: nil)
     }
     
   
     func getMessages() {
-        ref.queryOrdered(byChild: "count").observeSingleEvent(of: .value, with: {(snapshot) in
+        let query = ref.queryOrdered(byChild: "count")
+        query.observeSingleEvent(of: .value, with: {(snapshot) in
             
-            if let workingSnap = snapshot.value as? [String: AnyObject] {
-                self.messages.removeAll()
-                
-                for (_, value) in workingSnap {
-                  
-                    if let message = value["message"] as? String, let guestID = value["guestID"] as? String, let djUID = value["djUID"] as? String, let timeStamp = value["timeStamp"] as? NSNumber, let count = value["count"] as? Int {
-    
-                        let newMessage = Message(message: message, timeStamp: timeStamp, djUID: djUID, guestID: guestID, count: count)
-                        
-                        print("Message: \(message)count: \(count)\n")
-                        if count > self.messageCount {
-                            self.messageCount = count
-                        }
-                        self.messages.append(newMessage)
-                        self.messages.sorted(by: { (message1, message2) -> Bool in
-                            let count = message1.count!
-                            let count2 = message2.count!
-                            return count > count2
-                        })
-                        print(self.messages)
-                        
-                        DispatchQueue.main.async {
-                            self.collectionView?.reloadData()
-                        }
-                    }
-                    else {
-                        print("Error getting values from working snap")
-                    }
+            self.messages.removeAll()
 
+            
+            if !snapshot.exists() {
+                print("Snapshot does not exist")
+                return
+            }
+            for snap in snapshot.children.allObjects as! [DataSnapshot] {
+                if let value = snap.value as? [String: AnyObject],let message = value["message"] as? String, let guestID = value["guestID"] as? String,  let timeStamp = value["timeStamp"] as? NSNumber, let djUID = value["djUID"] as? String {
+                    
+                    let newMessage = Message(message: message, timeStamp: timeStamp, djUID: djUID, guestID: guestID)
+
+             
+                    self.messages.append(newMessage)
+                  
+                    DispatchQueue.main.async {
+                        self.collectionView?.reloadData()
+                    }
                 }
-                
+                else {
+                    print("Unable to convert snapshot children into [String:AnyObjects]")
+                }
             }
-            else {
-                print("Error converting snapshot.value to [string:Anyobject]")
-            }
+//            if let workingSnap = snapshot.value as? [String: AnyObject] {
+//                self.messages.removeAll()
+//
+//                for (key, value) in workingSnap {
+//
+//                    if let message = value["message"] as? String, let guestID = value["guestID"] as? String,  let timeStamp = value["timeStamp"] as? NSNumber, let djUID = value["djUID"] as? String, let count = value["count"] as? Int {
+//
+//
+//
+//
+//                        let newMessage = Message(message: message, timeStamp: timeStamp, djUID: key, guestID: guestID, count: count)
+//
+//                        //print("Message: \(message)count: \(count)\n")
+//                        if count > self.messageCount {
+//                            self.messageCount = count
+//                        }
+//                        self.messages.append(newMessage)
+//                        for m in self.messages {
+//                            print(m.count ?? -10)
+//                        }
+//
+//                        DispatchQueue.main.async {
+//                            self.collectionView?.reloadData()
+//                        }
+//                    }
+//                    else {
+//                        print("Error getting values from working snap")
+//                    }
+//
+//                }
+//
+//            }
+//            else {
+//                print("Error converting snapshot.value to [string:Anyobject]")
+//            }
             
         }) { (error) in
             print("Error getting snapshot: \(error.localizedDescription)")
@@ -154,9 +203,9 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         print("Send was hit")
         //push to database
         let timeStamp = Int(Date().timeIntervalSince1970)
-        messageCount = messageCount + 1
+       
         if let message = messageTextField.text, let id = guestID, let uid = dj?.uid {
-            let value = ["message": message, "timeStamp": timeStamp, "djUID":uid, "guestID": id, "count": messageCount] as [String : Any]
+            let value = ["message": message, "timeStamp": timeStamp, "djUID":uid, "guestID": id] as [String : Any]
             ref.childByAutoId().setValue(value)
         }
         else {
