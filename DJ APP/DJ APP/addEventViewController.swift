@@ -93,13 +93,22 @@ class addEventViewController: UIViewController {
         return (false, "")
     }
     
+    func presentCalendar(){
+    let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
+    let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView") as! scheduleViewController
+    controller.dj = dj
+    self.present(controller, animated: true, completion: nil)
+    }
+    
     @IBAction func addEvent(_ sender: Any) {
         handleEntry()
-        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView") as! scheduleViewController
-        controller.dj = dj
-        self.present(controller, animated: true, completion: nil)
+        presentCalendar()
     }
+    
+    @IBAction func cancelEventAdd(_ sender: Any) {
+        presentCalendar()
+    }
+    
     
     func handleEntry(){
         guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "" else {

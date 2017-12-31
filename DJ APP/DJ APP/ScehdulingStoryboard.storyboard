@@ -272,7 +272,7 @@
                                     <action selector="pickerConfig:" destination="1RK-4d-Zb7" eventType="editingDidEnd" id="mgs-E6-qVq"/>
                                 </connections>
                             </textField>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="lF9-tJ-jWw">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="lF9-tJ-jWw">
                                 <rect key="frame" x="0.0" y="270" width="375" height="216"/>
                                 <date key="date" timeIntervalSinceReferenceDate="536367929.96102101">
                                     <!--2017-12-30 23:05:29 +0000-->
@@ -311,6 +311,9 @@
                                 <state key="normal" title="&lt;">
                                     <color key="titleColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancelEventAdd:" destination="1RK-4d-Zb7" eventType="touchUpInside" id="pyS-Q8-a1b"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
