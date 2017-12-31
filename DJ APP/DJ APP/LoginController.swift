@@ -13,6 +13,8 @@ import FBSDKLoginKit
 class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLoginButtonDelegate {
     
     var guestSnapshot: [String: AnyObject]?
+    var djSnapshot: [String: AnyObject]?
+
     
     let djGuestLoginButton: UIButton = {
         let lb = UIButton(type: .system)
@@ -228,7 +230,12 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 if let result = result as? [String: AnyObject], let email = result["email"] as? String {
                     //send to check database
                     print("Successfully parsed email")
-                    let isFoundTuple = self.isFound(guestEmail: email)
+                    guard let guestSnap = self.guestSnapshot else {
+                        print("guestSnapshot did not load")
+                        return
+                    }
+                    
+                    let isFoundTuple = self.isFound(snapshot: guestSnap, guestEmail: email)
                     //user is present in database
                     if isFoundTuple.0 {
                         //Send to new view with email
@@ -255,25 +262,42 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getGuestSnapshot()
+        getSnapshots()
     }
 
     func checkIfUserIsAlreadyLoggedIn() {
-        //If user is currently signed in, then his stuff is in the database, so find it
+        //If guest is currently signed in, then his stuff is in the database, so find it
         if Auth.auth().currentUser != nil {
             if let email = Auth.auth().currentUser?.email {
                 print(email)
-                let isFoundTuple = isFound(guestEmail: email)
+                guard let guestSnap = self.guestSnapshot else {
+                    print("guest snap did not load")
+                    return
+                }
+                //if guest is found then present DJ Tableview
+                let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
                 if (isFoundTuple.0) {
                     presentDJTableView(guestID: isFoundTuple.key)
                 }
+                //Else check if the dj is found then present DJ root view
                 else {
-                    print("User was logged in but not found in database. So will now logout")
-                    do {
-                        try Auth.auth().signOut()
+                    guard let djSnap = self.djSnapshot else {
+                        print("Dj Snap did not load")
+                        return
                     }
-                    catch let error as NSError {
-                        print("Error with signing out of firebase: \(error.localizedDescription)")
+                    let djFoundTuple = isFound(snapshot: djSnap, guestEmail: email)
+                    if (djFoundTuple.0) {
+                        checkIfValidated(uid: djFoundTuple.key)
+                    }
+                    //Else not in either database, but still signed in so sign out
+                    else {
+                        print("User was logged in but not found in user or guest database. So will now logout")
+                        do {
+                            try Auth.auth().signOut()
+                        }
+                        catch let error as NSError {
+                            print("Error with signing out of firebase: \(error.localizedDescription)")
+                        }
                     }
                 }
             }
@@ -287,17 +311,30 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         }
     }
     
-    func getGuestSnapshot() {
+    func getSnapshots() {
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
 
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.guestSnapshot = dictionary
                 }
-                self.checkIfUserIsAlreadyLoggedIn()
             }
+            //get users
+            Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
+                
+                DispatchQueue.main.async {
+                    if let dictionary = snapshot.value as? [String: AnyObject] {
+                        self.djSnapshot = dictionary
+                    }
+                    self.checkIfUserIsAlreadyLoggedIn()
+                }
+            }, withCancel: nil)
+            
         }, withCancel: nil)
+        
     }
+    
+
     
     //Handle what shows when you hit login or enter (UISegmentedController)
     func handleLoginEnterChange() {
@@ -367,54 +404,98 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 guard let uid = Auth.auth().currentUser?.uid else {
                     return
                 }
+                self.checkIfValidated(uid: uid)
                 
-                Database.database().reference().child("users").child(uid).observe(.value, with: {(snapshot) in
-                    if let dictionary = snapshot.value as? [String: AnyObject] {
-                       
-                        guard let validated = dictionary["validated"] as? Bool else {
-                            return
-                        }
-                        
-                        //If user is validated, present DJRootViewController
-                        if (validated) {
-                            
-                            //Create DJ object, and store the dictionary snapshot into it.
-                            if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
-                                
-                                let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)
-                                
-                                //Send DJ to DJRootViewController
-                                let djRootViewController = DJRootViewController()
-                                djRootViewController.dj = dj
-                                
-                                let djNavController = UINavigationController(rootViewController: djRootViewController)
-                                self.present(djNavController, animated: true, completion: nil)
-                                
-                            }
-                            else {
-                                print("Parsing the DJ went wrong")
-                            }
-                        }
-                        else {
-                            print ("user is not validated")
-                            return
-                        }
-                    }
-                })
+//                Database.database().reference().child("users").child(uid).observe(.value, with: {(snapshot) in
+//                    if let dictionary = snapshot.value as? [String: AnyObject] {
+//
+//                        guard let validated = dictionary["validated"] as? Bool else {
+//                            return
+//                        }
+//
+//                        //If user is validated, present DJRootViewController
+//                        if (validated) {
+//
+//                            //Create DJ object, and store the dictionary snapshot into it.
+//                            if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
+//
+//                                let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)
+//
+//                                //Send DJ to DJRootViewController
+//                                let djRootViewController = DJRootViewController()
+//                                djRootViewController.dj = dj
+//
+//                                let djNavController = UINavigationController(rootViewController: djRootViewController)
+//                                self.present(djNavController, animated: true, completion: nil)
+//
+//                            }
+//                            else {
+//                                print("Parsing the DJ went wrong")
+//                            }
+//                        }
+//                        else {
+//                            print ("user is not validated")
+//                            return
+//                        }
+//                    }
+//                })
             }
         })
     }
     
+    func checkIfValidated(uid: String) {
+        
+        guard let djSnap = self.djSnapshot else {
+            print("djsnapshot did not load in check if validated")
+            return
+        }
+        
+        for (key, dictionary) in djSnap {
+            if key == uid {
+                guard let validated = dictionary["validated"] as? Bool else {
+                    print("Dj not validated")
+                    return
+                }
+                
+                //If user is validated, present DJRootViewController
+                if (validated) {
+                    
+                    //Create DJ object, and store the dictionary snapshot into it.
+                    if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
+                        
+                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)
+                        
+                        //Send DJ to DJRootViewController
+                        let djRootViewController = DJRootViewController()
+                        djRootViewController.dj = dj
+                        
+                        let djNavController = UINavigationController(rootViewController: djRootViewController)
+                        self.present(djNavController, animated: true, completion: nil)
+                        
+                    }
+                    else {
+                        print("Parsing the DJ went wrong")
+                    }
+                }
+                else {
+                    print ("user is not validated")
+                    return
+                }
+            }
+        }
+    }
+    
     func handleGuestEnter() {
         
-        guard let email = usernameTextField.text?.lowercased(), email != "" else {
+        guard let email = usernameTextField.text?.lowercased(), email != "", let guestSnap = self.guestSnapshot else {
             print("Username is empty, or snap did not load")
             return
         }
 
         
         //Found in database
-        let isFoundTuple = isFound(guestEmail: email)
+        
+        let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
         if isFoundTuple.0 {
             Auth.auth().signIn(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
@@ -459,20 +540,18 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         present(djTableNavController, animated: true, completion: nil)
     }
     
-    func isFound(guestEmail: String) ->(found: Bool, key: String) {
-        if let workingSnap = self.guestSnapshot {
-            for (k,v) in workingSnap {
-                if let email = v["email"] as? String, email == guestEmail {
-                    return (true, k)
-                }
-               
+    //returns key and true if found in the given snapshot
+    func isFound(snapshot: [String: AnyObject], guestEmail: String) ->(found: Bool, key: String) {
+        for (k,v) in snapshot {
+            if let email = v["email"] as? String, email.lowercased() == guestEmail {
+                return (true, k)
             }
-        }
-        else {
-            print("Guest Snap did not load")
+           
         }
         return (false, "")
     }
+    
+
    
     
     func setupViews() {
