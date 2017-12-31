@@ -30,5 +30,4 @@ class UserDJ: NSObject {
         self.profilePicURL = profilePicURL
         self.uid = uid
     }
-    
 }
