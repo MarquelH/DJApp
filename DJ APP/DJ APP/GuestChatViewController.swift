@@ -17,8 +17,11 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         }
     }
     var guestID: String?
-    
+    var ref: DatabaseReference!
+   // var messagesRef: DatabaseReference!
     var messages = [Message]()
+    var handle: UInt?
+    var messageCount: Int = -1
     
     let sendContanier: UIView = {
        let sc = UIView()
@@ -50,8 +53,129 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         return tf
     }()
     
+    let cellId = "cellId"
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let uid = dj?.uid, let id = guestID {
+            ref = Database.database().reference().child("messages").child(id).child(uid)
+            //messagesRef = Database.database().reference().child("messages").child(id)
+            getMessages()
+        }
+        else {
+            print("Chat will appear guestID or Dj not passed in")
+        }
+    }
+    
     override func viewDidLoad() {
         setupNavigationBar()
+        
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.register(MessageCell.self, forCellWithReuseIdentifier: cellId)
+        
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MessageCell
+        
+        cell.message = messages[indexPath.row]
+        if let id = guestID {
+            cell.guestID = id
+        }
+        else {
+            print("Loading table problem with GuestID")
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 40)
+    }
+    
+  
+    func getMessages() {
+        ref.queryOrdered(byChild: "count").observeSingleEvent(of: .value, with: {(snapshot) in
+            
+            if let workingSnap = snapshot.value as? [String: AnyObject] {
+                self.messages.removeAll()
+                
+                for (_, value) in workingSnap {
+                  
+                    if let message = value["message"] as? String, let guestID = value["guestID"] as? String, let djUID = value["djUID"] as? String, let timeStamp = value["timeStamp"] as? NSNumber, let count = value["count"] as? Int {
+    
+                        let newMessage = Message(message: message, timeStamp: timeStamp, djUID: djUID, guestID: guestID, count: count)
+                        
+                        print("Message: \(message)count: \(count)\n")
+                        if count > self.messageCount {
+                            self.messageCount = count
+                        }
+                        self.messages.append(newMessage)
+                        self.messages.sorted(by: { (message1, message2) -> Bool in
+                            let count = message1.count!
+                            let count2 = message2.count!
+                            return count > count2
+                        })
+                        print(self.messages)
+                        
+                        DispatchQueue.main.async {
+                            self.collectionView?.reloadData()
+                        }
+                    }
+                    else {
+                        print("Error getting values from working snap")
+                    }
+
+                }
+                
+            }
+            else {
+                print("Error converting snapshot.value to [string:Anyobject]")
+            }
+            
+        }) { (error) in
+            print("Error getting snapshot: \(error.localizedDescription)")
+        }
+        
+    }
+    
+    func setupNavigationBar() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+    }
+    
+    func handleSend() {
+        print("Send was hit")
+        //push to database
+        let timeStamp = Int(Date().timeIntervalSince1970)
+        messageCount = messageCount + 1
+        if let message = messageTextField.text, let id = guestID, let uid = dj?.uid {
+            let value = ["message": message, "timeStamp": timeStamp, "djUID":uid, "guestID": id, "count": messageCount] as [String : Any]
+            ref.childByAutoId().setValue(value)
+        }
+        else {
+            print("Problem unwrapping message value, or dj, or guestID")
+        }
+        messageTextField.text = ""
+        getMessages()
+    }
+    
+    func handleCancel() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        if let ref = self.ref, let handle = handle {
+//            ref.removeObserver(withHandle: handle)
+//        }
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -79,18 +203,5 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         messageTextField.centerYAnchor.constraint(equalTo: sendContanier.centerYAnchor).isActive = true
         messageTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor, constant: 12).isActive = true
         messageTextField.heightAnchor.constraint(equalTo: sendContanier.heightAnchor).isActive = true
-    }
-    
-    func setupNavigationBar() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-    }
-    
-    func handleSend() {
-        print("Send was hit")
-    }
-    
-    func handleCancel() {
-        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -13,12 +13,14 @@ class Message: NSObject {
     var timeStamp: NSNumber?
     var djUID: String?
     var guestID: String?
+    var count: Int?
     
-    init(message: String, timeStamp: NSNumber, djUID: String, guestID: String) {
+    init(message: String, timeStamp: NSNumber, djUID: String, guestID: String, count: Int) {
         self.message = message
         self.timeStamp = timeStamp
         self.djUID = djUID
         self.guestID = guestID
+        self.count = count
     }
     
 }

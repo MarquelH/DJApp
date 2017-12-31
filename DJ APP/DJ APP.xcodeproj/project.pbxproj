@@ -48,6 +48,7 @@
 		D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */; };
 		D88ACF661FF8210900197AC2 /* GuestChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88ACF651FF8210900197AC2 /* GuestChatViewController.swift */; };
 		D88ACF681FF8219E00197AC2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88ACF671FF8219E00197AC2 /* Message.swift */; };
+		D88ACF6A1FF82AA100197AC2 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88ACF691FF82AA100197AC2 /* MessageCell.swift */; };
 		D89437161FBE8E60002D0E7F /* SelectedTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89437151FBE8E60002D0E7F /* SelectedTrackViewController.swift */; };
 		D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */; };
 		D89A345B1FBA2D8D00D5E2F2 /* TrackItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89A345A1FBA2D8D00D5E2F2 /* TrackItem.swift */; };
@@ -129,6 +130,7 @@
 		D88340BD1F737CF400BD9FC2 /* SongTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewController.swift; sourceTree = "<group>"; };
 		D88ACF651FF8210900197AC2 /* GuestChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestChatViewController.swift; sourceTree = "<group>"; };
 		D88ACF671FF8219E00197AC2 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		D88ACF691FF82AA100197AC2 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		D89437151FBE8E60002D0E7F /* SelectedTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedTrackViewController.swift; sourceTree = "<group>"; };
 		D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		D89A345A1FBA2D8D00D5E2F2 /* TrackItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackItem.swift; sourceTree = "<group>"; };
@@ -196,10 +198,8 @@
 		D81321EA1F71C98E00C130AD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				D8C9D6611FF1B4A9005384CF /* User Cells */,
 				D81321EB1F71C9A900C130AD /* Exensions.swift */,
 				D8C9D6621FF1DD3D005384CF /* SnapshotHelper.swift */,
-				C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -316,8 +316,11 @@
 				D847BA1E1F6DADAE002C1BE7 /* UserDJ.swift */,
 				D8AF5C841FF04D1C0095C914 /* RunTimeError.swift */,
 				D89A345A1FBA2D8D00D5E2F2 /* TrackItem.swift */,
-				D801FE091FF45707003C2258 /* BaseTrackViewController.swift */,
 				D88ACF671FF8219E00197AC2 /* Message.swift */,
+				D801FE091FF45707003C2258 /* BaseTrackViewController.swift */,
+				C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */,
+				D88ACF691FF82AA100197AC2 /* MessageCell.swift */,
+				D8C9D6611FF1B4A9005384CF /* User Cells */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				D8C9D65F1FF1B11C005384CF /* DJCell.swift in Sources */,
 				D8158AED1FEF0A3100C45946 /* HomeViewController.swift in Sources */,
 				C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */,
+				D88ACF6A1FF82AA100197AC2 /* MessageCell.swift in Sources */,
 				D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */,
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
 				D801FE0C1FF46CB8003C2258 /* SongSelectedTrackController.swift in Sources */,
