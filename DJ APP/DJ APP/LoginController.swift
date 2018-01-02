@@ -68,6 +68,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         tf.isSecureTextEntry = true
         tf.placeholder = "Password"
         tf.clearButtonMode = UITextFieldViewMode.whileEditing
+        tf.returnKeyType = .go
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -151,9 +152,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         cb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         return cb
     }()
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .lightContent
-//    }
     
     var loginButtonTopAnchor: NSLayoutConstraint?
     
@@ -570,7 +568,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         usernameContainer.addSubview(usernameImage)
         passwordContainer.addSubview(passwordTextField)
         passwordContainer.addSubview(passwordImage)
-
+        
 //        setupFbButton()
         
         //ios 9 constraints x,y,w,h

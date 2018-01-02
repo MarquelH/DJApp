@@ -15,7 +15,10 @@ class addEventViewController: UIViewController {
     
     var dj: UserDJ?
     var refEventList: DatabaseReference!
+    var startingTime = "DummyValue"
+    var doWeHaveDJ = false
     
+    @IBOutlet weak var endingTime: UITextField!
     @IBOutlet weak var eventLocation: UITextField!
     @IBOutlet weak var eventToAddDateAndTime: UITextField!
     @IBOutlet weak var eventDatePicker: UIDatePicker!
@@ -37,8 +40,22 @@ class addEventViewController: UIViewController {
         dateFormatter.timeStyle = DateFormatter.Style.short
         
         let strDate = dateFormatter.string(from: eventDatePicker.date)
-        eventToAddDateAndTime.text = strDate
         
+        let components = strDate.components(separatedBy: " ")
+        var counter = 0
+        var resultArr = [String]()
+        
+        //Extracting starting time from date. Storing in variable
+        for component in components{
+            if counter != 0{
+                resultArr.append(component)
+            }
+            counter = counter + 1
+        }
+        startingTime = resultArr.joined(separator: " ")
+        
+        //Setting Datepicker results to text field
+        eventToAddDateAndTime.text = strDate
     }
     
     override func viewDidLoad() {
@@ -48,13 +65,13 @@ class addEventViewController: UIViewController {
         
         if let uidKey = dj?.uid {
             print("DJ has uid")
-            refEventList = Database.database().reference().child("Events").child(uidKey)
+            doWeHaveDJ = true
+            refEventList = Database.database().reference().child("Events")
         }
         else {
+            doWeHaveDJ = false
             print("DJ does not have uid")
         }
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,9 +148,12 @@ class addEventViewController: UIViewController {
         let key = self.refEventList.childByAutoId().key
         print("key is: \(key)\n")
 
-                    let event = ["id": key, "location":self.eventLocation.text!, "DateAndTime":self.eventToAddDateAndTime.text!] as [String : Any]
+            if doWeHaveDJ {
+            let event = ["id": key, "location":self.eventLocation.text!, "DateAndTime":self.eventToAddDateAndTime.text!,"DjID":dj?.uid,
+                         "Starting Time":self.startingTime,"Ending Time":self.endingTime.text!] as [String : Any]
                     
                     self.refEventList.child(key).setValue(event)
+            }
             }
         }
 
