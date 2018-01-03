@@ -17,50 +17,78 @@ class addEventViewController: UIViewController {
     var refEventList: DatabaseReference!
     var startingTime = "DummyValue"
     var doWeHaveDJ = false
+    var originalView: CGFloat?
     
     @IBOutlet weak var endingTime: UITextField!
     @IBOutlet weak var eventLocation: UITextField!
     @IBOutlet weak var eventToAddDateAndTime: UITextField!
-    @IBOutlet weak var eventDatePicker: UIDatePicker!
+    
+    let toolbar: UIToolbar = {
+        let tb = UIToolbar()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleToolBarDone))
+        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleToolBarCancel))
+        tb.barTintColor = UIColor.black
+        tb.barStyle = .default
+        tb.isTranslucent = true
+        tb.tintColor = UIColor(red: 75/255, green: 215/255, blue: 100/255, alpha: 1)
+        tb.sizeToFit()
+        tb.setItems([cancelButton, spacer, doneButton], animated: true)
+        return tb
+    }()
+    
+    func handleToolBarDone() {
+        self.view.endEditing(true)
+    }
+    
+    func handleToolBarCancel() {
+        self.view.endEditing(true)
+    }
+    
+    var datePickerView1:UIDatePicker = UIDatePicker()
+    var datePickerView2:UIDatePicker = UIDatePicker()
     
     @IBAction func pickerConfig(_ sender: UITextView) {
-        let datePickerView = UIDatePicker()
-        datePickerView.datePickerMode = .date
-        sender.inputView = datePickerView
-        datePickerView.addTarget(self, action: #selector(datePickerChanged), for: .valueChanged)
+        datePickerView1.datePickerMode = UIDatePickerMode.dateAndTime
+        datePickerView1.minimumDate = Date.init()
+        sender.inputView = datePickerView1
+        sender.inputAccessoryView = toolbar
+        datePickerView1.minuteInterval = 15
+        datePickerView1.addTarget(self, action: #selector(datePickerChanged), for: UIControlEvents.valueChanged)
+    }
+    
+    @IBAction func picker2Config(_ sender: UITextView) {
+        datePickerView2.datePickerMode = UIDatePickerMode.dateAndTime
+        datePickerView2.minimumDate = datePickerView1.date
+        sender.inputView = datePickerView2
+        sender.inputAccessoryView = toolbar
+        datePickerView2.minuteInterval = 15
+        datePickerView2.addTarget(self, action: #selector(datePickerChanged), for: UIControlEvents.valueChanged)
     }
     
     
     
     
-    @IBAction func datePickerChanged(_ sender: UIDatePicker) {
+    func datePickerChanged(_ sender: UIDatePicker){
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.short
         dateFormatter.timeStyle = DateFormatter.Style.short
         
-        let strDate = dateFormatter.string(from: eventDatePicker.date)
-        
-        let components = strDate.components(separatedBy: " ")
-        var counter = 0
-        var resultArr = [String]()
-        
-        //Extracting starting time from date. Storing in variable
-        for component in components{
-            if counter != 0{
-                resultArr.append(component)
-            }
-            counter = counter + 1
+        if (eventToAddDateAndTime.isEditing) {
+            let strDate = dateFormatter.string(from: sender.date)
+            eventToAddDateAndTime.text = strDate
+            endingTime.text = ""
         }
-        startingTime = resultArr.joined(separator: " ")
-        
-        //Setting Datepicker results to text field
-        eventToAddDateAndTime.text = strDate
+        else if (endingTime.isEditing)  {
+            let strDate = dateFormatter.string(from: sender.date)
+            endingTime.text = strDate
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        originalView = self.view.frame.origin.y
         //self.view.backgroundColor = UIColor.gray
         
         if let uidKey = dj?.uid {
@@ -149,8 +177,8 @@ class addEventViewController: UIViewController {
         print("key is: \(key)\n")
 
             if doWeHaveDJ {
-            let event = ["id": key, "location":self.eventLocation.text!, "DateAndTime":self.eventToAddDateAndTime.text!,"DjID":dj?.uid,
-                         "Starting Time":self.startingTime,"Ending Time":self.endingTime.text!] as [String : Any]
+            let event = ["id": key, "location":self.eventLocation.text!, "StartDateAndTime":self.eventToAddDateAndTime.text!,"DjID":dj?.uid,
+                         "EndDateAndTime":self.endingTime.text!] as [String : Any]
                     
                     self.refEventList.child(key).setValue(event)
             }

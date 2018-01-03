@@ -214,10 +214,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     let toolbar: UIToolbar = {
         let tb = UIToolbar()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleToolBarDone))
-        //doneButton.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleToolBarCancel))
-        //cancelButton.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         tb.barTintColor = UIColor.white
         tb.barStyle = .default
         tb.isTranslucent = true
