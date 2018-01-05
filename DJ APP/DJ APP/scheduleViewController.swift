@@ -19,9 +19,11 @@ class scheduleViewController: UIViewController {
     
     
     @IBAction func backButtonPressed(_ sender: Any) {
-        let rootController = DJRootViewController()
-        rootController.dj = dj
-        self.present(rootController, animated: true, completion: nil)
+        let djRootViewController = DJRootViewController()
+        djRootViewController.dj = dj
+        
+        let djNavController = UINavigationController(rootViewController: djRootViewController)
+        self.present(djNavController, animated: true, completion: nil)
     }
     
     @IBAction func addTapped(_ sender: Any) {

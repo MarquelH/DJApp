@@ -18,8 +18,9 @@ class UserDJ: NSObject {
     var validated: Bool?
     var profilePicURL: String?
     var uid: String?
+    var twitter: String?
     
-    init(age: Int, currentLocation: String, djName: String, email: String, genre: String, hometown: String, validated: Bool, profilePicURL: String, uid: String) {
+    init(age: Int, currentLocation: String, djName: String, email: String, genre: String, hometown: String, validated: Bool, profilePicURL: String, uid: String, twitter: String) {
         self.age = age
         self.currentLocation = currentLocation
         self.djName = djName
@@ -29,5 +30,6 @@ class UserDJ: NSObject {
         self.validated = validated
         self.profilePicURL = profilePicURL
         self.uid = uid
+        self.twitter = twitter
     }
 }

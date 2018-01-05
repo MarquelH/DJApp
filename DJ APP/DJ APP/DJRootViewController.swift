@@ -97,7 +97,7 @@ class DJRootViewController: UIViewController {
     
     let ProfileBtn: UIButton = {
         let lb = UIButton(type: .system)
-        lb.setTitle("Go To DJ Profile", for: .normal)
+        lb.setTitle("Edit Your DJ Profile", for: .normal)
         lb.setTitleColor(UIColor.blue, for: .normal)
         lb.backgroundColor = UIColor.clear
         lb.layer.cornerRadius = 30
@@ -105,6 +105,20 @@ class DJRootViewController: UIViewController {
         lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
         //lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 33)
         lb.addTarget(self, action: #selector(handleDJProfileEnter), for: .touchUpInside)
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    let MessagesBtn: UIButton = {
+        let lb = UIButton(type: .system)
+        lb.setTitle("View Messages", for: .normal)
+        lb.setTitleColor(UIColor.blue, for: .normal)
+        lb.backgroundColor = UIColor.clear
+        lb.layer.cornerRadius = 30
+        lb.layer.borderWidth = 3
+        lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
+        //lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 33)
+        //lb.addTarget(self, action: #selector(handleDJProfileEnter), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
@@ -141,6 +155,7 @@ class DJRootViewController: UIViewController {
         view.addSubview(profilePic)
         view.addSubview(SchedulingBtn)
         view.addSubview(ProfileBtn)
+        view.addSubview(MessagesBtn)
         //print(dj?.djName! as Any)
         
         //backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -158,10 +173,15 @@ class DJRootViewController: UIViewController {
         SchedulingBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 5).isActive = true
         SchedulingBtn.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
-        ProfileBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        ProfileBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 90).isActive = true
         ProfileBtn.heightAnchor.constraint(equalToConstant: 80).isActive = true
         ProfileBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 120).isActive = true
         ProfileBtn.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        MessagesBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -90).isActive = true
+        MessagesBtn.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        MessagesBtn.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 120).isActive = true
+        MessagesBtn.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
         profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profilePic.topAnchor.constraint(equalTo: view.topAnchor, constant: 90).isActive = true
@@ -203,7 +223,10 @@ class DJRootViewController: UIViewController {
     }
     
     func handleDJProfileEnter(){
-        
+        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "DJSideProfileController") as! DJSideProfileViewController
+        controller.dj = dj
+        self.present(controller, animated: true, completion: nil)
     }
 
 

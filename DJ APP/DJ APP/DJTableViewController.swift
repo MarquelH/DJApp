@@ -98,14 +98,17 @@ class DJTableViewController: UITableViewController {
                 
                 for (key,value) in dictionary {
                     
-                    if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
+                    if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
                     
-                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key)
+                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
                         
                         self.users.append(dj)
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
+                    }
+                    else{
+                        print("couldn't find DJ's")
                     }
                     
                 }
@@ -129,13 +132,9 @@ class DJTableViewController: UITableViewController {
         
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
-        cell.textLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-        cell.textLabel?.font = UIFont(name: "SudegnakNo2", size: 34)
         
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
-            cell.detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-            cell.detailTextLabel?.font = UIFont(name: "SudegnakNo2", size: 27)
         }
 
         

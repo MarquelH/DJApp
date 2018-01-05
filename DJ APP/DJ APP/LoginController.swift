@@ -105,7 +105,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     let notUserLabel: UIButton = {
         let btn = UIButton(type: .system)
         let lightblue = UIColor.white.withAlphaComponent(0.75)
-        btn.setTitle("Don't have an account? Sign up here", for: .normal)
+        btn.setTitle("Don't have a DJ account? Sign up by clicking here", for: .normal)
         btn.setTitleColor(lightblue, for: .normal)
         btn.titleLabel?.font = UIFont.italicSystemFont(ofSize: 15)
         btn.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
@@ -141,15 +141,16 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     
     let customFBLogin: UIButton =  {
         let cb = UIButton(type: .system)
-        cb.setTitle("FB Login", for: .normal)
+        cb.setTitle("Facebook Login", for: .normal)
         cb.addTarget(self, action: #selector(handleCustomLogin), for: .touchUpInside)
         cb.translatesAutoresizingMaskIntoConstraints = false
         cb.layer.borderWidth = 2
         cb.layer.borderColor = UIColor.white.cgColor
-        cb.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        cb.backgroundColor = UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
         cb.layer.masksToBounds = false
         cb.layer.cornerRadius = 20
         cb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        cb.titleLabel?.textColor = UIColor.white
         return cb
     }()
     
@@ -383,6 +384,12 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     
     func handleLogin() {
         guard let email = usernameTextField.text, let password = passwordTextField.text else {
+            let alert = UIAlertController(title: "Invalid Entries", message: "Username and password must be valid", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+                self.usernameTextField.text = ""
+                self.passwordTextField.text = ""
+            }))
+            self.present(alert, animated: true, completion: nil)
             print("Login info was invalid")
             return
         }
@@ -394,6 +401,12 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 print(error.localizedDescription)
                 self.usernameTextField.text = ""
                 self.passwordTextField.text = ""
+                let alert = UIAlertController(title: "Invalid Login", message: "Error logging in with the given username and password! Please Re-enter.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+                    self.usernameTextField.text = ""
+                    self.passwordTextField.text = ""
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
             //Else there was no error and we gucci
             else {
@@ -459,9 +472,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                 if (validated) {
                     
                     //Create DJ object, and store the dictionary snapshot into it.
-                    if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
+                    if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let twitter = dictionary["twitterOrInstagram"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
                         
-                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)
+                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid, twitter: twitter)
                         
                         //Send DJ to DJRootViewController
                         let djRootViewController = DJRootViewController()
@@ -592,7 +605,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         
         logoInLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         logoInLogin.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -65).isActive = true
-        logoInLogin.topAnchor.constraint(equalTo: view.topAnchor, constant: 30)
+        //logoInLogin.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
         logoInLogin.heightAnchor.constraint(equalToConstant: 60).isActive = true
         logoInLogin.widthAnchor.constraint(equalToConstant: 125).isActive = true
         

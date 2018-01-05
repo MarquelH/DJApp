@@ -16,7 +16,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     var username: String?
     var password: String?
     
-    let genre: [String] = ["Rap", "Rock", "Country", "Folk", "Indie", "Reggee", "EDM", "House", "R&B", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
+    let genre: [String] = ["Rap", "Hip-Hop", "Reggee", "R&B", "EDM", "House", "Rock", "Country", "Folk", "Indie", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
     
     lazy var profilePic: UIImageView = {
         let pp = UIImageView()
@@ -295,7 +295,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
         
         //make sure the fields are valid
-        guard let usernameUnwrapped = username, let passwordUnwrapper = password, let age = Int(ageSting), let genre = genreTextField.text, let name = djNameTextField.text, let hometown = hometownTextField.text else {
+        guard let usernameUnwrapped = username, let passwordUnwrapper = password, let age = Int(ageSting), let genre = genreTextField.text, let name = djNameTextField.text, let hometown = hometownTextField.text, let twitter = twitterTextField.text else {
             print("Not valid args passed in.")
             return
         }
@@ -337,7 +337,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         
                         if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
                             
-                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl] as [String : Any]
+                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
                         
                         self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
                         }

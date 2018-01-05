@@ -137,7 +137,7 @@ class DJPRofileViewController: UIViewController {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.clear
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lbl.font = UIFont(name: "SudegnakNo2", size : 36)
+        //lbl.font = UIFont(name: "SudegnakNo2", size : 36)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -145,7 +145,7 @@ class DJPRofileViewController: UIViewController {
         let al = UILabel()
         al.backgroundColor = UIColor.clear
         al.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        al.font = UIFont(name: "SudegnakNo2", size: 36)
+        //al.font = UIFont(name: "SudegnakNo2", size: 36)
         al.translatesAutoresizingMaskIntoConstraints = false
         return al
     }()
@@ -154,7 +154,7 @@ class DJPRofileViewController: UIViewController {
         let lbl = UILabel()
         lbl.backgroundColor = UIColor.clear
         lbl.textColor = UIColor.white
-        lbl.font = UIFont(name: "SudegnakNo2", size: 36)
+        //lbl.font = UIFont(name: "SudegnakNo2", size: 36)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -162,7 +162,7 @@ class DJPRofileViewController: UIViewController {
     let genreLabel: UILabel = {
         let gl = UILabel()
         gl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        gl.font = UIFont(name: "SudegnakNo2", size: 36)
+        //gl.font = UIFont(name: "SudegnakNo2", size: 36)
         gl.translatesAutoresizingMaskIntoConstraints = false
         return gl
     }()
@@ -202,7 +202,7 @@ class DJPRofileViewController: UIViewController {
         let lbl = UILabel()
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         lbl.text = "Twitter/Instagram:"
-        lbl.font = UIFont(name: "SudegnakNo2", size : 26)
+        //lbl.font = UIFont(name: "SudegnakNo2", size : 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
