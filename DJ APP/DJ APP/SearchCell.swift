@@ -12,7 +12,7 @@ class SearchCell: BaseCell {
 
     override func setupViews() {
         super.setupViews()
-        contentView.backgroundColor = UIColor.black
+        contentView.backgroundColor = UIColor.darkGray
         
         contentView.addSubview(profileImageView)
 

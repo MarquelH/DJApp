@@ -95,7 +95,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
                         downvoteIDs.remove(at: index)
                         upvoteIDs.append(isPresentTuple.1)
                         updateRefGuestByDJ()
-                        addUpvoteToSong(key: isPresentTuple.1, amount: 2)
+                        addUpvoteToSong(key: isPresentTuple.1, amount: 1)
 
                     }
                 }

@@ -64,13 +64,13 @@ class DJTableViewController: UITableViewController {
         self.tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
         self.tableView.separatorStyle = .none
         
-        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
-        backgroundImage.image = UIImage(named: "headphonesImage")
-        backgroundImage.contentMode = .scaleAspectFill
+        //let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
+       // backgroundImage.image = UIImage(named: "headphonesImage")
+        //backgroundImage.contentMode = .scaleAspectFill
         
         //view.insertSubview(backgroundImage, at: 0)
-        self.tableView.backgroundView = backgroundImage
-        
+        //self.tableView.backgroundView = backgroundImage
+        self.tableView.backgroundColor = UIColor.black
         //Set refresh controller
         self.tableView.refreshControl = refreshController
         
@@ -91,7 +91,7 @@ class DJTableViewController: UITableViewController {
     }
     
     func fetchDjs() {
-        
+        self.users.removeAll() //So that table view doesn't load duplicates
         Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
         
             if let dictionary = snapshot.value as? [String: AnyObject] {

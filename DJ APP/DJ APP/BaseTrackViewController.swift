@@ -56,6 +56,8 @@ class BaseTrackViewController: UIViewController {
         }
         trackName.text = track?.trackName
         trackArtist.text = track?.trackArtist
+        trackName.font = UIFont(name: "Mikodacs", size : 15)
+        trackArtist.font = UIFont(name: "Mikodacs", size : 15)
     }
     
     override func viewWillLayoutSubviews() {
