@@ -27,6 +27,7 @@
 		C724ECAC200168F900DEEC5E /* GoLiveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAB200168F900DEEC5E /* GoLiveTableViewController.swift */; };
 		C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAD20016A9500DEEC5E /* djTrackCell.swift */; };
 		C75748B920001EFD0093B446 /* profileTabForCustomTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75748B820001EFD0093B446 /* profileTabForCustomTabBarViewController.swift */; };
+		C76CC09420017538005A9554 /* Mikodacs.otf in Resources */ = {isa = PBXBuildFile; fileRef = C76CC09320017537005A9554 /* Mikodacs.otf */; };
 		C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */; };
 		C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */; };
 		C7F337AF1FFD9DB50082E579 /* DJSideProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F337AE1FFD9DB50082E579 /* DJSideProfileViewController.swift */; };
@@ -110,7 +111,7 @@
 		C724ECAB200168F900DEEC5E /* GoLiveTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoLiveTableViewController.swift; sourceTree = "<group>"; };
 		C724ECAD20016A9500DEEC5E /* djTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = djTrackCell.swift; sourceTree = "<group>"; };
 		C75748B820001EFD0093B446 /* profileTabForCustomTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileTabForCustomTabBarViewController.swift; sourceTree = "<group>"; };
-		C76CC092200171CC005A9554 /* Mikodacs.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Mikodacs.otf; sourceTree = "<group>"; };
+		C76CC09320017537005A9554 /* Mikodacs.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Mikodacs.otf; path = ../../../../../Downloads/mikodacs/Mikodacs.otf; sourceTree = "<group>"; };
 		C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduleViewController.swift; sourceTree = "<group>"; };
 		C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		C7F337AE1FFD9DB50082E579 /* DJSideProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJSideProfileViewController.swift; sourceTree = "<group>"; };
@@ -294,7 +295,7 @@
 		D81A66BE1F4F6E3E00543A8F /* DJ APP */ = {
 			isa = PBXGroup;
 			children = (
-				C76CC092200171CC005A9554 /* Mikodacs.otf */,
+				C76CC09320017537005A9554 /* Mikodacs.otf */,
 				66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */,
 				C7F8DCE91FFEE50000890BB6 /* Storyboards */,
 				D8AC84791FF5935E001566EA /* DJ APP.entitlements */,
@@ -521,6 +522,7 @@
 			files = (
 				D81A66CA1F4F6E3E00543A8F /* LaunchScreen.storyboard in Resources */,
 				66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */,
+				C76CC09420017538005A9554 /* Mikodacs.otf in Resources */,
 				D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */,
 				6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */,
 				66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */,
