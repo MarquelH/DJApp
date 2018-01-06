@@ -7,16 +7,42 @@
 //
 
 import UIKit
-import FirebaseDatabase
+import Firebase
 
 class DJPRofileViewController: UIViewController {
     
+    var users = [UserDJ]()
     var dj: UserDJ?
     var guestID: String?
+    
+    @IBOutlet weak var hometownLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var twitterLabel: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var djNameLabel: UILabel!
+    @IBOutlet weak var messageButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func messageButtonPressed(_ sender: Any) {
+        handleDM()
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.black
+        setupViews()
+        
+        messageButton.layer.cornerRadius = 27
+        backButton.layer.cornerRadius = 27
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,7 +55,9 @@ class DJPRofileViewController: UIViewController {
         }
         setupViews()
     }
-
+    
+    
+    
     //Present new collectionview controller as rootview of navigation controller from tabbar controller
     func handleDM() {
         print("DM was pressed")
@@ -54,64 +82,10 @@ class DJPRofileViewController: UIViewController {
     }
     
     func setupViews() {
-        if let name = dj?.djName, let hometown = dj?.hometown, let profileUrl = dj?.profilePicURL, let age = dj?.age, let genre = dj?.genre {
-            djNameLabel.text = "Name: \(name)"
-            profilePic.loadImageWithChachfromUrl(urlString: profileUrl)
-            hometownLabel.text = "Hometown: \(hometown)"
-            ageLabel.text = "Age: \(age)"
-            genreLabel.text = "Genre: \(genre)"
-        }
-        else {
-           print("No DJ at setupViews")
-        }
-       
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+        placeDJNameInLabel()
+        setupDJInfo()
+        placeDJImageInView()
         
-        view.addSubview(scrollView)
-        scrollView.addSubview(profilePic)
-        scrollView.addSubview(djNameLabel)
-        scrollView.addSubview(ageLabel)
-        scrollView.addSubview(hometownLabel)
-        scrollView.addSubview(genreLabel)
-        scrollView.addSubview(dmDJButton)
-        
-        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        scrollView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        
-        profilePic.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        profilePic.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
-        profilePic.widthAnchor.constraint(equalToConstant: 140).isActive = true
-        profilePic.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        
-        djNameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        djNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 18).isActive = true
-        djNameLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -48).isActive = true
-        djNameLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        ageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        ageLabel.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 18).isActive = true
-        ageLabel.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        ageLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        hometownLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        hometownLabel.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 18).isActive = true
-        hometownLabel.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        hometownLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        genreLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        genreLabel.topAnchor.constraint(equalTo: hometownLabel.bottomAnchor, constant: 18).isActive = true
-        genreLabel.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        genreLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        dmDJButton.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 36).isActive = true
-        dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        dmDJButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     let scrollView: UIScrollView = {
@@ -133,86 +107,44 @@ class DJPRofileViewController: UIViewController {
         return pp
     }()
     
-    let hometownLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.backgroundColor = UIColor.clear
-        lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        //lbl.font = UIFont(name: "SudegnakNo2", size : 36)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    let ageLabel: UILabel = {
-        let al = UILabel()
-        al.backgroundColor = UIColor.clear
-        al.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        //al.font = UIFont(name: "SudegnakNo2", size: 36)
-        al.translatesAutoresizingMaskIntoConstraints = false
-        return al
-    }()
+    func placeDJNameInLabel(){
+        if let djName = dj?.djName {
+            djNameLabel.font = UIFont(name: "SudegnakNo2", size: 60)
+            djNameLabel.text = djName
+        }
+        else{
+            print("No DJ Name")
+        }
+    }
     
-    let djNameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.backgroundColor = UIColor.clear
-        lbl.textColor = UIColor.white
-        //lbl.font = UIFont(name: "SudegnakNo2", size: 36)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
+    func setupDJInfo(){
+        if let hometown = dj?.hometown, let profileUrl = dj?.profilePicURL, let age = dj?.age, let genre = dj?.genre, let twitter = dj?.twitter{
+            hometownLabel.text = hometown
+            ageLabel.text = "\(age)"
+            genreLabel.text = genre
+            twitterLabel.text = twitter
+        }
+        else{
+            print("No DJ Info")
+        }
+    }
     
-    let genreLabel: UILabel = {
-        let gl = UILabel()
-        gl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        //gl.font = UIFont(name: "SudegnakNo2", size: 36)
-        gl.translatesAutoresizingMaskIntoConstraints = false
-        return gl
-    }()
-    
-    let dmDJButton: UIButton = {
-        let lb = UIButton(type: .system)
-        lb.setTitle("Hit up The DJ!", for: .normal)
-        lb.setTitleColor(UIColor.white, for: .normal)
-        lb.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lb.layer.cornerRadius = 25
-        lb.layer.masksToBounds = true
-        lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.white.cgColor
-        lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 36)
-        lb.addTarget(self, action: #selector(handleDM), for: .touchUpInside)
-        lb.translatesAutoresizingMaskIntoConstraints = false
-        return lb
-    }()
-    
-    let twitterIcon: UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFill
-        img.image = UIImage(named: "twitter-square-logo")
-        img.translatesAutoresizingMaskIntoConstraints = false
-        return img
-    }()
-    
-    let headphonesLogo: UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(named: "headphones")
-        img.translatesAutoresizingMaskIntoConstraints = false
-        img.contentMode = .scaleAspectFill
-        return img
-    }()
-    
-    let twitterLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lbl.text = "Twitter/Instagram:"
-        //lbl.font = UIFont(name: "SudegnakNo2", size : 26)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    
-    let twitterSep: UIView = {
-        let sep = UIView()
-        sep.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        sep.translatesAutoresizingMaskIntoConstraints = false
-        return sep
-    }()
+    func placeDJImageInView(){
+        if let profileURL = dj?.profilePicURL{
+            profilePic.loadImageWithChachfromUrl(urlString: profileURL)
+            profileImage.contentMode = .scaleAspectFill
+            profileImage.layer.cornerRadius = 60
+            profileImage.layer.masksToBounds = true
+            profileImage.layer.borderWidth = 1.5
+            profileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
+            profileImage.clipsToBounds = true
+            profileImage.translatesAutoresizingMaskIntoConstraints = false
+            profileImage.image = profilePic.image
+        }
+        else{
+            print("No Image to place")
+        }
+    }
 }
 
 

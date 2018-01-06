@@ -16,39 +16,34 @@ class CustomTabBarController: UITabBarController {
     
     let songController = SongTableViewController()
     let searchTrackController = SearchTrackViewController()
-    let profileController = DJPRofileViewController()
     let homeController = HomeViewController()
+    let profilePicker = profileTabForCustomTabBarViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
    
         let songNavController = UINavigationController()
         songNavController.tabBarItem.title = "Songs"
         songNavController.tabBarItem.image = UIImage(named: "listIcon")
         songNavController.viewControllers = [songController]
+    
+        profilePicker.tabBarItem.title = "DJ Profile"
+        profilePicker.tabBarItem.image = UIImage(named: "bioIcon")
         
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
-        
-        profileController.tabBarItem.title = "DJ Profile"
-        profileController.tabBarItem.image = UIImage(named: "bioIcon")
         
         homeController.tabBarItem.title = "DJ List"
         homeController.tabBarItem.image = UIImage(named: "Home-50")
     
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
-        
 
-//        self.navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-
-        viewControllers = [homeController, songNavController, searchTrackController, profileController]
+        viewControllers = [homeController, songNavController, searchTrackController,profilePicker]
         
         self.selectedIndex = 1;
-        
     }
-    
     
     //Remove all results from search table when you move to a different screen... maybe not the best if I
     //Can't clear the text from search bar
@@ -64,15 +59,15 @@ class CustomTabBarController: UITabBarController {
     }
     
     func setDJsAndGuestID(dj: UserDJ, id: String) {
-        profileController.dj = dj
+        profilePicker.dj = dj
         songController.dj = dj
         searchTrackController.dj = dj
         homeController.djID = dj.uid
         self.dj = dj
         
+        profilePicker.guestID = id
         songController.guestID = id
         searchTrackController.guestID = id
-        profileController.guestID = id
         homeController.guestID = id
         self.guestID = id
         

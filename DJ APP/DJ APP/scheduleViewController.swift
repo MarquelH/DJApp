@@ -73,10 +73,10 @@ class scheduleViewController: UIViewController {
         guard let validCell = view as! CalendarCell?
             else{return}
         if cellState.isSelected {
-            validCell.selectedView.isHidden = false //Not showing selected circle.
+            validCell.selectedView.isHidden = false //Showing selected circle.
         }
         else{
-            validCell.selectedView.isHidden = true //Showing selected circle.
+            validCell.selectedView.isHidden = true //Not Showing selected circle.
         }
     }
     
