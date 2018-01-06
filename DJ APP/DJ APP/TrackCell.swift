@@ -74,6 +74,8 @@ class TrackCell: BaseCell {
         detailTextLabel?.textColor = UIColor.white
         textLabel?.textColor = UIColor.white
         
+        textLabel?.font = UIFont(name: "Mikodacs", size : 19)
+        detailTextLabel?.font = UIFont(name: "Mikodacs", size : 15)
         
         textLabel?.lineBreakMode = .byTruncatingTail
         detailTextLabel?.lineBreakMode = .byTruncatingTail

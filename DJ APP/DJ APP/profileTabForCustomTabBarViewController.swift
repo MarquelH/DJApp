@@ -19,7 +19,7 @@ class profileTabForCustomTabBarViewController: UIViewController {
         btn.layer.cornerRadius = 30
         btn.setTitle("Hit Up The DJ!", for: .normal)
         btn.setTitleColor(UIColor.white, for: .normal)
-        btn.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 30)
+        //btn.titleLabel?.font = UIFont(name: "Mikodacs", size: 30)
         btn.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
         btn.layer.borderWidth = 3
         btn.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
@@ -34,7 +34,7 @@ class profileTabForCustomTabBarViewController: UIViewController {
         btn.layer.cornerRadius = 30
         btn.setTitle("View Profile", for: .normal)
         btn.setTitleColor(UIColor.white, for: .normal)
-        btn.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 30)
+        //btn.titleLabel?.font = UIFont(name: "Mikodacs", size: 30)
         btn.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
         btn.layer.borderWidth = 3
         btn.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor

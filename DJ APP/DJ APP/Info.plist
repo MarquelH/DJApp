@@ -2,27 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>fb808378199370845</string>
-            </array>
-        </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>808378199370845</string>
-    <key>FacebookDisplayName</key>
-    <string>GoDJ</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fb-messenger-share-api</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-    </array>
-    
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb808378199370845</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>808378199370845</string>
+	<key>FacebookDisplayName</key>
+	<string>GoDJ</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -62,6 +61,7 @@
 	<string>Access to photos to provide us with a profile pic</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Mikodacs.otf</string>
 		<string>SudegnakNo2.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
