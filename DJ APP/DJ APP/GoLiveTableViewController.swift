@@ -9,14 +9,7 @@
 import UIKit
 import Firebase
 
-class GoLiveTableViewController: UITableViewController, FetchDataForSongTable {
-    func setSongList(fetchedSnapshot: [String : AnyObject], songTableList: [TrackItem]) {
-        <#code#>
-    }
-    
-    func setGuestByDJ(fetchedUpvote: [String], fetchedDownvote: [String]) {
-        <#code#>
-    }
+class GoLiveTableViewController: UITableViewController {
     
 
 }
