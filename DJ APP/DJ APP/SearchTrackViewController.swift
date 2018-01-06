@@ -82,7 +82,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
     }
     
     

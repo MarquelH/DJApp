@@ -59,11 +59,15 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
         homeController.fetchGuestUpVotesAndDownVotes()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //Change status bar background color
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.darkGray
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
     }
     
     
