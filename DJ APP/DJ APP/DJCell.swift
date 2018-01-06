@@ -16,10 +16,10 @@ class DJCell: BaseCell {
         super.layoutSubviews()
 
         textLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-        textLabel?.font = UIFont(name: "Mikodacs", size : 26)
-        
+        textLabel?.font = UIFont(name: "Mikodacs", size : 20)
+
         detailTextLabel?.textColor = UIColor.white.withAlphaComponent(1.5)
-        detailTextLabel?.font = UIFont(name: "Mikodacs", size : 18)
+        detailTextLabel?.font = UIFont(name: "Mikodacs", size : 15)
         
         //10 for left and right, 70 for size of image
         textLabel?.frame = CGRect(x: 90, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)

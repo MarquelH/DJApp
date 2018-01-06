@@ -175,7 +175,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         
         tableView.separatorStyle = .none
         tableView.tableHeaderView = searchController.searchBar
-        tableView.backgroundColor = UIColor.black
+        tableView.backgroundColor = UIColor.darkGray
         tableView.backgroundView = noResults
         tableView.separatorColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
     }
@@ -197,6 +197,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         
         cell.textLabel?.text = track.trackName
         cell.detailTextLabel?.text = track.trackArtist
+        
+        cell.textLabel?.font = UIFont(name: "Mikodacs", size : 19)
+        cell.detailTextLabel?.font = UIFont(name: "Mikodacs", size : 15)
         
         
         if let imageURL = track.trackImage?.addHTTPS()?.absoluteString.replaceWith60() {
