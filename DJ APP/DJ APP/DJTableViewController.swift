@@ -153,7 +153,7 @@ class DJTableViewController: UITableViewController {
             else {
                 print("Problem parsing events into [String: AnyObjet]")
             }
-            refreshController.endRefreshing()
+            self.refreshController.endRefreshing()
         }, withCancel: nil)
     }
     
