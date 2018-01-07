@@ -48,6 +48,7 @@
 		D81A66E01F4F6E3E00543A8F /* DJ_APPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66DF1F4F6E3E00543A8F /* DJ_APPUITests.swift */; };
 		D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66F01F4F713F00543A8F /* DJTableViewController.swift */; };
 		D81A66F31F4F721D00543A8F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A66F21F4F721D00543A8F /* LoginController.swift */; };
+		D81C26EB2002AB1600069238 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81C26EA2002AB1600069238 /* Event.swift */; };
 		D83AFB9E1F75C1C5003B0004 /* SearchTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */; };
 		D83AFBA01F75CF31003B0004 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83AFB9F1F75CF31003B0004 /* TrackCell.swift */; };
 		D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */ = {isa = PBXBuildFile; fileRef = D847BA1E1F6DADAE002C1BE7 /* UserDJ.swift */; };
@@ -138,6 +139,7 @@
 		D81A66E11F4F6E3E00543A8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D81A66F01F4F713F00543A8F /* DJTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJTableViewController.swift; sourceTree = "<group>"; };
 		D81A66F21F4F721D00543A8F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		D81C26EA2002AB1600069238 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		D83AFB9D1F75C1C5003B0004 /* SearchTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackViewController.swift; sourceTree = "<group>"; };
 		D83AFB9F1F75CF31003B0004 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		D847BA1E1F6DADAE002C1BE7 /* UserDJ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDJ.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 			children = (
 				D847BA1E1F6DADAE002C1BE7 /* UserDJ.swift */,
 				D8AF5C841FF04D1C0095C914 /* RunTimeError.swift */,
+				D81C26EA2002AB1600069238 /* Event.swift */,
 				D89A345A1FBA2D8D00D5E2F2 /* TrackItem.swift */,
 				D88ACF671FF8219E00197AC2 /* Message.swift */,
 				D801FE091FF45707003C2258 /* BaseTrackViewController.swift */,
@@ -723,6 +726,7 @@
 				D8AF5C851FF04D1C0095C914 /* RunTimeError.swift in Sources */,
 				D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */,
 				D8C9D65F1FF1B11C005384CF /* DJCell.swift in Sources */,
+				D81C26EB2002AB1600069238 /* Event.swift in Sources */,
 				D8158AED1FEF0A3100C45946 /* HomeViewController.swift in Sources */,
 				C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */,
 				D88ACF6A1FF82AA100197AC2 /* MessageCell.swift in Sources */,

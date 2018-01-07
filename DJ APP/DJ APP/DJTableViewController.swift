@@ -12,8 +12,10 @@ import Firebase
 class DJTableViewController: UITableViewController {
 
     var users = [UserDJ]()
+    var events = [Event]()
     let cellId = "cellId"
     var guestID: String?
+    var usersSnapshot: [String: AnyObject]?
     
     lazy var refreshController: UIRefreshControl = {
         let rc = UIRefreshControl()
@@ -91,32 +93,92 @@ class DJTableViewController: UITableViewController {
     }
     
     func fetchDjs() {
-        self.users.removeAll() //So that table view doesn't load duplicates
+        //So that table view doesn't load duplicates
+        self.users.removeAll()
+        self.events.removeAll()
         Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
-        
+
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                self.usersSnapshot = dictionary
+                self.fetchEvents()
+            }
+
+        }, withCancel: nil)
+    }
+    
+    
+    func fetchEvents() {
+        Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
+            
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 
-                for (key,value) in dictionary {
+                for (_,value) in dictionary {
                     
-                    if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
+                    if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String {
                     
-                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
                         
-                        self.users.append(dj)
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
+                        let currDateTime = Date()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "M/dd/yy, h:mm a"
+                      
+                        guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
+                            print("Failed converting the the dates")
+                            return
+                        }
+                        
+                        
+                        
+                        //Check if the current time is within the start and end times
+                        //Add to the events list if it is.
+                        if ((sd.timeIntervalSince1970) <= currDateTime.timeIntervalSince1970 &&
+                            (ed.timeIntervalSince1970) >= currDateTime.timeIntervalSince1970) {
+                            
+                            let newEvent = Event(djID: djID, location: location, startTime: sd, endTime: ed, eventID: eventID)
+                            self.events.append(newEvent)
+                            //Add the DJ to the DJ List
+                            self.addDJToList(djID: djID)
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
                         }
                     }
                     else{
-                        print("couldn't find DJ's")
+                        print("Couldn't find information about the event")
                     }
                     
                 }
                 
             }
-            
+            else {
+                print("Problem parsing events into [String: AnyObjet]")
+            }
+            refreshController.endRefreshing()
         }, withCancel: nil)
-        refreshController.endRefreshing()
+    }
+    
+    func addDJToList(djID: String) {
+        guard let dictionary = usersSnapshot else {
+            print("userSnapshot is empty")
+            return
+        }
+        for (key,value) in dictionary {
+
+            if key == djID {
+                print("DJ Found in snapshot, going to add them to the list. ")
+                if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
+                    
+                    let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
+                    
+                    self.users.append(dj)
+                    
+                }
+                else{
+                    print("couldn't find DJ's")
+                }
+            }
+            
+        }
     }
     
 
