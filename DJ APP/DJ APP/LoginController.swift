@@ -416,40 +416,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                     return
                 }
                 self.checkIfValidated(uid: uid)
-                
-//                Database.database().reference().child("users").child(uid).observe(.value, with: {(snapshot) in
-//                    if let dictionary = snapshot.value as? [String: AnyObject] {
-//
-//                        guard let validated = dictionary["validated"] as? Bool else {
-//                            return
-//                        }
-//
-//                        //If user is validated, present DJRootViewController
-//                        if (validated) {
-//
-//                            //Create DJ object, and store the dictionary snapshot into it.
-//                            if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
-//
-//                                let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid)
-//
-//                                //Send DJ to DJRootViewController
-//                                let djRootViewController = DJRootViewController()
-//                                djRootViewController.dj = dj
-//
-//                                let djNavController = UINavigationController(rootViewController: djRootViewController)
-//                                self.present(djNavController, animated: true, completion: nil)
-//
-//                            }
-//                            else {
-//                                print("Parsing the DJ went wrong")
-//                            }
-//                        }
-//                        else {
-//                            print ("user is not validated")
-//                            return
-//                        }
-//                    }
-//                })
             }
         })
     }
@@ -476,12 +442,17 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                         
                         let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid, twitter: twitter)
                         
-                        //Send DJ to DJRootViewController
-                        let djRootViewController = DJRootViewController()
-                        djRootViewController.dj = dj
+                        //Send DJ to Dj Tab Bar Controller
+                        let tabbarController = DJcustomTabBarControllerViewController()
+                        tabbarController.setDJs(dj: dj)
+                        self.present(tabbarController, animated: true, completion: nil)
                         
-                        let djNavController = UINavigationController(rootViewController: djRootViewController)
-                        self.present(djNavController, animated: true, completion: nil)
+                        //Send DJ to DJRootViewController
+//                        let djRootViewController = DJRootViewController()
+//                        djRootViewController.dj = dj
+//
+//                        let djNavController = UINavigationController(rootViewController: djRootViewController)
+//                        self.present(djNavController, animated: true, completion: nil)
                         
                     }
                     else {

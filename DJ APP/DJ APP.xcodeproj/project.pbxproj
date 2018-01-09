@@ -37,6 +37,8 @@
 		C7FD13462001D6CD00FEC07D /* Mikodacs.otf in Resources */ = {isa = PBXBuildFile; fileRef = C7FD13452001D64000FEC07D /* Mikodacs.otf */; };
 		D801FE0A1FF45707003C2258 /* BaseTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D801FE091FF45707003C2258 /* BaseTrackViewController.swift */; };
 		D801FE0C1FF46CB8003C2258 /* SongSelectedTrackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D801FE0B1FF46CB8003C2258 /* SongSelectedTrackController.swift */; };
+		D804C6BC200443FB006E1A9B /* TabBarToProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D804C6BB200443FB006E1A9B /* TabBarToProfileViewController.swift */; };
+		D804C6BE2004485A006E1A9B /* TabBarToAddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D804C6BD2004485A006E1A9B /* TabBarToAddEventViewController.swift */; };
 		D80A18981F5C867200747022 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80A18971F5C867200747022 /* RegisterController.swift */; };
 		D81321EC1F71C9A900C130AD /* Exensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81321EB1F71C9A900C130AD /* Exensions.swift */; };
 		D8158AED1FEF0A3100C45946 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8158AEC1FEF0A3000C45946 /* HomeViewController.swift */; };
@@ -122,6 +124,8 @@
 		C7FD13452001D64000FEC07D /* Mikodacs.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Mikodacs.otf; sourceTree = "<group>"; };
 		D801FE091FF45707003C2258 /* BaseTrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTrackViewController.swift; sourceTree = "<group>"; };
 		D801FE0B1FF46CB8003C2258 /* SongSelectedTrackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectedTrackController.swift; sourceTree = "<group>"; };
+		D804C6BB200443FB006E1A9B /* TabBarToProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarToProfileViewController.swift; sourceTree = "<group>"; };
+		D804C6BD2004485A006E1A9B /* TabBarToAddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarToAddEventViewController.swift; sourceTree = "<group>"; };
 		D80A18971F5C867200747022 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		D81321EB1F71C9A900C130AD /* Exensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exensions.swift; sourceTree = "<group>"; };
 		D8158AEC1FEF0A3000C45946 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -263,6 +267,8 @@
 				C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */,
 				C7F8DCEA1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift */,
 				C7F8DCEE1FFF277300890BB6 /* DJSongTableViewController.swift */,
+				D804C6BB200443FB006E1A9B /* TabBarToProfileViewController.swift */,
+				D804C6BD2004485A006E1A9B /* TabBarToAddEventViewController.swift */,
 				C724ECAB200168F900DEEC5E /* GoLiveTableViewController.swift */,
 				66AA668C1FF097B4001ECA58 /* addEventViewController.swift */,
 				C7F8DCEC1FFF268C00890BB6 /* MessagesViewController.swift */,
@@ -720,6 +726,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D804C6BE2004485A006E1A9B /* TabBarToAddEventViewController.swift in Sources */,
 				D89A345B1FBA2D8D00D5E2F2 /* TrackItem.swift in Sources */,
 				D80A18981F5C867200747022 /* RegisterController.swift in Sources */,
 				C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */,
@@ -735,6 +742,7 @@
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
 				D801FE0C1FF46CB8003C2258 /* SongSelectedTrackController.swift in Sources */,
 				D86732981F54E31C00270D07 /* AddInfoController.swift in Sources */,
+				D804C6BC200443FB006E1A9B /* TabBarToProfileViewController.swift in Sources */,
 				C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */,
 				D867329A1F54E58E00270D07 /* DJRootViewController.swift in Sources */,
 				D83AFBA01F75CF31003B0004 /* TrackCell.swift in Sources */,

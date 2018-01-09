@@ -89,8 +89,10 @@ class addEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         originalView = self.view.frame.origin.y
-        //self.view.backgroundColor = UIColor.gray
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let uidKey = dj?.uid {
             print("DJ has uid")
             doWeHaveDJ = true
@@ -100,10 +102,6 @@ class addEventViewController: UIViewController {
             doWeHaveDJ = false
             print("DJ does not have uid")
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         getEventSnapshot()
     }
     
@@ -139,10 +137,10 @@ class addEventViewController: UIViewController {
     }
     
     func presentCalendar(){
-    let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
-    let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView") as! scheduleViewController
-    controller.dj = dj
-    self.present(controller, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "scheduleView") as! scheduleViewController
+        controller.dj = dj
+        self.present(controller, animated: true, completion: nil)
     }
     
     @IBAction func addEvent(_ sender: Any) {
