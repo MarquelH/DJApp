@@ -24,8 +24,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         //do i have to dispatch main
         didSet{
             tableView.reloadData()
-            
-
         }
     }
     var upvoteIDs: [String] = []

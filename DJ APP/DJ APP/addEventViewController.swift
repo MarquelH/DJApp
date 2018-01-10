@@ -145,7 +145,6 @@ class addEventViewController: UIViewController {
     
     @IBAction func addEvent(_ sender: Any) {
         handleEntry()
-        presentCalendar()
     }
     
     @IBAction func cancelEventAdd(_ sender: Any) {
@@ -155,17 +154,32 @@ class addEventViewController: UIViewController {
     
     func handleEntry(){
         guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "" else {
+            let alert = UIAlertController(title: "Error!", message: "Please enter a valid date and time range", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismissAlert()
+            }))
+            self.present(alert, animated: true, completion: nil)
             print("date & time is empty, or snap did not load")
             return
         }
         
         guard let location = eventLocation.text, location != "" else {
+            let alert = UIAlertController(title: "Error!", message: "Please enter a location", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismissAlert()
+            }))
+            self.present(alert, animated: true, completion: nil)
             print("location is empty, or snap did not load")
             return
         }
         
         let isFoundTuple = isFound(eventDateAndTime: dateAndTime)
         if isFoundTuple.0 { //Checking for event at same date and time
+            let alert = UIAlertController(title: "Error!", message: "It appears as though something is already scheduled at that time!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismissAlert()
+            }))
+            self.present(alert, animated: true, completion: nil)
             print("something is already scheduled at that time")
             return
         }
@@ -178,25 +192,31 @@ class addEventViewController: UIViewController {
             let event = ["id": key, "location":self.eventLocation.text!, "StartDateAndTime":self.eventToAddDateAndTime.text!,"DjID":dj?.uid,
                          "EndDateAndTime":self.endingTime.text!] as [String : Any]
                     
-                    self.refEventList.child(key).setValue(event)
+                self.refEventList.child(key).setValue(event)
+                let alert = UIAlertController(title: "Success", message: "We have added your event to the calendar!", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+                    self.dismissAlertForAdd()
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
             }
         }
+    
+    func dismissAlertForAdd(){
+        self.navigationController?.popViewController(animated: true)
+        eventToAddDateAndTime.text = ""
+        endingTime.text = ""
+        eventLocation.text = ""
+        self.view.endEditing(true)
+    }
+    
+    func dismissAlert(){
+        self.navigationController?.popViewController(animated: true)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

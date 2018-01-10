@@ -124,8 +124,8 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
                                                                          "genre":genre, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter])
                         
                         let alert = UIAlertController(title: "Success", message: "We have updated your info \(name)!", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.cancel, handler: { action in
-                            self.changesSaved()
+                        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
+                            self.popAlertOff()
                         }))
                         self.present(alert, animated: true, completion: nil)
                         
@@ -136,22 +136,30 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         }
     }
     
-    func changesSaved() {
-        self.dismiss(animated: true, completion: nil)
-        presentRootView()
+    func popAlertOff() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func cancelChangesBtnPressed(_ sender: Any) {
-        presentRootView()
+        let alert = UIAlertController(title: "Oh No!", message: "Are you sure you want to cancel your changes?!", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: { action in
+            self.popAlertOff()
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default
+            , handler: { action in
+            self.popAlertOff()
+        }))
+        self.present(alert, animated: true, completion: nil)
+        //presentRootView()
     }
     
-    func presentRootView(){
+    /*func presentRootView(){
         let djRootViewController = DJRootViewController()
         djRootViewController.dj = dj
         
         let djNavController = UINavigationController(rootViewController: djRootViewController)
         self.present(djNavController, animated: true, completion: nil)
-    }
+    }*/
     
     
     
@@ -213,14 +221,15 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     func placeDJImageInView(){
         if let profileURL = dj?.profilePicURL{
             profilePic.loadImageWithChachfromUrl(urlString: profileURL)
-            djProfileImage.contentMode = .scaleAspectFill
+            /*djProfileImage.contentMode = .scaleAspectFill
             djProfileImage.layer.cornerRadius = 60
             djProfileImage.layer.masksToBounds = true
             djProfileImage.layer.borderWidth = 1.5
             djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
             djProfileImage.clipsToBounds = true
-            djProfileImage.translatesAutoresizingMaskIntoConstraints = false
+            djProfileImage.translatesAutoresizingMaskIntoConstraints = false*/
             djProfileImage.image = profilePic.image
+            print("placed image")
         }
         else{
             print("No Image to place")

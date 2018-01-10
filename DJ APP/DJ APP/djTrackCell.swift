@@ -23,40 +23,17 @@ import Firebase
         return tvl
     }()
     
-    lazy var upArrowImageView: ProfileImageView = {
-        let iv = ProfileImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.isUserInteractionEnabled = true
-        iv.backgroundColor = UIColor.clear
-        return iv
-    }()
-    
-    lazy var downArrowImageView: ProfileImageView = {
-        let iv = ProfileImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.isUserInteractionEnabled = true
-        iv.backgroundColor = UIColor.clear
-        return iv
-    }()
-    
-    func upArrowSelected() {
-        upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.green)
-        downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.lightGray)
-        totalvotesLabel.textColor = UIColor.green
-    }
-    
-    func downArrowSelected() {
-        upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.lightGray)
-        downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.red)
-        totalvotesLabel.textColor = UIColor.red
-    }
-    
     func noSelection() {
-        upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.lightGray)
-        downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.lightGray)
+        let numberOfVotes = Int(totalvotesLabel.text!)
+        if (numberOfVotes! == 0){
         totalvotesLabel.textColor = UIColor.lightGray
+        }
+        else if (numberOfVotes! < 0){
+            totalvotesLabel.textColor = UIColor.red
+        }
+        else{
+            totalvotesLabel.textColor = UIColor.green
+        }
     }
     
     
@@ -99,13 +76,8 @@ import Firebase
     override func setupViews() {
         super.setupViews()
         
-        upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.lightGray)
-        downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.lightGray)
-        
         contentView.backgroundColor = UIColor.black
         contentView.addSubview(profileImageView)
-        contentView.addSubview(upArrowImageView)
-        contentView.addSubview(downArrowImageView)
         contentView.addSubview(totalvotesLabel)
         
         
@@ -115,22 +87,8 @@ import Firebase
         profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        upArrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -20).isActive = true
-        upArrowImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
-        upArrowImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        upArrowImageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        
-        
-        downArrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 20).isActive = true
-        downArrowImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
-        downArrowImageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        downArrowImageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        
-        totalvotesLabel.topAnchor.constraint(equalTo: upArrowImageView.topAnchor).isActive = true
-        totalvotesLabel.bottomAnchor.constraint(equalTo: downArrowImageView.bottomAnchor, constant: 3).isActive = true
-        totalvotesLabel.leftAnchor.constraint(equalTo: downArrowImageView.leftAnchor).isActive = true
-        
-        totalvotesLabel.rightAnchor.constraint(equalTo: downArrowImageView.rightAnchor).isActive = true
+        totalvotesLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        totalvotesLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
     }
     
     //    required init?(coder aDecoder: NSCoder) {

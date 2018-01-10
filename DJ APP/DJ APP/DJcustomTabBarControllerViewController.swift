@@ -13,10 +13,10 @@ class DJcustomTabBarControllerViewController: UITabBarController {
 
      var dj: UserDJ?
     
-    let scheduleController = TabBarToAddEventViewController()
+    let scheduleController = scheduleViewController()
     let goLiveController = DJSongTableViewController()
-    //let addEventController = addEventViewController()
-    let profileController = TabBarToProfileViewController()
+    let addEventController = addEventViewController()
+    let profileController = DJSideProfileViewController()
     let messagesController = MessagesViewController()
     
     override func viewDidLoad() {
@@ -25,31 +25,34 @@ class DJcustomTabBarControllerViewController: UITabBarController {
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
         
-        goLiveController.tabBarItem.title = "Go Live"
-        goLiveController.tabBarItem.image = UIImage(named: "bioIcon")
-        
-        scheduleController.tabBarItem.title = "Schedule"
-        scheduleController.tabBarItem.image = UIImage(named: "searchIcon")
-        
-        profileController.tabBarItem.title = "Profile"
-        profileController.tabBarItem.image = UIImage(named: "bioIcon")
-        
-        messagesController.tabBarItem.title = "Messages"
-        messagesController.tabBarItem.image = UIImage(named: "Home-50")
-        
 
-//        viewControllers = [schedule,goLive,addEvent,profile,messages]
-        viewControllers = [goLiveController, scheduleController, profileController,  messagesController]
-
+        sendDJToViews()
     }
 
     
-    func setDJs(dj: UserDJ) {
-        goLiveController.dj = dj
-        scheduleController.dj = dj
-        profileController.dj = dj
-        messagesController.dj = dj
-        self.dj = dj
+    
+    func sendDJToViews() {
+        //Setting DJ's according to view type.
+        for theView in viewControllers! {
+            if let v1 = theView as? scheduleViewController{
+                v1.dj = dj
+            }
+            else if let v2 = theView as? DJSongTableViewController{
+                v2.dj = dj
+            }
+            else if let v3 = theView as? addEventViewController{
+                v3.dj = dj
+            }
+            else if let v4 = theView as? DJSideProfileViewController{
+                v4.dj = dj
+            }
+            else if let v5 = theView as? MessagesViewController{
+                v5.dj = dj
+            }
+            else{
+                print("Not the right view controller")
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
