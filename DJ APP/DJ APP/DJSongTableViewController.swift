@@ -212,6 +212,19 @@ class DJSongTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return tableSongList.count
     }
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let accept = UITableViewRowAction(style: .normal, title: "Accept") { action, index in
+            print("Accept tapped")
+        }
+        accept.backgroundColor = .green
+        
+        let deny = UITableViewRowAction(style: .destructive, title: "Deny") { action, index in
+            print("Deny tapped")
+        }
+        //deny.backgroundColor = .red
+
+        return [accept, deny]
+    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
