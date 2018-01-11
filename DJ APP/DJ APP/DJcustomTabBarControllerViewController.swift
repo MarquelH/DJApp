@@ -49,6 +49,9 @@ class DJcustomTabBarControllerViewController: UITabBarController {
             else if let v5 = theView as? MessagesViewController{
                 v5.dj = dj
             }
+            else if let v6 = theView as? NavForTableViewController{
+                v6.dj = dj
+            }
             else{
                 print("Not the right view controller")
             }

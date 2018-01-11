@@ -17,7 +17,7 @@ import Firebase
         let tvl = UILabel()
         tvl.translatesAutoresizingMaskIntoConstraints = false
         tvl.textColor = UIColor.lightGray
-        tvl.font = UIFont.boldSystemFont(ofSize: 18)
+        tvl.font = UIFont.boldSystemFont(ofSize: 22)
         tvl.backgroundColor = UIColor.clear
         tvl.textAlignment = .center
         return tvl

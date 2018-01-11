@@ -26,6 +26,7 @@
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
 		C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAD20016A9500DEEC5E /* djTrackCell.swift */; };
 		C75748B920001EFD0093B446 /* profileTabForCustomTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75748B820001EFD0093B446 /* profileTabForCustomTabBarViewController.swift */; };
+		C76113F32006CF7F003E3EE3 /* NavForTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */; };
 		C766A4C620057F5A006A3DDF /* SongSelectedByDJViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766A4C520057F5A006A3DDF /* SongSelectedByDJViewController.swift */; };
 		C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */; };
 		C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */; };
@@ -111,6 +112,7 @@
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
 		C724ECAD20016A9500DEEC5E /* djTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = djTrackCell.swift; sourceTree = "<group>"; };
 		C75748B820001EFD0093B446 /* profileTabForCustomTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileTabForCustomTabBarViewController.swift; sourceTree = "<group>"; };
+		C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavForTableViewController.swift; sourceTree = "<group>"; };
 		C766A4C520057F5A006A3DDF /* SongSelectedByDJViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectedByDJViewController.swift; sourceTree = "<group>"; };
 		C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduleViewController.swift; sourceTree = "<group>"; };
 		C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			children = (
 				C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */,
 				C7F8DCEA1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift */,
+				C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */,
 				C7F8DCEE1FFF277300890BB6 /* DJSongTableViewController.swift */,
 				C766A4C520057F5A006A3DDF /* SongSelectedByDJViewController.swift */,
 				66AA668C1FF097B4001ECA58 /* addEventViewController.swift */,
@@ -724,6 +727,7 @@
 				D80A18981F5C867200747022 /* RegisterController.swift in Sources */,
 				C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */,
 				D8AF5C851FF04D1C0095C914 /* RunTimeError.swift in Sources */,
+				C76113F32006CF7F003E3EE3 /* NavForTableViewController.swift in Sources */,
 				D88340BE1F737CF400BD9FC2 /* SongTableViewController.swift in Sources */,
 				D8C9D65F1FF1B11C005384CF /* DJCell.swift in Sources */,
 				D81C26EB2002AB1600069238 /* Event.swift in Sources */,

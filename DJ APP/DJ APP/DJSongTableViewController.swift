@@ -9,9 +9,11 @@
 import UIKit
 import Firebase
 
-class DJSongTableViewController: UITableViewController, FetchDataForSongTable {
+class DJSongTableViewController: UITableViewController {
 
     var dj: UserDJ?
+    
+    @IBOutlet weak var theNavItem: UINavigationItem!
     let djTrackCellId: String = "djTrackCellId"
     //Used for up and down arrows to send to database
     var currentSnapshot: [String: AnyObject]?
@@ -21,16 +23,15 @@ class DJSongTableViewController: UITableViewController, FetchDataForSongTable {
         //do i have to dispatch main
         didSet{
             tableView.reloadData()
-            
-            
         }
     }
+    
     var upvoteIDs: [String] = []
     var downvoteIDs: [String] = []
     
     lazy var refreshController: UIRefreshControl = {
         let rc = UIRefreshControl()
-        rc.addTarget(self, action: #selector(self.refreshData), for: UIControlEvents.valueChanged)
+        rc.addTarget(self, action: #selector(self.fetchSongList), for: UIControlEvents.valueChanged)
         rc.tintColor = UIColor.blue.withAlphaComponent(0.75)
         return rc
     }()
@@ -50,7 +51,7 @@ class DJSongTableViewController: UITableViewController, FetchDataForSongTable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.refreshData()
+        
     }
     
     override func viewDidLoad() {
@@ -64,39 +65,68 @@ class DJSongTableViewController: UITableViewController, FetchDataForSongTable {
         else {
             print("DJ does not have uid")
         }
-        
         setupNavigationBar()
         setupViews()
+        fetchSongList()
     }
     
     //HELPERS -------------------------
-    func setGuestByDJ(fetchedUpvote: [String], fetchedDownvote: [String]) {
-        self.upvoteIDs = fetchedUpvote
-        self.downvoteIDs = fetchedDownvote
+    
+    func getSongSnapshot(){
+        refSongList.observeSingleEvent(of: .value, with: {(snapshot) in
+            if snapshot.exists() {
+                print("snap exists")
+            }
+            else {
+                print("snap does not exist")
+            }
+            DispatchQueue.main.async {
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.currentSnapshot = dictionary
+                }
+            }
+        }, withCancel: nil)
     }
     
-    func setSongList(fetchedSnapshot: [String : AnyObject], songTableList: [TrackItem]) {
-        self.currentSnapshot = fetchedSnapshot
-        self.tableSongList = songTableList
+    func fetchSongList() {
+        refSongList.queryOrdered(byChild: "totalvotes").observeSingleEvent(of: .value, with: {(snapshot) in
+            
+            self.tableSongList.removeAll()
+            
+            //No Snap for Song list -> Remove all songs from song list, unless it was empty to begin with
+            guard let workingSnap = snapshot.value as? [String: AnyObject] else {
+                if var currSnap = self.currentSnapshot {
+                    currSnap.removeAll()
+                }
+                return
+            }
+            //self.getSongSnapshot()
+            //self.setSongList(fetchedSnapshot: workingSnap, songTableList: self.tableSongList)
+            
+            self.currentSnapshot = workingSnap
+            
+            for snap in snapshot.children.allObjects as! [DataSnapshot] {
+                
+                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String {
+                    
+                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album)
+                    
+                    self.tableSongList.insert(newTrack, at: 0)
+                    
+                }
+            }
+            
+            
+        }, withCancel: {(error) in
+            print(error.localizedDescription)
+        })
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        
-        displayLabel()
         refreshController.endRefreshing()
     }
-    
-    func refreshData() {
-        if let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController  {
-            //Set the as the delegate
-            homeTabController.songTableDelegate = self
-            homeTabController.fetchGuestUpVotesAndDownVotes()
-            homeTabController.fetchSongList()
-        }
-        else {
-            print("Something wrong with tabbar controller")
-        }
-    }
+
     
     
     func setupNavigationBar() {
@@ -106,17 +136,17 @@ class DJSongTableViewController: UITableViewController, FetchDataForSongTable {
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Refresh button
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshData))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(fetchSongList))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any]
         
-        if let name = dj?.djName {
-            self.navigationController?.navigationItem.title = "\(name)" + "'s Requests"
+        if let name = dj?.djName{
+            theNavItem.title = "\(name)" + "'s Requests"
         }
-        else {
-            print("Dj Passed in has no name")
+        else{
+            print("No DJ Name")
         }
     }
     
@@ -139,9 +169,11 @@ class DJSongTableViewController: UITableViewController, FetchDataForSongTable {
     
     func displayLabel() {
         if tableSongList.isEmpty {
+            print("EMPTY")
             noRequestLabel.isHidden = false
         }
         else {
+            print("NOT EMPTY")
             noRequestLabel.isHidden = true
         }
     }
@@ -205,8 +237,9 @@ class DJSongTableViewController: UITableViewController, FetchDataForSongTable {
         else {
             print("problem with URL parsing")
         }
-            cell.noSelection()
         
+        cell.noSelection()
+        self.displayLabel()
         return cell
     }
 

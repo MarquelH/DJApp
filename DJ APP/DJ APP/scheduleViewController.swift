@@ -15,25 +15,12 @@ class scheduleViewController: UIViewController {
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
-    
-    
-    
-    @IBAction func backButtonPressed(_ sender: Any) {
-        let djRootViewController = DJRootViewController()
-        djRootViewController.dj = dj
-        
-        let djNavController = UINavigationController(rootViewController: djRootViewController)
-        self.present(djNavController, animated: true, completion: nil)
-    }
-    
-    @IBAction func addTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle:nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "addEventView") as! addEventViewController
-        controller.dj = dj
-        self.present(controller, animated: true, completion: nil)
-    }
-    
     var dj: UserDJ?
+    
+    @IBOutlet weak var tableOfEventsForSelectedEvent: UITableView!
+    @IBAction func addTapped(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 2
+    }
     
     let formatter = DateFormatter()
     
@@ -129,6 +116,11 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
+        
+        //Here, we will take snapshot of event and place into table view in
+        //the bottom of the view.
+        
+        
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {

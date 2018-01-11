@@ -147,10 +147,6 @@ class addEventViewController: UIViewController {
         handleEntry()
     }
     
-    @IBAction func cancelEventAdd(_ sender: Any) {
-        presentCalendar()
-    }
-    
     
     func handleEntry(){
         guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "" else {
@@ -200,7 +196,7 @@ class addEventViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             }
-        }
+    }
     
     func dismissAlertForAdd(){
         self.navigationController?.popViewController(animated: true)

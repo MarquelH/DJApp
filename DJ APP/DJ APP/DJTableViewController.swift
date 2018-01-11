@@ -214,12 +214,10 @@ class DJTableViewController: UITableViewController {
         else if (indexPath.row % 2 == 0){
             //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
             cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
-
         }
         else{
             //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.25)
             cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-
         }
         return cell
     }
