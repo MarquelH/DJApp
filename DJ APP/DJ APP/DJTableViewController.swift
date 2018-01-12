@@ -27,10 +27,10 @@ class DJTableViewController: UITableViewController {
     let noDJLabel: UILabel = {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
-        nrl.textColor = UIColor.blue
-        nrl.text = "No DJs are playing right now\nCheck again later"
+        nrl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
+        nrl.text = "No DJs are currently playing near you.\nPlease try again later!"
         nrl.textAlignment = .center
-        nrl.font = UIFont.boldSystemFont(ofSize: 20)
+        nrl.font = UIFont(name: "Mikodacs", size : 20)
         nrl.lineBreakMode = .byWordWrapping
         nrl.numberOfLines = 0
         return nrl

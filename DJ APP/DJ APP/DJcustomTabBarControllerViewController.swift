@@ -13,12 +13,6 @@ class DJcustomTabBarControllerViewController: UITabBarController {
 
      var dj: UserDJ?
     
-    let scheduleController = scheduleViewController()
-    let goLiveController = DJSongTableViewController()
-    let addEventController = addEventViewController()
-    let profileController = DJSideProfileViewController()
-    let messagesController = MessagesViewController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

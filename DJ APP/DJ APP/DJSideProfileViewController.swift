@@ -150,16 +150,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
             self.popAlertOff()
         }))
         self.present(alert, animated: true, completion: nil)
-        //presentRootView()
     }
-    
-    /*func presentRootView(){
-        let djRootViewController = DJRootViewController()
-        djRootViewController.dj = dj
-        
-        let djNavController = UINavigationController(rootViewController: djRootViewController)
-        self.present(djNavController, animated: true, completion: nil)
-    }*/
     
     
     

@@ -11,16 +11,71 @@ import JTAppleCalendar
 import Firebase
 
 class scheduleViewController: UIViewController {
-
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     var dj: UserDJ?
+    var eventSnapshot: [String: AnyObject]?
+    var refEventList: DatabaseReference!
+    var arrOfTimes: [String] = []
+    var arrOfLocations: [String] = []
+    let eventCellId: String = "eventCellId"
     
-    @IBOutlet weak var tableOfEventsForSelectedEvent: UITableView!
+    func getEventSnapshot(){
+        Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
+            if snapshot.exists() {
+                print("snap exists")
+            }
+            else {
+                print("snap does not exist")
+            }
+            DispatchQueue.main.async {
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.eventSnapshot = dictionary
+                }
+            }
+        }, withCancel: nil)
+    }
+    
+    
+    func isFound(eventDateAndTime: String) ->(found: Bool, key: String, location: String,time: String,otherTime: String) {
+        if let workingSnap = self.eventSnapshot {
+            for (k,v) in workingSnap {
+                
+                if let dateAndTime = v["StartDateAndTime"] as? String{
+                    let dateAloneArray = dateAndTime.split(separator: ",")
+                    let dateForComparison = dateAloneArray[0]
+                    let realDate = String(dateForComparison)
+                    
+                    let realTimeForString = dateAloneArray[1]
+                    let realTime = String(realTimeForString)
+                    let realTimeBare = realTime.replacingOccurrences(of: " ", with: "")
+                    
+                    let endDateAndTime = v["EndDateAndTime"] as! String
+                    let timeAloneArray = endDateAndTime.split(separator: ",")
+                    let realEndTimeForString = timeAloneArray[1]
+                    let realEndTime = String(realEndTimeForString)
+                    let realEndTimeBare = realEndTime.replacingOccurrences(of: " ", with: "")
+                
+                    if realDate == eventDateAndTime {
+                    let location = v["location"] as! String
+                     return (true, k, location,realTimeBare,realEndTimeBare)
+                    }
+                }
+            }
+        }
+        else {
+            print("Snap did not load")
+        }
+        return (false, "","","","")
+    }
+
     @IBAction func addTapped(_ sender: Any) {
         self.tabBarController?.selectedIndex = 2
     }
+    
     
     let formatter = DateFormatter()
     
@@ -28,6 +83,18 @@ class scheduleViewController: UIViewController {
         super.viewDidLoad()
 
         setupCalendarView()
+        timeLabel.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let uidKey = dj?.uid {
+            print("DJ has uid")
+            refEventList = Database.database().reference().child("Events")
+        }
+        else {
+            print("DJ does not have uid")
+        }
+        getEventSnapshot()
     }
     
     func setupViewsOfCalendar(from visibleDates: DateSegmentInfo){
@@ -56,6 +123,7 @@ class scheduleViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func handleCellSelected(view: JTAppleCell?, cellState: CellState){
         guard let validCell = view as! CalendarCell?
             else{return}
@@ -69,7 +137,6 @@ class scheduleViewController: UIViewController {
     
     func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
         guard let validCell = view as! CalendarCell? else{return}
-        
         if cellState.isSelected {
             validCell.dateLabel.textColor = UIColor.black
         }
@@ -80,6 +147,26 @@ class scheduleViewController: UIViewController {
             else{
                 validCell.dateLabel.textColor = UIColor.darkGray
             }
+        }
+    }
+    
+    func handleCellColorAndTextForEvents(view: JTAppleCell?, date: Date){
+        guard let validCell = view as! CalendarCell? else{return}
+        let dateFormatter2 = DateFormatter()
+        
+        dateFormatter2.dateStyle = DateFormatter.Style.short
+        dateFormatter2.timeStyle = DateFormatter.Style.short
+        
+        
+        let strDate = dateFormatter2.string(from: date)
+        
+        let arr = strDate.split(separator: ",")
+        let dateAlone = arr[0]
+        
+        let isFoundTuple = isFound(eventDateAndTime: String(dateAlone))
+        if isFoundTuple.0{
+            validCell.dateLabel.textColor = UIColor.black
+            validCell.selectedView.isHidden = false
         }
     }
     
@@ -110,6 +197,7 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
         cell.dateLabel.text = cellState.text
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
+        handleCellColorAndTextForEvents(view: cell, date: date)
         return cell
     }
     
@@ -117,15 +205,38 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
         
-        //Here, we will take snapshot of event and place into table view in
-        //the bottom of the view.
+        //Here, we will take snapshot of event and make labels visible upon
+        //the sight of an event.
+        let dateFormatter2 = DateFormatter()
+        
+        dateFormatter2.dateStyle = DateFormatter.Style.short
+        dateFormatter2.timeStyle = DateFormatter.Style.short
         
         
+        let strDate = dateFormatter2.string(from: date)
+        
+        let arr = strDate.split(separator: ",")
+        let dateAlone = arr[0]
+        
+        let isFoundTuple = isFound(eventDateAndTime: String(dateAlone))
+        
+        if isFoundTuple.0 {
+            locationLabel.adjustsFontSizeToFitWidth = true
+            locationLabel.text = "Playing at \(isFoundTuple.2) on this day!"
+            timeLabel.isHidden = false
+            timeLabel.text = "\(isFoundTuple.3) - \(isFoundTuple.4)"
+            timeLabel.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
+        }
+        else{
+            locationLabel.text = "No Scheduled Events on Selected Day"
+            timeLabel.isHidden = true
+        }
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
+        handleCellColorAndTextForEvents(view: cell, date: date)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {

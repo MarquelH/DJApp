@@ -121,19 +121,25 @@ class addEventViewController: UIViewController {
         }, withCancel: nil)
     }
     
-    func isFound(eventDateAndTime: String) ->(found: Bool, key: String) {
+    func isFound(eventDateAndTime: String) ->(found: Bool, key: String, realDate: String) {
         if let workingSnap = self.eventSnapshot {
             for (k,v) in workingSnap {
-                if let dateAndTime = v["DateAndTime"] as? String, dateAndTime == eventDateAndTime {
-                    return (true, k)
-                }
                 
+                if let dateAndTime = v["StartDateAndTime"] as? String{
+                    let dateAloneArray = dateAndTime.split(separator: ",")
+                    let dateForComparison = dateAloneArray[0]
+                    let realDate = String(dateForComparison)
+                    
+                    if realDate == eventDateAndTime {
+                        return (true, k, realDate)
+                    }
+                }
             }
         }
         else {
-            print("Guest Snap did not load")
+            print("Snap did not load")
         }
-        return (false, "")
+        return (false, "","")
     }
     
     func presentCalendar(){
@@ -150,7 +156,17 @@ class addEventViewController: UIViewController {
     
     func handleEntry(){
         guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "" else {
-            let alert = UIAlertController(title: "Error!", message: "Please enter a valid date and time range", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Skrt!", message: "Please enter a valid date and time range.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismissAlert()
+            }))
+            self.present(alert, animated: true, completion: nil)
+            print("date & time is empty, or snap did not load")
+            return
+        }
+        
+        guard let endingDateAndTime = endingTime.text, endingDateAndTime != "" else {
+            let alert = UIAlertController(title: "Skrt!", message: "Please enter a valid date and time range.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
                 self.dismissAlert()
             }))
@@ -160,7 +176,7 @@ class addEventViewController: UIViewController {
         }
         
         guard let location = eventLocation.text, location != "" else {
-            let alert = UIAlertController(title: "Error!", message: "Please enter a location", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Skrt!", message: "Please enter a venue.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
                 self.dismissAlert()
             }))
@@ -169,9 +185,14 @@ class addEventViewController: UIViewController {
             return
         }
         
-        let isFoundTuple = isFound(eventDateAndTime: dateAndTime)
+        let arr = dateAndTime.split(separator: ",")
+        let dateAlone = arr[0]
+        let dateForPassing = String(dateAlone)
+        
+        let isFoundTuple = isFound(eventDateAndTime: dateForPassing)
+        
         if isFoundTuple.0 { //Checking for event at same date and time
-            let alert = UIAlertController(title: "Error!", message: "It appears as though something is already scheduled at that time!", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Oops!", message: "It appears as though something is already scheduled on this day.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
                 self.dismissAlert()
             }))
@@ -208,6 +229,14 @@ class addEventViewController: UIViewController {
     
     func dismissAlert(){
         self.navigationController?.popViewController(animated: true)
+        eventToAddDateAndTime.text = ""
+        endingTime.text = ""
+        self.view.endEditing(true)
+    }
+    
+    func dismissAlertForLocation(){
+        self.navigationController?.popViewController(animated: true)
+        self.view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {

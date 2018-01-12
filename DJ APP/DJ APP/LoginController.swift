@@ -24,7 +24,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         lb.layer.cornerRadius = 40
         lb.layer.borderWidth = 1
         lb.layer.borderColor = UIColor.white.cgColor
-        lb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        lb.titleLabel?.font = UIFont(name: "Mikodacs", size: 35)
         lb.addTarget(self, action: #selector(handleLoginEnter), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
@@ -149,7 +149,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         cb.backgroundColor = UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
         cb.layer.masksToBounds = false
         cb.layer.cornerRadius = 20
-        cb.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        cb.titleLabel?.font = UIFont(name: "Mikodacs", size: 20)
         cb.titleLabel?.textColor = UIColor.white
         return cb
     }()

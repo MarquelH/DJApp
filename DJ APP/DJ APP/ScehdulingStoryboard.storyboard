@@ -10,6 +10,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Mikodacs.otf">
+            <string>Mikodacs</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Song Table View Controller-->
         <scene sceneID="APY-DS-OK0">
@@ -51,23 +56,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U6P-uB-bSb">
-                                <rect key="frame" x="0.0" y="417" width="375" height="201"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="201" id="mVs-Du-WjV"/>
-                                </constraints>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="scheduleTableCell" id="Myb-6K-lcS">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Myb-6K-lcS" id="zMB-II-gyt">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQx-6j-ORh">
                                 <rect key="frame" x="336" y="8" width="39" height="72"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
@@ -85,14 +73,14 @@
                                         <rect key="frame" x="0.0" y="0.0" width="371" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLs-d9-X6F">
-                                                <rect key="frame" x="0.0" y="0.0" width="371" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="371" height="26.5"/>
+                                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="21"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="Month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbg-Vu-YZ8">
-                                                <rect key="frame" x="0.0" y="20.5" width="371" height="29.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <rect key="frame" x="0.0" y="26.5" width="371" height="23.5"/>
+                                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="21"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -110,49 +98,49 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="53" id="1hd-S3-iFy"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                                         <color key="textColor" white="0.72999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ioa-iX-soc">
                                                         <rect key="frame" x="53" y="0.0" width="53" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                                         <color key="textColor" white="0.72999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X17-wD-KFp">
                                                         <rect key="frame" x="106" y="0.0" width="53" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                                         <color key="textColor" white="0.72999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B2Z-lD-wD2">
                                                         <rect key="frame" x="159" y="0.0" width="53" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                                         <color key="textColor" white="0.72999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMG-qx-ys3">
                                                         <rect key="frame" x="212" y="0.0" width="53" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                                         <color key="textColor" white="0.72999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1FD-FB-2m3">
                                                         <rect key="frame" x="265" y="0.0" width="53" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                                         <color key="textColor" white="0.72999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dv1-iA-f7r">
                                                         <rect key="frame" x="318" y="0.0" width="53" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                                         <color key="textColor" white="0.72999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -225,32 +213,52 @@
                                     <constraint firstItem="aol-05-KwY" firstAttribute="top" secondItem="duw-9O-YJN" secondAttribute="top" constant="50" id="aeZ-YM-bCP"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Scheduled Events on Selected Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRh-1d-Z9Q">
+                                <rect key="frame" x="16" y="496" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="G0P-XZ-Fbs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQe-xn-jaf">
+                                <rect key="frame" x="16" y="569" width="343" height="21"/>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="fQx-6j-ORh" secondAttribute="trailing" id="2Qd-Ib-KQz"/>
-                            <constraint firstItem="fQx-6j-ORh" firstAttribute="trailing" secondItem="U6P-uB-bSb" secondAttribute="trailing" id="7lU-XF-2cn"/>
-                            <constraint firstItem="U6P-uB-bSb" firstAttribute="bottom" secondItem="iSS-pd-cpb" secondAttribute="bottom" id="8eG-SL-tBK"/>
-                            <constraint firstItem="U6P-uB-bSb" firstAttribute="leading" secondItem="9pZ-t6-Z5h" secondAttribute="leading" id="VPk-IO-S29"/>
+                            <constraint firstItem="yRh-1d-Z9Q" firstAttribute="leading" secondItem="9pZ-t6-Z5h" secondAttribute="leadingMargin" id="3PU-ns-GxW"/>
+                            <constraint firstItem="yRh-1d-Z9Q" firstAttribute="leading" secondItem="FQe-xn-jaf" secondAttribute="leading" id="7V2-tH-fMg"/>
+                            <constraint firstItem="yRh-1d-Z9Q" firstAttribute="trailing" secondItem="FQe-xn-jaf" secondAttribute="trailing" id="7aS-Zn-CKw"/>
+                            <constraint firstItem="iSS-pd-cpb" firstAttribute="bottom" secondItem="FQe-xn-jaf" secondAttribute="bottom" constant="28" id="7cb-fP-m7z"/>
+                            <constraint firstItem="yRh-1d-Z9Q" firstAttribute="top" secondItem="duw-9O-YJN" secondAttribute="bottom" constant="38" id="O8t-hc-lzL"/>
+                            <constraint firstItem="FQe-xn-jaf" firstAttribute="top" secondItem="yRh-1d-Z9Q" secondAttribute="bottom" constant="52" id="Xhj-3U-UJy"/>
                             <constraint firstItem="fQx-6j-ORh" firstAttribute="top" secondItem="9pZ-t6-Z5h" secondAttribute="topMargin" constant="-12" id="Y01-XR-w6X"/>
                             <constraint firstItem="duw-9O-YJN" firstAttribute="top" secondItem="iSS-pd-cpb" secondAttribute="top" constant="41" id="bf8-Mr-jz1"/>
                             <constraint firstItem="iSS-pd-cpb" firstAttribute="bottom" secondItem="duw-9O-YJN" secondAttribute="bottom" constant="160" id="cQt-12-XX3"/>
+                            <constraint firstItem="duw-9O-YJN" firstAttribute="centerX" secondItem="9pZ-t6-Z5h" secondAttribute="centerX" id="hjv-ls-ENo"/>
                             <constraint firstItem="fQx-6j-ORh" firstAttribute="leading" secondItem="iSS-pd-cpb" secondAttribute="leading" constant="336" id="laQ-5z-W7a"/>
-                            <constraint firstItem="duw-9O-YJN" firstAttribute="centerX" secondItem="U6P-uB-bSb" secondAttribute="centerX" id="sPp-xK-xOm"/>
+                            <constraint firstItem="yRh-1d-Z9Q" firstAttribute="centerX" secondItem="duw-9O-YJN" secondAttribute="centerX" id="wvp-Dd-PU0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iSS-pd-cpb"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Schedule" image="searchIcon" id="yyN-3K-Q0Y"/>
                     <connections>
                         <outlet property="calendarView" destination="hAd-pF-8dg" id="bvQ-6q-YeW"/>
+                        <outlet property="locationLabel" destination="yRh-1d-Z9Q" id="fYo-Ie-k7m"/>
                         <outlet property="month" destination="bbg-Vu-YZ8" id="HDH-yY-0SN"/>
-                        <outlet property="tableOfEventsForSelectedEvent" destination="U6P-uB-bSb" id="pWr-dz-OCo"/>
+                        <outlet property="timeLabel" destination="FQe-xn-jaf" id="hpw-mJ-eqp"/>
                         <outlet property="year" destination="VLs-d9-X6F" id="waY-gW-hx8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7WU-ui-mbj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="-851"/>
+            <point key="canvasLocation" x="37.600000000000001" y="-851.42428785607206"/>
         </scene>
         <!--addEventView-->
         <scene sceneID="fvU-3i-hza">
@@ -261,21 +269,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="sPZ-hB-Eni">
-                                <rect key="frame" x="0.0" y="55" width="375" height="485"/>
+                                <rect key="frame" x="20" y="55" width="335" height="485"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QgS-HG-ZbL">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Move picker to select." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1L-Td-mt5">
-                                        <rect key="frame" x="0.0" y="65" width="375" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <rect key="frame" x="0.0" y="65" width="335" height="30"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0yt-ah-r8Q">
-                                        <rect key="frame" x="0.0" y="130" width="375" height="30"/>
+                                        <rect key="frame" x="0.0" y="130" width="335" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -284,18 +292,18 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAV-7C-G42">
-                                        <rect key="frame" x="0.0" y="195" width="375" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <rect key="frame" x="0.0" y="195" width="335" height="30"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Move picker to select." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cc-tZ-jFx">
-                                        <rect key="frame" x="0.0" y="260" width="375" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <rect key="frame" x="0.0" y="260" width="335" height="30"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j8m-Xi-wUL">
-                                        <rect key="frame" x="0.0" y="325" width="375" height="30"/>
+                                        <rect key="frame" x="0.0" y="325" width="335" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -304,12 +312,12 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba5-Ot-JRz">
-                                        <rect key="frame" x="0.0" y="390" width="375" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <rect key="frame" x="0.0" y="390" width="335" height="30"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="RJ Bentleys" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GMM-Ad-GRM">
-                                        <rect key="frame" x="0.0" y="455" width="375" height="30"/>
+                                        <rect key="frame" x="0.0" y="455" width="335" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -327,9 +335,9 @@
                         <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="IyR-bS-QHU" firstAttribute="bottom" secondItem="4Z8-ZS-lob" secondAttribute="bottom" id="4Vx-SL-kRe"/>
-                            <constraint firstItem="sPZ-hB-Eni" firstAttribute="leading" secondItem="Uvi-hS-N5V" secondAttribute="leading" id="CcX-9c-tnR"/>
+                            <constraint firstItem="sPZ-hB-Eni" firstAttribute="leading" secondItem="Uvi-hS-N5V" secondAttribute="leading" constant="20" id="CcX-9c-tnR"/>
                             <constraint firstItem="IyR-bS-QHU" firstAttribute="leading" secondItem="4Z8-ZS-lob" secondAttribute="leading" constant="128" id="LJD-yp-igL"/>
-                            <constraint firstAttribute="trailing" secondItem="sPZ-hB-Eni" secondAttribute="trailing" id="Lc1-3X-VWN"/>
+                            <constraint firstAttribute="trailing" secondItem="sPZ-hB-Eni" secondAttribute="trailing" constant="20" id="Lc1-3X-VWN"/>
                             <constraint firstItem="sPZ-hB-Eni" firstAttribute="top" secondItem="4Z8-ZS-lob" secondAttribute="top" constant="35" id="fEe-xb-f1O"/>
                             <constraint firstItem="IyR-bS-QHU" firstAttribute="top" secondItem="sPZ-hB-Eni" secondAttribute="bottom" constant="54" id="xVq-Ub-OLa"/>
                             <constraint firstItem="sPZ-hB-Eni" firstAttribute="centerX" secondItem="IyR-bS-QHU" secondAttribute="centerX" id="zZR-ic-MmI"/>
@@ -356,22 +364,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headphonesImage" translatesAutoresizingMaskIntoConstraints="NO" id="gwR-V1-du5">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="214"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="210"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="usernameIcon" translatesAutoresizingMaskIntoConstraints="NO" id="8lE-YN-cRX">
-                                <rect key="frame" x="107" y="132" width="150" height="121"/>
+                                <rect key="frame" x="102" y="128" width="155" height="121"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIb-dq-be0">
-                                <rect key="frame" x="16" y="58" width="343" height="25"/>
+                                <rect key="frame" x="16" y="58" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9u-BZ-RcH">
-                                <rect key="frame" x="113" y="168" width="139" height="49"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="qU7-Yj-jjV"/>
-                                </constraints>
+                                <rect key="frame" x="113" y="164" width="134" height="49"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="22"/>
                                 <state key="normal" title="Edit Photo">
                                     <color key="titleColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -381,8 +386,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hff-xW-QGB">
-                                <rect key="frame" x="0.0" y="550" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="546" width="375" height="32"/>
                                 <color key="backgroundColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="9Fr-fJ-cEF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
                                 <state key="normal" title="Save Changes">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -391,8 +400,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pRb-DG-iwd">
-                                <rect key="frame" x="0.0" y="588" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="586" width="375" height="32"/>
                                 <color key="backgroundColor" red="1" green="0.1012012446673427" blue="0.15635097429426303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="IrD-Gz-K2T"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
                                 <state key="normal" title="Cancel Changes">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -401,13 +414,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hometown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLA-Y6-dZM">
-                                <rect key="frame" x="16" y="293" width="83" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="16" y="288" width="78" height="23"/>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                 <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UEl-Sv-Rn6">
-                                <rect key="frame" x="107" y="288" width="252" height="30"/>
+                                <rect key="frame" x="102" y="284" width="257" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -417,19 +430,19 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DJ Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCJ-jX-IGe">
-                                <rect key="frame" x="16" y="338" width="71" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="16" y="333" width="62" height="23"/>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                 <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LgA-yt-xwo">
-                                <rect key="frame" x="16" y="428" width="47" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="16" y="424" width="43" height="23"/>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                 <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GUB-p5-xoM">
-                                <rect key="frame" x="107" y="333" width="252" height="30"/>
+                                <rect key="frame" x="102" y="329" width="257" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -439,7 +452,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="idf-nz-oMk">
-                                <rect key="frame" x="107" y="381" width="252" height="30"/>
+                                <rect key="frame" x="102" y="377" width="257" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -449,7 +462,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b0s-uv-5uj">
-                                <rect key="frame" x="107" y="424" width="252" height="30"/>
+                                <rect key="frame" x="102" y="420" width="257" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -459,7 +472,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BPo-8R-wPE">
-                                <rect key="frame" x="158" y="468" width="201" height="30"/>
+                                <rect key="frame" x="164" y="464" width="196" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -469,66 +482,66 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twitter/Instagram" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igF-x2-IuH">
-                                <rect key="frame" x="16" y="472" width="134" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="16" y="468" width="140" height="23"/>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                 <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UL5-mQ-BC9">
-                                <rect key="frame" x="16" y="386" width="30" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="16" y="381" width="27" height="23"/>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="18"/>
                                 <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="gwR-V1-du5" firstAttribute="leading" secondItem="hpK-2L-vAF" secondAttribute="leading" id="0dD-hf-8Hl"/>
-                            <constraint firstItem="BPo-8R-wPE" firstAttribute="leading" secondItem="igF-x2-IuH" secondAttribute="trailing" constant="8" symbolic="YES" id="3Xf-PA-Kim"/>
-                            <constraint firstItem="hff-xW-QGB" firstAttribute="top" secondItem="BPo-8R-wPE" secondAttribute="bottom" constant="52" id="4ON-Ch-tMa"/>
-                            <constraint firstItem="UL5-mQ-BC9" firstAttribute="centerY" secondItem="idf-nz-oMk" secondAttribute="centerY" id="5Lg-ix-jTe"/>
-                            <constraint firstItem="GUB-p5-xoM" firstAttribute="top" secondItem="UEl-Sv-Rn6" secondAttribute="bottom" constant="15" id="6nu-X1-0YV"/>
-                            <constraint firstItem="GUB-p5-xoM" firstAttribute="leading" secondItem="idf-nz-oMk" secondAttribute="leading" id="AhX-FM-WyQ"/>
-                            <constraint firstItem="UL5-mQ-BC9" firstAttribute="leading" secondItem="LgA-yt-xwo" secondAttribute="leading" id="BEE-iG-0dc"/>
-                            <constraint firstItem="gwR-V1-du5" firstAttribute="trailing" secondItem="hff-xW-QGB" secondAttribute="trailing" id="BYr-gy-Au1"/>
-                            <constraint firstItem="gwR-V1-du5" firstAttribute="top" secondItem="hpK-2L-vAF" secondAttribute="top" id="Bes-nL-StE"/>
-                            <constraint firstItem="8lE-YN-cRX" firstAttribute="top" secondItem="YIb-dq-be0" secondAttribute="bottom" constant="49" id="CiS-48-nbi"/>
-                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="leading" secondItem="GUB-p5-xoM" secondAttribute="leading" id="D44-ED-Pbe"/>
-                            <constraint firstItem="YIb-dq-be0" firstAttribute="trailing" secondItem="UEl-Sv-Rn6" secondAttribute="trailing" id="GG9-tm-uZb"/>
-                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="leading" secondItem="XLA-Y6-dZM" secondAttribute="trailing" constant="8" symbolic="YES" id="IBF-sM-CtG"/>
-                            <constraint firstItem="8lE-YN-cRX" firstAttribute="centerX" secondItem="i9u-BZ-RcH" secondAttribute="centerX" id="KQd-S1-yLf"/>
-                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="top" secondItem="8lE-YN-cRX" secondAttribute="bottom" constant="35" id="LPT-3O-eer"/>
-                            <constraint firstItem="hff-xW-QGB" firstAttribute="trailing" secondItem="pRb-DG-iwd" secondAttribute="trailing" id="LUr-SB-7gf"/>
-                            <constraint firstItem="LgA-yt-xwo" firstAttribute="centerY" secondItem="b0s-uv-5uj" secondAttribute="centerY" id="Lze-i8-xOJ"/>
-                            <constraint firstItem="hff-xW-QGB" firstAttribute="leading" secondItem="pRb-DG-iwd" secondAttribute="leading" id="Org-5E-hhB"/>
-                            <constraint firstItem="YIb-dq-be0" firstAttribute="top" secondItem="PzP-gU-3x6" secondAttribute="top" constant="38" id="R0d-Kh-X1Z"/>
-                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="top" secondItem="gwR-V1-du5" secondAttribute="bottom" constant="74" id="SPY-V5-W5v"/>
-                            <constraint firstItem="pRb-DG-iwd" firstAttribute="top" secondItem="hff-xW-QGB" secondAttribute="bottom" constant="8" symbolic="YES" id="T43-XM-lia"/>
-                            <constraint firstItem="b0s-uv-5uj" firstAttribute="trailing" secondItem="BPo-8R-wPE" secondAttribute="trailing" id="UNE-w7-8ga"/>
-                            <constraint firstItem="YCJ-jX-IGe" firstAttribute="centerY" secondItem="GUB-p5-xoM" secondAttribute="centerY" id="Uyf-53-obo"/>
-                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="top" secondItem="i9u-BZ-RcH" secondAttribute="bottom" constant="71" id="a9y-0P-pf6"/>
-                            <constraint firstItem="GUB-p5-xoM" firstAttribute="trailing" secondItem="idf-nz-oMk" secondAttribute="trailing" id="aaW-K0-Thf"/>
-                            <constraint firstItem="8lE-YN-cRX" firstAttribute="centerY" secondItem="i9u-BZ-RcH" secondAttribute="centerY" id="bGA-hD-DHu"/>
-                            <constraint firstItem="idf-nz-oMk" firstAttribute="top" secondItem="GUB-p5-xoM" secondAttribute="bottom" constant="18" id="di0-sn-g5J"/>
-                            <constraint firstItem="XLA-Y6-dZM" firstAttribute="centerY" secondItem="UEl-Sv-Rn6" secondAttribute="centerY" id="fmw-bC-L3E"/>
-                            <constraint firstItem="8lE-YN-cRX" firstAttribute="leading" secondItem="UEl-Sv-Rn6" secondAttribute="leading" id="gIS-bL-AUt"/>
-                            <constraint firstItem="igF-x2-IuH" firstAttribute="centerY" secondItem="BPo-8R-wPE" secondAttribute="centerY" id="gg5-lB-FcA"/>
-                            <constraint firstItem="idf-nz-oMk" firstAttribute="trailing" secondItem="b0s-uv-5uj" secondAttribute="trailing" id="hap-CM-J9U"/>
-                            <constraint firstItem="i9u-BZ-RcH" firstAttribute="leading" secondItem="PzP-gU-3x6" secondAttribute="leading" constant="113" id="iVG-PA-V8Y"/>
-                            <constraint firstItem="idf-nz-oMk" firstAttribute="leading" secondItem="b0s-uv-5uj" secondAttribute="leading" id="nt2-Eo-pMz"/>
-                            <constraint firstItem="YCJ-jX-IGe" firstAttribute="leading" secondItem="UL5-mQ-BC9" secondAttribute="leading" id="okn-ot-39R"/>
-                            <constraint firstItem="gwR-V1-du5" firstAttribute="centerX" secondItem="YIb-dq-be0" secondAttribute="centerX" id="pWA-kX-c7R"/>
-                            <constraint firstItem="BPo-8R-wPE" firstAttribute="top" secondItem="b0s-uv-5uj" secondAttribute="bottom" constant="14" id="pWw-zi-3OB"/>
-                            <constraint firstItem="PzP-gU-3x6" firstAttribute="trailing" secondItem="8lE-YN-cRX" secondAttribute="trailing" constant="118" id="sHy-eP-qCd"/>
-                            <constraint firstItem="YIb-dq-be0" firstAttribute="leading" secondItem="XLA-Y6-dZM" secondAttribute="leading" id="v5B-9Q-2ko"/>
-                            <constraint firstItem="pRb-DG-iwd" firstAttribute="bottom" secondItem="PzP-gU-3x6" secondAttribute="bottom" id="vuB-c6-TF8"/>
-                            <constraint firstItem="LgA-yt-xwo" firstAttribute="leading" secondItem="igF-x2-IuH" secondAttribute="leading" id="w8n-1U-OjD"/>
-                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="trailing" secondItem="GUB-p5-xoM" secondAttribute="trailing" id="x1Q-qR-wlI"/>
-                            <constraint firstItem="YIb-dq-be0" firstAttribute="leading" secondItem="hpK-2L-vAF" secondAttribute="leadingMargin" id="xx6-Av-NkR"/>
-                            <constraint firstItem="gwR-V1-du5" firstAttribute="leading" secondItem="hff-xW-QGB" secondAttribute="leading" id="yf9-W0-jEk"/>
-                            <constraint firstItem="b0s-uv-5uj" firstAttribute="top" secondItem="idf-nz-oMk" secondAttribute="bottom" constant="13" id="zNj-1l-NHc"/>
-                            <constraint firstItem="XLA-Y6-dZM" firstAttribute="leading" secondItem="YCJ-jX-IGe" secondAttribute="leading" id="zjg-pb-JVQ"/>
-                            <constraint firstAttribute="trailing" secondItem="gwR-V1-du5" secondAttribute="trailing" id="zwL-rm-exj"/>
+                            <constraint firstItem="UL5-mQ-BC9" firstAttribute="leading" secondItem="LgA-yt-xwo" secondAttribute="leading" id="06w-9b-w6z"/>
+                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="leading" secondItem="GUB-p5-xoM" secondAttribute="leading" id="2nX-5S-8af"/>
+                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="top" secondItem="8lE-YN-cRX" secondAttribute="bottom" constant="35" id="4OQ-A5-0Ke"/>
+                            <constraint firstItem="YIb-dq-be0" firstAttribute="top" secondItem="PzP-gU-3x6" secondAttribute="top" constant="38" id="4mv-Xy-tEb"/>
+                            <constraint firstItem="idf-nz-oMk" firstAttribute="top" secondItem="GUB-p5-xoM" secondAttribute="bottom" constant="18" id="93n-ic-qFc"/>
+                            <constraint firstItem="GUB-p5-xoM" firstAttribute="leading" secondItem="idf-nz-oMk" secondAttribute="leading" id="As3-Xp-R24"/>
+                            <constraint firstItem="YIb-dq-be0" firstAttribute="leading" secondItem="hpK-2L-vAF" secondAttribute="leadingMargin" id="BJG-vx-9Mp"/>
+                            <constraint firstItem="YIb-dq-be0" firstAttribute="trailing" secondItem="UEl-Sv-Rn6" secondAttribute="trailing" id="Esl-nS-U3X"/>
+                            <constraint firstItem="LgA-yt-xwo" firstAttribute="centerY" secondItem="b0s-uv-5uj" secondAttribute="centerY" id="Fbi-vj-8Fw"/>
+                            <constraint firstItem="PzP-gU-3x6" firstAttribute="trailing" secondItem="BPo-8R-wPE" secondAttribute="trailing" constant="15" id="H1R-Av-XLY"/>
+                            <constraint firstItem="gwR-V1-du5" firstAttribute="leading" secondItem="hpK-2L-vAF" secondAttribute="leading" id="HvI-Fs-DDr"/>
+                            <constraint firstItem="PzP-gU-3x6" firstAttribute="trailing" secondItem="8lE-YN-cRX" secondAttribute="trailing" constant="118" id="JgI-Gp-i17"/>
+                            <constraint firstItem="hff-xW-QGB" firstAttribute="leading" secondItem="pRb-DG-iwd" secondAttribute="leading" id="Jpg-qH-4Px"/>
+                            <constraint firstItem="igF-x2-IuH" firstAttribute="top" secondItem="b0s-uv-5uj" secondAttribute="bottom" constant="18" id="MYh-bo-DEk"/>
+                            <constraint firstItem="pRb-DG-iwd" firstAttribute="top" secondItem="hff-xW-QGB" secondAttribute="bottom" constant="8" symbolic="YES" id="NqC-K7-dXj"/>
+                            <constraint firstItem="LgA-yt-xwo" firstAttribute="leading" secondItem="igF-x2-IuH" secondAttribute="leading" id="Pfx-mD-qDY"/>
+                            <constraint firstItem="pRb-DG-iwd" firstAttribute="bottom" secondItem="PzP-gU-3x6" secondAttribute="bottom" id="QN6-ZM-ygh"/>
+                            <constraint firstItem="igF-x2-IuH" firstAttribute="centerY" secondItem="BPo-8R-wPE" secondAttribute="centerY" id="R2q-ZF-Q6j"/>
+                            <constraint firstItem="8lE-YN-cRX" firstAttribute="centerX" secondItem="i9u-BZ-RcH" secondAttribute="centerX" id="RQ5-1H-mYe"/>
+                            <constraint firstItem="hff-xW-QGB" firstAttribute="trailing" secondItem="pRb-DG-iwd" secondAttribute="trailing" id="S6x-il-7Hn"/>
+                            <constraint firstItem="XLA-Y6-dZM" firstAttribute="leading" secondItem="YCJ-jX-IGe" secondAttribute="leading" id="SHk-ZK-RkQ"/>
+                            <constraint firstItem="idf-nz-oMk" firstAttribute="leading" secondItem="b0s-uv-5uj" secondAttribute="leading" id="Sa9-Ms-lUv"/>
+                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="leading" secondItem="XLA-Y6-dZM" secondAttribute="trailing" constant="8" symbolic="YES" id="URH-fK-X3z"/>
+                            <constraint firstItem="idf-nz-oMk" firstAttribute="trailing" secondItem="b0s-uv-5uj" secondAttribute="trailing" id="V0n-mb-aXh"/>
+                            <constraint firstItem="gwR-V1-du5" firstAttribute="leading" secondItem="hff-xW-QGB" secondAttribute="leading" id="VRX-Wb-oTO"/>
+                            <constraint firstItem="LgA-yt-xwo" firstAttribute="top" secondItem="UL5-mQ-BC9" secondAttribute="bottom" constant="20" id="X24-6q-eZV"/>
+                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="top" secondItem="i9u-BZ-RcH" secondAttribute="bottom" constant="71" id="YkU-0M-w67"/>
+                            <constraint firstAttribute="trailing" secondItem="gwR-V1-du5" secondAttribute="trailing" id="Zj9-D2-7ci"/>
+                            <constraint firstItem="8lE-YN-cRX" firstAttribute="leading" secondItem="UEl-Sv-Rn6" secondAttribute="leading" id="a3l-vb-KEC"/>
+                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="trailing" secondItem="GUB-p5-xoM" secondAttribute="trailing" id="bRm-5C-7L1"/>
+                            <constraint firstItem="hff-xW-QGB" firstAttribute="top" secondItem="BPo-8R-wPE" secondAttribute="bottom" constant="52" id="cev-e5-sIH"/>
+                            <constraint firstItem="8lE-YN-cRX" firstAttribute="top" secondItem="YIb-dq-be0" secondAttribute="bottom" constant="49" id="d8m-6Z-rMQ"/>
+                            <constraint firstItem="gwR-V1-du5" firstAttribute="trailing" secondItem="hff-xW-QGB" secondAttribute="trailing" id="eUY-Nx-bKl"/>
+                            <constraint firstItem="gwR-V1-du5" firstAttribute="top" secondItem="hpK-2L-vAF" secondAttribute="top" id="f4a-Xo-BiY"/>
+                            <constraint firstItem="BPo-8R-wPE" firstAttribute="leading" secondItem="igF-x2-IuH" secondAttribute="trailing" constant="8" symbolic="YES" id="jPu-wN-JLR"/>
+                            <constraint firstItem="YCJ-jX-IGe" firstAttribute="top" secondItem="XLA-Y6-dZM" secondAttribute="bottom" constant="22" id="oWV-MT-yq7"/>
+                            <constraint firstItem="YCJ-jX-IGe" firstAttribute="centerY" secondItem="GUB-p5-xoM" secondAttribute="centerY" id="oeL-9s-2Gn"/>
+                            <constraint firstItem="XLA-Y6-dZM" firstAttribute="centerY" secondItem="UEl-Sv-Rn6" secondAttribute="centerY" id="pds-tF-1dF"/>
+                            <constraint firstItem="UEl-Sv-Rn6" firstAttribute="top" secondItem="gwR-V1-du5" secondAttribute="bottom" constant="74" id="rEf-SP-uBd"/>
+                            <constraint firstItem="gwR-V1-du5" firstAttribute="centerX" secondItem="YIb-dq-be0" secondAttribute="centerX" id="sla-m6-4rd"/>
+                            <constraint firstItem="GUB-p5-xoM" firstAttribute="trailing" secondItem="idf-nz-oMk" secondAttribute="trailing" id="tFg-iJ-htv"/>
+                            <constraint firstItem="YCJ-jX-IGe" firstAttribute="leading" secondItem="UL5-mQ-BC9" secondAttribute="leading" id="tQZ-au-KCZ"/>
+                            <constraint firstItem="8lE-YN-cRX" firstAttribute="centerY" secondItem="i9u-BZ-RcH" secondAttribute="centerY" id="tvh-TJ-I0N"/>
+                            <constraint firstItem="YIb-dq-be0" firstAttribute="leading" secondItem="XLA-Y6-dZM" secondAttribute="leading" id="v9K-aV-tfS"/>
+                            <constraint firstItem="UL5-mQ-BC9" firstAttribute="centerY" secondItem="idf-nz-oMk" secondAttribute="centerY" id="vQR-By-yIJ"/>
+                            <constraint firstItem="i9u-BZ-RcH" firstAttribute="leading" secondItem="PzP-gU-3x6" secondAttribute="leading" constant="113" id="xE6-XP-iAg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PzP-gU-3x6"/>
                     </view>
