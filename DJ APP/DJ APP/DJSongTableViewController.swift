@@ -18,6 +18,7 @@ class DJSongTableViewController: UITableViewController {
     //Used for up and down arrows to send to database
     var currentSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
+    var refEventList: DatabaseReference!
     var tableSongList = [TrackItem]()
     {
         //do i have to dispatch main
@@ -25,9 +26,6 @@ class DJSongTableViewController: UITableViewController {
             tableView.reloadData()
         }
     }
-    
-    var upvoteIDs: [String] = []
-    var downvoteIDs: [String] = []
     
     lazy var refreshController: UIRefreshControl = {
         let rc = UIRefreshControl()
@@ -51,23 +49,21 @@ class DJSongTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
         //Set the reference to the dj selected & to the guest
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
+            refEventList = Database.database().reference().child("Events")
         }
         else {
             print("DJ does not have uid")
         }
         setupNavigationBar()
         setupViews()
-        fetchSongList()
+        fetchEventList()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()        
     }
     
     //HELPERS -------------------------
@@ -88,10 +84,69 @@ class DJSongTableViewController: UITableViewController {
         }, withCancel: nil)
     }
     
-    func fetchSongList() {
-        refSongList.queryOrdered(byChild: "totalvotes").observeSingleEvent(of: .value, with: {(snapshot) in
+    func fetchEventList() {
+        var hasEvent: Bool = false
+        
+        refEventList.observeSingleEvent(of: .value, with: {(snapshot) in
             
             self.tableSongList.removeAll()
+            
+            guard let workingSnap = snapshot.value as? [String: AnyObject] else {
+                print("No snapshot for event")
+                return
+            }
+            
+            for (_,value) in workingSnap {
+                //Find the events with the correct dj id
+                if let uid = value["DjID"] as? String, uid == self.dj?.uid {
+
+                    //check if the event time lines up
+                    if let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String {
+                        
+                        
+                        let currDateTime = Date()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "M/dd/yy, h:mm a"
+                        
+                        guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
+                            print("Failed converting the the dates")
+                            return
+                        }
+                        
+                        
+                        
+                        //Check if the current time is within the start and end times
+                        //Add to the events list if it is.
+                        if ((sd.timeIntervalSince1970) <= currDateTime.timeIntervalSince1970 &&
+                            (ed.timeIntervalSince1970) >= currDateTime.timeIntervalSince1970) {
+                            hasEvent = true
+
+                        }
+                    }
+                }
+            }
+            
+            if hasEvent {
+                self.fetchSongList(found: true)
+            }
+            else {
+                self.fetchSongList(found: false)
+            }
+            
+            
+        }, withCancel: {(error) in
+            print(error.localizedDescription)
+            return
+        })
+    }
+    
+    func fetchSongList(found: Bool) {
+        if !found {
+            refreshController.endRefreshing()
+            displayLabel()
+            return
+        }
+        refSongList.queryOrdered(byChild: "totalvotes").observeSingleEvent(of: .value, with: {(snapshot) in
             
             //No Snap for Song list -> Remove all songs from song list, unless it was empty to begin with
             guard let workingSnap = snapshot.value as? [String: AnyObject] else {
@@ -119,12 +174,14 @@ class DJSongTableViewController: UITableViewController {
             
         }, withCancel: {(error) in
             print(error.localizedDescription)
+            return
         })
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
         refreshController.endRefreshing()
+        displayLabel()
     }
 
     
@@ -234,7 +291,7 @@ class DJSongTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: djTrackCellId, for: indexPath) as! djTrackCell
         
-        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let key = tableSongList[indexPath.row].id else {
+        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let _ = tableSongList[indexPath.row].id else {
             
             print("Issue parsing from tableSongList")
             return cell
@@ -253,7 +310,6 @@ class DJSongTableViewController: UITableViewController {
         }
         
         cell.noSelection()
-        self.displayLabel()
         return cell
     }
 
