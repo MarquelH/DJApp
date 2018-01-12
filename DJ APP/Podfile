@@ -15,6 +15,9 @@ pod 'JTAppleCalendar','~> 7.1.4'
 pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'
+pod 'GooglePlaces'
+pod 'GooglePlacePicker'
+pod 'GoogleMaps'
 
   target 'DJ APPTests' do
     inherit! :search_paths

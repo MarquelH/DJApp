@@ -19,9 +19,6 @@ class scheduleViewController: UIViewController {
     var dj: UserDJ?
     var eventSnapshot: [String: AnyObject]?
     var refEventList: DatabaseReference!
-    var arrOfTimes: [String] = []
-    var arrOfLocations: [String] = []
-    let eventCellId: String = "eventCellId"
     
     func getEventSnapshot(){
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -180,7 +177,7 @@ extension scheduleViewController: JTAppleCalendarViewDataSource {
         formatter.timeZone = Calendar.current.timeZone
         formatter.locale = Calendar.current.locale
         
-        let startDate = formatter.date(from: "2017 12 29")
+        let startDate = formatter.date(from: "2018 01 12")
         let endDate = formatter.date(from: "2030 12 29")
         let parameters = ConfigurationParameters(startDate: startDate!, endDate: endDate!)
         return parameters

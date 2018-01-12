@@ -31,7 +31,6 @@
 		C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */; };
 		C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */; };
 		C7F337AF1FFD9DB50082E579 /* DJSideProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F337AE1FFD9DB50082E579 /* DJSideProfileViewController.swift */; };
-		C7F6B0BA20082A170020945D /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F6B0B920082A170020945D /* EventCell.swift */; };
 		C7F8DCE61FFEE4CF00890BB6 /* djProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7F8DCE51FFEE4CF00890BB6 /* djProfileStoryboard.storyboard */; };
 		C7F8DCEB1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F8DCEA1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift */; };
 		C7F8DCED1FFF268C00890BB6 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F8DCEC1FFF268C00890BB6 /* MessagesViewController.swift */; };
@@ -117,7 +116,6 @@
 		C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduleViewController.swift; sourceTree = "<group>"; };
 		C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		C7F337AE1FFD9DB50082E579 /* DJSideProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJSideProfileViewController.swift; sourceTree = "<group>"; };
-		C7F6B0B920082A170020945D /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		C7F8DCE51FFEE4CF00890BB6 /* djProfileStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = djProfileStoryboard.storyboard; sourceTree = "<group>"; };
 		C7F8DCEA1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJcustomTabBarControllerViewController.swift; sourceTree = "<group>"; };
 		C7F8DCEC1FFF268C00890BB6 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -219,7 +217,6 @@
 			isa = PBXGroup;
 			children = (
 				C724ECAD20016A9500DEEC5E /* djTrackCell.swift */,
-				C7F6B0B920082A170020945D /* EventCell.swift */,
 			);
 			name = "DJ Cells";
 			sourceTree = "<group>";
@@ -715,9 +712,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -743,7 +745,6 @@
 				C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */,
 				D88ACF6A1FF82AA100197AC2 /* MessageCell.swift in Sources */,
 				D8996EEF1F7DB8B700FE4E16 /* CustomTabBarController.swift in Sources */,
-				C7F6B0BA20082A170020945D /* EventCell.swift in Sources */,
 				C7F8DCED1FFF268C00890BB6 /* MessagesViewController.swift in Sources */,
 				D847BA1F1F6DADAE002C1BE7 /* UserDJ.swift in Sources */,
 				D801FE0C1FF46CB8003C2258 /* SongSelectedTrackController.swift in Sources */,

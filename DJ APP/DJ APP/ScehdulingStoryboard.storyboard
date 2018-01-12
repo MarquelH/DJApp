@@ -321,6 +321,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="beganToEnterLocation:" destination="1RK-4d-Zb7" eventType="editingDidBegin" id="oyG-M1-Cx0"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>

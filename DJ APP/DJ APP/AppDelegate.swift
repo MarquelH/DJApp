@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FBSDKCoreKit
+import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         UIApplication.shared.statusBarStyle = .lightContent
         window?.rootViewController = LoginController()
+        
+        GMSPlacesClient.provideAPIKey("AIzaSyAQV3SEQb2akarGfI-y3iejHX_aZSXJLBI")
+        //GMSServices.provideAPIKey("AIzaSyAQV3SEQb2akarGfI-y3iejHX_aZSXJLBI")
         
         return true
     }
