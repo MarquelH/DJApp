@@ -9,8 +9,11 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
+import GoogleMaps
+import GooglePlaces
 
 class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLoginButtonDelegate {
+    
     
     var guestSnapshot: [String: AnyObject]?
     var djSnapshot: [String: AnyObject]?
@@ -516,11 +519,17 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     }
     
     func presentDJTableView (guestID: String) {
-        let djTableViewController = DJTableViewController()
+        /*let djTableViewController = DJTableViewController()
         let djTableNavController = UINavigationController(rootViewController: djTableViewController)
         djTableNavController.delegate = self
         djTableViewController.guestID = guestID
-        present(djTableNavController, animated: true, completion: nil)
+        present(djTableNavController, animated: true, completion: nil)*/
+        let mapView = MapViewController()
+        let mapNavController = UINavigationController(rootViewController: mapView)
+        //mapNavController.delegate = self
+        mapView.navigationController?.title = "Hello Map."
+        mapView.guestID = guestID
+        self.present(mapNavController, animated: true, completion: nil)
     }
     
     //returns key and true if found in the given snapshot

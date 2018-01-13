@@ -56,9 +56,12 @@ class scheduleViewController: UIViewController {
                     let realEndTime = String(realEndTimeForString)
                     let realEndTimeBare = realEndTime.replacingOccurrences(of: " ", with: "")
                 
+                    let theName = v["DJ Name"] as! String
+                    if theName == dj?.djName{
                     if realDate == eventDateAndTime {
                     let location = v["location"] as! String
                      return (true, k, location,realTimeBare,realEndTimeBare)
+                    }
                     }
                 }
             }

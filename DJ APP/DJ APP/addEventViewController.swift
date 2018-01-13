@@ -19,6 +19,8 @@ class addEventViewController: UIViewController {
     var startingTime = "DummyValue"
     var doWeHaveDJ = false
     var originalView: CGFloat?
+    var strLong: String?
+    var strLat: String?
     
     @IBOutlet weak var endingTime: UITextField!
     @IBOutlet weak var eventLocation: UITextField!
@@ -137,9 +139,11 @@ class addEventViewController: UIViewController {
                     let dateAloneArray = dateAndTime.split(separator: ",")
                     let dateForComparison = dateAloneArray[0]
                     let realDate = String(dateForComparison)
-                    
+                    let theName = v["DJ Name"] as! String
+                    if theName == dj?.djName{
                     if realDate == eventDateAndTime {
                         return (true, k, realDate)
+                    }
                     }
                 }
             }
@@ -214,8 +218,9 @@ class addEventViewController: UIViewController {
         print("key is: \(key)\n")
 
             if doWeHaveDJ {
-            let event = ["id": key, "location":self.eventLocation.text!, "StartDateAndTime":self.eventToAddDateAndTime.text!,"DjID":dj?.uid,
-                         "EndDateAndTime":self.endingTime.text!] as [String : Any]
+            
+                let event = ["id": key, "location":self.eventLocation.text!, "StartDateAndTime":self.eventToAddDateAndTime.text!,"DjID":dj?.uid!,
+                             "EndDateAndTime":self.endingTime.text!,"Latitude Coordinates":strLat!,"Longitude Coordinates":strLong!,"DJ Name":dj?.djName!] as [String : Any]
                     
                 self.refEventList.child(key).setValue(event)
                 let alert = UIAlertController(title: "Success", message: "We have added your event to the calendar!", preferredStyle: UIAlertControllerStyle.alert)
@@ -256,9 +261,12 @@ class addEventViewController: UIViewController {
 
 extension addEventViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("Place attributions: \(place.attributions)")
+        //print("Place name: \(place.name)")
+        //print("Place address: \(place.formattedAddress)")
+        //print("Place attributions: \(place.attributions)")
+        print("Place coordinate: \(place.coordinate)")
+        strLong = place.coordinate.longitude.description
+        strLat = place.coordinate.latitude.description
         let parentView = parent as! DJcustomTabBarControllerViewController
         
         for theViewIwant in parentView.viewControllers!{
