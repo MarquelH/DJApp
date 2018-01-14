@@ -41,7 +41,8 @@ class scheduleViewController: UIViewController {
         if let workingSnap = self.eventSnapshot {
             for (k,v) in workingSnap {
                 
-                if let dateAndTime = v["StartDateAndTime"] as? String{
+                if let dateAndTime = v["StartDateAndTime"] as? String, let endDateAndTime = v["EndDateAndTime"] as? String, let theName = v["DJ Name"] as? String, let location = v["location"] as? String {
+                    
                     let dateAloneArray = dateAndTime.split(separator: ",")
                     let dateForComparison = dateAloneArray[0]
                     let realDate = String(dateForComparison)
@@ -50,18 +51,14 @@ class scheduleViewController: UIViewController {
                     let realTime = String(realTimeForString)
                     let realTimeBare = realTime.replacingOccurrences(of: " ", with: "")
                     
-                    let endDateAndTime = v["EndDateAndTime"] as! String
+                    
                     let timeAloneArray = endDateAndTime.split(separator: ",")
                     let realEndTimeForString = timeAloneArray[1]
                     let realEndTime = String(realEndTimeForString)
                     let realEndTimeBare = realEndTime.replacingOccurrences(of: " ", with: "")
                 
-                    let theName = v["DJ Name"] as! String
-                    if theName == dj?.djName{
-                    if realDate == eventDateAndTime {
-                    let location = v["location"] as! String
-                     return (true, k, location,realTimeBare,realEndTimeBare)
-                    }
+                    if theName == dj?.djName && realDate == eventDateAndTime {
+                        return (true, k, location,realTimeBare,realEndTimeBare)
                     }
                 }
             }
@@ -87,7 +84,7 @@ class scheduleViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if let uidKey = dj?.uid {
+        if let _ = dj?.uid {
             print("DJ has uid")
             refEventList = Database.database().reference().child("Events")
         }
