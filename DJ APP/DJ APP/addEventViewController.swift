@@ -22,7 +22,8 @@ class addEventViewController: UIViewController {
     var strLong: String?
     var strLat: String?
     var isEditingEvent: Bool = false
-    var currentEvent: Event? 
+    var currentEvent: Event?
+    var editingEventInfo: [String]?
     
     @IBOutlet weak var endingTime: UITextField!
     @IBOutlet weak var eventLocation: UITextField!
@@ -41,6 +42,7 @@ class addEventViewController: UIViewController {
         tb.setItems([cancelButton, spacer, doneButton], animated: true)
         return tb
     }()
+    
     
     func handleToolBarDone() {
         self.view.endEditing(true)
@@ -98,6 +100,7 @@ class addEventViewController: UIViewController {
         }
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         originalView = self.view.frame.origin.y
@@ -114,13 +117,30 @@ class addEventViewController: UIViewController {
             doWeHaveDJ = false
             print("DJ does not have uid")
         }
+        
+        if let info = editingEventInfo, isEditingEvent {
+            fillInLabels(startTime: info[0], endTime: info[1], location: info[2])
+        }
+        else {
+            print("Event info was not passed in or not editing event. ")
+        }
         getEventSnapshot()
+        
+    }
+    
+    //Reset isEditingEvent when view changes, because they should not be editing anymore.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isEditingEvent = false
+        if let _ = self.editingEventInfo {
+            self.editingEventInfo?.removeAll()
+        }
     }
     
     func fillInLabels(startTime: String, endTime: String, location: String) {
-        endingTime.text = endTime
-        eventLocation.text = location
-        eventToAddDateAndTime.text = startTime
+        endingTime.placeholder = endTime
+        eventLocation.placeholder = location
+        eventToAddDateAndTime.placeholder = startTime
     }
     
     func getEventSnapshot(){

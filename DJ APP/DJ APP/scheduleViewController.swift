@@ -19,6 +19,22 @@ class scheduleViewController: UIViewController {
     var dj: UserDJ?
     var eventSnapshot: [String: AnyObject]?
     var refEventList: DatabaseReference!
+    var editingLocation: String?
+    var editingStartDate: String?
+    var editingEndDate: String?
+    
+    let editButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.layer.cornerRadius = 15
+        btn.setTitle("Edit Event", for: .normal)
+        btn.setTitleColor(UIColor.white, for: .normal)
+        btn.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
+        btn.layer.borderWidth = 3
+        btn.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
+        btn.addTarget(self, action: #selector(handleEdit), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
     
     func getEventSnapshot(){
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -58,6 +74,11 @@ class scheduleViewController: UIViewController {
                     let realEndTimeBare = realEndTime.replacingOccurrences(of: " ", with: "")
                 
                     if theName == dj?.djName && realDate == eventDateAndTime {
+                        //Set the editing location, start, and end date so if they edit,
+                        //we can pass this info to the add event view controller.
+                        self.editingLocation = location
+                        self.editingStartDate = dateAndTime
+                        self.editingEndDate = endDateAndTime
                         return (true, k, location,realTimeBare,realEndTimeBare)
                     }
                 }
@@ -82,6 +103,22 @@ class scheduleViewController: UIViewController {
         setupCalendarView()
         timeLabel.isHidden = true
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        self.view.addSubview(editButton)
+        
+        editButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        editButton.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8).isActive = true
+        editButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30).isActive = true
+        editButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        editButton.isHidden = true
+    }
+    
+  
+    
     
     override func viewWillAppear(_ animated: Bool) {
         if let _ = dj?.uid {
@@ -119,6 +156,25 @@ class scheduleViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func handleEdit() {
+        if let viewControllers = self.tabBarController?.viewControllers, let addController = viewControllers[2] as? addEventViewController {
+            
+            if let location = self.editingLocation, let startTime = self.editingStartDate, let endTime =
+                self.editingEndDate {
+                addController.isEditingEvent = true
+                addController.editingEventInfo = [startTime, endTime, location]
+                self.tabBarController?.selectedIndex = 2
+            }
+            else {
+                print("Editing location, start date, and end date not set. ")
+            }
+        }
+        else {
+            print("Can't make the 2nd view controller an addevent view controller")
+        }
     }
     
     func handleCellSelected(view: JTAppleCell?, cellState: CellState){
@@ -223,10 +279,12 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
             timeLabel.isHidden = false
             timeLabel.text = "\(isFoundTuple.3) - \(isFoundTuple.4)"
             timeLabel.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
+            editButton.isHidden = false
         }
         else{
             locationLabel.text = "No Scheduled Events on Selected Day"
             timeLabel.isHidden = true
+            editButton.isHidden = true
         }
     }
     

@@ -156,41 +156,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
                     print("Unable to convert snapshot children into [String:AnyObjects]")
                 }
             }
-//            if let workingSnap = snapshot.value as? [String: AnyObject] {
-//                self.messages.removeAll()
-//
-//                for (key, value) in workingSnap {
-//
-//                    if let message = value["message"] as? String, let guestID = value["guestID"] as? String,  let timeStamp = value["timeStamp"] as? NSNumber, let djUID = value["djUID"] as? String, let count = value["count"] as? Int {
-//
-//
-//
-//
-//                        let newMessage = Message(message: message, timeStamp: timeStamp, djUID: key, guestID: guestID, count: count)
-//
-//                        //print("Message: \(message)count: \(count)\n")
-//                        if count > self.messageCount {
-//                            self.messageCount = count
-//                        }
-//                        self.messages.append(newMessage)
-//                        for m in self.messages {
-//                            print(m.count ?? -10)
-//                        }
-//
-//                        DispatchQueue.main.async {
-//                            self.collectionView?.reloadData()
-//                        }
-//                    }
-//                    else {
-//                        print("Error getting values from working snap")
-//                    }
-//
-//                }
-//
-//            }
-//            else {
-//                print("Error converting snapshot.value to [string:Anyobject]")
-//            }
+
             
         }) { (error) in
             print("Error getting snapshot: \(error.localizedDescription)")
@@ -223,15 +189,9 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         self.dismiss(animated: true, completion: nil)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-//        if let ref = self.ref, let handle = handle {
-//            ref.removeObserver(withHandle: handle)
-//        }
-        
-    }
     
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         view.addSubview(sendContanier)
         sendContanier.addSubview(sendLineSeperator)
         sendContanier.addSubview(sendButton)

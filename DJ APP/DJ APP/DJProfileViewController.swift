@@ -85,7 +85,6 @@ class DJPRofileViewController: UIViewController {
         placeDJNameInLabel()
         setupDJInfo()
         placeDJImageInView()
-        
     }
     
     let scrollView: UIScrollView = {

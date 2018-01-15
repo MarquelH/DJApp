@@ -451,12 +451,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                         tabbarController.dj = dj
                         self.present(tabbarController, animated: true, completion: nil)
                         
-                        //Send DJ to DJRootViewController
-//                        let djRootViewController = DJRootViewController()
-//                        djRootViewController.dj = dj
-//
-//                        let djNavController = UINavigationController(rootViewController: djRootViewController)
-//                        self.present(djNavController, animated: true, completion: nil)
                         
                     }
                     else {
