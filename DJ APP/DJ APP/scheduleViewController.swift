@@ -212,7 +212,6 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
         dateFormatter2.dateStyle = DateFormatter.Style.short
         dateFormatter2.timeStyle = DateFormatter.Style.short
         
-        
         let strDate = dateFormatter2.string(from: date)
         
         let arr = strDate.split(separator: ",")
