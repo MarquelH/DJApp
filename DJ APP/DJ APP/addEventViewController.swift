@@ -21,6 +21,9 @@ class addEventViewController: UIViewController {
     var originalView: CGFloat?
     var strLong: String?
     var strLat: String?
+    var isEditingEvent: Bool = false
+    var currentEvent: Event?
+    var editingEventInfo: [String]?
     
     @IBOutlet weak var endingTime: UITextField!
     @IBOutlet weak var eventLocation: UITextField!
@@ -39,6 +42,7 @@ class addEventViewController: UIViewController {
         tb.setItems([cancelButton, spacer, doneButton], animated: true)
         return tb
     }()
+    
     
     func handleToolBarDone() {
         self.view.endEditing(true)
@@ -96,6 +100,7 @@ class addEventViewController: UIViewController {
         }
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         originalView = self.view.frame.origin.y
@@ -103,7 +108,7 @@ class addEventViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let uidKey = dj?.uid {
+        if let _ = dj?.uid {
             print("DJ has uid")
             doWeHaveDJ = true
             refEventList = Database.database().reference().child("Events")
@@ -112,7 +117,30 @@ class addEventViewController: UIViewController {
             doWeHaveDJ = false
             print("DJ does not have uid")
         }
+        
+        if let info = editingEventInfo, isEditingEvent {
+            fillInLabels(startTime: info[0], endTime: info[1], location: info[2])
+        }
+        else {
+            print("Event info was not passed in or not editing event. ")
+        }
         getEventSnapshot()
+        
+    }
+    
+    //Reset isEditingEvent when view changes, because they should not be editing anymore.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isEditingEvent = false
+        if let _ = self.editingEventInfo {
+            self.editingEventInfo?.removeAll()
+        }
+    }
+    
+    func fillInLabels(startTime: String, endTime: String, location: String) {
+        endingTime.placeholder = endTime
+        eventLocation.placeholder = location
+        eventToAddDateAndTime.placeholder = startTime
     }
     
     func getEventSnapshot(){
@@ -165,74 +193,62 @@ class addEventViewController: UIViewController {
         handleEntry()
     }
     
+    func presentAlert(title: String, error: String) {
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+            self.dismissAlert()
+        }))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
     
     func handleEntry(){
-        guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "" else {
-            let alert = UIAlertController(title: "Skrt!", message: "Please enter a valid date and time range.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                self.dismissAlert()
-            }))
-            self.present(alert, animated: true, completion: nil)
-            print("date & time is empty, or snap did not load")
+        guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "", let endingDateAndTime = endingTime.text, endingDateAndTime != "", let location = eventLocation.text, location != "" else {
+            presentAlert(title: "Skrt!", error: "Please enter a valid date and time range.")
             return
         }
         
-        guard let endingDateAndTime = endingTime.text, endingDateAndTime != "" else {
-            let alert = UIAlertController(title: "Skrt!", message: "Please enter a valid date and time range.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                self.dismissAlert()
-            }))
-            self.present(alert, animated: true, completion: nil)
-            print("date & time is empty, or snap did not load")
-            return
-        }
-        
-        guard let location = eventLocation.text, location != "" else {
-            let alert = UIAlertController(title: "Skrt!", message: "Please enter a venue.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                self.dismissAlert()
-            }))
-            self.present(alert, animated: true, completion: nil)
-            print("location is empty, or snap did not load")
-            return
-        }
-        
+        //What are you using these for?
         let arr = dateAndTime.split(separator: ",")
         let dateAlone = arr[0]
         let dateForPassing = String(dateAlone)
         
         let isFoundTuple = isFound(eventDateAndTime: dateForPassing)
         
-        if isFoundTuple.0 { //Checking for event at same date and time
-            let alert = UIAlertController(title: "Oops!", message: "It appears as though something is already scheduled on this day.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                self.dismissAlert()
-            }))
-            self.present(alert, animated: true, completion: nil)
-            print("something is already scheduled at that time")
-            return
+        if isFoundTuple.0 && !isEditingEvent{ //Check if there is an event at this time and not editing event
+            presentAlert(title: "Skrt", error: "It appears as though something is already scheduled on this day.")
         }
         else{
-        //Generate new key inside EventList node and return it
-        let key = self.refEventList.childByAutoId().key
-        print("key is: \(key)\n")
-
-            if doWeHaveDJ {
-            
-                let event = ["id": key, "location":self.eventLocation.text!, "StartDateAndTime":self.eventToAddDateAndTime.text!,"DjID":dj?.uid!,
-                             "EndDateAndTime":self.endingTime.text!,"Latitude Coordinates":strLat!,"Longitude Coordinates":strLong!,"DJ Name":dj?.djName!] as [String : Any]
-                    
-                self.refEventList.child(key).setValue(event)
-                let alert = UIAlertController(title: "Success", message: "We have added your event to the calendar!", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                    self.dismissAlertForAdd()
-                }))
-                self.present(alert, animated: true, completion: nil)
+            //Updating existing event
+            if isEditing {
+                addEventWithKey(key: isFoundTuple.1)
             }
+            //New Event
+            else {
+                //Generate new key inside EventList node and return it
+                let key = self.refEventList.childByAutoId().key
+                addEventWithKey(key: key)
             }
+        }
     }
     
-    func dismissAlertForAdd(){
+    //Updates event or adds new event based up on the key passed in.
+    func addEventWithKey(key: String) {
+        if let djName = self.dj?.djName, let djUID = self.dj?.uid, let location = self.eventLocation.text, let startDate = self.eventToAddDateAndTime.text, let endDate = self.endingTime.text, let lat = strLat, let long = strLong {
+            
+            let event = ["id": key, "location":location , "StartDateAndTime": startDate,"DjID":djUID,
+                         "EndDateAndTime":endDate,"Latitude Coordinates": lat,"Longitude Coordinates":long,"DJ Name":djName] as [String : Any]
+            
+            self.refEventList.child(key).setValue(event)
+            presentAlert(title: "Success", error: "We have added your event to the calendar!")
+            
+        }
+        else {
+            print("One of the fields is not present. ")
+        }
+    }
+    
+    func dismissAlertForAdd() {
         self.navigationController?.popViewController(animated: true)
         eventToAddDateAndTime.text = ""
         endingTime.text = ""
@@ -240,7 +256,7 @@ class addEventViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    func dismissAlert(){
+    func dismissAlert() {
         self.navigationController?.popViewController(animated: true)
         eventToAddDateAndTime.text = ""
         endingTime.text = ""
