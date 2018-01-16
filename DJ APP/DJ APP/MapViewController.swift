@@ -17,7 +17,6 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //getEventSnapshot()
         setupNavBar()
         layoutViews()
     }
@@ -83,6 +82,7 @@ class MapViewController: UIViewController {
         let camera = GMSCameraPosition.camera(withLatitude: 38.986918, longitude: -76.942554, zoom: 15.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view = mapView
+        mapView.clear() //Resetting the marker.
         
         // Creates a marker in the center of the map.
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -95,7 +95,18 @@ class MapViewController: UIViewController {
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     for(_,v) in dictionary{
-                        let latCoords = v["Latitude Coordinates"] as? String, longCoords = v["Longitude Coordinates"] as? String,name = v["DJ Name"] as? String,location = v["location"] as? String
+                        let latCoords = v["Latitude Coordinates"] as? String, longCoords = v["Longitude Coordinates"] as? String,name = v["DJ Name"] as? String,location = v["location"] as? String,date = v["StartDateAndTime"] as? String
+                        let todaysDate = Date.init()
+                        let realDate = String(describing: todaysDate)
+                        let dateAloneArray = realDate.split(separator: ",")
+                        let todaysDateForComparison = dateAloneArray[0]
+                        
+                        let theArrayForThisDate = date?.split(separator: ",")
+                        let thisDateForComparison = theArrayForThisDate![0]
+                        
+                        if todaysDateForComparison == thisDateForComparison{
+                            
+                        print("We have something on this date!")
                         let marker = GMSMarker()
                         let actualLats = Double(latCoords!) as! CLLocationDegrees
                         let actualLongs = Double(longCoords!) as! CLLocationDegrees
@@ -106,6 +117,10 @@ class MapViewController: UIViewController {
                         marker.tracksInfoWindowChanges = true
                         //marker.icon = UIImage(named: "bioIcon")
                         marker.map = mapView
+                        }
+                        else{
+                            print("No markers today.")
+                        }
                     }
                 }
                 else{
@@ -113,9 +128,6 @@ class MapViewController: UIViewController {
                 }
             }
         }, withCancel: nil)
-        
-        
-        
         
         /*if let workingSnap = self.eventSnapshot{
             print("MAKING MARKER")

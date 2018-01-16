@@ -23,18 +23,19 @@ class scheduleViewController: UIViewController {
     var editingStartDate: String?
     var editingEndDate: String?
     
-    let editButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.layer.cornerRadius = 15
-        btn.setTitle("Edit Event", for: .normal)
-        btn.setTitleColor(UIColor.white, for: .normal)
-        btn.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-        btn.layer.borderWidth = 3
-        btn.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
-        btn.addTarget(self, action: #selector(handleEdit), for: .touchUpInside)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }()
+    let today = Date.init()
+    let formatter = DateFormatter()
+    
+    @IBOutlet weak var editButton: UIButton!
+    
+    @IBAction func editButtonTapped(_ sender: Any) {
+        handleEdit()
+    }
+    
+    func setEditButtonShape(){
+        editButton.layer.cornerRadius = 10
+    }
+    
     
     func getEventSnapshot(){
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -91,34 +92,28 @@ class scheduleViewController: UIViewController {
     }
 
     @IBAction func addTapped(_ sender: Any) {
+        let theView = self.tabBarController?.viewControllers![2] as! addEventViewController
+
+        let theArrayOfDates = calendarView.selectedDates
+        
+        for date in theArrayOfDates{
+            formatter.dateStyle = DateFormatter.Style.short
+            formatter.timeStyle = DateFormatter.Style.short
+            theView.eventToAddDateAndTime.text = formatter.string(from: date)
+        }
+        
         self.tabBarController?.selectedIndex = 2
     }
-    
-    
-    let formatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupCalendarView()
+        setEditButtonShape()
         timeLabel.isHidden = true
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        self.view.addSubview(editButton)
-        
-        editButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        editButton.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8).isActive = true
-        editButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30).isActive = true
-        editButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
         editButton.isHidden = true
     }
-    
-  
-    
+
     
     override func viewWillAppear(_ animated: Bool) {
         if let _ = dj?.uid {
@@ -150,7 +145,7 @@ class scheduleViewController: UIViewController {
         calendarView.visibleDates { (visibleDates) in
             self.setupViewsOfCalendar(from: visibleDates)
         }
-        
+        calendarView.selectDates([today])
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +161,7 @@ class scheduleViewController: UIViewController {
                 self.editingEndDate {
                 addController.isEditingEvent = true
                 addController.editingEventInfo = [startTime, endTime, location]
+                
                 self.tabBarController?.selectedIndex = 2
             }
             else {

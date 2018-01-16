@@ -138,9 +138,9 @@ class addEventViewController: UIViewController {
     }
     
     func fillInLabels(startTime: String, endTime: String, location: String) {
-        endingTime.placeholder = endTime
-        eventLocation.placeholder = location
-        eventToAddDateAndTime.placeholder = startTime
+        endingTime.text = endTime
+        eventLocation.text = location
+        eventToAddDateAndTime.text = startTime
     }
     
     func getEventSnapshot(){
@@ -202,9 +202,18 @@ class addEventViewController: UIViewController {
         return
     }
     
+    func presentAlertForAdd(title: String, error: String) {
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
+            self.dismissAlertForAdd()
+        }))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
+    
     func handleEntry(){
         guard let dateAndTime = eventToAddDateAndTime.text, dateAndTime != "", let endingDateAndTime = endingTime.text, endingDateAndTime != "", let location = eventLocation.text, location != "" else {
-            presentAlert(title: "Skrt!", error: "Please enter a valid date and time range.")
+            presentAlert(title: "Skrt!", error: "Please fill in all the fields.")
             return
         }
         
@@ -216,7 +225,7 @@ class addEventViewController: UIViewController {
         let isFoundTuple = isFound(eventDateAndTime: dateForPassing)
         
         if isFoundTuple.0 && !isEditingEvent{ //Check if there is an event at this time and not editing event
-            presentAlert(title: "Skrt", error: "It appears as though something is already scheduled on this day.")
+            presentAlert(title: "Skrt!", error: "It appears as though something is already scheduled on this day.")
         }
         else{
             //Updating existing event
@@ -234,17 +243,17 @@ class addEventViewController: UIViewController {
     
     //Updates event or adds new event based up on the key passed in.
     func addEventWithKey(key: String) {
-        if let djName = self.dj?.djName, let djUID = self.dj?.uid, let location = self.eventLocation.text, let startDate = self.eventToAddDateAndTime.text, let endDate = self.endingTime.text, let lat = strLat, let long = strLong {
+        if let djName = self.dj?.djName, let djUID = self.dj?.uid, let location = eventLocation.text, let startDate = eventToAddDateAndTime.text, let endDate = endingTime.text, let lat = strLat, let long = strLong {
             
             let event = ["id": key, "location":location , "StartDateAndTime": startDate,"DjID":djUID,
                          "EndDateAndTime":endDate,"Latitude Coordinates": lat,"Longitude Coordinates":long,"DJ Name":djName] as [String : Any]
             
             self.refEventList.child(key).setValue(event)
-            presentAlert(title: "Success", error: "We have added your event to the calendar!")
+            presentAlertForAdd(title: "Success", error: "We have added your event to the calendar!")
             
         }
         else {
-            print("One of the fields is not present. ")
+            print("One of the fields is not present.")
         }
     }
     
@@ -270,16 +279,12 @@ class addEventViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 }
 
 extension addEventViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        //print("Place name: \(place.name)")
-        //print("Place address: \(place.formattedAddress)")
-        //print("Place attributions: \(place.attributions)")
         print("Place coordinate: \(place.coordinate)")
         strLong = place.coordinate.longitude.description
         strLat = place.coordinate.latitude.description

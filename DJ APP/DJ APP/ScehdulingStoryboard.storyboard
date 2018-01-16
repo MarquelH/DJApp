@@ -223,26 +223,42 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQe-xn-jaf">
-                                <rect key="frame" x="16" y="569" width="343" height="21"/>
+                                <rect key="frame" x="16" y="555" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="J3o-WN-D4o"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vXK-6r-69x">
+                                <rect key="frame" x="16" y="584" width="343" height="34"/>
+                                <color key="backgroundColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
+                                <state key="normal" title="Edit Event">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="editButtonTapped:" destination="Yqv-QD-lhK" eventType="touchUpInside" id="Tm3-Rt-fBs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="fQx-6j-ORh" secondAttribute="trailing" id="2Qd-Ib-KQz"/>
                             <constraint firstItem="yRh-1d-Z9Q" firstAttribute="leading" secondItem="9pZ-t6-Z5h" secondAttribute="leadingMargin" id="3PU-ns-GxW"/>
-                            <constraint firstItem="yRh-1d-Z9Q" firstAttribute="leading" secondItem="FQe-xn-jaf" secondAttribute="leading" id="7V2-tH-fMg"/>
-                            <constraint firstItem="yRh-1d-Z9Q" firstAttribute="trailing" secondItem="FQe-xn-jaf" secondAttribute="trailing" id="7aS-Zn-CKw"/>
-                            <constraint firstItem="iSS-pd-cpb" firstAttribute="bottom" secondItem="FQe-xn-jaf" secondAttribute="bottom" constant="28" id="7cb-fP-m7z"/>
+                            <constraint firstItem="FQe-xn-jaf" firstAttribute="trailing" secondItem="vXK-6r-69x" secondAttribute="trailing" id="8cH-pP-god"/>
+                            <constraint firstItem="FQe-xn-jaf" firstAttribute="leading" secondItem="vXK-6r-69x" secondAttribute="leading" id="97D-fi-bXL"/>
+                            <constraint firstItem="FQe-xn-jaf" firstAttribute="trailing" secondItem="yRh-1d-Z9Q" secondAttribute="trailing" id="EK0-TQ-gtl"/>
+                            <constraint firstItem="FQe-xn-jaf" firstAttribute="leading" secondItem="yRh-1d-Z9Q" secondAttribute="leading" id="HJ8-dG-SKK"/>
                             <constraint firstItem="yRh-1d-Z9Q" firstAttribute="top" secondItem="duw-9O-YJN" secondAttribute="bottom" constant="38" id="O8t-hc-lzL"/>
-                            <constraint firstItem="FQe-xn-jaf" firstAttribute="top" secondItem="yRh-1d-Z9Q" secondAttribute="bottom" constant="52" id="Xhj-3U-UJy"/>
                             <constraint firstItem="fQx-6j-ORh" firstAttribute="top" secondItem="9pZ-t6-Z5h" secondAttribute="topMargin" constant="-12" id="Y01-XR-w6X"/>
                             <constraint firstItem="duw-9O-YJN" firstAttribute="top" secondItem="iSS-pd-cpb" secondAttribute="top" constant="41" id="bf8-Mr-jz1"/>
                             <constraint firstItem="iSS-pd-cpb" firstAttribute="bottom" secondItem="duw-9O-YJN" secondAttribute="bottom" constant="160" id="cQt-12-XX3"/>
                             <constraint firstItem="duw-9O-YJN" firstAttribute="centerX" secondItem="9pZ-t6-Z5h" secondAttribute="centerX" id="hjv-ls-ENo"/>
                             <constraint firstItem="fQx-6j-ORh" firstAttribute="leading" secondItem="iSS-pd-cpb" secondAttribute="leading" constant="336" id="laQ-5z-W7a"/>
+                            <constraint firstItem="vXK-6r-69x" firstAttribute="bottom" secondItem="iSS-pd-cpb" secondAttribute="bottom" id="pzz-jh-BKB"/>
+                            <constraint firstItem="vXK-6r-69x" firstAttribute="top" secondItem="FQe-xn-jaf" secondAttribute="bottom" constant="8" symbolic="YES" id="vCL-RV-tJn"/>
                             <constraint firstItem="yRh-1d-Z9Q" firstAttribute="centerX" secondItem="duw-9O-YJN" secondAttribute="centerX" id="wvp-Dd-PU0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iSS-pd-cpb"/>
@@ -250,6 +266,7 @@
                     <tabBarItem key="tabBarItem" title="Schedule" image="searchIcon" id="yyN-3K-Q0Y"/>
                     <connections>
                         <outlet property="calendarView" destination="hAd-pF-8dg" id="bvQ-6q-YeW"/>
+                        <outlet property="editButton" destination="vXK-6r-69x" id="UpT-Zc-4fJ"/>
                         <outlet property="locationLabel" destination="yRh-1d-Z9Q" id="fYo-Ie-k7m"/>
                         <outlet property="month" destination="bbg-Vu-YZ8" id="HDH-yY-0SN"/>
                         <outlet property="timeLabel" destination="FQe-xn-jaf" id="hpw-mJ-eqp"/>
@@ -271,7 +288,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="sPZ-hB-Eni">
                                 <rect key="frame" x="20" y="55" width="335" height="485"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QgS-HG-ZbL">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date And Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QgS-HG-ZbL">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
                                         <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
                                         <nil key="highlightedColor"/>
@@ -291,7 +308,7 @@
                                             <action selector="pickerConfig:" destination="1RK-4d-Zb7" eventType="editingDidBegin" id="llB-KT-r1A"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAV-7C-G42">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date And Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAV-7C-G42">
                                         <rect key="frame" x="0.0" y="195" width="335" height="30"/>
                                         <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
                                         <nil key="highlightedColor"/>

@@ -212,15 +212,15 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     func placeDJImageInView(){
         if let profileURL = dj?.profilePicURL{
             profilePic.loadImageWithChachfromUrl(urlString: profileURL)
-            /*djProfileImage.contentMode = .scaleAspectFill
+            djProfileImage.contentMode = .scaleAspectFill
             djProfileImage.layer.cornerRadius = 60
             djProfileImage.layer.masksToBounds = true
             djProfileImage.layer.borderWidth = 1.5
             djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
             djProfileImage.clipsToBounds = true
-            djProfileImage.translatesAutoresizingMaskIntoConstraints = false*/
+            djProfileImage.translatesAutoresizingMaskIntoConstraints = false
             djProfileImage.image = profilePic.image
-            print("placed image")
+            print("Image placed")
         }
         else{
             print("No Image to place")
