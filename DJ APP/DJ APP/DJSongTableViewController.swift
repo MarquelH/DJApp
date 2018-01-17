@@ -267,6 +267,12 @@ class DJSongTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if (tableSongList.count == 0 ){
+            noRequestLabel.isHidden = false
+        }
+        else {
+            noRequestLabel.isHidden = true
+        }
         return tableSongList.count
     }
     

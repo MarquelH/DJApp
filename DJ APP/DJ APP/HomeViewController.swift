@@ -32,6 +32,7 @@ class HomeViewController: UIViewController {
     var currentSnapshot: [String: AnyObject]?
     var songTableDelegate: FetchDataForSongTable?
     var selectedTrackDelegate: FetchDataForSelectedTrack?
+    var isForDJ = false
 
     override func viewDidLoad() {
         super.viewDidLoad()

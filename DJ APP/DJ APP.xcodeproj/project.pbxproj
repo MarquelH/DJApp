@@ -31,6 +31,7 @@
 		C789F23D20097BA60056DAA2 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C789F23C20097BA60056DAA2 /* MapViewController.swift */; };
 		C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */; };
 		C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */; };
+		C7E686E2200EC0D400D89D6D /* CustomInitialTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E686E1200EC0D400D89D6D /* CustomInitialTabBarController.swift */; };
 		C7F337AF1FFD9DB50082E579 /* DJSideProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F337AE1FFD9DB50082E579 /* DJSideProfileViewController.swift */; };
 		C7F8DCE61FFEE4CF00890BB6 /* djProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7F8DCE51FFEE4CF00890BB6 /* djProfileStoryboard.storyboard */; };
 		C7F8DCEB1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F8DCEA1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift */; };
@@ -117,6 +118,7 @@
 		C789F23C20097BA60056DAA2 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduleViewController.swift; sourceTree = "<group>"; };
 		C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		C7E686E1200EC0D400D89D6D /* CustomInitialTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInitialTabBarController.swift; sourceTree = "<group>"; };
 		C7F337AE1FFD9DB50082E579 /* DJSideProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJSideProfileViewController.swift; sourceTree = "<group>"; };
 		C7F8DCE51FFEE4CF00890BB6 /* djProfileStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = djProfileStoryboard.storyboard; sourceTree = "<group>"; };
 		C7F8DCEA1FFF25FD00890BB6 /* DJcustomTabBarControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DJcustomTabBarControllerViewController.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			children = (
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
 				C789F23C20097BA60056DAA2 /* MapViewController.swift */,
+				C7E686E1200EC0D400D89D6D /* CustomInitialTabBarController.swift */,
 				D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */,
 				D8158AEC1FEF0A3000C45946 /* HomeViewController.swift */,
 				C75748B820001EFD0093B446 /* profileTabForCustomTabBarViewController.swift */,
@@ -771,6 +774,7 @@
 				D819CF891FBCC67300D60B93 /* SearchCell.swift in Sources */,
 				C75748B920001EFD0093B446 /* profileTabForCustomTabBarViewController.swift in Sources */,
 				C766A4C620057F5A006A3DDF /* SongSelectedByDJViewController.swift in Sources */,
+				C7E686E2200EC0D400D89D6D /* CustomInitialTabBarController.swift in Sources */,
 				D88ACF681FF8219E00197AC2 /* Message.swift in Sources */,
 				C7F337AF1FFD9DB50082E579 /* DJSideProfileViewController.swift in Sources */,
 				D8C9D65D1FF1AC26005384CF /* BaseCell.swift in Sources */,

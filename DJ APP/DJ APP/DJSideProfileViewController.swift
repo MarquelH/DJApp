@@ -66,6 +66,13 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     
     lazy var profilePic: ProfileImageView = {
         let pp = ProfileImageView()
+        pp.contentMode = .scaleAspectFill
+        pp.layer.cornerRadius = 70
+        pp.layer.masksToBounds = true
+        pp.clipsToBounds = true
+        pp.layer.borderWidth = 1.0
+        pp.layer.borderColor = UIColor.black.cgColor
+        pp.translatesAutoresizingMaskIntoConstraints = false
         return pp
     }()
     
@@ -95,6 +102,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     func endEditing (){
         self.view.endEditing(true)
     }
+    
     @IBAction func saveChangesBtnPressed(_ sender: Any) {
         if hometownTextField.text != "", DJNameTextField.text != "", ageTextField.text != "",
             genreTextField.text != "", twitterInstagramTextField.text != "" {
@@ -212,15 +220,14 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     func placeDJImageInView(){
         if let profileURL = dj?.profilePicURL{
             profilePic.loadImageWithChachfromUrl(urlString: profileURL)
-            djProfileImage.contentMode = .scaleAspectFill
-            djProfileImage.layer.cornerRadius = 60
-            djProfileImage.layer.masksToBounds = true
-            djProfileImage.layer.borderWidth = 1.5
-            djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
-            djProfileImage.clipsToBounds = true
-            djProfileImage.translatesAutoresizingMaskIntoConstraints = false
+            //djProfileImage.contentMode = .scaleAspectFill
+            //djProfileImage.layer.cornerRadius = 60
+            //djProfileImage.layer.masksToBounds = true
+            //djProfileImage.layer.borderWidth = 1.5
+            //djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
+            //djProfileImage.clipsToBounds = true
+            //djProfileImage.translatesAutoresizingMaskIntoConstraints = false
             djProfileImage.image = profilePic.image
-            print("Image placed")
         }
         else{
             print("No Image to place")

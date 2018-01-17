@@ -89,7 +89,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             self.tableView.reloadData()
         }
 
-        displayLabel()
         refreshController.endRefreshing()
     }
     
@@ -349,15 +348,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         noRequestLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
     }
     
-    func displayLabel() {
-        if tableSongList.isEmpty {
-            noRequestLabel.isHidden = false
-        }
-        else {
-            noRequestLabel.isHidden = true
-        }
-    }
-    
     func handleBack() {
         self.parent?.dismiss(animated: true, completion: nil)
     }
@@ -381,6 +371,12 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if (tableSongList.count == 0 ){
+            noRequestLabel.isHidden = false
+        }
+        else {
+            noRequestLabel.isHidden = true
+        }
         return tableSongList.count
     }
     

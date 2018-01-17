@@ -483,9 +483,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                     return
                 }
                 else {
-                    print("successful login of user from email")
                     self.presentDJTableView(guestID: isFoundTuple.key)
-
                 }
             })
         }
@@ -513,17 +511,26 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     }
     
     func presentDJTableView (guestID: String) {
-        /*let djTableViewController = DJTableViewController()
-        let djTableNavController = UINavigationController(rootViewController: djTableViewController)
-        djTableNavController.delegate = self
-        djTableViewController.guestID = guestID
-        present(djTableNavController, animated: true, completion: nil)*/
-        let mapView = MapViewController()
-        let mapNavController = UINavigationController(rootViewController: mapView)
-        //mapNavController.delegate = self
-        mapView.navigationController?.title = "Hello Map."
-        mapView.guestID = guestID
-        self.present(mapNavController, animated: true, completion: nil)
+        let initialTab = CustomInitialTabBarController()
+        
+        //Send selected DJ and guest id to new views
+        
+        initialTab.setGuestIDs(id: guestID)
+        
+        //Insert views into navigation controller
+        
+        present(initialTab, animated: true, completion: nil)
+    }
+    
+    func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+        }
+        catch let error as NSError {
+            print("Error with signing out of firebase: \(error.localizedDescription)")
+        }
+        dismiss(animated: true, completion: nil)
+        
     }
     
     //returns key and true if found in the given snapshot

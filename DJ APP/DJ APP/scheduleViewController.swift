@@ -27,13 +27,40 @@ class scheduleViewController: UIViewController {
     let formatter = DateFormatter()
     
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+
+        let alert = UIAlertController(title: "Oops!", message: "Are you sure you want to delete this event?", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: { action in
+                    self.deleteEvent()
+                }))
+                alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default
+                , handler: { action in
+                self.dismissAlert()
+                }))
+            
+            self.present(alert, animated: true, completion: nil)
+        
+            return
+    }
+    
+    func dismissAlert(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func deleteEvent() {
+        
+    }
     
     @IBAction func editButtonTapped(_ sender: Any) {
         handleEdit()
     }
     
+    
     func setEditButtonShape(){
         editButton.layer.cornerRadius = 10
+        deleteButton.layer.cornerRadius = 10
     }
     
     
@@ -112,6 +139,7 @@ class scheduleViewController: UIViewController {
         setEditButtonShape()
         timeLabel.isHidden = true
         editButton.isHidden = true
+        deleteButton.isHidden = true
     }
 
     
@@ -145,7 +173,6 @@ class scheduleViewController: UIViewController {
         calendarView.visibleDates { (visibleDates) in
             self.setupViewsOfCalendar(from: visibleDates)
         }
-        calendarView.selectDates([today])
     }
 
     override func didReceiveMemoryWarning() {
@@ -161,7 +188,6 @@ class scheduleViewController: UIViewController {
                 self.editingEndDate {
                 addController.isEditingEvent = true
                 addController.editingEventInfo = [startTime, endTime, location]
-                
                 self.tabBarController?.selectedIndex = 2
             }
             else {
@@ -184,23 +210,22 @@ class scheduleViewController: UIViewController {
         }
     }
     
-    func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
+    func handleCellTextColor(view: JTAppleCell?, cellState: CellState, date: Date){
         guard let validCell = view as! CalendarCell? else{return}
         if cellState.isSelected {
             validCell.dateLabel.textColor = UIColor.black
         }
         else{
-            if cellState.dateBelongsTo == .thisMonth{
+                if cellState.dateBelongsTo == .thisMonth{
                 validCell.dateLabel.textColor = UIColor.white
-            }
-            else{
+                }
+                else{
                 validCell.dateLabel.textColor = UIColor.darkGray
-            }
+                }
         }
     }
     
-    func handleCellColorAndTextForEvents(view: JTAppleCell?, date: Date){
-        guard let validCell = view as! CalendarCell? else{return}
+    func checkForEvent(date: Date) -> Bool{
         let dateFormatter2 = DateFormatter()
         
         dateFormatter2.dateStyle = DateFormatter.Style.short
@@ -213,12 +238,13 @@ class scheduleViewController: UIViewController {
         let dateAlone = arr[0]
         
         let isFoundTuple = isFound(eventDateAndTime: String(dateAlone))
-        if isFoundTuple.0{
-            validCell.dateLabel.textColor = UIColor.black
-            validCell.selectedView.isHidden = false
+        if isFoundTuple.0 {
+            return true
+        }
+        else {
+        return false
         }
     }
-    
 }
 
 extension scheduleViewController: JTAppleCalendarViewDataSource {
@@ -231,6 +257,7 @@ extension scheduleViewController: JTAppleCalendarViewDataSource {
         
         let startDate = formatter.date(from: "2018 01 12")
         let endDate = formatter.date(from: "2030 12 29")
+        
         let parameters = ConfigurationParameters(startDate: startDate!, endDate: endDate!)
         return parameters
     }
@@ -245,14 +272,14 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "calCell", for: indexPath) as! CalendarCell
         cell.dateLabel.text = cellState.text
         handleCellSelected(view: cell, cellState: cellState)
-        handleCellTextColor(view: cell, cellState: cellState)
-        handleCellColorAndTextForEvents(view: cell, date: date)
+        handleCellTextColor(view: cell, cellState: cellState,date: date)
+        //handleCellColorAndTextForEvents(view: cell, date: date, cellState: cellState)
         return cell
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleCellSelected(view: cell, cellState: cellState)
-        handleCellTextColor(view: cell, cellState: cellState)
+        handleCellTextColor(view: cell, cellState: cellState,date: date)
         
         //Here, we will take snapshot of event and make labels visible upon
         //the sight of an event.
@@ -275,18 +302,20 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
             timeLabel.text = "\(isFoundTuple.3) - \(isFoundTuple.4)"
             timeLabel.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
             editButton.isHidden = false
+            deleteButton.isHidden = false
         }
         else{
             locationLabel.text = "No Scheduled Events on Selected Day"
             timeLabel.isHidden = true
             editButton.isHidden = true
+            deleteButton.isHidden = true
         }
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleCellSelected(view: cell, cellState: cellState)
-        handleCellTextColor(view: cell, cellState: cellState)
-        handleCellColorAndTextForEvents(view: cell, date: date)
+        handleCellTextColor(view: cell, cellState: cellState, date: date)
+        //handleCellColorAndTextForEvents(view: cell, date: date, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {

@@ -22,7 +22,6 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-   
         let songNavController = UINavigationController()
         songNavController.tabBarItem.title = "Songs"
         songNavController.tabBarItem.image = UIImage(named: "listIcon")

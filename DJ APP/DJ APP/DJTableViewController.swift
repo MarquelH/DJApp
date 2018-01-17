@@ -39,13 +39,11 @@ class DJTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .default
-        noDJLabel.isHidden = true
         fetchDjs()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        displayLabel()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,7 +56,6 @@ class DJTableViewController: UITableViewController {
         setupNavBar()
         setupTableView()
         self.tableView.reloadData()
-        
     }
 
     func setupTableView() {
@@ -83,19 +80,11 @@ class DJTableViewController: UITableViewController {
         noDJLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
     }
     
-    func displayLabel() {
-        if users.isEmpty {
-            noDJLabel.isHidden = false
-        }
-        else {
-            noDJLabel.isHidden = true
-        }
-    }
-    
     func fetchDjs() {
         //So that table view doesn't load duplicates
         self.users.removeAll()
         self.events.removeAll()
+        
         Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
 
             if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -170,6 +159,7 @@ class DJTableViewController: UITableViewController {
                     
                     let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
                     
+
                     self.users.append(dj)
                     
                 }
@@ -183,7 +173,13 @@ class DJTableViewController: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        
+        if users.count == 0{
+            noDJLabel.isHidden = false
+        }
+        else{
+            noDJLabel.isHidden = true
+        }
         return users.count
     }
     
@@ -194,6 +190,9 @@ class DJTableViewController: UITableViewController {
         
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
+        
+        
+        //Do an events snapshot to capture the location here.
         
         if let loc = dj.currentLocation  {
             cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
@@ -233,9 +232,10 @@ class DJTableViewController: UITableViewController {
         if let workingID = self.guestID {
             customTabBarController.setDJsAndGuestID(dj: users[indexPath.row], id: workingID)
         }
-  
         
         //Insert views into navigation controller
+        
+        customTabBarController.selectedIndex = 1
         present(customTabBarController, animated: true, completion: nil)
         
         
@@ -248,9 +248,14 @@ class DJTableViewController: UITableViewController {
 
     func setupNavBar() {
         navigationItem.title = "DJ List"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleLogout))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(fetchEvents))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
     }
 
     func handleLogout() {

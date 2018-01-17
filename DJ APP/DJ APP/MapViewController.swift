@@ -26,16 +26,23 @@ class MapViewController: UIViewController {
         UIApplication.shared.statusBarStyle = .default
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //UIApplication.shared.statusBarStyle = .default
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
     func setupNavBar(){
-        navigationItem.title = "DJs Near You"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleLogout))
-        navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 33) as Any]
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleLogout))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        //Bar text
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
+        self.navigationItem.title = "DJs Near You"
     }
     
     func handleLogout(){
@@ -82,8 +89,7 @@ class MapViewController: UIViewController {
         let camera = GMSCameraPosition.camera(withLatitude: 38.986918, longitude: -76.942554, zoom: 15.0)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         view = mapView
-        mapView.clear() //Resetting the marker.
-        
+        mapView.clear() //Resetting the markers
         // Creates a marker in the center of the map.
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
             if snapshot.exists() {
@@ -97,14 +103,19 @@ class MapViewController: UIViewController {
                     for(_,v) in dictionary{
                         let latCoords = v["Latitude Coordinates"] as? String, longCoords = v["Longitude Coordinates"] as? String,name = v["DJ Name"] as? String,location = v["location"] as? String,date = v["StartDateAndTime"] as? String
                         let todaysDate = Date.init()
-                        let realDate = String(describing: todaysDate)
-                        let dateAloneArray = realDate.split(separator: ",")
+                        
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateStyle = DateFormatter.Style.short
+                        dateFormatter.timeStyle = DateFormatter.Style.short
+                        let strToday = dateFormatter.string(from: todaysDate)
+                        let dateAloneArray = strToday.split(separator: ",")
                         let todaysDateForComparison = dateAloneArray[0]
                         
                         let theArrayForThisDate = date?.split(separator: ",")
                         let thisDateForComparison = theArrayForThisDate![0]
                         
-                        if todaysDateForComparison == thisDateForComparison{
+                        
+                        if todaysDateForComparison == thisDateForComparison {
                             
                         print("We have something on this date!")
                         let marker = GMSMarker()
@@ -124,27 +135,10 @@ class MapViewController: UIViewController {
                     }
                 }
                 else{
-                    print("IDK")
+                    print("IDK!")
                 }
             }
         }, withCancel: nil)
-        
-        /*if let workingSnap = self.eventSnapshot{
-            print("MAKING MARKER")
-            for (k,v) in workingSnap{
-                let latCoords = v["Latitude Coordinates"], longCoords = v["Longitude Coordinates"],name = v["DJ Name"],location = v["location"]
-                let marker = GMSMarker()
-                let actualLats = latCoords as! CLLocationDegrees
-                let actualLongs = longCoords as! CLLocationDegrees
-                marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
-                marker.title = "\(name) is Playing!"
-                marker.snippet = "\(location)"
-                marker.map = mapView
-            }
-        }
-        else{
-            print("NOT MAKING MARKER")
-        }*/
     }
 
 }
