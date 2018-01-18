@@ -10,35 +10,70 @@ import UIKit
 import GoogleMaps
 import Firebase
 import GooglePlaces
+import MapKit
 
 class MapViewController: UIViewController {
     var guestID: String?
     var eventSnapshot: [String: AnyObject]?
+    var strLong = -76.942554
+    var strLat = 38.986918
+    var passedLat = 0.0
+    var passedLong = 0.0
+    var camera: GMSCameraPosition?
+    
+    //Current Location stuff
+    var locationManager = CLLocationManager()
+    //var currentLocation: CLLocation?
+    var mapView: GMSMapView!
+    //var placesClient: GMSPlacesClient!
+    var zoomLevel: Float = 15.0
+    
+    // An array to hold the list of likely places.
+    //var likelyPlaces: [GMSPlace] = []
+    
+    // The currently selected place.
+    //var selectedPlace: GMSPlace?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //listLikelyPlaces()
         setupNavBar()
+        
+        
+        
+        
+        
+        /*locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.distanceFilter = 50
+        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
+        
+        placesClient = GMSPlacesClient.shared()*/
         layoutViews()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .default
+        //UIApplication.shared.statusBarStyle = .default
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //UIApplication.shared.statusBarStyle = .default
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     func setupNavBar(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearch))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
@@ -57,6 +92,12 @@ class MapViewController: UIViewController {
     let loginController = LoginController()
     present(loginController, animated: true, completion: nil)
         
+    }
+    
+    func handleSearch() {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
     }
     
     func getEventSnapshot(){
@@ -84,10 +125,23 @@ class MapViewController: UIViewController {
     }
     
     func layoutViews() {
-        // Create a GMSCameraPosition that tells the map to display the
-        // coordinate -33.86,151.20 at zoom level 6.
-        let camera = GMSCameraPosition.camera(withLatitude: 38.986918, longitude: -76.942554, zoom: 15.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        
+        
+        //Find user's Current Location is next here!
+        //let currentPlace = likelyPlaces[1]
+        
+        //let longg = currentPlace.coordinate.longitude
+        //let latt = currentPlace.coordinate.latitude
+        
+        if (passedLat == 0.0){
+        camera = GMSCameraPosition.camera(withLatitude: strLat, longitude: strLong, zoom: 15.0)
+        }
+        else{
+            camera = GMSCameraPosition.camera(withLatitude: passedLat, longitude: passedLong, zoom: 15.0)
+        }
+        
+        
+        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera!)
         view = mapView
         mapView.clear() //Resetting the markers
         // Creates a marker in the center of the map.
@@ -113,7 +167,9 @@ class MapViewController: UIViewController {
                         
                         let theArrayForThisDate = date?.split(separator: ",")
                         let thisDateForComparison = theArrayForThisDate![0]
-                        
+                        let thisTimeForComparison = theArrayForThisDate![1]
+                        let strTime = String(thisTimeForComparison)
+                        let realStrTime = strTime.replacingOccurrences(of: " ", with: "")
                         
                         if todaysDateForComparison == thisDateForComparison {
                             
@@ -122,12 +178,12 @@ class MapViewController: UIViewController {
                         let actualLats = Double(latCoords!) as! CLLocationDegrees
                         let actualLongs = Double(longCoords!) as! CLLocationDegrees
                         marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
-                        marker.title = "\(name!) is Playing!"
+                        marker.title = "\(name!) is Playing at \(realStrTime)!"
                         marker.snippet = "\(location!)"
                         marker.tracksViewChanges = true
                         marker.tracksInfoWindowChanges = true
                         //marker.icon = UIImage(named: "bioIcon")
-                        marker.map = mapView
+                        marker.map = self.mapView
                         }
                         else{
                             print("No markers today.")
@@ -142,3 +198,74 @@ class MapViewController: UIViewController {
     }
 
 }
+
+extension MapViewController: GMSAutocompleteViewControllerDelegate {
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        //print("Place coordinate: \(place.coordinate)")
+        passedLong = place.coordinate.longitude
+        passedLat = place.coordinate.latitude
+        layoutViews()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: ", error.localizedDescription)
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+}
+
+/*extension MapViewController: CLLocationManagerDelegate {
+    
+    // Handle incoming location events.
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location: CLLocation = locations.last!
+        print("Location: \(location)")
+        
+        passedLong = location.coordinate.longitude
+        passedLat = location.coordinate.latitude
+        //let camera2 = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+                                              //longitude: location.coordinate.longitude,
+                                              //zoom: zoomLevel)
+        
+           // mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera2)
+        //view = mapView
+    }
+    
+    // Handle authorization for the location manager.
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .restricted:
+            print("Location access was restricted.")
+        case .denied:
+            print("User denied access to location.")
+            // Display the map using the default location.
+            mapView.isHidden = false
+        case .notDetermined:
+            print("Location status not determined.")
+        case .authorizedAlways: fallthrough
+        case .authorizedWhenInUse:
+            print("Location status is OK.")
+        }
+    }
+    
+    // Handle location manager errors.
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        locationManager.stopUpdatingLocation()
+        print("Error: \(error)")
+    }
+}*/
+
+
+

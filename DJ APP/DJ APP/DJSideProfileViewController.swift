@@ -64,6 +64,15 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         setButtonShapes()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
     lazy var profilePic: ProfileImageView = {
         let pp = ProfileImageView()
         pp.contentMode = .scaleAspectFill

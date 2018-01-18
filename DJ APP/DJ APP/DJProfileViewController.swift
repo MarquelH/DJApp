@@ -121,6 +121,7 @@ class DJPRofileViewController: UIViewController {
             hometownLabel.text = hometown
             ageLabel.text = "\(age)"
             genreLabel.text = genre
+            twitterLabel.adjustsFontSizeToFitWidth = true
             twitterLabel.text = twitter
         }
         else{

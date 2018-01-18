@@ -298,7 +298,6 @@ class DJSongTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: djTrackCellId, for: indexPath) as! djTrackCell
         
         guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let _ = tableSongList[indexPath.row].id else {
-            
             print("Issue parsing from tableSongList")
             return cell
         }
