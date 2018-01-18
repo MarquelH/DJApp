@@ -229,7 +229,7 @@ class addEventViewController: UIViewController {
         }
         else{
             //Updating existing event
-            if isEditing {
+            if isEditingEvent {
                 addEventWithKey(key: isFoundTuple.1)
             }
             //New Event
@@ -249,7 +249,7 @@ class addEventViewController: UIViewController {
                          "EndDateAndTime":endDate,"Latitude Coordinates": lat,"Longitude Coordinates":long,"DJ Name":djName] as [String : Any]
             
             self.refEventList.child(key).setValue(event)
-            presentAlertForAdd(title: "Success", error: "We have added your event to the calendar!")
+            presentAlertForAdd(title: "Success!", error: "We have added your event to the calendar!")
             
         }
         else {

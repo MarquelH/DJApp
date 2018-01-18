@@ -40,7 +40,7 @@ class DJTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .default
+        //UIApplication.shared.statusBarStyle = .default
         fetchDjs()
     }
     
@@ -50,7 +50,7 @@ class DJTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
+        //UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewDidLoad() {
@@ -85,20 +85,21 @@ class DJTableViewController: UITableViewController {
     func fetchDjs() {
         //So that table view doesn't load duplicates
         self.users.removeAll()
-        self.events.removeAll()
+        //self.events.removeAll()
         
         Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
-
+            
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 self.usersSnapshot = dictionary
                 self.fetchEvents()
             }
-
+            
         }, withCancel: nil)
     }
     
     
     func fetchEvents() {
+        self.events.removeAll()
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -106,12 +107,12 @@ class DJTableViewController: UITableViewController {
                 for (key,value) in dictionary {
                     
                     if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String {
-                    
+                        
                         
                         let currDateTime = Date()
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "M/dd/yy, h:mm a"
-                      
+                        
                         guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
                             print("Failed converting the the dates")
                             return
@@ -178,14 +179,14 @@ class DJTableViewController: UITableViewController {
             return
         }
         for (key,value) in dictionary {
-
+            
             if key == djID {
                 print("DJ Found in snapshot, going to add them to the list. ")
                 if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
                     
                     let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
                     
-
+                    
                     self.users.append(dj)
                     
                 }
@@ -199,7 +200,6 @@ class DJTableViewController: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if users.count == 0{
             noDJLabel.isHidden = false
         }
@@ -219,11 +219,19 @@ class DJTableViewController: UITableViewController {
         
         
         //Do an events snapshot to capture the location here.
-        
-        if let loc = dj.currentLocation  {
-            cell.detailTextLabel?.text = "Playing at: " +  "\(loc)"
-        }
-
+        Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                
+                for (_,value) in dictionary {
+                    let location = value["location"] as! String,name = value["DJ Name"] as? String
+                    
+                    if name == self.users[indexPath.row].djName{
+                        cell.detailTextLabel?.text = "Playing at: " +  "\(String(describing: location))"
+                    }
+                }
+            }})
+ 
         
         //Set the image view
         if let profileUrl = dj.profilePicURL {
@@ -273,13 +281,10 @@ class DJTableViewController: UITableViewController {
     }
 
     func setupNavBar() {
-        navigationItem.title = "DJ List"
+        navigationItem.title = "DJs Live Near You"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(fetchEvents))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
     }

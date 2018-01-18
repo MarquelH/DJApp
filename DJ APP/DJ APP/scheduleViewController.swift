@@ -22,6 +22,7 @@ class scheduleViewController: UIViewController {
     var editingLocation: String?
     var editingStartDate: String?
     var editingEndDate: String?
+    var dateForDeletion: String?
     
     let today = Date.init()
     let formatter = DateFormatter()
@@ -31,7 +32,7 @@ class scheduleViewController: UIViewController {
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
 
-        let alert = UIAlertController(title: "Oops!", message: "Are you sure you want to delete this event?", preferredStyle: UIAlertControllerStyle.alert)
+        /*let alert = UIAlertController(title: "Oops!", message: "Are you sure you want to delete this event?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: { action in
                     self.deleteEvent()
                 }))
@@ -42,16 +43,21 @@ class scheduleViewController: UIViewController {
             
             self.present(alert, animated: true, completion: nil)
         
-            return
+            return*/
     }
     
     func dismissAlert(){
         self.navigationController?.popViewController(animated: true)
     }
     
-    func deleteEvent() {
-        
-    }
+   /* func deleteEvent() {
+        if let workingSnap = self.eventSnapshot {
+            for (k,v) in workingSnap {
+                if let dateAndTime = v["StartDateAndTime"] as? String{
+                    
+                }
+                
+    }*/
     
     @IBAction func editButtonTapped(_ sender: Any) {
         handleEdit()
@@ -152,6 +158,11 @@ class scheduleViewController: UIViewController {
             print("DJ does not have uid")
         }
         getEventSnapshot()
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .default
     }
     
     func setupViewsOfCalendar(from visibleDates: DateSegmentInfo){
@@ -290,6 +301,7 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
         
         let strDate = dateFormatter2.string(from: date)
         
+        dateForDeletion = strDate
         let arr = strDate.split(separator: ",")
         let dateAlone = arr[0]
         

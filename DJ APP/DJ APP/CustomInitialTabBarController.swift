@@ -38,6 +38,7 @@ class CustomInitialTabBarController: UITabBarController {
         viewControllers = [mapNavController,djNavController]
         
         self.selectedIndex = 0
+        UIApplication.shared.statusBarStyle = .default
     }
     
     func handleBack() {

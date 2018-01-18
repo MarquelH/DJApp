@@ -545,9 +545,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     }
     
 
-   
     
     func setupViews() {
+        UIApplication.shared.statusBarStyle = .lightContent
         view.addSubview(djGuestLoginButton)
         view.addSubview(usernameContainer)
         view.addSubview(passwordContainer)

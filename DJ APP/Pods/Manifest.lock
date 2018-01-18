@@ -72,6 +72,9 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - SwiftLocation (3.1.0):
+    - SwiftyJSON (~> 4.0.0-alpha.1)
+  - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - FBSDKCoreKit
@@ -84,6 +87,7 @@ DEPENDENCIES:
   - GooglePlacePicker
   - GooglePlaces
   - JTAppleCalendar (~> 7.1.4)
+  - SwiftLocation (~> 3.1.0)
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
@@ -105,7 +109,9 @@ SPEC CHECKSUMS:
   JTAppleCalendar: aaeee95e939e0b0a381fb51eb77738bd26bb10f6
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  SwiftLocation: 8f5ef4f510a45e43239de57a3145b3669301e898
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: a5ec81da86e074d25e6b05391864bb0cc86b8092
+PODFILE CHECKSUM: ffe834144e014b1ebf99afbb0a432f68f8cd06e4
 
 COCOAPODS: 1.3.1
