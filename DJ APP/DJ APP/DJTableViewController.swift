@@ -16,6 +16,8 @@ class DJTableViewController: UITableViewController {
     let cellId = "cellId"
     var guestID: String?
     var usersSnapshot: [String: AnyObject]?
+    var eventsToBeDeleted: [String] = []
+    var songlistsToBeDeleted: [String] = []
     
     lazy var refreshController: UIRefreshControl = {
         let rc = UIRefreshControl()
@@ -101,7 +103,7 @@ class DJTableViewController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 
-                for (_,value) in dictionary {
+                for (key,value) in dictionary {
                     
                     if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String {
                     
@@ -115,6 +117,7 @@ class DJTableViewController: UITableViewController {
                             return
                         }
                         
+                        self.songlistsToBeDeleted.append(djID)
                         
                         
                         //Check if the current time is within the start and end times
@@ -124,12 +127,20 @@ class DJTableViewController: UITableViewController {
                             
                             let newEvent = Event(djID: djID, location: location, startTime: sd, endTime: ed, eventID: eventID)
                             self.events.append(newEvent)
+                            
                             //Add the DJ to the DJ List
                             self.addDJToList(djID: djID)
+                        
+                            //remove from the songlists to be deleted array because it is a valid songlist
+                            self.songlistsToBeDeleted.removeLast()
+                            
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
                             }
-                            
+                        }
+                        else if ((ed.timeIntervalSince1970) <= currDateTime.timeIntervalSince1970) {
+                            //Add key to eventsToBeDeleted
+                            self.eventsToBeDeleted.append(key)
                         }
                     }
                     else{
@@ -143,7 +154,22 @@ class DJTableViewController: UITableViewController {
                 print("Problem parsing events into [String: AnyObjet]")
             }
             self.refreshController.endRefreshing()
+            self.removePastEventsAndSonglists()
         }, withCancel: nil)
+    }
+    
+    func removePastEventsAndSonglists() {
+        //Remove past events
+        let ref = Database.database().reference().child("Events")
+        for eventID in eventsToBeDeleted {
+            ref.child(eventID).setValue(nil)
+        }
+        
+        //Remove past song lists
+        let ref2 = Database.database().reference().child("SongList")
+        for djID in songlistsToBeDeleted {
+            ref2.child(djID).setValue(nil)
+        }
     }
     
     func addDJToList(djID: String) {
