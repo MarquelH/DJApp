@@ -24,12 +24,54 @@ class DJPRofileViewController: UIViewController {
     @IBOutlet weak var messageButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     
+    @IBOutlet weak var imageForFullViewing: UIImageView!
+    
+    @IBAction func recognizerTapped(_ sender: UITapGestureRecognizer) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "View Full Image", style: .default) { action in
+            print("Fired off function")
+            self.tappedActions(sender)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            self.popAlertOff()
+        })
+        
+        present(alert, animated: true)
+        
+        
+    }
+    
+    func popAlertOff(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func tappedActions(_ sender: UITapGestureRecognizer){
+        let tappedImage = sender.view as! UIImageView
+        let newImageView = UIImageView(image: tappedImage.image)
+        newImageView.frame = UIScreen.main.bounds
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
+
     
     @IBAction func backButtonPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
+
     @IBAction func messageButtonPressed(_ sender: Any) {
         handleDM()
     }
@@ -38,13 +80,12 @@ class DJPRofileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
         messageButton.layer.cornerRadius = 27
         backButton.layer.cornerRadius = 27
         
         
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let name = dj?.djName {
@@ -97,7 +138,7 @@ class DJPRofileViewController: UIViewController {
     lazy var profilePic: ProfileImageView = {
         let pp = ProfileImageView()
         pp.contentMode = .scaleAspectFill
-        pp.layer.cornerRadius = 70
+        pp.layer.cornerRadius = 30
         pp.layer.masksToBounds = true
         pp.clipsToBounds = true
         pp.layer.borderWidth = 1.0
@@ -133,7 +174,7 @@ class DJPRofileViewController: UIViewController {
         if let profileURL = dj?.profilePicURL{
             profilePic.loadImageWithChachfromUrl(urlString: profileURL)
             profileImage.contentMode = .scaleAspectFill
-            profileImage.layer.cornerRadius = 60
+            profileImage.layer.cornerRadius = 30
             profileImage.layer.masksToBounds = true
             profileImage.layer.borderWidth = 1.5
             profileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor

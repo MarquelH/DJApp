@@ -21,9 +21,9 @@ class addEventViewController: UIViewController {
     var originalView: CGFloat?
     var strLong: String?
     var strLat: String?
-    var isEditingEvent: Bool = false
+    //var isEditingEvent: Bool = false
     var currentEvent: Event?
-    var editingEventInfo: [String]?
+    //var editingEventInfo: [String]?
     
     @IBOutlet weak var endingTime: UITextField!
     @IBOutlet weak var eventLocation: UITextField!
@@ -120,24 +120,12 @@ class addEventViewController: UIViewController {
             doWeHaveDJ = false
             print("DJ does not have uid")
         }
-        
-        if let info = editingEventInfo, isEditingEvent {
-            fillInLabels(startTime: info[0], endTime: info[1], location: info[2])
-        }
-        else {
-            print("Event info was not passed in or not editing event. ")
-        }
         getEventSnapshot()
-        
     }
     
     //Reset isEditingEvent when view changes, because they should not be editing anymore.
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        isEditingEvent = false
-        if let _ = self.editingEventInfo {
-            self.editingEventInfo?.removeAll()
-        }
     }
     
     func fillInLabels(startTime: String, endTime: String, location: String) {
@@ -227,20 +215,13 @@ class addEventViewController: UIViewController {
         
         let isFoundTuple = isFound(eventDateAndTime: dateForPassing)
         
-        if isFoundTuple.0 && !isEditingEvent{ //Check if there is an event at this time and not editing event
+        if isFoundTuple.0 { //Check if there is an event at this time and not editing event
             presentAlert(title: "Skrt!", error: "It appears as though something is already scheduled on this day.")
         }
         else{
-            //Updating existing event
-            if isEditingEvent {
-                addEventWithKey(key: isFoundTuple.1)
-            }
-            //New Event
-            else {
                 //Generate new key inside EventList node and return it
                 let key = self.refEventList.childByAutoId().key
                 addEventWithKey(key: key)
-            }
         }
     }
     

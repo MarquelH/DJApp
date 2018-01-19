@@ -59,10 +59,10 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
             print("No DJ")
         }
         
-        placeDJImageInView()
         placeDJNameInLabel()
         setupDJInfo()
         setButtonShapes()
+        placeDJImageInView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -164,6 +164,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     
     func popAlertOffAndResetTextFields() {
         setupDJInfo()
+        placeDJImageInView()
         popAlertOff()
     }
     
@@ -186,7 +187,53 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         cancelChangesBtn.layer.cornerRadius = 15
     }
     
-    @IBAction func editPhotoPressed(_ sender: Any) {
+    @IBAction func recognizerTapped(_ sender: UITapGestureRecognizer) {
+        print("Firing off")
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Edit Profile Picture", style: .default) { action in
+            print("Fired off edit function")
+            self.fireOffImagePicker()
+        })
+        
+        alert.addAction(UIAlertAction(title: "View Current Profile Picture", style: .default) { action in
+            print("Fired off ")
+            self.tappedActions(sender)
+
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            self.popAlertOff()
+        })
+        
+        present(alert, animated: true)
+        
+    
+}
+    
+func tappedActions(_ sender: UITapGestureRecognizer){
+    let tappedImage = sender.view as! UIImageView
+    let newImageView = UIImageView(image: tappedImage.image)
+    newImageView.frame = UIScreen.main.bounds
+    newImageView.backgroundColor = .black
+    newImageView.contentMode = .scaleAspectFit
+    newImageView.isUserInteractionEnabled = true
+    let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+    newImageView.addGestureRecognizer(tap)
+    self.view.addSubview(newImageView)
+    self.navigationController?.isNavigationBarHidden = true
+    self.tabBarController?.tabBar.isHidden = true
+}
+
+func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+    self.navigationController?.isNavigationBarHidden = false
+    self.tabBarController?.tabBar.isHidden = false
+    sender.view?.removeFromSuperview()
+}
+    
+    
+    
+    func fireOffImagePicker (){
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -217,6 +264,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         if let djName = dj?.djName {
             djNameLabel.font = UIFont(name: "SudegnakNo2", size: 60)
             djNameLabel.text = djName
+            djNameLabel.adjustsFontSizeToFitWidth = true
         }
         else{
             print("No DJ Name")
@@ -239,13 +287,13 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     func placeDJImageInView(){
         if let profileURL = dj?.profilePicURL{
             profilePic.loadImageWithChachfromUrl(urlString: profileURL)
-            //djProfileImage.contentMode = .scaleAspectFill
-            //djProfileImage.layer.cornerRadius = 60
-            //djProfileImage.layer.masksToBounds = true
-            //djProfileImage.layer.borderWidth = 1.5
-            //djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
-            //djProfileImage.clipsToBounds = true
-            //djProfileImage.translatesAutoresizingMaskIntoConstraints = false
+            djProfileImage.contentMode = .scaleAspectFill
+            djProfileImage.layer.cornerRadius = 30
+            djProfileImage.layer.masksToBounds = true
+            djProfileImage.layer.borderWidth = 1.5
+            djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
+            djProfileImage.clipsToBounds = true
+            djProfileImage.translatesAutoresizingMaskIntoConstraints = false
             djProfileImage.image = profilePic.image
         }
         else{

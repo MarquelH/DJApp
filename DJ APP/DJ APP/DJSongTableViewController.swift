@@ -277,13 +277,21 @@ class DJSongTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: djTrackCellId) as! djTrackCell
+        
+        //Trying to change cell color when accept/deny occurs
+        
         let accept = UITableViewRowAction(style: .normal, title: "Accept") { action, index in
             print("Accept tapped")
+            
+            cell.backgroundColor = UIColor.green
+            
         }
         accept.backgroundColor = .green
         
         let deny = UITableViewRowAction(style: .destructive, title: "Deny") { action, index in
             print("Deny tapped")
+            cell.backgroundColor = UIColor.red
         }
         //deny.backgroundColor = .red
 
@@ -303,7 +311,9 @@ class DJSongTableViewController: UITableViewController {
         }
         
         cell.textLabel?.text = "\(name)"
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.text = "Artist: \(artist)"
+        cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         cell.totalvotesLabel.text = "\(totalvotes)"
         
         

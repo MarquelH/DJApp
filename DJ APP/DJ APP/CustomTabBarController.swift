@@ -27,8 +27,10 @@ class CustomTabBarController: UITabBarController {
         songNavController.tabBarItem.image = UIImage(named: "listIcon")
         songNavController.viewControllers = [songController]
     
+        let profileNavController = UINavigationController()
         profilePicker.tabBarItem.title = "DJ Profile"
         profilePicker.tabBarItem.image = UIImage(named: "bioIcon")
+        profileNavController.viewControllers = [profilePicker]
         
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
@@ -39,7 +41,7 @@ class CustomTabBarController: UITabBarController {
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
 
-        viewControllers = [homeController, songNavController, searchTrackController,profilePicker]
+        viewControllers = [homeController, songNavController, searchTrackController,profileNavController]
         
         self.selectedIndex = 1;
     }

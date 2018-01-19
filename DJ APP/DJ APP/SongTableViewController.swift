@@ -315,9 +315,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleBack))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
-        //Refresh button
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshData))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any]
@@ -394,7 +391,9 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         }
         
         cell.textLabel?.text = "\(name)"
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.text = "Artist: \(artist)"
+        cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         cell.totalvotesLabel.text = "\(totalvotes)"
     
         
