@@ -56,6 +56,9 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         var placeholderTextLabel = textField?.value(forKey: "placeholderLabel") as? UILabel
         placeholderTextLabel?.textColor = UIColor.white
         sc.searchBar.delegate = self
+        sc.definesPresentationContext = true
+
+        //definesPresentationContext = true
         return sc
     }()
     
@@ -73,29 +76,10 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
 
         
-        
         setupTableView()
         turnScrollAndBouncOff()
     }
     
-    //When Selected Track is dissmissed, this is not triggered, so have to use protcol to pass info
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //Change status bar background color
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
-    }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        searchController.searchBar.text = ""
-        if (self.searchController.isActive) {
-            self.searchController.isActive = false
-        }
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
-
-    }
-
     // HELPERS -------------
     
     func setSeachDJandGuestID(dj: UserDJ, guestID: String) {
@@ -165,16 +149,25 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         results.removeAll()
     }
     
+
     
     
     //TABLE VIEW --------------
     
     func setupTableView() {
         //UIApplication.shared.statusBarFrame.height
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
+        
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+        
         
         tableView.separatorStyle = .none
         tableView.tableHeaderView = searchController.searchBar
+        tableView.scrollIndicatorInsets.top = (tableView.tableHeaderView!.frame.height)
+        tableView.scrollIndicatorInsets.bottom = (tabBarController?.tabBar.frame.height)!
         tableView.backgroundColor = UIColor.darkGray
         tableView.backgroundView = noResults
         tableView.separatorColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
