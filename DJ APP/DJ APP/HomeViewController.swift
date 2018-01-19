@@ -63,20 +63,11 @@ class HomeViewController: UIViewController {
                         delegate.setSongList(fetchedSnapshot: [:], songTableList: self.tableSongList)
                     }
                 }
-                else {
-                    print("Song Table delegate not set.")
-                }
                 
                 if let delegate = self.selectedTrackDelegate {
                     if let workingSnap = self.currentSnapshot {
                         delegate.setSongList(fetchedSnapshot: workingSnap, songTableList: self.tableSongList)
                     }
-                    else {
-                        print("currentSnapshot not instantiated. ")
-                    }
-                }
-                else {
-                    print("Selected Track delegate not set.")
                 }
                 return
             }
@@ -100,34 +91,15 @@ class HomeViewController: UIViewController {
                 if let workingSnap = self.currentSnapshot {
                     delegate.setSongList(fetchedSnapshot: workingSnap, songTableList: self.tableSongList)
                 }
-                else {
-                    print("currentSnapshot not instantiated. ")
-                }
             }
-            else {
-                print("Song Table delegate not set.")
-            }
-            
             if let delegate = self.selectedTrackDelegate {
                 if let workingSnap = self.currentSnapshot {
                     delegate.setSongList(fetchedSnapshot: workingSnap, songTableList: self.tableSongList)
                 }
-                else {
-                    print("currentSnapshot not instantiated. ")
-                }
-            }
-            else {
-                print("Selected Track delegate not set.")
             }
         }, withCancel: {(error) in
             print(error.localizedDescription)
         })
-        
-//        songListHandle = refSongList.queryOrdered(byChild: "totalvotes").observe(.value, with: {(snapshot) in
-//
-//        }, withCancel: {(error) in
-//            print("\(error.localizedDescription)")
-//        })
     }
     
     func fetchGuestUpVotesAndDownVotes() {
@@ -141,14 +113,8 @@ class HomeViewController: UIViewController {
                 if let delegate = self.songTableDelegate {
                     delegate.setGuestByDJ(fetchedUpvote: self.upvoteIDs, fetchedDownvote: self.downvoteIDs)
                 }
-                else {
-                    print("Delegate not assigned")
-                }
                 if let delegate = self.selectedTrackDelegate {
                     delegate.setGuestByDJ(fetchedUpvote: self.upvoteIDs, fetchedDownvote: self.downvoteIDs)
-                }
-                else {
-                    print("Delegate2 not assigned")
                 }
                 return
             }
@@ -168,14 +134,8 @@ class HomeViewController: UIViewController {
                 if let delegate = self.songTableDelegate {
                     delegate.setGuestByDJ(fetchedUpvote: self.upvoteIDs, fetchedDownvote: self.downvoteIDs)
                 }
-                else {
-                    print("Delegate not assigned")
-                }
                 if let delegate = self.selectedTrackDelegate {
                     delegate.setGuestByDJ(fetchedUpvote: self.upvoteIDs, fetchedDownvote: self.downvoteIDs)
-                }
-                else {
-                    print("Delegate2 not assigned")
                 }
                 
             }
@@ -186,13 +146,6 @@ class HomeViewController: UIViewController {
         }, withCancel: {(error) in
             print(error.localizedDescription)
         })
-        
-        //Observe
-//       guestHandle = refGuestByDJ.observe(.value, with: {(snapshot) in
-//
-//
-//        }, withCancel: {(error) in
-//            print(error.localizedDescription)})
     }
     
     

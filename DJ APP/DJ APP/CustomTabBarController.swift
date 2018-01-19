@@ -50,6 +50,11 @@ class CustomTabBarController: UITabBarController {
         let index = item.index(ofAccessibilityElement: item)
         if (index != 2) {
             searchTrackController.results.removeAll()
+            UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+            searchTrackController.searchController.isActive = false
+        }
+        else {
+            UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
         }
     }
 
