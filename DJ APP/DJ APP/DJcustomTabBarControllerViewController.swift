@@ -27,7 +27,7 @@ class DJcustomTabBarControllerViewController: UITabBarController {
     
     func sendDJToViews() {
         //Setting DJ's according to view type.
-        for theView in viewControllers! {
+        for theView in self.viewControllers! {
             if let v1 = theView as? scheduleViewController{
                 v1.dj = dj
             }

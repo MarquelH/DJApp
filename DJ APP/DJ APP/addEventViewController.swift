@@ -28,6 +28,8 @@ class addEventViewController: UIViewController {
     @IBOutlet weak var endingTime: UITextField!
     @IBOutlet weak var eventLocation: UITextField!
     @IBOutlet weak var eventToAddDateAndTime: UITextField!
+    @IBOutlet weak var saveEventButton: UIButton!
+    
     
     let toolbar: UIToolbar = {
         let tb = UIToolbar()
@@ -104,6 +106,7 @@ class addEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         originalView = self.view.frame.origin.y
+        saveEventButton.layer.cornerRadius = 24
     }
     
     override func viewWillAppear(_ animated: Bool) {

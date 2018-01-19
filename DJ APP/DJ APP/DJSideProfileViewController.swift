@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import GooglePlaces
 
 class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate,
  UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -69,9 +70,9 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = .default
-    }
+    //override func viewWillDisappear(_ animated: Bool) {
+    //    UIApplication.shared.statusBarStyle = .default
+  //  }
     
     lazy var profilePic: ProfileImageView = {
         let pp = ProfileImageView()
@@ -97,9 +98,13 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     @IBOutlet weak var saveChangesBtn: UIButton!
     @IBOutlet weak var cancelChangesBtn: UIButton!
     
-    @IBAction func hometownEditingDone(_ sender: Any) {
-        endEditing()
+    
+    @IBAction func hometownEditingBegan(_ sender: Any) {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
     }
+    
     @IBAction func djNameEditingDone(_ sender: Any) {
         endEditing()
     }
@@ -157,10 +162,15 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         self.navigationController?.popViewController(animated: true)
     }
     
+    func popAlertOffAndResetTextFields() {
+        setupDJInfo()
+        popAlertOff()
+    }
+    
     @IBAction func cancelChangesBtnPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Oh No!", message: "Are you sure you want to cancel your changes?!", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: { action in
-            self.popAlertOff()
+            self.popAlertOffAndResetTextFields()
         }))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default
             , handler: { action in
@@ -310,4 +320,29 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         self.view.endEditing(true)
     }
 
+}
+
+extension DJSideProfileViewController: GMSAutocompleteViewControllerDelegate {
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        hometownTextField.text = place.name
+        dismiss(animated: true, completion: nil)
+        endEditing()
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: ", error.localizedDescription)
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
 }

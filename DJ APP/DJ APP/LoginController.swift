@@ -446,10 +446,15 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                         let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid, twitter: twitter)
                         
                         //Send DJ to Dj Tab Bar Controller
+                        //let window = UIWindow(frame: UIScreen.main.bounds)
+                        
                         let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle: nil)
                         let tabbarController = storyboard.instantiateViewController(withIdentifier: "tabBarView") as! DJcustomTabBarControllerViewController
+                        //let tabBarController = DJcustomTabBarControllerViewController()
                         tabbarController.dj = dj
-                        self.present(tabbarController, animated: true, completion: nil)
+                        
+                        present(tabbarController, animated: true, completion: nil)
+                        
                         
                         
                     }

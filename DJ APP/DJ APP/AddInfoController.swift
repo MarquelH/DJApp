@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import GooglePlaces
 
 class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
@@ -98,7 +99,6 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     let twitterTextField: UITextField = {
         let htf = UITextField()
         htf.textColor = UIColor.white
-        htf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         htf.clearButtonMode = .whileEditing
         htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         htf.translatesAutoresizingMaskIntoConstraints = false
@@ -109,8 +109,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let htf = UITextField()
         htf.textColor = UIColor.white
         htf.clearButtonMode = .whileEditing
-        htf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        htf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
+        htf.addTarget(self, action: #selector(showPlacesAPI), for: .editingDidBegin)
         htf.translatesAutoresizingMaskIntoConstraints = false
         return htf
     }()
@@ -134,7 +133,6 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let dtf = UITextField()
         dtf.textColor = UIColor.white
         dtf.clearButtonMode = .whileEditing
-        dtf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         dtf.addTarget(self, action: #selector(resetView), for: .editingDidBegin)
         dtf.translatesAutoresizingMaskIntoConstraints = false
         return dtf
@@ -158,8 +156,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     let ageTextField: UITextField = {
         let atf = UITextField()
         atf.textColor = UIColor.white
+        atf.text = "16"
         atf.clearButtonMode = .whileEditing
-        atf.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         atf.translatesAutoresizingMaskIntoConstraints = false
         atf.addTarget(self, action: #selector(ageClicked), for: UIControlEvents.editingDidBegin)
         return atf
@@ -183,6 +181,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     let genreTextField: UITextField = {
         let gtf = UITextField()
         gtf.textColor = UIColor.white
+        gtf.text = "Rap"
         gtf.clearButtonMode = .whileEditing
         gtf.translatesAutoresizingMaskIntoConstraints = false
         gtf.addTarget(self, action: #selector(genreClicked), for: UIControlEvents.editingDidBegin)
@@ -205,17 +204,19 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     lazy var agePickView: UIPickerView = {
         let ap = UIPickerView()
+        ap.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         ap.dataSource = self
         ap.delegate = self
-        ap.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         return ap
     }()
 
     let toolbar: UIToolbar = {
         let tb = UIToolbar()
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleToolBarDone))
+        doneButton.tintColor = UIColor(red: 75/255, green: 215/255, blue: 100/255, alpha: 1)
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleToolBarCancel))
+        cancelButton.tintColor = UIColor(red: 75/255, green: 215/255, blue: 100/255, alpha: 1)
         tb.barTintColor = UIColor.white
         tb.barStyle = .default
         tb.isTranslucent = true
@@ -300,13 +301,16 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             return
         }
         
+        let pwdWithoutSpaces = passwordUnwrapper.trimmingCharacters(in: .whitespaces)
+        
         if (genre == "" || hometown == "" || name == "") {
             print("Not valid entries");
             return
         }
         
+        
         //create user
-        Auth.auth().createUser(withEmail: usernameUnwrapped, password: passwordUnwrapper){ (user, error) in
+        Auth.auth().createUser(withEmail: usernameUnwrapped, password: pwdWithoutSpaces){ (user, error) in
             if let error = error {
                 print ("My error is: \n")
                 print(error.localizedDescription)
@@ -437,7 +441,9 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     func registrationComplete() {
         self.dismiss(animated: true, completion: nil)
-        self.loginController?.handleGuestEnter()
+        let loginControl = LoginController()
+        loginControl.handleGuestEnter()
+        //self.loginController?.handleGuestEnter()
     }
     
     func resetView() {
@@ -448,7 +454,13 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
     }
     
-    func setupNavigationBar() {
+    func showPlacesAPI (){
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    func setupNavigationBar(){
         self.navigationItem.title = "Enter Info"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleDone))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
@@ -581,4 +593,28 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         
     }
+}
+
+extension AddInfoController: GMSAutocompleteViewControllerDelegate {
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        hometownTextField.text = place.name
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: ", error.localizedDescription)
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
 }

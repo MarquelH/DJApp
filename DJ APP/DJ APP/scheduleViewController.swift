@@ -30,6 +30,7 @@ class scheduleViewController: UIViewController {
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
+    
     @IBAction func deleteButtonTapped(_ sender: Any) {
 
         /*let alert = UIAlertController(title: "Oops!", message: "Are you sure you want to delete this event?", preferredStyle: UIAlertControllerStyle.alert)
@@ -125,15 +126,15 @@ class scheduleViewController: UIViewController {
     }
 
     @IBAction func addTapped(_ sender: Any) {
-        let theView = self.tabBarController?.viewControllers![2] as! addEventViewController
+        //let theView = self.tabBarController?.viewControllers![2] as! addEventViewController
 
-        let theArrayOfDates = calendarView.selectedDates
+        //let theArrayOfDates = calendarView.selectedDates
         
-        for date in theArrayOfDates{
-            formatter.dateStyle = DateFormatter.Style.short
-            formatter.timeStyle = DateFormatter.Style.short
-            theView.eventToAddDateAndTime.text = formatter.string(from: date)
-        }
+        //for date in theArrayOfDates{
+         //   formatter.dateStyle = DateFormatter.Style.short
+          //  formatter.timeStyle = DateFormatter.Style.short
+           // theView.eventToAddDateAndTime.text = formatter.string(from: date)
+        //}
         
         self.tabBarController?.selectedIndex = 2
     }
@@ -161,9 +162,9 @@ class scheduleViewController: UIViewController {
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = .default
-    }
+    //override func viewWillDisappear(_ animated: Bool) {
+      //  UIApplication.shared.statusBarStyle = .default
+    //}
     
     func setupViewsOfCalendar(from visibleDates: DateSegmentInfo){
         let date = visibleDates.monthDates.first!.date
