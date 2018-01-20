@@ -39,8 +39,6 @@ class DJPRofileViewController: UIViewController {
         })
         
         present(alert, animated: true)
-        
-        
     }
     
     func popAlertOff(){
@@ -73,7 +71,12 @@ class DJPRofileViewController: UIViewController {
     }
 
     @IBAction func messageButtonPressed(_ sender: Any) {
-        handleDM()
+        //handleDM()
+        let storyboard = UIStoryboard(name: "djProfileStoryboard", bundle: nil)
+        let contactForm = storyboard.instantiateViewController(withIdentifier: "GuestContactView") as! GuestContactFormViewController
+        contactForm.dj = dj
+        contactForm.guestID = guestID
+        self.present(contactForm, animated: true, completion: nil)
     }
     
 
@@ -82,8 +85,6 @@ class DJPRofileViewController: UIViewController {
         setupViews()
         messageButton.layer.cornerRadius = 27
         backButton.layer.cornerRadius = 27
-        
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {

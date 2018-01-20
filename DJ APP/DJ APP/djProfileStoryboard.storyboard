@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,7 +27,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headphonesImage" translatesAutoresizingMaskIntoConstraints="NO" id="jbP-gM-kw7">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jacob-morch-272617" translatesAutoresizingMaskIntoConstraints="NO" id="jbP-gM-kw7">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="306"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLF-gl-lgn">
@@ -102,7 +103,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="messageButtonPressed:" destination="a3v-Lo-ENH" eventType="touchUpInside" id="EYQ-Gu-VO1"/>
+                                    <action selector="messageButtonPressed:" destination="a3v-Lo-ENH" eventType="touchUpInside" id="chY-Co-abK"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="256" verticalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pM-5J-wyj">
@@ -180,9 +181,138 @@
             </objects>
             <point key="canvasLocation" x="-643.47826086956525" y="-313.04347826086956"/>
         </scene>
+        <!--GuestContactView-->
+        <scene sceneID="krE-St-iXg">
+            <objects>
+                <viewController storyboardIdentifier="GuestContactView" title="GuestContactView" id="MQe-nJ-YZA" customClass="GuestContactFormViewController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NGt-8c-0TX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4n-q2-KNU">
+                                <rect key="frame" x="20" y="20" width="30" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="X">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DJ Contact Form" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeE-lM-vNA">
+                                <rect key="frame" x="101" y="27" width="212" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="Nkm-hL-pnA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SudegnakNo2" family="SudegnakNo2" pointSize="46"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="lsF-ML-1ha">
+                                <rect key="frame" x="20" y="86" width="374" height="512"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GwW-R8-XhJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="tOx-s3-iG2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
+                                        <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Ex. Marquel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0jn-d6-RO4">
+                                        <rect key="frame" x="0.0" y="42" width="374" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="2ij-ts-Z0t"/>
+                                        </constraints>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Nuber" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJC-a5-aUi">
+                                        <rect key="frame" x="0.0" y="93" width="374" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="xLk-Er-1hv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
+                                        <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Optional" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VqW-oN-75P">
+                                        <rect key="frame" x="0.0" y="135" width="374" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Kif-OB-Vfb"/>
+                                        </constraints>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0a-ZT-dzT">
+                                        <rect key="frame" x="0.0" y="186" width="374" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="ryL-Cs-2dE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="22"/>
+                                        <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Type your message here..." translatesAutoresizingMaskIntoConstraints="NO" id="0Rs-Ei-gj2">
+                                        <rect key="frame" x="0.0" y="228" width="374" height="284"/>
+                                        <color key="backgroundColor" red="0.66666668653488159" green="0.61317976848199385" blue="0.59991892087422038" alpha="0.50995291095890416" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="go" smartDashesType="yes"/>
+                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYx-pH-Ayb">
+                                <rect key="frame" x="0.0" y="666" width="414" height="70"/>
+                                <color key="backgroundColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="LvA-UH-GVh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SudegnakNo2" family="SudegnakNo2" pointSize="52"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h4n-q2-KNU" firstAttribute="leading" secondItem="2Vx-dM-eBE" secondAttribute="leading" constant="20" id="7NW-gx-oXp"/>
+                            <constraint firstItem="EeE-lM-vNA" firstAttribute="centerY" secondItem="h4n-q2-KNU" secondAttribute="centerY" id="CpF-6W-72t"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lsF-ML-1ha" secondAttribute="trailing" id="Gqh-yA-5TY"/>
+                            <constraint firstItem="lsF-ML-1ha" firstAttribute="leading" secondItem="NGt-8c-0TX" secondAttribute="leadingMargin" id="LmL-q2-gO6"/>
+                            <constraint firstItem="mYx-pH-Ayb" firstAttribute="trailing" secondItem="2Vx-dM-eBE" secondAttribute="trailing" id="Meo-HL-6sd"/>
+                            <constraint firstItem="mYx-pH-Ayb" firstAttribute="top" secondItem="lsF-ML-1ha" secondAttribute="bottom" constant="68" id="T9q-0c-x2r"/>
+                            <constraint firstItem="2Vx-dM-eBE" firstAttribute="trailing" secondItem="EeE-lM-vNA" secondAttribute="trailing" constant="101" id="YlL-EH-e6X"/>
+                            <constraint firstItem="mYx-pH-Ayb" firstAttribute="leading" secondItem="2Vx-dM-eBE" secondAttribute="leading" id="fhV-Sc-dVU"/>
+                            <constraint firstItem="lsF-ML-1ha" firstAttribute="centerX" secondItem="NGt-8c-0TX" secondAttribute="centerX" id="hit-WS-VY8"/>
+                            <constraint firstItem="mYx-pH-Ayb" firstAttribute="bottom" secondItem="2Vx-dM-eBE" secondAttribute="bottom" id="mfY-qS-7Rf"/>
+                            <constraint firstItem="h4n-q2-KNU" firstAttribute="top" secondItem="2Vx-dM-eBE" secondAttribute="top" id="wPw-w6-1mP"/>
+                            <constraint firstItem="lsF-ML-1ha" firstAttribute="top" secondItem="h4n-q2-KNU" secondAttribute="bottom" constant="15" id="wcX-qC-lKq"/>
+                            <constraint firstItem="EeE-lM-vNA" firstAttribute="top" secondItem="2Vx-dM-eBE" secondAttribute="top" constant="7" id="xTr-rB-k4M"/>
+                            <constraint firstItem="EeE-lM-vNA" firstAttribute="centerX" secondItem="NGt-8c-0TX" secondAttribute="centerX" id="z3j-kb-yc4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2Vx-dM-eBE"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="DJ Contact Form" largeTitleDisplayMode="never" id="JyM-SR-Qj7">
+                        <barButtonItem key="backBarButtonItem" title="Profile View" id="gog-AN-gNd"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="djContactFormLabel" destination="EeE-lM-vNA" id="vfa-vd-EFu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vRj-cY-Ykf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="282.60869565217394" y="-313.04347826086956"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="headphonesImage" width="6016" height="4016"/>
+        <image name="jacob-morch-272617" width="3443" height="3443"/>
         <image name="usernameIcon" width="626" height="626"/>
     </resources>
 </document>
