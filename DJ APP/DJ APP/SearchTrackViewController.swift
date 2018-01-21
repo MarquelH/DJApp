@@ -156,24 +156,17 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         navigationItem.title = "Search"
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
-            
-            //tableView.contentInset = UIEdgeInsetsMake(UIApplication.shared.keyWindow!.safeAreaInsets.top, 0.0, UIApplication.shared.keyWindow!.safeAreaInsets.bottom, 0.0)
-            
-            navigationItem.searchController = self.searchController
-
-            
+            navigationItem.searchController = self.searchController  
         }
         else {
             tableView.tableHeaderView = searchController.searchBar
         }
 
-        tableView.contentInset = UIEdgeInsets(top: (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
-//
-//
-//        //tableView.scrollIndicatorInsets.top = (tableView.tableHeaderView!.frame.height)
-//        tableView.scrollIndicatorInsets.bottom = (tabBarController?.tabBar.frame.height)!
-//
+        let navBarHeight = (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!
+        let seachBarHeight = self.searchController.searchBar.frame.size.height + self.searchController.searchBar.frame.origin.y
         
+        tableView.contentInset = UIEdgeInsets(top: seachBarHeight + navBarHeight + 10.0, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.darkGray
         tableView.backgroundView = noResults
