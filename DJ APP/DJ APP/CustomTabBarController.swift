@@ -17,7 +17,7 @@ class CustomTabBarController: UITabBarController {
     let songController = SongTableViewController()
     let searchController = SearchTrackViewController()
     let homeController = HomeViewController()
-    let profilePicker = profileTabForCustomTabBarViewController()
+    let profileController = DJPRofileViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +27,10 @@ class CustomTabBarController: UITabBarController {
         songNavController.tabBarItem.image = UIImage(named: "listIcon")
         songNavController.viewControllers = [songController]
     
-        let profileNavController = UINavigationController()
-        profilePicker.tabBarItem.title = "DJ Profile"
-        profilePicker.tabBarItem.image = UIImage(named: "bioIcon")
-        profileNavController.viewControllers = [profilePicker]
+        //let profileNavController = UINavigationController()
+        profileController.tabBarItem.title = "DJ Profile"
+        profileController.tabBarItem.image = UIImage(named: "bioIcon")
+        //profileNavController.viewControllers = [profilePicker]
         
         let searchTrackController = UINavigationController()
         searchTrackController.tabBarItem.title = "Search"
@@ -44,13 +44,12 @@ class CustomTabBarController: UITabBarController {
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor.purple
 
-        viewControllers = [homeController, songNavController, searchTrackController,profileNavController]
+        viewControllers = [homeController, songNavController, searchTrackController, profileController]
         
         self.selectedIndex = 1;
     }
     
-    //Remove all results from search table when you move to a different screen... maybe not the best if I
-    //Can't clear the text from search bar
+  
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let index = item.index(ofAccessibilityElement: item)
         if (index != 2) {
@@ -68,13 +67,13 @@ class CustomTabBarController: UITabBarController {
     }
     
     func setDJsAndGuestID(dj: UserDJ, id: String) {
-        profilePicker.dj = dj
+        profileController.dj = dj
         songController.dj = dj
         searchController.dj = dj
         homeController.djID = dj.uid
         self.dj = dj
         
-        profilePicker.guestID = id
+        profileController.guestID = id
         songController.guestID = id
         searchController.guestID = id
         homeController.guestID = id
