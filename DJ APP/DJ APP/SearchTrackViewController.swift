@@ -23,12 +23,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     var results = [TrackItem]() {
         didSet{
             tableView.reloadData()
-            if (results.count == 0) {
-                turnScrollAndBouncOff()
-            }
-            else {
-                turnScrollAndBounceOn()
-            }
         }
     }
     
@@ -41,13 +35,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     lazy var searchController: UISearchController = {
        let sc = UISearchController(searchResultsController: nil)
-        sc.searchBar.placeholder = "Search Tracks"
+        sc.searchBar.placeholder = "Search Tracks, Artist, or Albums"
         sc.dimsBackgroundDuringPresentation = false
-        sc.definesPresentationContext = true
-        //sc.hidesNavigationBarDuringPresentation = false
+        sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
-        sc.searchBar.tintColor = UIColor.white
-        sc.searchBar.backgroundColor = UIColor.darkGray
+        //sc.searchBar.tintColor = UIColor.white
+        //sc.searchBar.backgroundColor = UIColor.lightGray
         //Change color of searching text
         var textField = sc.searchBar.value(forKey: "searchField") as? UITextField
         textField?.textColor = UIColor.white
@@ -77,7 +70,20 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
 
         
         setupTableView()
-        turnScrollAndBouncOff()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available (iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = false
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if #available (iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
     }
     
     // HELPERS -------------
@@ -119,16 +125,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
     }
     
-
-    func turnScrollAndBouncOff() {
-        tableView.bounces = false
-        tableView.alwaysBounceVertical = false
-    }
-    
-    func turnScrollAndBounceOn() {
-        tableView.bounces = true
-        tableView.alwaysBounceVertical = true
-    }
     
     //SEARCH BAR ------
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -157,21 +153,28 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     func setupTableView() {
         //UIApplication.shared.statusBarFrame.height
 
+        navigationItem.title = "Search"
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
-            navigationController?.navigationItem.searchController = searchController
-            //navigationItem.searchController = searchController
+            
+            //tableView.contentInset = UIEdgeInsetsMake(UIApplication.shared.keyWindow!.safeAreaInsets.top, 0.0, UIApplication.shared.keyWindow!.safeAreaInsets.bottom, 0.0)
+            
+            navigationItem.searchController = self.searchController
+
+            
         }
         else {
             tableView.tableHeaderView = searchController.searchBar
         }
-        
-        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
-        
+
+        tableView.contentInset = UIEdgeInsets(top: (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
+//
+//
+//        //tableView.scrollIndicatorInsets.top = (tableView.tableHeaderView!.frame.height)
+//        tableView.scrollIndicatorInsets.bottom = (tabBarController?.tabBar.frame.height)!
+//
         
         tableView.separatorStyle = .none
-        //tableView.scrollIndicatorInsets.top = (tableView.tableHeaderView!.frame.height)
-        tableView.scrollIndicatorInsets.bottom = (tabBarController?.tabBar.frame.height)!
         tableView.backgroundColor = UIColor.darkGray
         tableView.backgroundView = noResults
         tableView.separatorColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
