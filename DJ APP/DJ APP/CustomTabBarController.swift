@@ -15,7 +15,7 @@ class CustomTabBarController: UITabBarController {
     var guestID: String?
     
     let songController = SongTableViewController()
-    let searchTrackController = SearchTrackViewController()
+    let searchController = SearchTrackViewController()
     let homeController = HomeViewController()
     let profilePicker = profileTabForCustomTabBarViewController()
     
@@ -30,8 +30,11 @@ class CustomTabBarController: UITabBarController {
         profilePicker.tabBarItem.title = "DJ Profile"
         profilePicker.tabBarItem.image = UIImage(named: "bioIcon")
         
+        let searchTrackController = UINavigationController()
         searchTrackController.tabBarItem.title = "Search"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
+        searchTrackController.viewControllers = [searchController]
+
         
         homeController.tabBarItem.title = "DJ List"
         homeController.tabBarItem.image = UIImage(named: "Home-50")
@@ -49,9 +52,9 @@ class CustomTabBarController: UITabBarController {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let index = item.index(ofAccessibilityElement: item)
         if (index != 2) {
-            searchTrackController.results.removeAll()
+            searchController.results.removeAll()
             UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
-            searchTrackController.searchController.isActive = false
+            searchController.searchController.isActive = false
         }
         else {
             UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
@@ -65,13 +68,13 @@ class CustomTabBarController: UITabBarController {
     func setDJsAndGuestID(dj: UserDJ, id: String) {
         profilePicker.dj = dj
         songController.dj = dj
-        searchTrackController.dj = dj
+        searchController.dj = dj
         homeController.djID = dj.uid
         self.dj = dj
         
         profilePicker.guestID = id
         songController.guestID = id
-        searchTrackController.guestID = id
+        searchController.guestID = id
         homeController.guestID = id
         self.guestID = id
         
