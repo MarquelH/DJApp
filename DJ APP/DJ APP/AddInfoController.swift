@@ -301,19 +301,28 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             return
         }
         
-        let pwdWithoutSpaces = passwordUnwrapper.trimmingCharacters(in: .whitespaces)
         
         if (genre == "" || hometown == "" || name == "") {
             print("Not valid entries");
             return
         }
         
+        if !(name.count > 20){ //Making sure DJ Name isn't too long
         
         //create user
-        Auth.auth().createUser(withEmail: usernameUnwrapped, password: pwdWithoutSpaces){ (user, error) in
+        Auth.auth().createUser(withEmail: usernameUnwrapped, password: passwordUnwrapper){ (user, error) in
             if let error = error {
                 print ("My error is: \n")
                 print(error.localizedDescription)
+                
+                
+                let alert = UIAlertController(title: "Oops!", message: "\(error.localizedDescription)", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
+                    print("I was pressed")
+                    self.registrationNotComplete()
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
                 return
             }
             else {
@@ -342,7 +351,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
                             
                             let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
-                        
+                            
                         self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
                         }
                     })
@@ -359,6 +368,15 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 
                 self.present(alert, animated: true, completion: nil)
             }
+        }
+        }
+        else{
+            let alert = UIAlertController(title: "Skrt!", message: "DJ name is too long!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                print("I was pressed")
+                self.registrationNotComplete()
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
         
     }
@@ -437,6 +455,10 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         self.view.frame.origin.y -= 110
         genreTextField.inputView = genrePickView
         genreTextField.inputAccessoryView = toolbar
+    }
+    
+    func registrationNotComplete() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func registrationComplete() {

@@ -24,6 +24,7 @@
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
+		C71ADBE02012BD5D00C583ED /* GuestContactFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */; };
 		C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAD20016A9500DEEC5E /* djTrackCell.swift */; };
 		C75748B920001EFD0093B446 /* profileTabForCustomTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75748B820001EFD0093B446 /* profileTabForCustomTabBarViewController.swift */; };
 		C76113F32006CF7F003E3EE3 /* NavForTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */; };
@@ -111,6 +112,7 @@
 		66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SudegnakNo2.otf; sourceTree = "<group>"; };
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
+		C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestContactFormViewController.swift; sourceTree = "<group>"; };
 		C724ECAD20016A9500DEEC5E /* djTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = djTrackCell.swift; sourceTree = "<group>"; };
 		C75748B820001EFD0093B446 /* profileTabForCustomTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileTabForCustomTabBarViewController.swift; sourceTree = "<group>"; };
 		C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavForTableViewController.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				D801FE0B1FF46CB8003C2258 /* SongSelectedTrackController.swift */,
 				66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */,
 				D88ACF651FF8210900197AC2 /* GuestChatViewController.swift */,
+				C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */,
 			);
 			name = "User Controllers";
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				C7F337AF1FFD9DB50082E579 /* DJSideProfileViewController.swift in Sources */,
 				D8C9D65D1FF1AC26005384CF /* BaseCell.swift in Sources */,
 				D81A66F11F4F713F00543A8F /* DJTableViewController.swift in Sources */,
+				C71ADBE02012BD5D00C583ED /* GuestContactFormViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

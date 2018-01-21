@@ -448,12 +448,24 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                         //Send DJ to Dj Tab Bar Controller
                         //let window = UIWindow(frame: UIScreen.main.bounds)
                         
+                        if validated == true {
+                        
                         let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle: nil)
                         let tabbarController = storyboard.instantiateViewController(withIdentifier: "tabBarView") as! DJcustomTabBarControllerViewController
                         //let tabBarController = DJcustomTabBarControllerViewController()
                         tabbarController.dj = dj
                         
                         present(tabbarController, animated: true, completion: nil)
+                        }
+                        else{
+                                let alert = UIAlertController(title: "Skrt!", message: "You must be validated in order to be a DJ.", preferredStyle: UIAlertControllerStyle.alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                                    print("I was pressed")
+                                    self.navigationController?.popViewController(animated: true)
+                                }))
+                            
+                                self.present(alert, animated: true, completion: nil)
+                        }
                         
                         
                         

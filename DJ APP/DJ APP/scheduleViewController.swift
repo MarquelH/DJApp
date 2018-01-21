@@ -19,21 +19,20 @@ class scheduleViewController: UIViewController {
     var dj: UserDJ?
     var eventSnapshot: [String: AnyObject]?
     var refEventList: DatabaseReference!
-    var editingLocation: String?
-    var editingStartDate: String?
-    var editingEndDate: String?
+    //var editingLocation: String?
+    //var editingStartDate: String?
+    //var editingEndDate: String?
     var dateForDeletion: String?
     
     let today = Date.init()
     let formatter = DateFormatter()
     
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
 
-        /*let alert = UIAlertController(title: "Oops!", message: "Are you sure you want to delete this event?", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Oops!", message: "Are you sure you want to delete this event?", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: { action in
                     self.deleteEvent()
                 }))
@@ -44,29 +43,51 @@ class scheduleViewController: UIViewController {
             
             self.present(alert, animated: true, completion: nil)
         
-            return*/
+            return
     }
     
     func dismissAlert(){
         self.navigationController?.popViewController(animated: true)
     }
     
-   /* func deleteEvent() {
+    func deleteEvent() {
         if let workingSnap = self.eventSnapshot {
             for (k,v) in workingSnap {
-                if let dateAndTime = v["StartDateAndTime"] as? String{
+                if let dateAndTime = v["StartDateAndTime"] as? String, let theName = v["DJ Name"] as? String{
+                    print("WE'RE IN")
+                    print("\(dateAndTime)")
+                    let dateAloneArray = dateAndTime.split(separator: ",")
+                    let dateForComparison = dateAloneArray[0]
+                    let realDate = String(dateForComparison)
                     
+                    
+                    let dateFormatter2 = DateFormatter()
+                    
+                    dateFormatter2.dateStyle = DateFormatter.Style.short
+                    dateFormatter2.timeStyle = DateFormatter.Style.short
+                    
+                    
+                    for date in calendarView.selectedDates{
+                        let strDate = dateFormatter2.string(from: date)
+                        let clickedOndateAloneArray = strDate.split(separator: ",")
+                        let clickedOnDateForComparison = clickedOndateAloneArray[0]
+                        let clickedOnRealDate = String(clickedOnDateForComparison)
+
+                        if (realDate == clickedOnRealDate && theName == dj?.djName){
+                        refEventList.child(k).removeValue()
+                        self.getEventSnapshot()
+                        calendarView.reloadData()
+                        }
+                        
+                    }
                 }
-                
-    }*/
-    
-    @IBAction func editButtonTapped(_ sender: Any) {
-        handleEdit()
+            }
+        }
     }
     
     
+    
     func setEditButtonShape(){
-        editButton.layer.cornerRadius = 10
         deleteButton.layer.cornerRadius = 10
     }
     
@@ -109,11 +130,6 @@ class scheduleViewController: UIViewController {
                     let realEndTimeBare = realEndTime.replacingOccurrences(of: " ", with: "")
                 
                     if theName == dj?.djName && realDate == eventDateAndTime {
-                        //Set the editing location, start, and end date so if they edit,
-                        //we can pass this info to the add event view controller.
-                        self.editingLocation = location
-                        self.editingStartDate = dateAndTime
-                        self.editingEndDate = endDateAndTime
                         return (true, k, location,realTimeBare,realEndTimeBare)
                     }
                 }
@@ -145,7 +161,6 @@ class scheduleViewController: UIViewController {
         setupCalendarView()
         setEditButtonShape()
         timeLabel.isHidden = true
-        editButton.isHidden = true
         deleteButton.isHidden = true
     }
 
@@ -159,6 +174,7 @@ class scheduleViewController: UIViewController {
             print("DJ does not have uid")
         }
         getEventSnapshot()
+        calendarView.reloadData()
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
@@ -193,7 +209,7 @@ class scheduleViewController: UIViewController {
     }
     
     
-    func handleEdit() {
+    /*func handleEdit() {
         if let viewControllers = self.tabBarController?.viewControllers, let addController = viewControllers[2] as? addEventViewController {
             
             if let location = self.editingLocation, let startTime = self.editingStartDate, let endTime =
@@ -209,7 +225,7 @@ class scheduleViewController: UIViewController {
         else {
             print("Can't make the 2nd view controller an addevent view controller")
         }
-    }
+    }*/
     
     func handleCellSelected(view: JTAppleCell?, cellState: CellState){
         guard let validCell = view as! CalendarCell?
@@ -313,14 +329,11 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
             locationLabel.text = "Playing at \(isFoundTuple.2) on this day!"
             timeLabel.isHidden = false
             timeLabel.text = "\(isFoundTuple.3) - \(isFoundTuple.4)"
-            timeLabel.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-            editButton.isHidden = false
             deleteButton.isHidden = false
         }
         else{
             locationLabel.text = "No Scheduled Events on Selected Day"
             timeLabel.isHidden = true
-            editButton.isHidden = true
             deleteButton.isHidden = true
         }
     }

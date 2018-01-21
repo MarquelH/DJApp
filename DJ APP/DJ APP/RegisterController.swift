@@ -42,7 +42,7 @@ class RegisterController: UIViewController {
     
     let passwordTextField: UITextField = {
         let htf = UITextField()
-        htf.placeholder = "Password"
+        htf.placeholder = "Password (Must be at least 6 characters)"
         htf.clearButtonMode = .whileEditing
         htf.isSecureTextEntry = true
         htf.translatesAutoresizingMaskIntoConstraints = false
@@ -107,12 +107,16 @@ class RegisterController: UIViewController {
             return
         }
         
+        let realUsername = username.trimmingCharacters(in: .whitespaces)
+        let realPassword = password.trimmingCharacters(in: .whitespaces)
+        let realConfirmPassword = passwordAgain.trimmingCharacters(in: .whitespaces)
+        
         //Check if the username and password are valid 
-        if (username != "" && password != "" && password == passwordAgain) {
+        if (realUsername != "" && realPassword != "" && realPassword == realConfirmPassword) {
             let addInfoController = AddInfoController()
             addInfoController.loginController = loginController
-            addInfoController.username = username
-            addInfoController.password = password
+            addInfoController.username = realUsername
+            addInfoController.password = realPassword
             self.navigationController?.pushViewController(addInfoController, animated: true)
         }
         else {
