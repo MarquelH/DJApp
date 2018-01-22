@@ -16,6 +16,7 @@ class DJPRofileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.black
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,10 +31,15 @@ class DJPRofileViewController: UIViewController {
     }
     
     func handleDM() {
-        let guestChatController = GuestChatViewController()
-        guestChatController.dj = dj
-        guestChatController.guestID = guestID
-        present(guestChatController, animated: true, completion: nil)
+        //let guestChatController = GuestChatViewController()
+        //guestChatController.dj = dj
+        //guestChatController.guestID = guestID
+        //present(guestChatController, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "djProfileStoryboard", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "GuestContactView") as! GuestContactFormViewController
+        controller.dj = dj
+        controller.guestID = guestID
+        self.present(controller, animated: true, completion: nil)
     }
     
     func setupViews() {
@@ -42,7 +48,7 @@ class DJPRofileViewController: UIViewController {
             profilePic.loadImageWithChachfromUrl(urlString: profileUrl)
             hometownLabel.text = "Hometown:   \(hometown)"
             ageLabel.text = "Age:   \(age)"
-            genreLabel.text = "Genre:   \(genre)"
+            genreLabel.text = "Favorite Genre:   \(genre)"
         }
         else {
             print("No DJ at setupViews")
@@ -101,7 +107,7 @@ class DJPRofileViewController: UIViewController {
         dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
         dmDJButton.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 36).isActive = true
         dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        dmDJButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
     
     let scrollView: UIScrollView = {
@@ -119,7 +125,7 @@ class DJPRofileViewController: UIViewController {
         pp.layer.masksToBounds = true
         pp.clipsToBounds = true
         pp.layer.borderWidth = 1.0
-        pp.layer.borderColor = UIColor.white.cgColor
+        pp.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0).cgColor
         pp.translatesAutoresizingMaskIntoConstraints = false
         return pp
     }()
@@ -157,14 +163,14 @@ class DJPRofileViewController: UIViewController {
     
     let dmDJButton: UIButton = {
         let lb = UIButton(type: .system)
-        lb.setTitle("Hit up The DJ!", for: .normal)
+        lb.setTitle("Hit up The DJ", for: .normal)
         lb.setTitleColor(UIColor.white, for: .normal)
         lb.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         lb.layer.cornerRadius = 25
         lb.layer.masksToBounds = true
         lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.white.cgColor
-        lb.titleLabel?.font = UIFont(name: "Mikodacs", size: 36)
+        lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0).cgColor
+        lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 40)
         lb.addTarget(self, action: #selector(handleDM), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb

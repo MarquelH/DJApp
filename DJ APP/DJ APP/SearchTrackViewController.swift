@@ -39,6 +39,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         sc.dimsBackgroundDuringPresentation = false
         sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
+        //sc.searchBar.barTintColor =
         //sc.searchBar.tintColor = UIColor.white
         //sc.searchBar.backgroundColor = UIColor.lightGray
         //Change color of searching text
@@ -154,6 +155,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         //UIApplication.shared.statusBarFrame.height
 
         navigationItem.title = "Search"
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
             navigationItem.searchController = self.searchController  

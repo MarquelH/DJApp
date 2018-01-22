@@ -173,7 +173,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     let genreLabel: UILabel = {
         let gl = UILabel()
         gl.textColor = UIColor.gray
-        gl.text = "Genre:"
+        gl.text = "Favorite Genre:"
         gl.translatesAutoresizingMaskIntoConstraints = false
         return gl
     }()

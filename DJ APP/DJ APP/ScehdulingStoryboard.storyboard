@@ -591,6 +591,35 @@
             </objects>
             <point key="canvasLocation" x="-348.75" y="-143.66197183098592"/>
         </scene>
+        <!--Messages-->
+        <scene sceneID="amx-aN-y4X">
+            <objects>
+                <tableViewController id="zFL-gd-was" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CF2-ds-Eah">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="TAV-yv-WJp">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TAV-yv-WJp" id="Kfn-gF-HCE">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zFL-gd-was" id="kD2-HQ-az4"/>
+                            <outlet property="delegate" destination="zFL-gd-was" id="Ewj-9I-vcj"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Messages" image="message-7" selectedImage="message-7" id="Sre-ds-aMO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gRO-ec-5jv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="639" y="-180"/>
+        </scene>
         <!--tabBarView-->
         <scene sceneID="hdJ-NN-diE">
             <objects>
@@ -606,6 +635,7 @@
                         <segue destination="Yqv-QD-lhK" kind="relationship" relationship="viewControllers" id="cSi-qd-OBf"/>
                         <segue destination="1RK-4d-Zb7" kind="relationship" relationship="viewControllers" id="mtZ-Es-qMN"/>
                         <segue destination="iGv-ZX-hw2" kind="relationship" relationship="viewControllers" id="awT-8k-hUl"/>
+                        <segue destination="zFL-gd-was" kind="relationship" relationship="viewControllers" id="tzB-Q7-h3w"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xfA-nE-nfz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -636,6 +666,7 @@
         <image name="bioIcon" width="25" height="25"/>
         <image name="jacob-morch-272617" width="3443" height="3443"/>
         <image name="listIcon" width="30" height="30"/>
+        <image name="message-7" width="30" height="30"/>
         <image name="plus-simple-7" width="30" height="30"/>
         <image name="searchIcon" width="30" height="30"/>
         <image name="usernameIcon" width="626" height="626"/>
