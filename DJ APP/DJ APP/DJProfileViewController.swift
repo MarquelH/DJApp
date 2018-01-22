@@ -31,10 +31,7 @@ class DJPRofileViewController: UIViewController {
     }
     
     func handleDM() {
-        //let guestChatController = GuestChatViewController()
-        //guestChatController.dj = dj
-        //guestChatController.guestID = guestID
-        //present(guestChatController, animated: true, completion: nil)
+        
         let storyboard = UIStoryboard(name: "djProfileStoryboard", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "GuestContactView") as! GuestContactFormViewController
         controller.dj = dj
@@ -43,12 +40,13 @@ class DJPRofileViewController: UIViewController {
     }
     
     func setupViews() {
-        if let name = dj?.djName, let hometown = dj?.hometown, let profileUrl = dj?.profilePicURL, let age = dj?.age, let genre = dj?.genre {
-            djNameLabel.text = "Name:   \(name)"
+        if let name = dj?.djName, let hometown = dj?.hometown, let profileUrl = dj?.profilePicURL, let age = dj?.age, let genre = dj?.genre, let twitterHandle = dj?.twitter {
+            djNameLabel.text = "\(name)"
             profilePic.loadImageWithChachfromUrl(urlString: profileUrl)
-            hometownLabel.text = "Hometown:   \(hometown)"
-            ageLabel.text = "Age:   \(age)"
-            genreLabel.text = "Favorite Genre:   \(genre)"
+            hometownText.text = "\(hometown)"
+            ageText.text = "\(age)"
+            genreText.text = "\(genre)"
+            twitterText.text = "\(twitterHandle)"
         }
         else {
             print("No DJ at setupViews")
@@ -62,9 +60,17 @@ class DJPRofileViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(profilePic)
         scrollView.addSubview(djNameLabel)
+        
         scrollView.addSubview(ageLabel)
         scrollView.addSubview(hometownLabel)
         scrollView.addSubview(genreLabel)
+        scrollView.addSubview(twitterLabel)
+        
+        scrollView.addSubview(ageText)
+        scrollView.addSubview(hometownText)
+        scrollView.addSubview(genreText)
+        scrollView.addSubview(twitterText)
+        
         scrollView.addSubview(dmDJButton)
         
         scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -74,38 +80,74 @@ class DJPRofileViewController: UIViewController {
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "jacob-morch-272617")
-        backgroundImage.contentMode = .scaleAspectFill
+        backgroundImage.contentMode = .scaleAspectFit
+        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
         
         scrollView.insertSubview(backgroundImage, at: 0)
         
+        backgroundImage.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        backgroundImage.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
+        backgroundImage.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        backgroundImage.bottomAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
         
         profilePic.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         profilePic.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
         profilePic.widthAnchor.constraint(equalToConstant: 140).isActive = true
         profilePic.heightAnchor.constraint(equalToConstant: 140).isActive = true
         
-        djNameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        djNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 18).isActive = true
-        djNameLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -48).isActive = true
-        djNameLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
         
-        ageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
+        
+        
+        djNameLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        djNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 12).isActive = true
+        djNameLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -36).isActive = true
+        djNameLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        ageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         ageLabel.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 18).isActive = true
-        ageLabel.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        ageLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        ageLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        ageLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        hometownLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
+        hometownLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         hometownLabel.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 18).isActive = true
-        hometownLabel.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        hometownLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        hometownLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        hometownLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        genreLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
+        genreLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         genreLabel.topAnchor.constraint(equalTo: hometownLabel.bottomAnchor, constant: 18).isActive = true
-        genreLabel.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        genreLabel.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        genreLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        genreLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        twitterLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
+        twitterLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 18).isActive = true
+        twitterLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        twitterLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        
+        ageText.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
+        ageText.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 18).isActive = true
+        ageText.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
+        ageText.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        hometownText.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
+        hometownText.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 18).isActive = true
+        hometownText.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
+        hometownText.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        genreText.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
+        genreText.topAnchor.constraint(equalTo: hometownLabel.bottomAnchor, constant: 18).isActive = true
+        genreText.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
+        genreText.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        twitterText.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
+        twitterText.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 18).isActive = true
+        twitterText.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
+        twitterText.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        
         
         dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        dmDJButton.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 36).isActive = true
+        dmDJButton.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 36).isActive = true
         dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
         dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
@@ -133,32 +175,85 @@ class DJPRofileViewController: UIViewController {
     let hometownLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lbl.font = UIFont(name: "Mikodacs", size : 30)
+        lbl.font = UIFont(name: "Mikodacs", size : 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = "Hometown:"
         return lbl
     }()
+    
     let ageLabel: UILabel = {
         let al = UILabel()
         al.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        al.font = UIFont(name: "Mikodacs", size: 30)
+        al.font = UIFont(name: "Mikodacs", size: 26)
         al.translatesAutoresizingMaskIntoConstraints = false
+        al.text = "Age:"
+        return al
+    }()
+
+    let genreLabel: UILabel = {
+        let gl = UILabel()
+        gl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        gl.font = UIFont(name: "Mikodacs", size: 26)
+        gl.translatesAutoresizingMaskIntoConstraints = false
+        gl.text = "Genre:"
+        return gl
+    }()
+    
+    let twitterLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = "Twitter:"
+        return lbl
+    }()
+    
+    
+    
+    
+    let hometownText: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = UIColor.white
+        lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.textAlignment = .right
+        return lbl
+    }()
+    
+    let ageText: UILabel = {
+        let al = UILabel()
+        al.textColor = UIColor.white
+        al.font = UIFont(name: "Mikodacs", size: 26)
+        al.translatesAutoresizingMaskIntoConstraints = false
+        al.textAlignment = .right
         return al
     }()
     
     let djNameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "Mikodacs", size: 30)
+        lbl.font = UIFont(name: "Mikodacs", size: 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        lbl.textColor = UIColor.white
+        lbl.textAlignment = .center
         return lbl
     }()
     
-    let genreLabel: UILabel = {
+    let genreText: UILabel = {
         let gl = UILabel()
-        gl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        gl.font = UIFont(name: "Mikodacs", size: 30)
+        gl.textColor = UIColor.white
+        gl.font = UIFont(name: "Mikodacs", size: 26)
         gl.translatesAutoresizingMaskIntoConstraints = false
+        gl.textAlignment = .right
         return gl
+    }()
+    
+    let twitterText: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = UIColor.white
+        lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.textAlignment = .right
+        return lbl
     }()
     
     let dmDJButton: UIButton = {
@@ -190,15 +285,6 @@ class DJPRofileViewController: UIViewController {
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleAspectFill
         return img
-    }()
-    
-    let twitterLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lbl.text = "Twitter/Instagram:"
-        lbl.font = UIFont(name: "SudegnakNo2", size : 26)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
     }()
     
     let twitterSep: UIView = {
