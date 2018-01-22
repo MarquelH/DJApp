@@ -108,13 +108,14 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     let notUserLabel: UIButton = {
         let btn = UIButton(type: .system)
         let lightblue = UIColor.white.withAlphaComponent(0.75)
-        btn.setTitle("Don't have a DJ account? Sign up by clicking here", for: .normal)
+        btn.setTitle("Don't have an account? Register Here", for: .normal)
         btn.setTitleColor(lightblue, for: .normal)
         btn.titleLabel?.font = UIFont.italicSystemFont(ofSize: 15)
         btn.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
+    
     
     let logoInLogin: UIImageView = {
         let img = UIImageView()
@@ -188,15 +189,11 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
             print("Error occured with the login")
             return
         }
-        else {
-            print("Facebook did login")
-        }
-        print("I was pressed2")
         signInWithFBEmailAddress()
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        //nothing to do here
+        //nothing to here
     }
     
     func handleCustomLogin () {
@@ -228,10 +225,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                     print("Failed to start graph request: \(error ?? "-1" as! Error)")
                     return
                 }
-                //print (result)
+                
                 if let result = result as? [String: AnyObject], let email = result["email"] as? String {
                     //send to check database
-                    print("Successfully parsed email")
                     guard let guestSnap = self.guestSnapshot else {
                         print("guestSnapshot did not load")
                         return
@@ -474,10 +470,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
                         print("Parsing the DJ went wrong")
                     }
                 }
-                else {
-                    print ("user is not validated")
-                    return
-                }
             }
         }
     }
@@ -604,7 +596,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         
         logoInLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         logoInLogin.bottomAnchor.constraint(equalTo: djOrGuestSegmentedControl.topAnchor, constant: -65).isActive = true
-        //logoInLogin.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
         logoInLogin.heightAnchor.constraint(equalToConstant: 60).isActive = true
         logoInLogin.widthAnchor.constraint(equalToConstant: 125).isActive = true
         
@@ -612,7 +603,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         notUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         notUserLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         notUserLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        notUserLabel.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor).isActive = true
+        notUserLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         
         djOrGuestSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -628,12 +619,10 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         
         
         djGuestLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        //have to se this to a variable to change it later
         loginButtonTopAnchor = djGuestLoginButton.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 50)
         loginButtonTopAnchor?.isActive = true
         djGuestLoginButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         djGuestLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        
         
         usernameImage.centerYAnchor.constraint(equalTo: usernameContainer.centerYAnchor).isActive = true
         usernameImage.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 12).isActive = true
