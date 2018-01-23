@@ -162,16 +162,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //show all fonts
-//        for family: String in UIFont.familyNames
-//        {
-//            print("\(family)")
-//            for names: String in UIFont.fontNames(forFamilyName: family)
-//            {
-//                print("== \(names)")
-//            }
-//        }
-
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
         backgroundImage.contentMode = .scaleAspectFill
@@ -261,6 +251,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getSnapshots()
+        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     func checkIfUserIsAlreadyLoggedIn() {

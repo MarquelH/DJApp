@@ -40,7 +40,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
         //sc.searchBar.barTintColor =
-        //sc.searchBar.tintColor = UIColor.white
+        sc.searchBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
         //sc.searchBar.backgroundColor = UIColor.lightGray
         //Change color of searching text
         var textField = sc.searchBar.value(forKey: "searchField") as? UITextField
@@ -78,6 +78,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         if #available (iOS 11.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
         }
+        UIApplication.shared.statusBarStyle = .default
     }
 
     override func viewDidAppear(_ animated: Bool) {

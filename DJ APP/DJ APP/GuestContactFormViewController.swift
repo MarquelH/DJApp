@@ -85,13 +85,14 @@ class GuestContactFormViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let uid = dj?.uid, let id = guestID {
-            ref = Database.database().reference().child("messages").child(id).child(uid)
+            ref = Database.database().reference().child("messages").child(uid)
             
             //messagesRef = Database.database().reference().child("messages").child(id)
         }
         else {
             print("View will appear & guestID or Dj not passed in")
         }
+        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     override func didReceiveMemoryWarning() {

@@ -15,11 +15,50 @@ class DJPRofileViewController: UIViewController {
     var dj: UserDJ?
     var guestID: String?
     
-    override func viewDidLoad() {
+    override func viewDidLoad(){
         super.viewDidLoad()
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        profilePic.isUserInteractionEnabled = true
+        profilePic.addGestureRecognizer(tapGestureRecognizer)
+        
         self.view.backgroundColor = UIColor.black
         UIApplication.shared.statusBarStyle = .lightContent
     }
+    
+    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "View Full Photo", style: UIAlertActionStyle.default, handler: { action in
+            self.loadUpFullView(tapGestureRec: tapGestureRecognizer)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { action in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func loadUpFullView(tapGestureRec: UITapGestureRecognizer){
+        let imageView = tapGestureRec.view as! UIImageView
+        let newImageView = UIImageView(image: imageView.image)
+        newImageView.frame = UIScreen.main.bounds
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.scrollView.isHidden = true
+        view.addSubview(newImageView)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func dismissFullscreenImage(sender: UITapGestureRecognizer) {
+        self.scrollView.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,7 +72,6 @@ class DJPRofileViewController: UIViewController {
     }
     
     func handleDM() {
-        
         let storyboard = UIStoryboard(name: "djProfileStoryboard", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "GuestContactView") as! GuestContactFormViewController
         controller.dj = dj
@@ -74,6 +112,7 @@ class DJPRofileViewController: UIViewController {
         scrollView.addSubview(twitterText)
         
         scrollView.addSubview(dmDJButton)
+        scrollView.addSubview(headphonesLogo)
         
         scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -103,7 +142,7 @@ class DJPRofileViewController: UIViewController {
         djNameLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         djNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 12).isActive = true
         djNameLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -36).isActive = true
-        djNameLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        djNameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         ageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         ageLabel.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 18).isActive = true
@@ -146,10 +185,14 @@ class DJPRofileViewController: UIViewController {
         twitterText.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
         twitterText.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
+        headphonesLogo.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        headphonesLogo.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 50).isActive = true
+        headphonesLogo.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        headphonesLogo.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
-        
-        dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        dmDJButton.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 36).isActive = true
+        //dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
+        dmDJButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        dmDJButton.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 150).isActive = true
         dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
         dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
@@ -197,7 +240,7 @@ class DJPRofileViewController: UIViewController {
         gl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         gl.font = UIFont(name: "Mikodacs", size: 26)
         gl.translatesAutoresizingMaskIntoConstraints = false
-        gl.text = "Genre:"
+        gl.text = "Favorite Genre:"
         return gl
     }()
     
@@ -206,11 +249,9 @@ class DJPRofileViewController: UIViewController {
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         lbl.font = UIFont(name: "Mikodacs", size : 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "Twitter:"
+        lbl.text = "Twitter/IG:"
         return lbl
     }()
-    
-    
     
     
     let hometownText: UILabel = {
@@ -233,7 +274,8 @@ class DJPRofileViewController: UIViewController {
     
     let djNameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "Mikodacs", size: 26)
+        lbl.font = UIFont(name: "SudegnakNo2", size: 45)
+        lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = UIColor.white
         lbl.textAlignment = .center
@@ -253,6 +295,7 @@ class DJPRofileViewController: UIViewController {
         let lbl = UILabel()
         lbl.textColor = UIColor.white
         lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .right
         return lbl
@@ -260,7 +303,7 @@ class DJPRofileViewController: UIViewController {
     
     let dmDJButton: UIButton = {
         let lb = UIButton(type: .system)
-        lb.setTitle("Hit up The DJ", for: .normal)
+        lb.setTitle("Hit up The DJ!", for: .normal)
         lb.setTitleColor(UIColor.white, for: .normal)
         lb.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         lb.layer.cornerRadius = 25

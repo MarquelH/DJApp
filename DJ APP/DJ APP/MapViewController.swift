@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     var passedLat = 0.0
     var passedLong = 0.0
     var camera: GMSCameraPosition?
+    var hasEvent = false
     
     //Current Location stuff
     var locationManager = CLLocationManager()
@@ -41,8 +42,6 @@ class MapViewController: UIViewController {
         
         
         
-        
-        
         /*locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
@@ -57,7 +56,7 @@ class MapViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //UIApplication.shared.statusBarStyle = .default
+        UIApplication.shared.statusBarStyle = .default
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -155,13 +154,35 @@ class MapViewController: UIViewController {
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     for(_,v) in dictionary{
-                        let latCoords = v["Latitude Coordinates"] as? String, longCoords = v["Longitude Coordinates"] as? String,name = v["DJ Name"] as? String,location = v["location"] as? String,date = v["StartDateAndTime"] as? String
+                        let latCoords = v["Latitude Coordinates"] as? String, longCoords = v["Longitude Coordinates"] as? String,name = v["DJ Name"] as? String,location = v["location"] as? String,date = v["StartDateAndTime"] as? String, endTime = v["EndDateAndTime"] as? String
                         let todaysDate = Date.init()
                         
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateStyle = DateFormatter.Style.short
-                        dateFormatter.timeStyle = DateFormatter.Style.short
-                        let strToday = dateFormatter.string(from: todaysDate)
+                            
+                            
+                            
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "M/dd/yy, h:mm a"
+                            
+                        guard let sd = dateFormatter.date(from: date!), let ed = dateFormatter.date(from: endTime!) else {
+                                print("Failed converting the the dates")
+                                return
+                            }
+                            
+                            
+                            
+                            //Check if the current time is within the start and end times
+                            //Add to the events list if it is.
+                            if ((sd.timeIntervalSince1970) <= todaysDate.timeIntervalSince1970 &&
+                                (ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970) {
+                                self.hasEvent = true
+                                
+                            }
+                        
+                        
+                        let dateFormatter2 = DateFormatter()
+                        dateFormatter2.dateStyle = DateFormatter.Style.short
+                        dateFormatter2.timeStyle = DateFormatter.Style.short
+                        let strToday = dateFormatter2.string(from: todaysDate)
                         let dateAloneArray = strToday.split(separator: ",")
                         let todaysDateForComparison = dateAloneArray[0]
                         
@@ -171,14 +192,20 @@ class MapViewController: UIViewController {
                         let strTime = String(thisTimeForComparison)
                         let realStrTime = strTime.replacingOccurrences(of: " ", with: "")
                         
-                        if todaysDateForComparison == thisDateForComparison {
-                            
+                        let theArrayForThisDate2 = endTime?.split(separator: ",")
+                        let thisDateForComparison2 = theArrayForThisDate2![0]
+                        let thisTimeForComparison2 = theArrayForThisDate2![1]
+                        let strTime2 = String(thisTimeForComparison2)
+                        let realStrTime2 = strTime2.replacingOccurrences(of: " ", with: "")
+                        
+                        if self.hasEvent {
                         print("We have something on this date!")
                         let marker = GMSMarker()
                         let actualLats = Double(latCoords!) as! CLLocationDegrees
                         let actualLongs = Double(longCoords!) as! CLLocationDegrees
                         marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
-                        marker.title = "\(name!) is Playing at \(realStrTime)!"
+                        marker.title = "\(name!) is playing at \(realStrTime)!"
+                        marker.icon = UIImage(named: "headphonesSmall")
                         marker.snippet = "\(location!)"
                         marker.tracksViewChanges = true
                         marker.tracksInfoWindowChanges = true

@@ -141,9 +141,9 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
                 return
             }
             for snap in snapshot.children.allObjects as! [DataSnapshot] {
-                if let value = snap.value as? [String: AnyObject],let message = value["message"] as? String, let guestID = value["guestID"] as? String,  let timeStamp = value["timeStamp"] as? NSNumber, let djUID = value["djUID"] as? String {
+                if let value = snap.value as? [String: AnyObject],let message = value["message"] as? String, let guestID = value["guestID"] as? String,  let timeStamp = value["timeStamp"] as? NSNumber, let djUID = value["djUID"] as? String, let guestName = value["guestName"] as? String, let guestPhone = value["Guest Phone"] as? String{
                     
-                    let newMessage = Message(message: message, timeStamp: timeStamp, djUID: djUID, guestID: guestID)
+                    let newMessage = Message(message: message, timeStamp: timeStamp, djUID: djUID, guestID: guestID,guestName: guestName,guestPhone: guestPhone)
 
              
                     self.messages.append(newMessage)

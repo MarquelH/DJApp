@@ -52,6 +52,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.refreshData()
+        UIApplication.shared.statusBarStyle = .default
     }
 
     override func viewDidLoad() {
@@ -88,7 +89,6 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-
         refreshController.endRefreshing()
     }
     

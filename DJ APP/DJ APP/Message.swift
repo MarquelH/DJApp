@@ -13,12 +13,16 @@ class Message: NSObject {
     var timeStamp: NSNumber?
     var djUID: String?
     var guestID: String?
+    var guestName: String?
+    var guestPhone: String?
     
-    init(message: String, timeStamp: NSNumber, djUID: String, guestID: String) {
+    init(message: String, timeStamp: NSNumber, djUID: String, guestID: String, guestName: String, guestPhone: String) {
         self.message = message
         self.timeStamp = timeStamp
         self.djUID = djUID
         self.guestID = guestID
+        self.guestName = guestName
+        self.guestPhone = guestPhone
     }
     
 }

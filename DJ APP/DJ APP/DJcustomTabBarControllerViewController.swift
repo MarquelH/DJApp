@@ -40,7 +40,7 @@ class DJcustomTabBarControllerViewController: UITabBarController {
             else if let v4 = theView as? DJSideProfileViewController{
                 v4.dj = dj
             }
-            else if let v5 = theView as? MessagesViewController{
+            else if let v5 = theView as? MessagesTableViewController{
                 v5.dj = dj
             }
             else if let v6 = theView as? NavForTableViewController{

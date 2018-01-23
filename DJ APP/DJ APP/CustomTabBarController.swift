@@ -47,6 +47,7 @@ class CustomTabBarController: UITabBarController {
         viewControllers = [homeController, songNavController, searchTrackController, profileController]
         
         self.selectedIndex = 1;
+        
     }
     
   

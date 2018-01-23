@@ -20,6 +20,9 @@ class NavForTableViewController: UINavigationController {
             if let v1 = child as? DJSongTableViewController{
                 v1.dj = dj
             }
+            if let v2 = child as? MessagesTableViewController{
+                v2.dj = dj
+            }
             else{
                 print("Not the right VC")
             }
