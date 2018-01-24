@@ -11,7 +11,7 @@ import Firebase
 import GooglePlaces
 
 class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate,
- UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+ UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
 
     var dj: UserDJ?
@@ -63,6 +63,13 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         setupDJInfo()
         setButtonShapes()
         placeDJImageInView()
+        self.DJNameTextField.delegate = self
+        self.twitterInstagramTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,7 +120,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     }
     
     
-    func endEditing (){
+    func endEditing(){
         self.view.endEditing(true)
     }
     
@@ -150,7 +157,6 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
                             self.popAlertOff()
                         }))
                         self.present(alert, animated: true, completion: nil)
-                        
                     }
                 })
             }

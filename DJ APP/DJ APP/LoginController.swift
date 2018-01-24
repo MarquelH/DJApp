@@ -12,7 +12,7 @@ import FBSDKLoginKit
 import GoogleMaps
 import GooglePlaces
 
-class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLoginButtonDelegate {
+class LoginController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, FBSDKLoginButtonDelegate {
     
     
     var guestSnapshot: [String: AnyObject]?
@@ -71,7 +71,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         tf.isSecureTextEntry = true
         tf.placeholder = "Password"
         tf.clearButtonMode = UITextFieldViewMode.whileEditing
-        tf.returnKeyType = .go
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -171,8 +170,16 @@ class LoginController: UIViewController, UINavigationControllerDelegate, FBSDKLo
         setupViews()
         handleLoginEnterChange()
         
+        self.usernameTextField.delegate = self
+        self.passwordTextField.delegate = self
       
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         if error != nil  {

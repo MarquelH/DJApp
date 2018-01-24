@@ -102,7 +102,7 @@ class TrackCell: BaseCell {
         upArrowImageView.image = upArrowImage.maskWithColor(color: UIColor.lightGray)
         downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.lightGray)
         
-        contentView.backgroundColor = UIColor.black
+        //contentView.backgroundColor = UIColor.black
         contentView.addSubview(profileImageView)
         contentView.addSubview(upArrowImageView)
         contentView.addSubview(downArrowImageView)

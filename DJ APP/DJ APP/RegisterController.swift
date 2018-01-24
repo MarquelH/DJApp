@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegisterController: UIViewController {
+class RegisterController: UIViewController, UITextFieldDelegate {
 
     var loginController: LoginController?
     
@@ -95,6 +95,14 @@ class RegisterController: UIViewController {
 //        view.backgroundColor = UIColor.clear
         setupNavigationBar()
         setupViews()
+        self.usernameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.reenterPasswordTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     func handleCancel() {

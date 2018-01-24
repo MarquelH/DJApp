@@ -77,9 +77,9 @@ class HomeViewController: UIViewController {
             //SongList -> DJ ID -> [String: AnyObject]
             for snap in snapshot.children.allObjects as! [DataSnapshot] {
                 
-                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String {
+                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String, let acceptedOrNot = value["accepted"] as? String {
                     
-                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album)
+                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album, accepted: acceptedOrNot)
                     
                     self.tableSongList.insert(newTrack, at: 0)
                     //Delegate call here

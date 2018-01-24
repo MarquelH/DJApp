@@ -178,6 +178,7 @@ class DJTableViewController: UITableViewController {
             print("userSnapshot is empty")
             return
         }
+        
         for (key,value) in dictionary {
             
             if key == djID {

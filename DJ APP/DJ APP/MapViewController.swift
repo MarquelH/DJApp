@@ -175,7 +175,6 @@ class MapViewController: UIViewController {
                             if ((sd.timeIntervalSince1970) <= todaysDate.timeIntervalSince1970 &&
                                 (ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970) {
                                 self.hasEvent = true
-                                
                             }
                         
                         
@@ -209,8 +208,8 @@ class MapViewController: UIViewController {
                         marker.snippet = "\(location!)"
                         marker.tracksViewChanges = true
                         marker.tracksInfoWindowChanges = true
-                        //marker.icon = UIImage(named: "bioIcon")
                         marker.map = self.mapView
+                        self.hasEvent = false
                         }
                         else{
                             print("No markers today.")

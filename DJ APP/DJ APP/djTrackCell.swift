@@ -76,7 +76,7 @@ import Firebase
     override func setupViews() {
         super.setupViews()
         
-        contentView.backgroundColor = UIColor.black
+        //contentView.backgroundColor = UIColor.black
         contentView.addSubview(profileImageView)
         contentView.addSubview(totalvotesLabel)
         

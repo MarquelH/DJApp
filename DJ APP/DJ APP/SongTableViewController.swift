@@ -19,6 +19,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     var currentSnapshot: [String: AnyObject]?
     var refSongList: DatabaseReference!
     var refGuestByDJ: DatabaseReference!
+    var cellBackgroundColor = UIColor.black
     var tableSongList = [TrackItem]()
     {
         //do i have to dispatch main
@@ -390,6 +391,16 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             return cell
         }
         
+        if tableSongList[indexPath.row].accepted == "true"{
+            print("ITS TRUE")
+            self.cellBackgroundColor = UIColor.green
+            tableView.reloadData()
+        }
+        else{
+            print("ITS FALSE")
+        }
+        
+        cell.backgroundColor = self.cellBackgroundColor
         cell.textLabel?.text = "\(name)"
         cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.text = "Artist: \(artist)"

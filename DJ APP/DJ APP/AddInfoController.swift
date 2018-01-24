@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import GooglePlaces
 
-class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
 
     var loginController: LoginController?
     var originalView: CGFloat?
@@ -244,11 +244,18 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         setupViews()
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.djNameTextField.delegate = self
+        self.twitterTextField.delegate = self
     }
     
     //func handleImageSelection() {
         
     //}
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
     
     func handlePicTapped() {
         let imagePicker = UIImagePickerController()

@@ -12,6 +12,7 @@ import Firebase
 class DJSongTableViewController: UITableViewController {
 
     var dj: UserDJ?
+    var cellBackgroundColor = UIColor.black
     
     @IBOutlet weak var theNavItem: UINavigationItem!
     let djTrackCellId: String = "djTrackCellId"
@@ -162,9 +163,9 @@ class DJSongTableViewController: UITableViewController {
             
             for snap in snapshot.children.allObjects as! [DataSnapshot] {
                 
-                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String {
+                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String, let acceptedOrNot = value["accepted"] as? String {
                     
-                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album)
+                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album, accepted: acceptedOrNot)
                     
                     self.tableSongList.insert(newTrack, at: 0)
                     
@@ -277,24 +278,23 @@ class DJSongTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: djTrackCellId) as! djTrackCell
+        //let cell = tableView.dequeueReusableCell(withIdentifier: djTrackCellId) as! djTrackCell
         
         //Trying to change cell color when accept/deny occurs
         
         let accept = UITableViewRowAction(style: .normal, title: "Accept") { action, index in
             print("Accept tapped")
+            self.cellBackgroundColor = UIColor.green
+            self.tableSongList[indexPath.row].accepted = "true"
             
-            cell.backgroundColor = UIColor.green
-            
+            tableView.reloadData()
         }
         accept.backgroundColor = .green
         
         let deny = UITableViewRowAction(style: .destructive, title: "Deny") { action, index in
-            print("Deny tapped")
-            cell.backgroundColor = UIColor.red
         }
         //deny.backgroundColor = .red
-
+        
         return [accept, deny]
     }
     
@@ -310,6 +310,8 @@ class DJSongTableViewController: UITableViewController {
             return cell
         }
         
+        
+        cell.backgroundColor = self.cellBackgroundColor
         cell.textLabel?.text = "\(name)"
         cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.text = "Artist: \(artist)"
