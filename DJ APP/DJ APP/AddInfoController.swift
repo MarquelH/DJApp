@@ -350,7 +350,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         
                         if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
                             
-                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
+                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": false, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
                             
                         self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
                         }
