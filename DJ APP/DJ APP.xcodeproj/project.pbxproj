@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
-		6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */; };
 		66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */; };
 		66A41DAD1FEC2909004D31FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */; };
 		66A41DAF1FEC291F004D31FB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAE1FEC291F004D31FB /* CFNetwork.framework */; };
@@ -24,6 +23,9 @@
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
 		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
+		C702C0BE201A71B00041507D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C702C0BD201A71AF0041507D /* GoogleService-Info.plist */; };
+		C702C0BF201A71B00041507D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C702C0BD201A71AF0041507D /* GoogleService-Info.plist */; };
+		C702C0C0201A71B00041507D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C702C0BD201A71AF0041507D /* GoogleService-Info.plist */; };
 		C71ADBE02012BD5D00C583ED /* GuestContactFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */; };
 		C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAD20016A9500DEEC5E /* djTrackCell.swift */; };
 		C76113F32006CF7F003E3EE3 /* NavForTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */; };
@@ -96,7 +98,6 @@
 		4C7F37CD4B3E866E3B68B5B5 /* Pods_DJ_APPTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DJ_APPTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
-		6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScehdulingStoryboard.storyboard; sourceTree = "<group>"; };
 		66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		66A41DAE1FEC291F004D31FB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -112,6 +113,7 @@
 		66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SudegnakNo2.otf; sourceTree = "<group>"; };
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
+		C702C0BD201A71AF0041507D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestContactFormViewController.swift; sourceTree = "<group>"; };
 		C724ECAD20016A9500DEEC5E /* djTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = djTrackCell.swift; sourceTree = "<group>"; };
 		C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavForTableViewController.swift; sourceTree = "<group>"; };
@@ -326,7 +328,7 @@
 				D81A66C61F4F6E3E00543A8F /* Assets.xcassets */,
 				D81A66C81F4F6E3E00543A8F /* LaunchScreen.storyboard */,
 				D81A66CB1F4F6E3E00543A8F /* Info.plist */,
-				6618CB731F55EC46008C8C6A /* GoogleService-Info.plist */,
+				C702C0BD201A71AF0041507D /* GoogleService-Info.plist */,
 			);
 			path = "DJ APP";
 			sourceTree = "<group>";
@@ -499,6 +501,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					D81A66CF1F4F6E3E00543A8F = {
@@ -544,9 +549,9 @@
 				66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */,
 				C7FD13462001D6CD00FEC07D /* Mikodacs.otf in Resources */,
 				D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */,
-				6618CB741F55EC46008C8C6A /* GoogleService-Info.plist in Resources */,
 				66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */,
 				C7F8DCE61FFEE4CF00890BB6 /* djProfileStoryboard.storyboard in Resources */,
+				C702C0BE201A71B00041507D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +559,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C702C0BF201A71B00041507D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +567,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C702C0C0201A71B00041507D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,8 +603,6 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftLocation/SwiftLocation.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -610,8 +615,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftLocation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -953,7 +956,7 @@
 				);
 				INFOPLIST_FILE = "DJ APP/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "MMAT.DJ-APP";
+				PRODUCT_BUNDLE_IDENTIFIER = com.marquelhendricks.godj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -973,7 +976,7 @@
 				);
 				INFOPLIST_FILE = "DJ APP/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "MMAT.DJ-APP";
+				PRODUCT_BUNDLE_IDENTIFIER = com.marquelhendricks.godj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

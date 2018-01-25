@@ -284,9 +284,8 @@ class DJSongTableViewController: UITableViewController {
         
         let accept = UITableViewRowAction(style: .normal, title: "Accept") { action, index in
             print("Accept tapped")
-            self.cellBackgroundColor = UIColor.green
-            self.tableSongList[indexPath.row].accepted = "true"
-            
+            //self.cellBackgroundColor = UIColor.green
+            //self.tableSongList[indexPath.row].accepted = "true"
             tableView.reloadData()
         }
         accept.backgroundColor = .green

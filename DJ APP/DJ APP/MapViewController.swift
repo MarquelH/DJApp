@@ -155,6 +155,7 @@ class MapViewController: UIViewController {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     for(_,v) in dictionary{
                         let latCoords = v["Latitude Coordinates"] as? String, longCoords = v["Longitude Coordinates"] as? String,name = v["DJ Name"] as? String,location = v["location"] as? String,date = v["StartDateAndTime"] as? String, endTime = v["EndDateAndTime"] as? String
+                        
                         let todaysDate = Date.init()
                         
                             
@@ -172,10 +173,7 @@ class MapViewController: UIViewController {
                             
                             //Check if the current time is within the start and end times
                             //Add to the events list if it is.
-                            if ((sd.timeIntervalSince1970) <= todaysDate.timeIntervalSince1970 &&
-                                (ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970) {
-                                self.hasEvent = true
-                            }
+                        
                         
                         
                         let dateFormatter2 = DateFormatter()
@@ -184,6 +182,11 @@ class MapViewController: UIViewController {
                         let strToday = dateFormatter2.string(from: todaysDate)
                         let dateAloneArray = strToday.split(separator: ",")
                         let todaysDateForComparison = dateAloneArray[0]
+                        
+                        
+                        let dateAloneArray2 = date?.split(separator: ",")
+                        let eventDateForComparison = String(describing: dateAloneArray2![0])
+                        
                         
                         let theArrayForThisDate = date?.split(separator: ",")
                         let thisDateForComparison = theArrayForThisDate![0]
@@ -197,7 +200,13 @@ class MapViewController: UIViewController {
                         let strTime2 = String(thisTimeForComparison2)
                         let realStrTime2 = strTime2.replacingOccurrences(of: " ", with: "")
                         
-                        if self.hasEvent {
+                        if todaysDateForComparison == eventDateForComparison {
+                            
+                            if ((ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970){
+                                self.hasEvent = true
+                            }
+                            if self.hasEvent{
+                            
                         print("We have something on this date!")
                         let marker = GMSMarker()
                         let actualLats = Double(latCoords!) as! CLLocationDegrees
@@ -210,6 +219,10 @@ class MapViewController: UIViewController {
                         marker.tracksInfoWindowChanges = true
                         marker.map = self.mapView
                         self.hasEvent = false
+                            }
+                            else{
+                                print("DOES NOT HAVE AN EVENT")
+                            }
                         }
                         else{
                             print("No markers today.")
