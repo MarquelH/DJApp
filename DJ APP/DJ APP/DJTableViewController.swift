@@ -106,7 +106,7 @@ class DJTableViewController: UITableViewController {
                 
                 for (key,value) in dictionary {
                     
-                    if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String {
+                    if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String, let djName = value["DJ Name"] as? String {
                         
                         
                         let currDateTime = Date()
@@ -126,7 +126,8 @@ class DJTableViewController: UITableViewController {
                         if ((sd.timeIntervalSince1970) <= currDateTime.timeIntervalSince1970 &&
                             (ed.timeIntervalSince1970) >= currDateTime.timeIntervalSince1970) {
                             
-                            let newEvent = Event(djID: djID, location: location, startTime: sd, endTime: ed, eventID: eventID)
+                            let newEvent = Event(djID: djID, location: location, startTime: sd, endTime: ed, eventID: eventID, djName: djName)
+                            print("Added to the list: \(eventID) at location: \(location)")
                             self.events.append(newEvent)
                             
                             //Add the DJ to the DJ List
@@ -218,20 +219,13 @@ class DJTableViewController: UITableViewController {
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
         
-        
-        //Do an events snapshot to capture the location here.
-        Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
-            
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                
-                for (_,value) in dictionary {
-                    let location = value["location"] as! String,name = value["DJ Name"] as? String
-                    
-                    if name == self.users[indexPath.row].djName{
-                        cell.detailTextLabel?.text = "Playing at: " +  "\(String(describing: location))"
-                    }
-                }
-            }})
+        if let location = events[indexPath.row].location {
+            cell.detailTextLabel?.text = "Playing at: " +  "\(String(describing: location))"
+        }
+        else {
+            cell.detailTextLabel?.text = ""
+        }
+             
  
         
         //Set the image view

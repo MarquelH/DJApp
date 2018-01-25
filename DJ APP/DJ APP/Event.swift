@@ -14,6 +14,7 @@ class Event: NSObject {
     var startTime: Date?
     var endTime: Date?
     var eventID: String?
+    var djName: String?
     
     init(djID: String, location: String, startTime: Date, endTime: Date, eventID: String) {
         self.djID = djID
@@ -21,5 +22,14 @@ class Event: NSObject {
         self.startTime = startTime
         self.endTime = endTime
         self.eventID = eventID
+    }
+    
+    init(djID: String, location: String, startTime: Date, endTime: Date, eventID: String, djName: String) {
+        self.djID = djID
+        self.location = location
+        self.startTime = startTime
+        self.endTime = endTime
+        self.eventID = eventID
+        self.djName = djName
     }
 }
