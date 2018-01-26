@@ -33,7 +33,7 @@ class CustomTabBarController: UITabBarController {
         //profileNavController.viewControllers = [profilePicker]
         
         let searchTrackController = UINavigationController()
-        searchTrackController.tabBarItem.title = "Search"
+        searchTrackController.tabBarItem.title = "Request a Song"
         searchTrackController.tabBarItem.image = UIImage(named: "searchIcon")
         searchTrackController.viewControllers = [searchController]
 

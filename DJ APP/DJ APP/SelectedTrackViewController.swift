@@ -170,7 +170,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
         //Create song object, and insert into node
         if let name = track?.trackName, let artist = track?.trackArtist, let artwork = track?.trackImage?.absoluteString, let album = track?.trackAlbum {
             
-            let song = ["id": key, "name":name, "artist":artist, "album": album, "artwork":artwork, "upvotes": 1, "downvotes":0, "totalvotes":1, "accepted":"false"] as [String : AnyObject]
+            let song = ["id": key, "name":name, "artist":artist, "album": album, "artwork":artwork, "upvotes": 1, "downvotes":0, "totalvotes":1] as [String : AnyObject]
             
             refSongList.child(key).setValue(song)
             

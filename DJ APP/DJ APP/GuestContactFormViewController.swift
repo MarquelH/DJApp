@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class GuestContactFormViewController: UIViewController {
+class GuestContactFormViewController: UIViewController, UITextFieldDelegate {
 
     var dj: UserDJ?
     var guestID: String?
@@ -28,6 +28,11 @@ class GuestContactFormViewController: UIViewController {
     
     @IBAction func submitButtonPressed(_ sender: Any) {
         handleSubmit()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     
@@ -74,8 +79,9 @@ class GuestContactFormViewController: UIViewController {
         super.viewDidLoad()
         setupLabel()
         // Do any additional setup after loading the view.
-        
-        
+        guestName.delegate = self
+        guestPhoneNumber.delegate = self
+        guestMessage.delegate = self
     }
     
     func setupLabel(){
@@ -100,4 +106,15 @@ class GuestContactFormViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+}
+
+extension GuestContactFormViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 }

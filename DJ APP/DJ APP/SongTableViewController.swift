@@ -391,14 +391,14 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             return cell
         }
         
-        if tableSongList[indexPath.row].accepted == "true"{
+       /* if tableSongList[indexPath.row].accepted == "true"{
             print("ITS TRUE")
             self.cellBackgroundColor = UIColor.green
             tableView.reloadData()
         }
         else{
             print("ITS FALSE")
-        }
+        }*/
         
         cell.backgroundColor = self.cellBackgroundColor
         cell.textLabel?.text = "\(name)"
