@@ -127,13 +127,7 @@ class DJSongTableViewController: UITableViewController {
                 }
             }
             
-            if hasEvent {
-                self.fetchSongList(found: true)
-            }
-            else {
-                self.fetchSongList(found: false)
-            }
-            
+            self.fetchSongList(found: hasEvent)
             
         }, withCancel: {(error) in
             print(error.localizedDescription)
@@ -142,47 +136,45 @@ class DJSongTableViewController: UITableViewController {
     }
     
     func fetchSongList(found: Bool) {
-        if !found {
-            refreshController.endRefreshing()
-            displayLabel()
-            return
-        }
-        refSongList.queryOrdered(byChild: "totalvotes").observeSingleEvent(of: .value, with: {(snapshot) in
-            
-            //No Snap for Song list -> Remove all songs from song list, unless it was empty to begin with
-            guard let workingSnap = snapshot.value as? [String: AnyObject] else {
-                if var currSnap = self.currentSnapshot {
-                    currSnap.removeAll()
-                }
-                return
-            }
-            //self.getSongSnapshot()
-            //self.setSongList(fetchedSnapshot: workingSnap, songTableList: self.tableSongList)
-            
-            self.currentSnapshot = workingSnap
-            
-            for snap in snapshot.children.allObjects as! [DataSnapshot] {
+        if found {
+     
+            refSongList.queryOrdered(byChild: "totalvotes").observeSingleEvent(of: .value, with: {(snapshot) in
                 
-                if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String {
-                    
-                    let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album)
-                    
-                    self.tableSongList.insert(newTrack, at: 0)
-                    
+                //No Snap for Song list -> Remove all songs from song list, unless it was empty to begin with
+                guard let workingSnap = snapshot.value as? [String: AnyObject] else {
+                    if var currSnap = self.currentSnapshot {
+                        currSnap.removeAll()
+                    }
+                    return
                 }
+              
+                self.currentSnapshot = workingSnap
+                
+                for snap in snapshot.children.allObjects as! [DataSnapshot] {
+                    
+                    if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String {
+                        
+                        let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album)
+                        
+                        self.tableSongList.insert(newTrack, at: 0)
+                        
+                    }
+                }
+                
+                
+            }, withCancel: {(error) in
+                print(error.localizedDescription)
+                return
+            })
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
             
-            
-        }, withCancel: {(error) in
-            print(error.localizedDescription)
-            return
-        })
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
         }
         refreshController.endRefreshing()
         displayLabel()
+        
     }
 
     

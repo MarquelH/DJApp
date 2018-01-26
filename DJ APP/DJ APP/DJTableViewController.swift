@@ -40,19 +40,10 @@ class DJTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //UIApplication.shared.statusBarStyle = .default
         fetchDjs()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        //UIApplication.shared.statusBarStyle = .lightContent
-    }
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
@@ -64,13 +55,6 @@ class DJTableViewController: UITableViewController {
         //Register cells and remove seperators
         self.tableView.register(DJCell.self, forCellReuseIdentifier: cellId)
         self.tableView.separatorStyle = .none
-        
-        //let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
-       // backgroundImage.image = UIImage(named: "headphonesImage")
-        //backgroundImage.contentMode = .scaleAspectFill
-        
-        //view.insertSubview(backgroundImage, at: 0)
-        //self.tableView.backgroundView = backgroundImage
         self.tableView.backgroundColor = UIColor.black
         //Set refresh controller
         self.tableView.refreshControl = refreshController
@@ -239,7 +223,7 @@ class DJTableViewController: UITableViewController {
             //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
             cell.backgroundColor = UIColor.black.withAlphaComponent(0.9)
         }
-        else if (indexPath.row % 2 == 0){
+        else if (indexPath.row % 3 == 1){
             //cell.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5)
             cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.9)
         }

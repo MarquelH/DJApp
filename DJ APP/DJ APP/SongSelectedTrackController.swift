@@ -13,16 +13,6 @@ class SongSelectedTrackController: BaseTrackViewController {
     var songTableController: SongTableViewController?
     var index: Int?
     
-//    let trackAlbum: UILabel = {
-//        let tn = UILabel()
-//        tn.textColor = UIColor.white
-//        tn.textAlignment = .center
-//        tn.font = UIFont.boldSystemFont(ofSize: 14)
-//        tn.translatesAutoresizingMaskIntoConstraints = false
-//        tn.isUserInteractionEnabled = true
-//        return tn
-//    }()
-    
     let thumbsUp: UIButton = {
         let iv = UIButton()
         iv.contentMode = .scaleAspectFill

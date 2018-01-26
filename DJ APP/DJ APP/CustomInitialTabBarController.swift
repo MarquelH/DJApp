@@ -40,30 +40,6 @@ class CustomInitialTabBarController: UITabBarController {
         
         self.selectedIndex = 0
         UIApplication.shared.statusBarStyle = .default
-        
-      
-        /*if UIScreen.main.bounds.size.height == 480 {
-            // iPhone 4
-            myConstant = 10
-        } else if UIScreen.main.bounds.size.height == 568 {
-            // iPhone 5
-            myConstant = 20
-        } else if UIScreen.main.bounds.size.width == 375 {
-            // iPhone 6
-            myConstant = 30
-        } else if UIScreen.main.bounds.size.width == 414 {
-            // iPhone 6+
-            myConstant = 40
-        }
-        
-        var myConstraint = NSLayoutConstraint (item: myButton,
-                                               attribute: NSLayoutAttribute.Top,
-                                               relatedBy: NSLayoutRelation.Equal,
-                                               toItem: self.view,
-                                               attribute: NSLayoutAttribute.Top,
-                                               multiplier: 1,
-                                               constant: myConstant)
-        self.view.addConstraint(myConstraint)*/
     }
     
     func handleBack() {
