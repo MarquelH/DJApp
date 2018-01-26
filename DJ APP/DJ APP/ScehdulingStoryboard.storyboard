@@ -518,6 +518,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="134" id="Y49-eJ-7AO"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ufH-4D-BJr" appends="YES" id="fFl-Uj-Nto"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -580,6 +583,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zcs-y7-BL8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ufH-4D-BJr">
+                    <connections>
+                        <action selector="tapGestureRecTapped:" destination="iGv-ZX-hw2" id="yg5-Wr-uVd"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-349.27536231884062" y="-144.29347826086956"/>
         </scene>

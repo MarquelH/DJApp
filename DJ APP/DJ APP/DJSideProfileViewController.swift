@@ -17,6 +17,11 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     var dj: UserDJ?
     let ref = Database.database().reference()
     
+    @IBAction func tapGestureRecTapped(_ sender: Any) {
+        
+    }
+    
+    
     let genre: [String] = ["Rap", "Hip-Hop", "Reggae", "R&B", "EDM", "House", "Rock", "Country", "Folk", "Indie", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
     
     lazy var genrePickView: UIPickerView = {
