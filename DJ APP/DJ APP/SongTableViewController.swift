@@ -42,9 +42,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor.white
         nrl.text = "No songs requested\nBe the first to request a song!"
-        nrl.font = UIFont(name: "Mikodacs", size: 15)
+        nrl.font = UIFont(name: "Mikodacs", size: 18)
         nrl.textAlignment = .center
-        nrl.font = UIFont.boldSystemFont(ofSize: 20)
         nrl.lineBreakMode = .byWordWrapping
         nrl.numberOfLines = 0
         return nrl

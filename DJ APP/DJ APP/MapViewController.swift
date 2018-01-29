@@ -31,6 +31,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     var mapView: GMSMapView!
     var zoomLevel: Float = 15.0
     
+    var currentLocationMarker: GMSMarker?
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
@@ -39,12 +41,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         strLong = location.coordinate.longitude
         
         let camera = GMSCameraPosition.camera(withLatitude: strLat, longitude: strLong, zoom: 15.0)
-        let marker = GMSMarker()
-
-        marker.position = CLLocationCoordinate2D(latitude: strLat, longitude: strLong)
-        marker.title = "You are here!"
-        marker.tracksViewChanges = true
-        marker.map = self.mapView
+        currentLocationMarker = GMSMarker()
+        
+        currentLocationMarker!.position = CLLocationCoordinate2D(latitude: strLat, longitude: strLong)
+        currentLocationMarker!.title = "You are here!"
+        currentLocationMarker!.tracksViewChanges = true
+        currentLocationMarker!.map = self.mapView
+        
         mapView.animate(to: camera)
     }
     
@@ -68,14 +71,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = .default
+        locationManager.startUpdatingLocation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        currentLocationMarker?.map = self.mapView
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print("SETTING TO NIL")
+        currentLocationMarker?.map = nil
     }
     
     func setupNavBar(){
@@ -186,11 +193,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                                 print("Failed converting the the dates")
                                 return
                             }
-                            
-                            
-                            
-                            //Check if the current time is within the start and end times
-                            //Add to the events list if it is.
+                        
+                        
+                        
+                        
+                        //Check if the current time is within the start and end times
+                        //Add to the events list if it is.
                         
                         
                         
@@ -214,6 +222,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         
                         let theArrayForThisDate2 = endTime?.split(separator: ",")
                         let thisDateForComparison2 = theArrayForThisDate2![0]
+                        let endStringDate = String(describing: thisDateForComparison2)
                         let thisTimeForComparison2 = theArrayForThisDate2![1]
                         let strTime2 = String(thisTimeForComparison2)
                         let realStrTime2 = strTime2.replacingOccurrences(of: " ", with: "")
@@ -225,12 +234,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                             }
                             if self.hasEvent{
                             
-                        print("We have something on this date!")
                         let marker = GMSMarker()
                         let actualLats = Double(latCoords!) as! CLLocationDegrees
                         let actualLongs = Double(longCoords!) as! CLLocationDegrees
                         marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
-                        marker.title = "\(name!) is playing at \(realStrTime)!"
+                                if ((sd.timeIntervalSince1970) <= todaysDate.timeIntervalSince1970){
+                                    marker.title = "\(name!) is playing until \(realStrTime2)!"
+                                }
+                                else{
+                                    marker.title = "\(name!) is playing at \(realStrTime)!"
+                                }
                         marker.icon = UIImage(named: "headphonesSmall")
                         marker.snippet = "\(location!)"
                         marker.tracksViewChanges = true
@@ -241,17 +254,43 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                             else{
                                 print("DOES NOT HAVE AN EVENT")
                             }
+                       
+                    }
+                        else if endStringDate == todaysDateForComparison{
+                            
+                            if ((ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970){
+                                self.hasEvent = true
+                                print("ITS TRUE")
+                            }
+                            
+                            if self.hasEvent{
+                                
+                                print("We have something on this date!")
+                                let marker = GMSMarker()
+                                let actualLats = Double(latCoords!) as! CLLocationDegrees
+                                let actualLongs = Double(longCoords!) as! CLLocationDegrees
+                                marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
+                                marker.title = "\(name!) is playing until \(realStrTime2)!"
+                                marker.icon = UIImage(named: "headphonesSmall")
+                                marker.snippet = "\(location!)"
+                                marker.tracksViewChanges = true
+                                marker.tracksInfoWindowChanges = true
+                                marker.map = self.mapView
+                                self.hasEvent = false
+                            }
+                            else{
+                                print("DOES NOT HAVE AN EVENT")
+                            }
+                            
+                            
+                            
                         }
                         else{
-                            print("No markers today.")
+                            print("NO EVENTS TODAY")
                         }
-                    }
-                }
-                else{
-                    print("IDK!")
-                }
             }
-        }, withCancel: nil)
+                }
+            }}, withCancel: nil)
     }
 
 }
