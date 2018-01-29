@@ -11,12 +11,15 @@ import GoogleMaps
 import Firebase
 import GooglePlaces
 import MapKit
+import CoreLocation
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, CLLocationManagerDelegate {
     var guestID: String?
     var eventSnapshot: [String: AnyObject]?
-    var strLong = -76.942554
-    var strLat = 38.986918
+    //var strLong = -76.942554
+    //var strLat = 38.986918
+    var strLat = 0.0
+    var strLong = 0.0
     var passedLat = 0.0
     var passedLong = 0.0
     var camera: GMSCameraPosition?
@@ -24,35 +27,43 @@ class MapViewController: UIViewController {
     
     //Current Location stuff
     var locationManager = CLLocationManager()
-    //var currentLocation: CLLocation?
+    
     var mapView: GMSMapView!
-    //var placesClient: GMSPlacesClient!
     var zoomLevel: Float = 15.0
     
-    // An array to hold the list of likely places.
-    //var likelyPlaces: [GMSPlace] = []
     
-    // The currently selected place.
-    //var selectedPlace: GMSPlace?
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        
+        strLat = location.coordinate.latitude
+        strLong = location.coordinate.longitude
+        
+        let camera = GMSCameraPosition.camera(withLatitude: strLat, longitude: strLong, zoom: 15.0)
+        let marker = GMSMarker()
+
+        marker.position = CLLocationCoordinate2D(latitude: strLat, longitude: strLong)
+        marker.title = "You are here!"
+        marker.tracksViewChanges = true
+        marker.map = self.mapView
+        mapView.animate(to: camera)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //listLikelyPlaces()
         setupNavBar()
         
-        
-        
-        /*locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
         
-        placesClient = GMSPlacesClient.shared()*/
         layoutViews()
         
     }
+    
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -65,6 +76,7 @@ class MapViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        mapView.clear()
     }
     
     func setupNavBar(){
@@ -125,22 +137,29 @@ class MapViewController: UIViewController {
     
     func layoutViews() {
         
-        
-        //Find user's Current Location is next here!
-        //let currentPlace = likelyPlaces[1]
-        
-        //let longg = currentPlace.coordinate.longitude
-        //let latt = currentPlace.coordinate.latitude
-        
         if (passedLat == 0.0){
+        strLong = -76.942554
+        strLat = 38.986918
         camera = GMSCameraPosition.camera(withLatitude: strLat, longitude: strLong, zoom: 15.0)
         }
         else{
             camera = GMSCameraPosition.camera(withLatitude: passedLat, longitude: passedLong, zoom: 15.0)
         }
         
-        
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera!)
+        
+        do {
+            // Set the map style by passing the URL of the local file.
+            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
+                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+                
+            } else {
+                NSLog("Unable to find style.json")
+            }
+        } catch {
+            NSLog("One or more of the map styles failed to load. \(error)")
+        } 
+        
         view = mapView
         mapView.clear() //Resetting the markers
         // Creates a marker in the center of the map.

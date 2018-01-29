@@ -26,6 +26,7 @@
 		C702C0BE201A71B00041507D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C702C0BD201A71AF0041507D /* GoogleService-Info.plist */; };
 		C702C0BF201A71B00041507D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C702C0BD201A71AF0041507D /* GoogleService-Info.plist */; };
 		C702C0C0201A71B00041507D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C702C0BD201A71AF0041507D /* GoogleService-Info.plist */; };
+		C7169552201EC91800B7F87C /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C7169551201EC91800B7F87C /* style.json */; };
 		C71ADBE02012BD5D00C583ED /* GuestContactFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */; };
 		C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAD20016A9500DEEC5E /* djTrackCell.swift */; };
 		C76113F32006CF7F003E3EE3 /* NavForTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */; };
@@ -114,6 +115,7 @@
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
 		C702C0BD201A71AF0041507D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C7169551201EC91800B7F87C /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestContactFormViewController.swift; sourceTree = "<group>"; };
 		C724ECAD20016A9500DEEC5E /* djTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = djTrackCell.swift; sourceTree = "<group>"; };
 		C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavForTableViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				D81A66F01F4F713F00543A8F /* DJTableViewController.swift */,
+				C7169551201EC91800B7F87C /* style.json */,
 				C789F23C20097BA60056DAA2 /* MapViewController.swift */,
 				C7E686E1200EC0D400D89D6D /* CustomInitialTabBarController.swift */,
 				D8996EEE1F7DB8B700FE4E16 /* CustomTabBarController.swift */,
@@ -548,6 +551,7 @@
 				D81A66CA1F4F6E3E00543A8F /* LaunchScreen.storyboard in Resources */,
 				66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */,
 				C7FD13462001D6CD00FEC07D /* Mikodacs.otf in Resources */,
+				C7169552201EC91800B7F87C /* style.json in Resources */,
 				D81A66C71F4F6E3E00543A8F /* Assets.xcassets in Resources */,
 				66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */,
 				C7F8DCE61FFEE4CF00890BB6 /* djProfileStoryboard.storyboard in Resources */,
