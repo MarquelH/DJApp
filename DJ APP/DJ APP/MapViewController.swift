@@ -76,7 +76,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        mapView.clear()
     }
     
     func setupNavBar(){
