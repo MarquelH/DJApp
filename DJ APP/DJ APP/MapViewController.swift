@@ -41,12 +41,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         strLong = location.coordinate.longitude
         
         let camera = GMSCameraPosition.camera(withLatitude: strLat, longitude: strLong, zoom: 15.0)
-        currentLocationMarker = GMSMarker()
+       /* currentLocationMarker = GMSMarker()
         
         currentLocationMarker!.position = CLLocationCoordinate2D(latitude: strLat, longitude: strLong)
         currentLocationMarker!.title = "You are here!"
         currentLocationMarker!.tracksViewChanges = true
-        currentLocationMarker!.map = self.mapView
+        currentLocationMarker!.map = self.mapView*/
         
         mapView.animate(to: camera)
     }
@@ -70,31 +70,21 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .default
+        UIApplication.shared.statusBarStyle = .lightContent
         locationManager.startUpdatingLocation()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        currentLocationMarker?.map = self.mapView
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print("SETTING TO NIL")
-        currentLocationMarker?.map = nil
-    }
-    
     func setupNavBar(){
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleLogout))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearch))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any, NSForegroundColorAttributeName: UIColor.white]
         self.navigationItem.title = "DJs Near You"
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
     }
     
     func handleLogout(){

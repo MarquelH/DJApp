@@ -52,7 +52,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.refreshData()
-        UIApplication.shared.statusBarStyle = .default
+        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     override func viewDidLoad() {
@@ -317,7 +317,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any, NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
         
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"

@@ -39,7 +39,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         sc.dimsBackgroundDuringPresentation = false
         sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
-        //sc.searchBar.barTintColor =
+        //sc.searchBar.barTintColor = UIColor.darkGray
         sc.searchBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
         //sc.searchBar.backgroundColor = UIColor.lightGray
         //Change color of searching text
@@ -49,6 +49,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         //Change color of placeholder text
         var placeholderTextLabel = textField?.value(forKey: "placeholderLabel") as? UILabel
         placeholderTextLabel?.textColor = UIColor.white
+        
         sc.searchBar.delegate = self
         sc.definesPresentationContext = true
 
@@ -61,7 +62,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        searchController.searchBar.barTintColor = UIColor.darkGray
         
         //Need this to display the next screen
         self.definesPresentationContext = true
@@ -78,7 +79,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         if #available (iOS 11.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
         }
-        UIApplication.shared.statusBarStyle = .default
+        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -157,14 +158,15 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
 
         navigationItem.title = "Search"
         navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
+        //navigationController?.navigationBar.barTintColor = UIColor.darkGray
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
-            navigationItem.searchController = self.searchController  
+            navigationItem.searchController = self.searchController
         }
         else {
             tableView.tableHeaderView = searchController.searchBar
         }
-
+        
         let navBarHeight = (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!
         let seachBarHeight = self.searchController.searchBar.frame.size.height + self.searchController.searchBar.frame.origin.y
         
