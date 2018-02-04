@@ -38,9 +38,9 @@ class MessageTableViewCell: UITableViewCell {
         textLabel?.lineBreakMode = .byTruncatingTail
         detailTextLabel?.lineBreakMode = .byTruncatingTail
         
-        textLabel?.frame = CGRect(x: 90, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
+       // textLabel?.frame = CGRect(x: 90, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
         textLabel?.backgroundColor = UIColor.clear
-        detailTextLabel?.frame = CGRect(x: 90, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+       // detailTextLabel?.frame = CGRect(x: 90, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.backgroundColor = UIColor.clear
     }
     

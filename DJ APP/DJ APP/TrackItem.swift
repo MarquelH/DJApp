@@ -29,11 +29,9 @@ struct TrackItem {
         upvotes = 0
         downvotes = 0
         totalvotes = 0
-        
     }
     
     init() {
-        
     }
     
     init(trackName: String, trackArtist: String, trackImage: String, id: String, upvotes: Int, downvotes: Int, totalvotes: Int, trackAlbum: String) {

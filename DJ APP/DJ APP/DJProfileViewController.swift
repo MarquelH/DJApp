@@ -20,7 +20,6 @@ class DJPRofileViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         profilePic.isUserInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
-        
         self.view.backgroundColor = UIColor.black
         UIApplication.shared.statusBarStyle = .lightContent
     }

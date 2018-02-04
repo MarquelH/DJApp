@@ -182,7 +182,7 @@ class DJSongTableViewController: UITableViewController {
     func setupNavigationBar() {
         
         //Back button
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleLogout))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Refresh button
@@ -190,7 +190,8 @@ class DJSongTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any, NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.barTintColor =  UIColor.black
         
         if let name = dj?.djName{
             theNavItem.title = "\(name)" + "'s Requests"

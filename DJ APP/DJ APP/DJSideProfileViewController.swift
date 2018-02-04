@@ -17,8 +17,26 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     var dj: UserDJ?
     let ref = Database.database().reference()
     
-    @IBAction func tapGestureRecTapped(_ sender: Any) {
+    @IBAction func tapGestureRecTapped(_ sender: UITapGestureRecognizer) {
+        print("Firing off")
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        alert.addAction(UIAlertAction(title: "Edit Profile Picture", style: .default) { action in
+            print("Fired off edit function")
+            self.fireOffImagePicker()
+        })
+        
+        alert.addAction(UIAlertAction(title: "View Current Profile Picture", style: .default) { action in
+            print("Fired off ")
+            self.tappedActions(sender)
+            
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            self.popAlertOff()
+        })
+        
+        present(alert, animated: true)
     }
     
     
@@ -82,6 +100,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
+    
     //override func viewWillDisappear(_ animated: Bool) {
     //    UIApplication.shared.statusBarStyle = .default
   //  }
@@ -98,7 +117,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         return pp
     }()
     
-    @IBOutlet weak var djProfileImage: UIImageView!
+    @IBOutlet weak var djProfileImage: ProfileImageView!
     @IBOutlet weak var djNameLabel: UILabel!
     @IBOutlet weak var editPhotoBtn: UIButton!
     @IBOutlet weak var hometownTextField: UITextField!
@@ -198,30 +217,6 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         cancelChangesBtn.layer.cornerRadius = 15
     }
     
-    @IBAction func recognizerTapped(_ sender: UITapGestureRecognizer) {
-        print("Firing off")
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Edit Profile Picture", style: .default) { action in
-            print("Fired off edit function")
-            self.fireOffImagePicker()
-        })
-        
-        alert.addAction(UIAlertAction(title: "View Current Profile Picture", style: .default) { action in
-            print("Fired off ")
-            self.tappedActions(sender)
-
-        })
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
-            self.popAlertOff()
-        })
-        
-        present(alert, animated: true)
-        
-    
-}
-    
 func tappedActions(_ sender: UITapGestureRecognizer){
     let tappedImage = sender.view as! UIImageView
     let newImageView = UIImageView(image: tappedImage.image)
@@ -245,6 +240,7 @@ func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
     
     
     func fireOffImagePicker (){
+        print("FIRING OFF IMAGE PICKER")
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -297,15 +293,14 @@ func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
     
     func placeDJImageInView(){
         if let profileURL = dj?.profilePicURL{
-            profilePic.loadImageWithChachfromUrl(urlString: profileURL)
             djProfileImage.contentMode = .scaleAspectFill
-            djProfileImage.layer.cornerRadius = 30
+            djProfileImage.layer.cornerRadius = 50
             djProfileImage.layer.masksToBounds = true
-            djProfileImage.layer.borderWidth = 1.5
-            djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9).cgColor
             djProfileImage.clipsToBounds = true
+            djProfileImage.layer.borderWidth = 1.0
+            djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0).cgColor
             djProfileImage.translatesAutoresizingMaskIntoConstraints = false
-            djProfileImage.image = profilePic.image
+            djProfileImage.loadImageWithChachfromUrl(urlString: profileURL)
         }
         else{
             print("No Image to place")
