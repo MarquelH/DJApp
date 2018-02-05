@@ -27,18 +27,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>4</string>
-	<key>FacebookAppID</key>
-	<string>808378199370845</string>
-	<key>FacebookDisplayName</key>
-	<string>GoDJ</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechromes</string>
 		<string>comgooglemaps</string>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-		<string>fbauth2</string>
-		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -62,11 +54,11 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © GoDJ. All rights Reserved,</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>See what DJ's are near you!</string>
+	<string>See what DJ&apos;s are near you!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>See what DJ's are near you!</string>
+	<string>See what DJ&apos;s are near you!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>See what DJ's are near you!</string>
+	<string>See what DJ&apos;s are near you!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to photos to provide us with a profile pic</string>
 	<key>UIAppFonts</key>
