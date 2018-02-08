@@ -26,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechromes</string>
@@ -52,13 +52,13 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © GoDJ. All rights Reserved,</string>
+	<string></string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>See what DJ&apos;s are near you!</string>
+	<string>See what DJ's are near you!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>See what DJ&apos;s are near you!</string>
+	<string>See what DJ's are near you!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>See what DJ&apos;s are near you!</string>
+	<string>See what DJ's are near you!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to photos to provide us with a profile pic</string>
 	<key>UIAppFonts</key>

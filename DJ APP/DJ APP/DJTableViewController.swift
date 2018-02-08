@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CoreLocation
 
 class DJTableViewController: UITableViewController {
 
@@ -18,6 +19,7 @@ class DJTableViewController: UITableViewController {
     var usersSnapshot: [String: AnyObject]?
     var eventsToBeDeleted: [String] = []
     var songlistsToBeDeleted: [String] = []
+    var currentUserLocation: CLLocation?
     
     lazy var refreshController: UIRefreshControl = {
         let rc = UIRefreshControl()
@@ -30,7 +32,7 @@ class DJTableViewController: UITableViewController {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-        nrl.text = "No DJs are currently playing near you.\nPlease try again later!"
+        nrl.text = "No DJs are currently playing within 5 miles of you.\nPlease try again later!"
         nrl.textAlignment = .center
         nrl.font = UIFont(name: "Mikodacs", size : 20)
         nrl.lineBreakMode = .byWordWrapping
@@ -91,9 +93,14 @@ class DJTableViewController: UITableViewController {
                 
                 for (key,value) in dictionary {
                     
-                    if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String, let djName = value["DJ Name"] as? String {
+                    if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String, let djName = value["DJ Name"] as? String, let eventLat = value["Latitude Coordinates"] as? String, let eventLong = value["Longitude Coordinates"] as? String {
+                        let realLat = Double(eventLat)
+                        let realLong = Double(eventLong)
+                        let locationIwant = CLLocation(latitude: realLat!, longitude: realLong!)
                         
-                        
+                        let theDistance = locationIwant.distance(from: self.currentUserLocation!)
+                        if theDistance <= 8046.72 { //8046.72 is about 5 miles in meters.
+
                         let currDateTime = Date()
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "M/dd/yy, h:mm a"
@@ -128,6 +135,10 @@ class DJTableViewController: UITableViewController {
                         else if ((ed.timeIntervalSince1970) <= currDateTime.timeIntervalSince1970) {
                             //Add key to eventsToBeDeleted
                             self.eventsToBeDeleted.append(key)
+                        }
+                    }
+                        else{
+                            print("User is too far from location!")
                         }
                     }
                     else{
@@ -261,7 +272,7 @@ class DJTableViewController: UITableViewController {
     }
 
     func setupNavBar() {
-        navigationItem.title = "DJs Live Near You"
+        navigationItem.title = "Live DJs Near You"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)

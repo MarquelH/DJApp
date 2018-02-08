@@ -37,8 +37,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
         
+        let tableNav = self.tabBarController?.viewControllers![1] as! UINavigationController
+        let tableView = tableNav.viewControllers[0] as! DJTableViewController
+        tableView.currentUserLocation = location
+        
         strLat = location.coordinate.latitude
         strLong = location.coordinate.longitude
+        
         
         let camera = GMSCameraPosition.camera(withLatitude: strLat, longitude: strLong, zoom: 15.0)
        /* currentLocationMarker = GMSMarker()
@@ -83,7 +88,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
         //Bar text
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any, NSForegroundColorAttributeName: UIColor.white]
-        self.navigationItem.title = "DJs Near You"
+        self.navigationItem.title = "Map of DJs"
         self.navigationController?.navigationBar.barTintColor = UIColor.black
     }
     

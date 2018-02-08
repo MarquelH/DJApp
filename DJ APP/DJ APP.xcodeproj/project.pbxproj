@@ -26,6 +26,7 @@
 		C7169552201EC91800B7F87C /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C7169551201EC91800B7F87C /* style.json */; };
 		C71ADBE02012BD5D00C583ED /* GuestContactFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */; };
 		C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAD20016A9500DEEC5E /* djTrackCell.swift */; };
+		C7574794202A6FBB00B420AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7574793202A6FBB00B420AB /* GoogleService-Info.plist */; };
 		C76113F32006CF7F003E3EE3 /* NavForTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */; };
 		C766A4C620057F5A006A3DDF /* SongSelectedByDJViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C766A4C520057F5A006A3DDF /* SongSelectedByDJViewController.swift */; };
 		C76F18FB2016A01300C0FAD5 /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76F18FA2016A01300C0FAD5 /* MessagesTableViewController.swift */; };
@@ -114,6 +115,7 @@
 		C7169551201EC91800B7F87C /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestContactFormViewController.swift; sourceTree = "<group>"; };
 		C724ECAD20016A9500DEEC5E /* djTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = djTrackCell.swift; sourceTree = "<group>"; };
+		C7574793202A6FBB00B420AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavForTableViewController.swift; sourceTree = "<group>"; };
 		C766A4C520057F5A006A3DDF /* SongSelectedByDJViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectedByDJViewController.swift; sourceTree = "<group>"; };
 		C76F18FA2016A01300C0FAD5 /* MessagesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				D81A66ED1F4F705700543A8F /* Controllers */,
 				D81A66C61F4F6E3E00543A8F /* Assets.xcassets */,
 				D81A66C81F4F6E3E00543A8F /* LaunchScreen.storyboard */,
+				C7574793202A6FBB00B420AB /* GoogleService-Info.plist */,
 				D81A66CB1F4F6E3E00543A8F /* Info.plist */,
 			);
 			path = "DJ APP";
@@ -544,6 +547,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81A66CA1F4F6E3E00543A8F /* LaunchScreen.storyboard in Resources */,
+				C7574794202A6FBB00B420AB /* GoogleService-Info.plist in Resources */,
 				66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */,
 				C7FD13462001D6CD00FEC07D /* Mikodacs.otf in Resources */,
 				C7169552201EC91800B7F87C /* style.json in Resources */,
