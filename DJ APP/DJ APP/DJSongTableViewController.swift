@@ -135,7 +135,7 @@ class DJSongTableViewController: UITableViewController {
         })
     }
     
-    func fetchSongList(found: Bool) {
+    @objc func fetchSongList(found: Bool) {
         if found {
      
             refSongList.queryOrdered(byChild: "totalvotes").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -190,7 +190,7 @@ class DJSongTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any, NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 29) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.barTintColor =  UIColor.black
         
         if let name = dj?.djName{
@@ -229,7 +229,7 @@ class DJSongTableViewController: UITableViewController {
         }
     }
     
-    func handleLogout() {
+    @objc func handleLogout() {
         let fireAuth = Auth.auth()
         
         do {

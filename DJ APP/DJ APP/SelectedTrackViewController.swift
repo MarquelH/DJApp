@@ -84,7 +84,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
     }
     
     //Might have to change this to pull data just before we add. But if we do this, not guarenteed to get the correct data
-    func handleAdd() {
+    @objc func handleAdd() {
         
         let isPresentTuple = songIsPresentInCurrentSnapshot()
         //it is present in the songlist
@@ -183,7 +183,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
         }
     }
     
-    func handleCancel() {
+    @objc func handleCancel() {
         print ("cancel")
         dismiss(animated: true, completion: {
             if let dj = self.dj, let guestID = self.guestID {

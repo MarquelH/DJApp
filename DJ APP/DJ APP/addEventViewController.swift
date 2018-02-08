@@ -46,11 +46,11 @@ class addEventViewController: UIViewController {
     }()
     
     
-    func handleToolBarDone() {
+    @objc func handleToolBarDone() {
         self.view.endEditing(true)
     }
     
-    func handleToolBarCancel() {
+    @objc func handleToolBarCancel() {
         self.view.endEditing(true)
     }
     
@@ -85,7 +85,7 @@ class addEventViewController: UIViewController {
     
     
     
-    func datePickerChanged(_ sender: UIDatePicker){
+    @objc func datePickerChanged(_ sender: UIDatePicker){
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.short

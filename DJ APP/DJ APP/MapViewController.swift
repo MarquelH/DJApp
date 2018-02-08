@@ -87,12 +87,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any, NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationItem.title = "Map of DJs"
         self.navigationController?.navigationBar.barTintColor = UIColor.black
     }
     
-    func handleLogout(){
+    @objc func handleLogout(){
     let fireAuth = Auth.auth()
     
         do {
@@ -106,7 +106,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    func handleSearch() {
+    @objc func handleSearch() {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)

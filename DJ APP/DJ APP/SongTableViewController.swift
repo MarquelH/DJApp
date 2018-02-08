@@ -92,7 +92,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         refreshController.endRefreshing()
     }
     
-    func upArrowTapped(tapGesture: UITapGestureRecognizer) {
+    @objc func upArrowTapped(tapGesture: UITapGestureRecognizer) {
 
         let taplocation = tapGesture.location(in: self.tableView)
         
@@ -108,7 +108,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         }
     }
     
-    func downArrowTapped(tapGesture: UITapGestureRecognizer) {
+    @objc func downArrowTapped(tapGesture: UITapGestureRecognizer) {
   
         let taplocation = tapGesture.location(in: self.tableView)
         
@@ -280,7 +280,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         }
     }
     
-    func refreshData() {
+    @objc func refreshData() {
         if let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController  {
             //Set the as the delegate
             homeTabController.songTableDelegate = self
@@ -317,7 +317,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 29) as Any, NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 29) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
         
         if let name = dj?.djName {
@@ -346,7 +346,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         noRequestLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
     }
     
-    func handleBack() {
+    @objc func handleBack() {
         self.parent?.dismiss(animated: true, completion: nil)
     }
 
@@ -402,9 +402,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         
         cell.backgroundColor = self.cellBackgroundColor
         cell.textLabel?.text = "\(name)"
-        cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.text = "Artist: \(artist)"
-        cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         cell.totalvotesLabel.text = "\(totalvotes)"
     
         

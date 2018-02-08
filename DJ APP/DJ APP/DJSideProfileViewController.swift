@@ -231,7 +231,7 @@ func tappedActions(_ sender: UITapGestureRecognizer){
     self.tabBarController?.tabBar.isHidden = true
 }
 
-func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+@objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
     self.navigationController?.isNavigationBarHidden = false
     self.tabBarController?.tabBar.isHidden = false
     sender.view?.removeFromSuperview()
@@ -360,11 +360,11 @@ func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
     }
     
     
-    func handleToolBarDone() {
+    @objc func handleToolBarDone() {
         self.view.endEditing(true)
     }
     
-    func handleToolBarCancel() {
+    @objc func handleToolBarCancel() {
         if (ageTextField.isEditing) {
             ageTextField.text = ""
         }

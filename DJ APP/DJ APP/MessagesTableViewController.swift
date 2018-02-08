@@ -26,13 +26,13 @@ class MessagesTableViewController: UITableViewController {
     func setupNavBar() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any, NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
         theNavItem.title = "Messages"
         
     }
     
-    func handleLogout() {
+    @objc func handleLogout() {
         let fireAuth = Auth.auth()
         
         do {
@@ -89,7 +89,7 @@ class MessagesTableViewController: UITableViewController {
         return messages.count
     }
     
-    func getMessages() {
+    @objc func getMessages() {
         ref.observeSingleEvent(of: .value, with: {(snapshot) in
             
             self.messages.removeAll()

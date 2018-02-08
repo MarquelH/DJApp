@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import DJ_APP
+//@testable import DJ_APP
 
 class DJ_APPTests: XCTestCase {
     

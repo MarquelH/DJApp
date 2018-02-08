@@ -105,12 +105,12 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    func handleCancel() {
+    @objc func handleCancel() {
         self.dismiss(animated: true, completion: nil)
     }
     
     //Present Addinfo controller and pass in
-    func handleContinue() {
+    @objc func handleContinue() {
         guard let username = usernameTextField.text, let password = passwordTextField.text, let passwordAgain = reenterPasswordTextField.text else {
             return
         }

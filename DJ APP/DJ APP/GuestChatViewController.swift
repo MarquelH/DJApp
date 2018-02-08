@@ -125,7 +125,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
     fileprivate func estimateFrameForText(text: String) -> CGRect {
         let size = CGSize(width: 200, height: 100)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 14)], context: nil)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)], context: nil)
     }
     
   
@@ -169,7 +169,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
     }
     
-    func handleSend() {
+    @objc func handleSend() {
         print("Send was hit")
         //push to database
         let timeStamp = Int(Date().timeIntervalSince1970)
@@ -185,7 +185,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
         getMessages()
     }
     
-    func handleCancel() {
+    @objc func handleCancel() {
         self.dismiss(animated: true, completion: nil)
     }
     

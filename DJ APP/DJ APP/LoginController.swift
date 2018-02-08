@@ -106,7 +106,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     let notUserLabel: UIButton = {
         let btn = UIButton(type: .system)
         let lightblue = UIColor.white.withAlphaComponent(0.75)
-        btn.setTitle("Don't have an account? Register Here", for: .normal)
+        btn.setTitle("Don't have a DJ account? Register Here!", for: .normal)
         btn.setTitleColor(lightblue, for: .normal)
         btn.titleLabel?.font = UIFont.italicSystemFont(ofSize: 15)
         btn.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
@@ -241,7 +241,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
 
     
     //Handle what shows when you hit login or enter (UISegmentedController)
-    func handleLoginEnterChange() {
+    @objc func handleLoginEnterChange() {
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 1) {
             djGuestLoginButton.setTitle("Login", for: .normal)
             passwordContainer.isHidden = false
@@ -261,7 +261,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     }
     
     //Handle what happens when you hit login/enter button
-    func handleLoginEnter() {
+    @objc func handleLoginEnter() {
         //login was hit
         if (djOrGuestSegmentedControl.selectedSegmentIndex == 1){
             handleLogin()
@@ -272,7 +272,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         }
     }
     
-    func handleRegister() {
+    @objc func handleRegister() {
         let registerController = RegisterController()
         registerController.loginController = self
         let navController = UINavigationController(rootViewController: registerController)
@@ -499,7 +499,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         
         
         notUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        notUserLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        notUserLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -13).isActive = true
         notUserLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         notUserLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         

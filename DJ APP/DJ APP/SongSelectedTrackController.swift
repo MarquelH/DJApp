@@ -58,7 +58,7 @@ class SongSelectedTrackController: BaseTrackViewController {
         setupViews()
     }
     
-    func thumbsUpTapped() {
+    @objc func thumbsUpTapped() {
         self.dismiss(animated: true, completion: {() in
 
             if let parent = self.songTableController, let index = self.index {
@@ -70,7 +70,7 @@ class SongSelectedTrackController: BaseTrackViewController {
         })
     }
     
-    func thumbsDownTapped() {
+    @objc func thumbsDownTapped() {
         self.dismiss(animated: true, completion: {() in
             if let parent = self.songTableController, let index = self.index {
                 parent.addDownvote(index: index)
@@ -82,7 +82,7 @@ class SongSelectedTrackController: BaseTrackViewController {
 
     }
     
-    func artistTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc func artistTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         self.dismiss(animated: true, completion: {() in
             if let parent = self.songTableController, let artist = self.track?.trackArtist {
                 parent.callSearch(str: artist)
@@ -93,7 +93,7 @@ class SongSelectedTrackController: BaseTrackViewController {
         })
     }
     
-    func albumTapped() {
+    @objc func albumTapped() {
         self.dismiss(animated: true, completion: {() in
             if let parent = self.songTableController, let album = self.track?.trackAlbum {
                 parent.callSearch(str: album)
@@ -151,7 +151,7 @@ class SongSelectedTrackController: BaseTrackViewController {
     }
     
     //check if parent still has DJ and such
-    func handleCancel()  {
+    @objc func handleCancel()  {
         print("Cancel was clicked")
         
         self.dismiss(animated: true, completion: nil)

@@ -32,7 +32,7 @@ class DJTableViewController: UITableViewController {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-        nrl.text = "No DJs are currently playing within 5 miles of you.\nPlease try again later!"
+        nrl.text = "No DJs are currently live near you.\nPlease try again later!"
         nrl.textAlignment = .center
         nrl.font = UIFont(name: "Mikodacs", size : 20)
         nrl.lineBreakMode = .byWordWrapping
@@ -69,7 +69,7 @@ class DJTableViewController: UITableViewController {
         noDJLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
     }
     
-    func fetchDjs() {
+    @objc func fetchDjs() {
         //So that table view doesn't load duplicates
         self.users.removeAll()
         //self.events.removeAll()
@@ -99,7 +99,7 @@ class DJTableViewController: UITableViewController {
                         let locationIwant = CLLocation(latitude: realLat!, longitude: realLong!)
                         
                         let theDistance = locationIwant.distance(from: self.currentUserLocation!)
-                        if theDistance <= 8046.72 { //8046.72 is about 5 miles in meters.
+                        if theDistance <= 1609.34 { //1609.34 is about 1 mile in meters.
 
                         let currDateTime = Date()
                         let dateFormatter = DateFormatter()
@@ -216,6 +216,7 @@ class DJTableViewController: UITableViewController {
         cell.textLabel?.text = dj.djName
         
         if let location = events[indexPath.row].location {
+            cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
             cell.detailTextLabel?.text = "Playing at: " +  "\(String(describing: location))"
         }
         else {
@@ -276,11 +277,11 @@ class DJTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any, NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
     }
 
-    func handleLogout() {
+    @objc func handleLogout() {
         do {
             try Auth.auth().signOut()
         }

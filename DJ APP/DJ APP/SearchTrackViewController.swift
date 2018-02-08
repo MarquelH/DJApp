@@ -79,7 +79,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         if #available (iOS 11.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
         }
-        UIApplication.shared.statusBarStyle = .lightContent
+        UIApplication.shared.statusBarStyle = .default
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -96,7 +96,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         self.guestID = guestID
     }
     
-    func search() {
+    @objc func search() {
         guard let text = self.searchText else {
             print("text is empty")
             return
@@ -157,7 +157,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         //UIApplication.shared.statusBarFrame.height
 
         navigationItem.title = "Search"
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "SudegnakNo2", size : 35) as Any]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any]
         //navigationController?.navigationBar.barTintColor = UIColor.darkGray
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never

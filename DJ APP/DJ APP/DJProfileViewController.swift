@@ -21,15 +21,14 @@ class DJPRofileViewController: UIViewController {
         profilePic.isUserInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
         self.view.backgroundColor = UIColor.black
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
-    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "View Full Photo", style: UIAlertActionStyle.default, handler: { action in
             self.loadUpFullView(tapGestureRec: tapGestureRecognizer)
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
             self.navigationController?.popViewController(animated: true)
         }))
         
@@ -50,7 +49,7 @@ class DJPRofileViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    func dismissFullscreenImage(sender: UITapGestureRecognizer) {
+    @objc func dismissFullscreenImage(sender: UITapGestureRecognizer) {
         self.scrollView.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
         sender.view?.removeFromSuperview()
@@ -68,9 +67,10 @@ class DJPRofileViewController: UIViewController {
             print("Dj was not passed through")
         }
         setupViews()
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
-    func handleDM() {
+    @objc func handleDM() {
         let storyboard = UIStoryboard(name: "djProfileStoryboard", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "GuestContactView") as! GuestContactFormViewController
         controller.dj = dj
@@ -131,7 +131,7 @@ class DJPRofileViewController: UIViewController {
         backgroundImage.bottomAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
         
         profilePic.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        profilePic.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 24).isActive = true
+        profilePic.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30).isActive = true
         profilePic.widthAnchor.constraint(equalToConstant: 140).isActive = true
         profilePic.heightAnchor.constraint(equalToConstant: 140).isActive = true
         
@@ -144,12 +144,12 @@ class DJPRofileViewController: UIViewController {
         djNameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         ageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
-        ageLabel.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 18).isActive = true
+        ageLabel.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 12).isActive = true
         ageLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         ageLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         hometownLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
-        hometownLabel.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 18).isActive = true
+        hometownLabel.topAnchor.constraint(equalTo: ageLabel.bottomAnchor, constant: 12).isActive = true
         hometownLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         hometownLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
@@ -185,13 +185,13 @@ class DJPRofileViewController: UIViewController {
         twitterText.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         headphonesLogo.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        headphonesLogo.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 50).isActive = true
+        headphonesLogo.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor).isActive = true
         headphonesLogo.widthAnchor.constraint(equalToConstant: 75).isActive = true
         headphonesLogo.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
         //dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
         dmDJButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        dmDJButton.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor, constant: 150).isActive = true
+        dmDJButton.bottomAnchor.constraint(equalTo: (self.tabBarController?.tabBar.topAnchor)!).isActive = true
         dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
         dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }

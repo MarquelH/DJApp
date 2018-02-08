@@ -60,7 +60,7 @@ class SongSelectedByDJViewController: BaseTrackViewController {
     }
     
     //check if parent still has DJ and such
-    func handleCancel()  {
+    @objc func handleCancel()  {
         print("Cancel was clicked")
         
         self.dismiss(animated: true, completion: nil)

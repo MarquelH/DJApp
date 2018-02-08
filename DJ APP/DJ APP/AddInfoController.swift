@@ -257,7 +257,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         return false
     }
     
-    func handlePicTapped() {
+    @objc func handlePicTapped() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -287,12 +287,12 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         dismiss(animated: true, completion: nil)
     }
     
-    func handleBack() {
+    @objc func handleBack() {
         navigationController?.popToRootViewController(animated: true)
         
     }
     
-    func handleDone() {
+    @objc func handleDone() {
 
         if (genreTextField.isEditing == true || ageTextField.isEditing == true) {
             handleToolBarDone()
@@ -434,12 +434,12 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     
-    func handleToolBarDone() {
+    @objc func handleToolBarDone() {
         self.view.endEditing(true)
         resetView()
     }
     
-    func handleToolBarCancel() {
+    @objc func handleToolBarCancel() {
         if (ageTextField.isEditing) {
             ageTextField.text = ""
         }
@@ -450,14 +450,14 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         resetView()
     }
   
-    func ageClicked() {
+    @objc func ageClicked() {
         resetView()
         self.view.frame.origin.y -= 65
         ageTextField.inputView = agePickView
         ageTextField.inputAccessoryView = toolbar
     }
    
-    func genreClicked() {
+    @objc func genreClicked() {
         resetView()
         self.view.frame.origin.y -= 110
         genreTextField.inputView = genrePickView
@@ -475,7 +475,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         //self.loginController?.handleGuestEnter()
     }
     
-    func resetView() {
+    @objc func resetView() {
         if let ov = originalView {
             self.view.frame.origin.y = ov
         } else {
@@ -483,7 +483,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
     }
     
-    func showPlacesAPI (){
+    @objc func showPlacesAPI (){
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)
