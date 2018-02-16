@@ -152,10 +152,10 @@ class DJSongTableViewController: UITableViewController {
                 
                 for snap in snapshot.children.allObjects as! [DataSnapshot] {
                     
-                    if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String {
+                    if let value = snap.value as? [String: AnyObject], let name = value["name"] as? String, let artist = value["artist"] as? String, let artwork = value["artwork"] as? String, let id = value["id"] as? String, let upvotes = value["upvotes"] as? Int, let downvotes = value["downvotes"] as? Int, let totalvotes = value["totalvotes"] as? Int, let album = value["album"] as? String, let accepted = value["accepted"] as? Bool {
                         
-                        let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album)
                         
+                        let newTrack = TrackItem(trackName: name, trackArtist: artist, trackImage: artwork, id: id, upvotes: upvotes, downvotes: downvotes, totalvotes: totalvotes, trackAlbum: album, accepted: accepted)
                         self.tableSongList.insert(newTrack, at: 0)
                         
                     }
@@ -174,6 +174,19 @@ class DJSongTableViewController: UITableViewController {
         }
         refreshController.endRefreshing()
         displayLabel()
+        
+    }
+    
+    func updateSongList(track: TrackItem) {
+        
+        if let name = track.trackName, let artist = track.trackArtist, let artwork = track.trackImage, let id = track.id, let upvotes = track.upvotes, let downvotes = track.downvotes, let totalvotes = track.totalvotes, let album = track.trackAlbum, let accepted = track.accepted {
+            let values = ["name": name, "artist": artist, "artwork": artwork, "id": id, "upvotes": upvotes, "downvotes": downvotes, "totalvotes": totalvotes, "album": album,"accepted": accepted] as [String : Any]
+            refSongList.child(id).setValue(values)
+        }
+        else {
+            print("Problem updating firebase with accepted change. ")
+        }
+        
         
     }
 
@@ -278,7 +291,13 @@ class DJSongTableViewController: UITableViewController {
         let accept = UITableViewRowAction(style: .normal, title: "Accept") { action, index in
             print("Accept tapped")
             //self.cellBackgroundColor = UIColor.green
-            //self.tableSongList[indexPath.row].accepted = "true"
+            self.tableSongList[indexPath.row].accepted = true
+            
+            
+            //Have to update Firebase with new accepted status
+            self.updateSongList(track: self.tableSongList[indexPath.row])
+            
+            
             tableView.reloadData()
         }
         accept.backgroundColor = .green
@@ -297,13 +316,18 @@ class DJSongTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: djTrackCellId, for: indexPath) as! djTrackCell
         
-        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let _ = tableSongList[indexPath.row].id else {
+        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let _ = tableSongList[indexPath.row].id, let accepted = tableSongList[indexPath.row].accepted else {
             print("Issue parsing from tableSongList")
             return cell
         }
         
+        if accepted {
+            cell.backgroundColor = UIColor.green
+        }
+        else {
+            cell.backgroundColor = self.cellBackgroundColor
+        }
         
-        cell.backgroundColor = self.cellBackgroundColor
         cell.textLabel?.text = "\(name)"
         cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.text = "Artist: \(artist)"

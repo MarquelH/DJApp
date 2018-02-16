@@ -18,9 +18,9 @@ struct TrackItem {
     var downvotes: Int?
     var totalvotes: Int?
     var id: String?
-    var accepted: String?
+    var accepted: Bool?
     
-    init(trackName: String, trackArtist: String, trackImage: URL, trackAlbum: String) {
+    init(trackName: String, trackArtist: String, trackImage: URL, trackAlbum: String, accepted: Bool) {
         self.trackName = trackName
         self.trackArtist = trackArtist
         self.trackImage = trackImage
@@ -29,12 +29,12 @@ struct TrackItem {
         upvotes = 0
         downvotes = 0
         totalvotes = 0
+        self.accepted = accepted
     }
     
-    init() {
-    }
+   
     
-    init(trackName: String, trackArtist: String, trackImage: String, id: String, upvotes: Int, downvotes: Int, totalvotes: Int, trackAlbum: String) {
+    init(trackName: String, trackArtist: String, trackImage: String, id: String, upvotes: Int, downvotes: Int, totalvotes: Int, trackAlbum: String, accepted: Bool) {
         self.trackName = trackName
         self.trackArtist = trackArtist
         self.id = id
@@ -44,6 +44,7 @@ struct TrackItem {
         let trackImageURL = URL.init(string: trackImage)
         self.trackImage = trackImageURL
         self.trackAlbum = trackAlbum
+        self.accepted = accepted
     }
     
 }

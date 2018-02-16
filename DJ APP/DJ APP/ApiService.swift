@@ -71,7 +71,7 @@ class ApiService: NSObject {
                         
                         //Make sure we only add songs
                         if (kind == "song") {
-                            let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage, trackAlbum: trackAlbum)
+                            let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage, trackAlbum: trackAlbum, accepted: false)
                             items.append(item)
                         }
                     //print("Items size: \(items.count)")

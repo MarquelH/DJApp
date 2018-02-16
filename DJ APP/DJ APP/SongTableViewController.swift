@@ -385,22 +385,22 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: trackCellId, for: indexPath) as! TrackCell
         
-        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let key = tableSongList[indexPath.row].id else {
+        guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let key = tableSongList[indexPath.row].id, let accepted = tableSongList[indexPath.row].accepted else {
             
             print("Issue parsing from tableSongList")
             return cell
         }
         
-       /* if tableSongList[indexPath.row].accepted == "true"{
+       if accepted {
             print("ITS TRUE")
-            self.cellBackgroundColor = UIColor.green
+            cell.backgroundColor = UIColor.green
             tableView.reloadData()
         }
         else{
             print("ITS FALSE")
-        }*/
+            cell.backgroundColor = self.cellBackgroundColor
+        }
         
-        cell.backgroundColor = self.cellBackgroundColor
         cell.textLabel?.text = "\(name)"
         cell.detailTextLabel?.text = "Artist: \(artist)"
         cell.totalvotesLabel.text = "\(totalvotes)"
