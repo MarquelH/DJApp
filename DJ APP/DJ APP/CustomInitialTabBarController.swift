@@ -29,7 +29,7 @@ class CustomInitialTabBarController: UITabBarController {
         mapNavController.viewControllers = [mapController]
     
         let djNavController = UINavigationController()
-        djTableView.tabBarItem.title = "List of DJs"
+        djTableView.tabBarItem.title = "Select a DJ"
         djTableView.tabBarItem.image = UIImage(named: "text-list-7")
         djNavController.viewControllers = [djTableView]
         

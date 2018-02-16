@@ -22,7 +22,6 @@
 		66AA668D1FF097B4001ECA58 /* addEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AA668C1FF097B4001ECA58 /* addEventViewController.swift */; };
 		66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */; };
 		66C97C6D1F8FE7DE0051D308 /* DJProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */; };
-		81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */; };
 		C7169552201EC91800B7F87C /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C7169551201EC91800B7F87C /* style.json */; };
 		C71ADBE02012BD5D00C583ED /* GuestContactFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */; };
 		C724ECAE20016A9500DEEC5E /* djTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C724ECAD20016A9500DEEC5E /* djTrackCell.swift */; };
@@ -31,6 +30,9 @@
 		C76F18FB2016A01300C0FAD5 /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76F18FA2016A01300C0FAD5 /* MessagesTableViewController.swift */; };
 		C76F18FD2016A44E00C0FAD5 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76F18FC2016A44E00C0FAD5 /* MessageTableViewCell.swift */; };
 		C789F23D20097BA60056DAA2 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C789F23C20097BA60056DAA2 /* MapViewController.swift */; };
+		C78F244020376906001402A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C78F243F20376906001402A3 /* GoogleService-Info.plist */; };
+		C78F244120376906001402A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C78F243F20376906001402A3 /* GoogleService-Info.plist */; };
+		C78F244220376906001402A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C78F243F20376906001402A3 /* GoogleService-Info.plist */; };
 		C7DBB2C51FF5F43E00F34A37 /* scheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */; };
 		C7DBB2C91FF5FA5700F34A37 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */; };
 		C7E686E2200EC0D400D89D6D /* CustomInitialTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E686E1200EC0D400D89D6D /* CustomInitialTabBarController.swift */; };
@@ -69,7 +71,6 @@
 		D8C9D65D1FF1AC26005384CF /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D65C1FF1AC25005384CF /* BaseCell.swift */; };
 		D8C9D65F1FF1B11C005384CF /* DJCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D65E1FF1B11C005384CF /* DJCell.swift */; };
 		D8C9D6631FF1DD3D005384CF /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D6621FF1DD3D005384CF /* SnapshotHelper.swift */; };
-		EA9727C810593E59222AF0F7 /* Pods_DJ_APPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7F37CD4B3E866E3B68B5B5 /* Pods_DJ_APPTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,8 +93,6 @@
 /* Begin PBXFileReference section */
 		01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DJ_APP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		188BB2A11CC44D1AE4E80D2F /* Pods-DJ APP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.release.xcconfig"; sourceTree = "<group>"; };
-		1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DJ_APPUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C7F37CD4B3E866E3B68B5B5 /* Pods_DJ_APPTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DJ_APPTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScehdulingStoryboard.storyboard; sourceTree = "<group>"; };
@@ -119,6 +118,7 @@
 		C76F18FA2016A01300C0FAD5 /* MessagesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
 		C76F18FC2016A44E00C0FAD5 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		C789F23C20097BA60056DAA2 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		C78F243F20376906001402A3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C7DBB2C41FF5F43E00F34A37 /* scheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduleViewController.swift; sourceTree = "<group>"; };
 		C7DBB2C81FF5FA5700F34A37 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		C7E686E1200EC0D400D89D6D /* CustomInitialTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInitialTabBarController.swift; sourceTree = "<group>"; };
@@ -191,7 +191,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA9727C810593E59222AF0F7 /* Pods_DJ_APPTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +198,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81A3424AE417E9EB86FDC2EA /* Pods_DJ_APPUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +325,7 @@
 				D81A66C61F4F6E3E00543A8F /* Assets.xcassets */,
 				D81A66C81F4F6E3E00543A8F /* LaunchScreen.storyboard */,
 				D81A66CB1F4F6E3E00543A8F /* Info.plist */,
+				C78F243F20376906001402A3 /* GoogleService-Info.plist */,
 			);
 			path = "DJ APP";
 			sourceTree = "<group>";
@@ -410,8 +409,6 @@
 				66A41DAE1FEC291F004D31FB /* CFNetwork.framework */,
 				66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */,
 				01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */,
-				4C7F37CD4B3E866E3B68B5B5 /* Pods_DJ_APPTests.framework */,
-				1E3E8818780B30E40F585085 /* Pods_DJ_APPUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -547,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81A66CA1F4F6E3E00543A8F /* LaunchScreen.storyboard in Resources */,
+				C78F244020376906001402A3 /* GoogleService-Info.plist in Resources */,
 				66B2698F1F97D5D000AECD03 /* SudegnakNo2.otf in Resources */,
 				C7FD13462001D6CD00FEC07D /* Mikodacs.otf in Resources */,
 				C7169552201EC91800B7F87C /* style.json in Resources */,
@@ -560,6 +558,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C78F244120376906001402A3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,6 +566,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C78F244220376906001402A3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

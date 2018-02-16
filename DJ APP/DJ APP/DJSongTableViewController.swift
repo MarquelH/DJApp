@@ -180,7 +180,10 @@ class DJSongTableViewController: UITableViewController {
     func updateSongList(track: TrackItem) {
         
         if let name = track.trackName, let artist = track.trackArtist, let artwork = track.trackImage, let id = track.id, let upvotes = track.upvotes, let downvotes = track.downvotes, let totalvotes = track.totalvotes, let album = track.trackAlbum, let accepted = track.accepted {
-            let values = ["name": name, "artist": artist, "artwork": artwork, "id": id, "upvotes": upvotes, "downvotes": downvotes, "totalvotes": totalvotes, "album": album,"accepted": accepted] as [String : Any]
+            
+            let stringForAccepted = String(describing: artwork)
+            
+            let values = ["name": name, "artist": artist, "artwork": stringForAccepted, "id": id, "upvotes": upvotes, "downvotes": downvotes, "totalvotes": totalvotes, "album": album,"accepted": accepted] as [String : Any]
             refSongList.child(id).setValue(values)
         }
         else {
@@ -256,7 +259,7 @@ class DJSongTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedSongTrack = SongSelectedByDJViewController()
+        /*let selectedSongTrack = SongSelectedByDJViewController()
         if self.presentedViewController != nil {
             //do i have to keep this? w
             self.dismiss(animated: true, completion: nil)
@@ -269,7 +272,8 @@ class DJSongTableViewController: UITableViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {() in
                 self.tableView.deselectRow(at: indexPath, animated: false)
             })
-        })
+        })*/
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -302,11 +306,7 @@ class DJSongTableViewController: UITableViewController {
         }
         accept.backgroundColor = .green
         
-        let deny = UITableViewRowAction(style: .destructive, title: "Deny") { action, index in
-        }
-        //deny.backgroundColor = .red
-        
-        return [accept, deny]
+        return [accept]
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -322,7 +322,7 @@ class DJSongTableViewController: UITableViewController {
         }
         
         if accepted {
-            cell.backgroundColor = UIColor.green
+            cell.backgroundColor = UIColor(red: 65/255, green: 244/255, blue: 104/255, alpha: 1.0)
         }
         else {
             cell.backgroundColor = self.cellBackgroundColor

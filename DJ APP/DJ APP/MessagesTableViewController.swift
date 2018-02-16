@@ -29,7 +29,6 @@ class MessagesTableViewController: UITableViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
         theNavItem.title = "Messages"
-        
     }
     
     @objc func handleLogout() {
@@ -131,19 +130,28 @@ class MessagesTableViewController: UITableViewController {
         let theMessage = msg.message
         let theNumber = msg.guestPhone
         let theName = msg.guestName
+        
         if theNumber != "No Number Given" {
             let alert = UIAlertController(title: theName, message: "\(theMessage!)\n Phone: \(theNumber!)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
             self.navigationController?.popViewController(animated: true)
         }))
-        self.present(alert, animated: true, completion: nil)
+            self.tabBarController?.present(alert, animated: true, completion: {() in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {() in
+                    self.tableView.deselectRow(at: indexPath, animated: false)
+                })
+            })
     }
         else{
             let alert = UIAlertController(title: theName, message: theMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
                 self.navigationController?.popViewController(animated: true)
             }))
-            self.present(alert, animated: true, completion: nil)
+            self.tabBarController?.present(alert, animated: true, completion: {() in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {() in
+                    self.tableView.deselectRow(at: indexPath, animated: false)
+                })
+            })
         }
     }
     
@@ -161,7 +169,6 @@ class MessagesTableViewController: UITableViewController {
         cell.textLabel?.text = "\(indexPath.row+1))  From: " + "\(theName!)"
         cell.detailTextLabel?.text = "\(theNumber!)"
         cell.backgroundColor = UIColor.black
-        
         return cell
     }
  

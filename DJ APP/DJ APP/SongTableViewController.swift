@@ -393,8 +393,9 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         
        if accepted {
             print("ITS TRUE")
-            cell.backgroundColor = UIColor.green
-            tableView.reloadData()
+            cell.backgroundColor = UIColor(red: 65/255, green: 244/255, blue: 104/255, alpha: 1.0)
+        //rgb(66, 244, 149)
+            //tableView.reloadData()
         }
         else{
             print("ITS FALSE")

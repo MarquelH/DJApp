@@ -53,10 +53,11 @@ class SongSelectedByDJViewController: BaseTrackViewController {
         trackAlbum.widthAnchor.constraint(equalTo: mainview.widthAnchor, constant: -24).isActive = true
         trackAlbum.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
-        cancelButton.centerXAnchor.constraint(equalTo: mainview.centerXAnchor).isActive = true
-        cancelButton.topAnchor.constraint(equalTo: mainview.bottomAnchor).isActive = true
+        cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         cancelButton.widthAnchor.constraint(equalTo: mainview.widthAnchor, constant: -72).isActive = true
         cancelButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        print("DONE WITH CONSTRAINTS")
     }
     
     //check if parent still has DJ and such
