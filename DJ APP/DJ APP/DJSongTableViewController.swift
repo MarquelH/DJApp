@@ -39,7 +39,7 @@ class DJSongTableViewController: UITableViewController {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor.white
-        nrl.text = "No songs requested yet!"
+        nrl.text = "No songs requested!"
         nrl.font = UIFont(name: "Mikodacs", size: 20)
         nrl.textAlignment = .center
         //nrl.font = UIFont.boldSystemFont(ofSize: 20)

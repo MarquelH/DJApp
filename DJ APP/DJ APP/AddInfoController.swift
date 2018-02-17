@@ -367,7 +367,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             
                 
                 //display alert
-                let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 48 hours for your DJ account to be processed and created.\nPress 'Continue' to be taken the main view.", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 12 hours for your DJ account to be processed and created.\nBy pressing continue, you agree to the obligation of playing songs at least 5 minutes after swiping a song left to accept.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
                     print("I was pressed")
                     self.registrationComplete()
