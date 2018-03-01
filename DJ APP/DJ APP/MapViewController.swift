@@ -183,7 +183,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                             
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "M/dd/yy, h:mm a"
-                            
+                            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                        
+                        print("\(date!)")
+                        print("\(endTime!)")
+                        
+                        var sde = dateFormatter.date(from: date!)
+                        var ede = dateFormatter.date(from: endTime!)
+                        
+                        print("\(sde)")
+                        print("\(ede)")
+                        
                         guard let sd = dateFormatter.date(from: date!), let ed = dateFormatter.date(from: endTime!) else {
                                 print("Failed converting the the dates")
                                 return
@@ -200,6 +210,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         let dateFormatter2 = DateFormatter()
                         dateFormatter2.dateStyle = DateFormatter.Style.short
                         dateFormatter2.timeStyle = DateFormatter.Style.short
+                        dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
                         let strToday = dateFormatter2.string(from: todaysDate)
                         let dateAloneArray = strToday.split(separator: ",")
                         let todaysDateForComparison = dateAloneArray[0]

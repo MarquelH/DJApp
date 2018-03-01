@@ -90,6 +90,7 @@ class addEventViewController: UIViewController {
         
         dateFormatter.dateStyle = DateFormatter.Style.short
         dateFormatter.timeStyle = DateFormatter.Style.short
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         if (eventToAddDateAndTime.isEditing) {
             let strDate = dateFormatter.string(from: sender.date)

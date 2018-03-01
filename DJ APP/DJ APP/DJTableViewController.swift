@@ -104,7 +104,8 @@ class DJTableViewController: UITableViewController {
                         let currDateTime = Date()
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "M/dd/yy, h:mm a"
-                        
+                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                            
                         guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
                             print("Failed converting the the dates")
                             return

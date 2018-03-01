@@ -65,6 +65,7 @@ class scheduleViewController: UIViewController {
                     
                     dateFormatter2.dateStyle = DateFormatter.Style.short
                     dateFormatter2.timeStyle = DateFormatter.Style.short
+                    dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
                     
                     
                     for date in calendarView.selectedDates{
@@ -258,7 +259,7 @@ class scheduleViewController: UIViewController {
         
         dateFormatter2.dateStyle = DateFormatter.Style.short
         dateFormatter2.timeStyle = DateFormatter.Style.short
-        
+        dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
         
         let strDate = dateFormatter2.string(from: date)
         
@@ -315,6 +316,7 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
         
         dateFormatter2.dateStyle = DateFormatter.Style.short
         dateFormatter2.timeStyle = DateFormatter.Style.short
+        dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
         
         let strDate = dateFormatter2.string(from: date)
         

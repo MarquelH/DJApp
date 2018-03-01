@@ -39,7 +39,7 @@ class DJSongTableViewController: UITableViewController {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor.white
-        nrl.text = "No songs requested!"
+        nrl.text = "No songs requested!\n This page automatically goes live when your scheduled events start."
         nrl.font = UIFont(name: "Mikodacs", size: 20)
         nrl.textAlignment = .center
         //nrl.font = UIFont.boldSystemFont(ofSize: 20)
@@ -108,9 +108,10 @@ class DJSongTableViewController: UITableViewController {
                         let currDateTime = Date()
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "M/dd/yy, h:mm a"
+                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                         
                         guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
-                            print("Failed converting the the dates")
+                            print("Failed converting the dates")
                             return
                         }
                         
