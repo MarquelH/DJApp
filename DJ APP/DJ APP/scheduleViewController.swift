@@ -284,7 +284,7 @@ extension scheduleViewController: JTAppleCalendarViewDataSource {
         formatter.timeZone = Calendar.current.timeZone
         formatter.locale = Calendar.current.locale
         
-        let startDate = formatter.date(from: "2018 02 01")
+        let startDate = formatter.date(from: "2018 04 10")
         let endDate = formatter.date(from: "2020 12 29")
         
         let parameters = ConfigurationParameters(startDate: startDate!, endDate: endDate!)

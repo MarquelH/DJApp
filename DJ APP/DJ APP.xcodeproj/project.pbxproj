@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4856D38BFCA136CD4CBA1230 /* Pods_DJ_APP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */; };
+		58D71E405F28B38CCB65BCDB /* Pods_DJ_APPUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239BC7D474AA9F637E4B58F4 /* Pods_DJ_APPUITests.framework */; };
 		66A41DA31FEC15DB004D31FB /* ScehdulingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */; };
 		66A41DAD1FEC2909004D31FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */; };
 		66A41DAF1FEC291F004D31FB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A41DAE1FEC291F004D31FB /* CFNetwork.framework */; };
@@ -71,6 +72,7 @@
 		D8C9D65D1FF1AC26005384CF /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D65C1FF1AC25005384CF /* BaseCell.swift */; };
 		D8C9D65F1FF1B11C005384CF /* DJCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D65E1FF1B11C005384CF /* DJCell.swift */; };
 		D8C9D6631FF1DD3D005384CF /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9D6621FF1DD3D005384CF /* SnapshotHelper.swift */; };
+		F9F87F97AC9B013B9636E0CF /* Pods_DJ_APPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7750ECC8B4378210A396B6C /* Pods_DJ_APPTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,7 @@
 /* Begin PBXFileReference section */
 		01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DJ_APP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		188BB2A11CC44D1AE4E80D2F /* Pods-DJ APP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.release.xcconfig"; sourceTree = "<group>"; };
+		239BC7D474AA9F637E4B58F4 /* Pods_DJ_APPUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DJ_APPUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		551F39FE0AEF518DA8E91F68 /* Pods-DJ APPUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPUITests/Pods-DJ APPUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5D02D30DA68EF32D9F243A82 /* Pods-DJ APPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APPTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APPTests/Pods-DJ APPTests.release.xcconfig"; sourceTree = "<group>"; };
 		66A41DA21FEC15DB004D31FB /* ScehdulingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ScehdulingStoryboard.storyboard; sourceTree = "<group>"; };
@@ -110,9 +113,11 @@
 		66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SudegnakNo2.otf; sourceTree = "<group>"; };
 		66C97C6C1F8FE7DE0051D308 /* DJProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJProfileViewController.swift; sourceTree = "<group>"; };
 		7B57B000E7390BB668F482F7 /* Pods-DJ APP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJ APP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJ APP/Pods-DJ APP.debug.xcconfig"; sourceTree = "<group>"; };
+		A7750ECC8B4378210A396B6C /* Pods_DJ_APPTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DJ_APPTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7169551201EC91800B7F87C /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C71ADBDF2012BD5D00C583ED /* GuestContactFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestContactFormViewController.swift; sourceTree = "<group>"; };
 		C724ECAD20016A9500DEEC5E /* djTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = djTrackCell.swift; sourceTree = "<group>"; };
+		C755EE8C2056B52700309016 /* Mathlete-Bulky.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mathlete-Bulky.otf"; sourceTree = "<group>"; };
 		C76113F22006CF7F003E3EE3 /* NavForTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavForTableViewController.swift; sourceTree = "<group>"; };
 		C766A4C520057F5A006A3DDF /* SongSelectedByDJViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectedByDJViewController.swift; sourceTree = "<group>"; };
 		C76F18FA2016A01300C0FAD5 /* MessagesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F87F97AC9B013B9636E0CF /* Pods_DJ_APPTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58D71E405F28B38CCB65BCDB /* Pods_DJ_APPUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				C7FD13452001D64000FEC07D /* Mikodacs.otf */,
+				C755EE8C2056B52700309016 /* Mathlete-Bulky.otf */,
 				66B2698E1F97D59E00AECD03 /* SudegnakNo2.otf */,
 				C7F8DCE91FFEE50000890BB6 /* Storyboards */,
 				D8AC84791FF5935E001566EA /* DJ APP.entitlements */,
@@ -409,6 +417,8 @@
 				66A41DAE1FEC291F004D31FB /* CFNetwork.framework */,
 				66A41DAC1FEC2908004D31FB /* AudioToolbox.framework */,
 				01A6AFA7DBF276DB25548BE5 /* Pods_DJ_APP.framework */,
+				A7750ECC8B4378210A396B6C /* Pods_DJ_APPTests.framework */,
+				239BC7D474AA9F637E4B58F4 /* Pods_DJ_APPUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

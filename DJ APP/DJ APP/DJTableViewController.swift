@@ -98,6 +98,11 @@ class DJTableViewController: UITableViewController {
                         let realLong = Double(eventLong)
                         let locationIwant = CLLocation(latitude: realLat!, longitude: realLong!)
                         
+                        //let status = CLLocationManager.authorizationStatus()
+                        //while status != CLAuthorizationStatus.authorizedAlways || sta
+                        
+                        //Check if location has been allowed here
+                        
                         let theDistance = locationIwant.distance(from: self.currentUserLocation!)
                         if theDistance <= 1609.34 { //1609.34 is about 1 mile in meters.
 

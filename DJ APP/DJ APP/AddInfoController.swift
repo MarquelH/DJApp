@@ -17,7 +17,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     var username: String?
     var password: String?
     
-    let genre: [String] = ["Rap", "Hip-Hop", "Reggee", "R&B", "EDM", "House", "Rock", "Country", "Folk", "Indie", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
+    let genre: [String] = ["Rap", "Hip-Hop", "Reggae", "R&B", "EDM", "House", "Rock", "Country", "Folk", "Indie", "Soul", "Funk", "Jazz", "Alternative", "Pop"]
     
     lazy var profilePic: UIImageView = {
         let pp = UIImageView()
@@ -357,7 +357,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         
                         if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
                             
-                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": false, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
+                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
                             
                         self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
                         }
@@ -367,7 +367,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             
                 
                 //display alert
-                let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. Please allow up to 12 hours for your DJ account to be processed and created.\nBy pressing continue, you agree to the obligation of playing songs at least 5 minutes after swiping a song left to accept.", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. \nPress Continue to get stated!", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
                     print("I was pressed")
                     self.registrationComplete()
@@ -471,7 +471,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     func registrationComplete() {
         self.dismiss(animated: true, completion: nil)
         let loginControl = LoginController()
-        loginControl.handleGuestEnter()
+        loginControl.handleLoginEnter()
+        //loginControl.handleGuestEnter()
         //self.loginController?.handleGuestEnter()
     }
     

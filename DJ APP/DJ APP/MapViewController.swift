@@ -66,7 +66,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
+        let status = CLLocationManager.authorizationStatus()
         
+        if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.notDetermined ||
+            status == CLAuthorizationStatus.restricted){
+            
+            }
         layoutViews()
         
     }
@@ -137,6 +142,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func layoutViews() {
+        
         
         if (passedLat == 0.0){
         strLong = -76.942554

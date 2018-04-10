@@ -31,15 +31,29 @@ class CustomInitialTabBarController: UITabBarController {
         let djNavController = UINavigationController()
         djTableView.tabBarItem.title = "Select a DJ"
         djTableView.tabBarItem.image = UIImage(named: "text-list-7")
+        //djTableView.tabBarItem.badgeColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         djNavController.viewControllers = [djTableView]
         
         tabBar.barTintColor = UIColor.black
-        tabBar.tintColor = UIColor.purple
+        tabBar.tintColor = UIColor.white
         
         viewControllers = [mapNavController,djNavController]
         
         self.selectedIndex = 0
         UIApplication.shared.statusBarStyle = .default
+        
+        let numberOfItems = CGFloat((self.tabBar.items!.count))
+        
+        let tabBarItemSize = CGSize(width: (self.tabBar.frame.width) / numberOfItems,
+                                    height: (self.tabBar.frame.height))
+        
+        self.tabBar.selectionIndicatorImage
+            = UIImage.imageWithColor(color: UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0),
+                                     size: tabBarItemSize).resizableImage(withCapInsets: .zero)
+        
+        self.tabBar.frame.size.width = self.view.frame.width + 4
+        self.tabBar.frame.origin.x = -2
+        
     }
     
     func handleBack() {
@@ -64,4 +78,18 @@ class CustomInitialTabBarController: UITabBarController {
         self.guestID = id
     }
 
+}
+
+extension UIImage
+{
+    class func imageWithColor(color: UIColor, size: CGSize) -> UIImage
+    {
+        let rect: CGRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
