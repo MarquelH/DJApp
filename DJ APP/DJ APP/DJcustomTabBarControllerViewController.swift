@@ -17,10 +17,23 @@ class DJcustomTabBarControllerViewController: UITabBarController {
         super.viewDidLoad()
 
         tabBar.barTintColor = UIColor.black
-        tabBar.tintColor = UIColor.purple
+        tabBar.tintColor = UIColor.white
         
 
         sendDJToViews()
+        
+        // Doing Pink Selection indicator.
+        let numberOfItems = CGFloat((self.tabBar.items!.count))
+        
+        let tabBarItemSize = CGSize(width: (self.tabBar.frame.width) / numberOfItems,
+                                    height: (self.tabBar.frame.height))
+        
+        self.tabBar.selectionIndicatorImage
+            = UIImage.imageWithColor(color: UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0),
+                                     size: tabBarItemSize).resizableImage(withCapInsets: .zero)
+        
+        self.tabBar.frame.size.width = self.view.frame.width + 4
+        self.tabBar.frame.origin.x = -2
     }
 
     
