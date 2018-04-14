@@ -645,11 +645,11 @@
             </objects>
             <point key="canvasLocation" x="-2174" y="-488"/>
         </scene>
-        <!--Go Live-->
+        <!--Song List-->
         <scene sceneID="sSM-dQ-dFe">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZEW-xL-Ngl" customClass="NavForTableViewController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Go Live" image="listIcon" id="TFo-3f-KBW"/>
+                    <tabBarItem key="tabBarItem" title="Song List" image="listIcon" id="TFo-3f-KBW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NI7-Sa-kEI">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

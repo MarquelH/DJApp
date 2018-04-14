@@ -69,6 +69,7 @@ class ApiService: NSObject {
                             return
                         }
                         
+                        print("Track Image: \(trackImage)")
                         //Make sure we only add songs
                         if (kind == "song") {
                             let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage, trackAlbum: trackAlbum, accepted: false)
