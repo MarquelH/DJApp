@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DJ APP/DJTableViewController.swift"
-            timestampString = "545376608.31602"
+            timestampString = "545535308.468891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "235"
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DJ APP/MapViewController.swift"
-            timestampString = "545530204.524449"
+            timestampString = "545535308.469063"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "layoutViews()"
             landmarkType = "7">
          </BreakpointContent>

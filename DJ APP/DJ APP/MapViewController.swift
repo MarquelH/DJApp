@@ -88,7 +88,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearch))
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearch))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search Map", style: .plain, target: self, action: #selector(handleSearch))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
         //Bar text
@@ -257,7 +258,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                                     marker.title = "\(name!) is playing at \(realStrTime)!"
                                 }
                         marker.icon = UIImage(named: "headphonesSmall")
-                        marker.snippet = "\(location!)"
+                        //marker.snippet = "\(location!)"
+                        marker.snippet = "Click Select A DJ tab to Request!"
                         marker.tracksViewChanges = true
                         marker.tracksInfoWindowChanges = true
                         marker.map = self.mapView
