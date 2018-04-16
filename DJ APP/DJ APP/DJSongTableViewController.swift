@@ -144,7 +144,7 @@ class DJSongTableViewController: UITableViewController {
                 //No Snap for Song list -> Remove all songs from song list, unless it was empty to begin with
                 guard let workingSnap = snapshot.value as? [String: AnyObject] else {
                     if var currSnap = self.currentSnapshot {
-                        currSnap.removeAll()
+                        //currSnap.removeAll()
                     }
                     return
                 }
