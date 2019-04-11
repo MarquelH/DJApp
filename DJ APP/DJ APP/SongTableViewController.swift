@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-
+import StoreKit
 
 class SongTableViewController: UITableViewController, FetchDataForSongTable {
 
@@ -57,8 +57,10 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        if (UserDefaults.standard.integer(forKey: "launchCount") == 10){
+            //Request review from user every 10th launch.
+            SKStoreReviewController.requestReview()
+        }
         //Set the reference to the dj selected & to the guest
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)

@@ -10,7 +10,7 @@ import UIKit
 
 class RegisterController: UIViewController, UITextFieldDelegate {
 
-    var loginController: LoginController?
+    var loginController: DJLoginController?
     
     let headphonesLogo: UIImageView = {
         let img = UIImageView()
@@ -22,7 +22,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     
     let usernameContainer: UIView = {
         let cv = UIView()
-        cv.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        cv.backgroundColor = UIColor.white
         cv.layer.masksToBounds = true
         cv.layer.cornerRadius = 30
         cv.layer.borderWidth = 0.5
@@ -44,7 +44,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         let htf = UITextField()
         htf.placeholder = "Password (Must be at least 6 characters)"
         htf.clearButtonMode = .whileEditing
-        htf.isSecureTextEntry = true
+        //htf.isSecureTextEntry = true
         htf.translatesAutoresizingMaskIntoConstraints = false
         htf.textColor = UIColor.black
         return htf
@@ -52,7 +52,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     
     let passwordContainer: UIView = {
         let cv = UIView()
-        cv.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        cv.backgroundColor = UIColor.white
         cv.layer.masksToBounds = true
         cv.layer.cornerRadius = 30
         cv.layer.borderWidth = 0.5
@@ -72,7 +72,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     }()
     let reenterPasswordContainer: UIView = {
         let cv = UIView()
-        cv.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        cv.backgroundColor = UIColor.white
         cv.layer.masksToBounds = true
         cv.layer.cornerRadius = 30
         cv.layer.borderWidth = 0.5
@@ -81,14 +81,14 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         return cv
     }()
     
-    let backgroundImage: UIImageView = {
+    /*let backgroundImage: UIImageView = {
         let bi = UIImageView()
         bi.image = UIImage(named: "headphonesImage")
         bi.translatesAutoresizingMaskIntoConstraints = false
         bi.contentMode = .scaleAspectFill
         bi.layer.masksToBounds = true
         return bi
-    }()
+    }()*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +98,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
         self.reenterPasswordTextField.delegate = self
+        self.view.backgroundColor = UIColor.black
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -140,7 +141,7 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     }
     
     func setupNavigationBar() {
-        self.navigationItem.title = "Login Information"
+        self.navigationItem.title = "Login Credentials"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleContinue))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
@@ -148,7 +149,6 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     }
     
     func setupViews() {
-        view.addSubview(backgroundImage)
         view.addSubview(passwordContainer)
         view.addSubview(reenterPasswordContainer)
         view.addSubview(usernameContainer)
@@ -158,11 +158,6 @@ class RegisterController: UIViewController, UITextFieldDelegate {
         reenterPasswordContainer.addSubview(reenterPasswordTextField)
 
         //let quarterHeight = view.frame.height / 3
-        
-        backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        backgroundImage.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         
         
         headphonesLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

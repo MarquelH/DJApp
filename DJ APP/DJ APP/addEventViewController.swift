@@ -222,7 +222,7 @@ class addEventViewController: UIViewController {
         else{
                 //Generate new key inside EventList node and return it
                 let key = self.refEventList.childByAutoId().key
-                addEventWithKey(key: key)
+                addEventWithKey(key: key!)
         }
     }
     

@@ -23,6 +23,15 @@ class NavForTableViewController: UINavigationController {
             if let v2 = child as? MessagesTableViewController{
                 v2.dj = dj
             }
+            if let v3 = child as? scheduleViewController{
+                v3.dj = dj
+            }
+            if let v4 = child as? addEventViewController{
+                v4.dj = dj
+            }
+            if let v5 = child as? DJSideProfileViewController{
+                v5.dj = dj
+            }
             else{
                 print("Not the right VC")
             }

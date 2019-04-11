@@ -21,6 +21,7 @@ class DJPRofileViewController: UIViewController {
         profilePic.isUserInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
         self.view.backgroundColor = UIColor.black
+        //self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(goBackToTabbedView))
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -33,6 +34,28 @@ class DJPRofileViewController: UIViewController {
         }))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func setupNavigationBar() {
+        //Back button
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(goBackToTabbedView))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        
+        
+        //Bar text
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 29) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        
+        if let name = dj?.djName {
+            self.navigationItem.title = "\(name)" + "'s Profile"
+        }
+        else {
+            print("Dj Passed in has no name")
+        }
+    }
+    
+    @objc func goBackToTabbedView() {
+        self.parent?.dismiss(animated: true, completion: nil)
     }
     
     func loadUpFullView(tapGestureRec: UITapGestureRecognizer){
@@ -67,6 +90,7 @@ class DJPRofileViewController: UIViewController {
             print("Dj was not passed through")
         }
         setupViews()
+        setupNavigationBar()
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
@@ -110,7 +134,7 @@ class DJPRofileViewController: UIViewController {
         scrollView.addSubview(genreText)
         scrollView.addSubview(twitterText)
         
-        scrollView.addSubview(dmDJButton)
+        //scrollView.addSubview(dmDJButton)
         scrollView.addSubview(headphonesLogo)
         
         scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -190,10 +214,10 @@ class DJPRofileViewController: UIViewController {
         headphonesLogo.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
         //dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        dmDJButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        dmDJButton.bottomAnchor.constraint(equalTo: (self.tabBarController?.tabBar.topAnchor)!).isActive = true
-        dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        //dmDJButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        //dmDJButton.bottomAnchor.constraint(equalTo: (self.tabBarController?.tabBar.topAnchor)!).isActive = true
+        //dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
+        //dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
     
     let scrollView: UIScrollView = {

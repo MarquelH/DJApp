@@ -1,67 +1,52 @@
 PODS:
-  - Firebase/Auth (4.10.1):
-    - Firebase/Core
-    - FirebaseAuth (= 4.4.4)
-  - Firebase/Core (4.10.1):
-    - FirebaseAnalytics (= 4.1.0)
-    - FirebaseCore (= 4.0.17)
-  - Firebase/Database (4.10.1):
-    - Firebase/Core
-    - FirebaseDatabase (= 4.1.5)
-  - Firebase/Storage (4.10.1):
-    - Firebase/Core
-    - FirebaseStorage (= 2.1.3)
-  - FirebaseAnalytics (4.1.0):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseAuth (4.4.4):
-    - FirebaseAnalytics (~> 4.1)
-    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+  - CardsLayout (0.0.1)
+  - Firebase/Auth (5.16.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (= 5.3.0)
+  - Firebase/CoreOnly (5.16.0):
+    - FirebaseCore (= 5.2.0)
+  - Firebase/Database (5.16.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (= 5.1.0)
+  - Firebase/Storage (5.16.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (= 3.1.0)
+  - FirebaseAuth (5.3.0):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
+    - GoogleUtilities/Environment (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.17):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.5):
-    - FirebaseAnalytics (~> 4.1)
-    - FirebaseCore (~> 4.0)
+  - FirebaseAuthInterop (1.0.0)
+  - FirebaseCore (5.2.0):
+    - GoogleUtilities/Logger (~> 5.2)
+  - FirebaseDatabase (5.1.0):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.9):
-    - FirebaseCore (~> 4.0)
-  - FirebaseStorage (2.1.3):
-    - FirebaseAnalytics (~> 4.1)
-    - FirebaseCore (~> 4.0)
+  - FirebaseStorage (3.1.0):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleMaps (2.6.0):
-    - GoogleMaps/Maps (= 2.6.0)
-  - GoogleMaps/Base (2.6.0)
-  - GoogleMaps/Maps (2.6.0):
+  - GoogleMaps (3.0.2):
+    - GoogleMaps/Maps (= 3.0.2)
+  - GoogleMaps/Base (3.0.2)
+  - GoogleMaps/Maps (3.0.2):
     - GoogleMaps/Base
-  - GooglePlacePicker (2.6.0):
-    - GoogleMaps (= 2.6.0)
-    - GooglePlaces (= 2.6.0)
-  - GooglePlaces (2.6.0):
-    - GoogleMaps/Base (= 2.6.0)
-  - GoogleToolboxForMac/DebugUtils (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
-    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
-  - GTMSessionFetcher/Core (1.1.14)
-  - JTAppleCalendar (7.1.5)
+  - GooglePlacePicker (3.0.2):
+    - GoogleMaps (= 3.0.2)
+    - GooglePlaces (= 3.0.2)
+  - GooglePlaces (3.0.2):
+    - GoogleMaps/Base (= 3.0.2)
+  - GoogleUtilities/Environment (5.3.7)
+  - GoogleUtilities/Logger (5.3.7):
+    - GoogleUtilities/Environment
+  - GTMSessionFetcher/Core (1.2.1)
+  - JTAppleCalendar (7.1.6)
   - leveldb-library (1.20)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
+  - LGButton (1.1.5)
 
 DEPENDENCIES:
+  - CardsLayout
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
@@ -69,24 +54,43 @@ DEPENDENCIES:
   - GooglePlacePicker
   - GooglePlaces
   - JTAppleCalendar (~> 7.1.4)
+  - LGButton
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CardsLayout
+    - Firebase
+    - FirebaseAuth
+    - FirebaseAuthInterop
+    - FirebaseCore
+    - FirebaseDatabase
+    - FirebaseStorage
+    - GoogleMaps
+    - GooglePlacePicker
+    - GooglePlaces
+    - GoogleUtilities
+    - GTMSessionFetcher
+    - JTAppleCalendar
+    - leveldb-library
+    - LGButton
 
 SPEC CHECKSUMS:
-  Firebase: 92c6ba593e32db0defde464a9adc981d5cb49f97
-  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
-  FirebaseAuth: d040bb7a9db6dfc29d0e7ec82d48be51352b2581
-  FirebaseCore: 872307b001bbefda1dfa0dbfffa50a6919023d4a
-  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
-  FirebaseInstanceID: d2058a35e9bebda1b6dd42486b84917bde552a9d
-  FirebaseStorage: 9a863a2bb96c406958eeff7c2f1dfa9f44c44a13
-  GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
-  GooglePlacePicker: e4488625effb006f59de49e14b7a603e463e4261
-  GooglePlaces: f6ddf33b75cef69e888907d9947c57198ed845f3
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
-  JTAppleCalendar: 2d4f974f9f3c8b4964d51ca1f6e004883c031fbe
+  CardsLayout: ceeb8f9c26319b47a2f0995ea4590cf7ba881462
+  Firebase: 749a8ff4962f9d8c79dda1966de20f6f77583d67
+  FirebaseAuth: c9b3ff063c223d2841d97240af547ce511bce19a
+  FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
+  FirebaseCore: ea2d1816723ef21492b8e9113303e1350db5e08c
+  FirebaseDatabase: 23acb0c53cd4d4070a427b60100b2e4aaa97c45d
+  FirebaseStorage: 29075f874c2b3cf61e5221a62c4ceefc809e5412
+  GoogleMaps: 941cd655e009b4d8e42df19a3d749bc3fccec973
+  GooglePlacePicker: 00a74c32477edc8e01a99cf49a6bd4e64767a2b1
+  GooglePlaces: c086e0055dc5f0177d7c9d65fc77a1734f9a4825
+  GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
+  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  JTAppleCalendar: abb30678f42a4ef8a340a932b1dcb8c85a33dac2
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  LGButton: 4acce1fab5cc64f7774687d47438cd968cd53246
 
-PODFILE CHECKSUM: ef742464966366eba046ead04c93da2be0590f71
+PODFILE CHECKSUM: 9b3e43bb53dff41e2ec6ac75480c44b1e360140c
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3

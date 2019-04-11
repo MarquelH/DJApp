@@ -12,6 +12,7 @@ import Firebase
 import GooglePlaces
 import MapKit
 import CoreLocation
+import StoreKit
 
 class MapViewController: UIViewController, CLLocationManagerDelegate {
     var guestID: String?
@@ -38,7 +39,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         let location = locations[0]
         
         let tableNav = self.tabBarController?.viewControllers![1] as! UINavigationController
-        let tableView = tableNav.viewControllers[0] as! DJTableViewController
+        let tableView = tableNav.viewControllers[0] as! DJMenuViewController
         tableView.currentUserLocation = location
         
         strLat = location.coordinate.latitude
@@ -61,8 +62,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         //listLikelyPlaces()
         setupNavBar()
         
+        
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
@@ -155,6 +157,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         }
         
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera!)
+        mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = true
         
         do {
             // Set the map style by passing the URL of the local file.

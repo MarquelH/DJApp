@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--breakOff-->
+        <scene sceneID="LfL-CC-gXE">
+            <objects>
+                <viewController storyboardIdentifier="breakOff" title="breakOff" id="Yrp-Lu-LHx" customClass="BreakoffController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mfD-Ml-IQk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vX-Av-Pza" customClass="LGButton" customModule="LGButton">
+                                <rect key="frame" x="66" y="235" width="282" height="102"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="102" id="0AM-Sm-yTu"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                        <color key="value" red="0.30761538300000002" green="0.4772980986" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientStartColor">
+                                        <color key="value" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientEndColor">
+                                        <color key="value" red="0.30761538300000002" green="0.4772980986" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="gradientHorizontal" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="DJ Mode"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="djRequestButtonTapped:" destination="Yrp-Lu-LHx" eventType="touchUpInside" id="7IV-FE-cdw"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4qq-AQ-5P0" customClass="LGButton" customModule="LGButton">
+                                <rect key="frame" x="66" y="559" width="282" height="102"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="102" id="IFE-t0-89p"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                        <color key="value" red="0.30761538300000002" green="0.4772980986" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientStartColor">
+                                        <color key="value" red="0.30761538300000002" green="0.4772980986" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientEndColor">
+                                        <color key="value" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="gradientHorizontal" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="Guest Mode"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="guestButtonTapped:" destination="Yrp-Lu-LHx" eventType="touchUpInside" id="xUa-S1-Fzb"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4qq-AQ-5P0" firstAttribute="leading" secondItem="zRj-OV-KqB" secondAttribute="leading" constant="66" id="6UP-Rr-Ecd"/>
+                            <constraint firstItem="zRj-OV-KqB" firstAttribute="trailing" secondItem="4qq-AQ-5P0" secondAttribute="trailing" constant="66" id="Q8Y-kd-LgD"/>
+                            <constraint firstItem="6vX-Av-Pza" firstAttribute="top" secondItem="zRj-OV-KqB" secondAttribute="top" constant="191" id="Tct-Tp-BIE"/>
+                            <constraint firstItem="6vX-Av-Pza" firstAttribute="leading" secondItem="zRj-OV-KqB" secondAttribute="leading" constant="66" id="hKJ-BG-dYR"/>
+                            <constraint firstItem="zRj-OV-KqB" firstAttribute="trailing" secondItem="6vX-Av-Pza" secondAttribute="trailing" constant="66" id="ixQ-cJ-KOc"/>
+                            <constraint firstItem="zRj-OV-KqB" firstAttribute="bottom" secondItem="4qq-AQ-5P0" secondAttribute="bottom" constant="201" id="mft-te-zJj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zRj-OV-KqB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WuJ-1w-CVg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1583.2" y="-21.139430284857571"/>
+        </scene>
+        <!--BrowseDJsViewController-->
+        <scene sceneID="kAV-3e-OVW">
+            <objects>
+                <viewController storyboardIdentifier="BrowseDJsViewController" title="BrowseDJsViewController" id="EeO-Zw-dSx" customClass="BrowseDJsViewController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="veK-wf-4rF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" barStyle="black" placeholder="Search For a DJ" translatesAutoresizingMaskIntoConstraints="NO" id="7FE-3s-1uU">
+                                <rect key="frame" x="0.0" y="65" width="414" height="56"/>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lhQ-rW-GMm">
+                                <rect key="frame" x="84" y="192" width="246" height="419"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="246" id="SHc-et-4W5"/>
+                                    <constraint firstAttribute="height" constant="419" id="uMw-il-Tln"/>
+                                </constraints>
+                                <collectionViewLayout key="collectionViewLayout" id="Kkw-PZ-KsX" customClass="CardsCollectionViewLayout" customModule="CardsLayout"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DJCollectionViewCell" id="PWU-tK-vWk" customClass="DJCollectionViewCell" customModule="DJ_APP" customModuleProvider="target">
+                                        <rect key="frame" x="10.5" y="0.0" width="225" height="394"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="225" height="394"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                        <size key="customSize" width="225" height="394"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstItem="lhQ-rW-GMm" firstAttribute="centerX" secondItem="veK-wf-4rF" secondAttribute="centerX" id="5yc-EO-a3m"/>
+                            <constraint firstItem="7FE-3s-1uU" firstAttribute="leading" secondItem="mj9-ig-DiB" secondAttribute="leading" id="BSs-6n-WV3"/>
+                            <constraint firstItem="lhQ-rW-GMm" firstAttribute="top" secondItem="7FE-3s-1uU" secondAttribute="bottom" constant="71" id="J8V-wY-oG6"/>
+                            <constraint firstItem="7FE-3s-1uU" firstAttribute="trailing" secondItem="mj9-ig-DiB" secondAttribute="trailing" id="Zay-b0-wPf"/>
+                            <constraint firstItem="7FE-3s-1uU" firstAttribute="top" secondItem="mj9-ig-DiB" secondAttribute="top" constant="21" id="s0I-cJ-dER"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mj9-ig-DiB"/>
+                    </view>
+                    <connections>
+                        <outlet property="djSearchBar" destination="7FE-3s-1uU" id="hAJ-vE-fcm"/>
+                        <outlet property="myCollectionView" destination="lhQ-rW-GMm" id="Cqw-OB-leN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LLK-nl-XPo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-709" y="10"/>
+        </scene>
+    </scenes>
+</document>

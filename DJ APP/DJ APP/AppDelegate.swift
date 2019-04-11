@@ -24,10 +24,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         UIApplication.shared.statusBarStyle = .lightContent
-        window?.rootViewController = LoginController()
+        let storyboard = UIStoryboard(name: "breakOffStoryboard", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "breakOff")
+        window?.rootViewController = initialViewController
         
         GMSPlacesClient.provideAPIKey("AIzaSyCGFT46V-bJKMBqTCfe0ME3wqHfd0cUuz0")
         GMSServices.provideAPIKey("AIzaSyCGFT46V-bJKMBqTCfe0ME3wqHfd0cUuz0")
+        
+        // get current number of times app has been launched
+        let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
+        
+        // increment received number by one
+        UserDefaults.standard.set(currentCount+1, forKey:"launchCount")
+        
+        // save changes to disk
+        UserDefaults.standard.synchronize()
         
         return true
     }

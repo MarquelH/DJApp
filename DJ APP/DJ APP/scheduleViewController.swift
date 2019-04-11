@@ -9,6 +9,7 @@
 import UIKit
 import JTAppleCalendar
 import Firebase
+import StoreKit
 
 class scheduleViewController: UIViewController {
     @IBOutlet weak var calendarView: JTAppleCalendarView!
@@ -158,7 +159,11 @@ class scheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if (UserDefaults.standard.integer(forKey: "launchCount") == 10){
+            //Asking for review on 10th launch.
+            var sk = SKStoreReviewController()
+            SKStoreReviewController.requestReview()
+        }
         setupCalendarView()
         setEditButtonShape()
         timeLabel.isHidden = true

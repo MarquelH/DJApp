@@ -163,28 +163,32 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
             //Image compression for optimization
             if let profileImage = self.djProfileImage.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.075) {
                 
-                
-                storageRef.putData(uploadData, metadata: nil, completion: {
-                    (metadata, error) in
+                storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                     if let error = error{
                         print(error.localizedDescription)
                         return
                     }
+                    storageRef.downloadURL { (url, error) in
+                        if let error = error{
+                            print(error.localizedDescription)
+                            return
+                        }
+                        let profileImageUrl = url?.absoluteString
+                        if profileImageUrl == nil {
+                            print("URL was null!")
+                            return
+                        }
+                    self.ref.child("users").child(uid).updateChildValues(["djName":name, "hometown":hometown, "age":age,
+                                                                          "genre":genre, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter])
                     
-                    if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                        
-                        self.ref.child("users").child(uid).updateChildValues(["djName":name, "hometown":hometown, "age":age,
-                                                                         "genre":genre, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter])
-                        
-                        let alert = UIAlertController(title: "Success", message: "We have updated your info \(name)!", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
-                            self.popAlertOff()
-                        }))
-                        self.present(alert, animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Success", message: "We have updated your info \(name)!", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
+                        self.popAlertOff()
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                     }
-                })
+                }
             }
-            
         }
     }
     

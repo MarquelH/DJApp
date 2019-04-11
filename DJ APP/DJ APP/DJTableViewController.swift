@@ -100,8 +100,24 @@ class DJTableViewController: UITableViewController {
                         
                         //let status = CLLocationManager.authorizationStatus()
                         //while status != CLAuthorizationStatus.authorizedAlways || sta
-                        
+                        let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString)
                         //Check if location has been allowed here
+                        guard let curentUserLoc = self.currentUserLocation else {
+                            let alert = UIAlertController(title: "User location not enabled!", message: "Location must be enabled so we can determine whether you are eligible to request!", preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "Screw you", style: UIAlertActionStyle.destructive, handler: { action in
+                                let mapview = MapViewController()
+                                self.tabBarController?.selectedIndex = 0
+                            }))
+                            alert.addAction(UIAlertAction(title: "Go to Settings", style: UIAlertActionStyle.default, handler: { action in
+                                if UIApplication.shared.canOpenURL(settingsURL as! URL) {
+                                    UIApplication.shared.open(settingsURL as! URL, completionHandler: { (success) in
+                                        print("Settings opened: \(success)") // Prints true
+                                    })
+                                }
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                            return
+                        }
                         
                         let theDistance = locationIwant.distance(from: self.currentUserLocation!)
                         if theDistance <= 1609.34 { //1609.34 is about 1 mile in meters.

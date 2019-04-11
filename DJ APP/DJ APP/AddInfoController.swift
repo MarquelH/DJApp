@@ -12,7 +12,7 @@ import GooglePlaces
 
 class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
 
-    var loginController: LoginController?
+    var loginController: DJLoginController?
     var originalView: CGFloat?
     var username: String?
     var password: String?
@@ -226,16 +226,6 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         return tb
     }()
     
-    
-    let backgroundImage: UIImageView = {
-        let bi = UIImageView()
-        bi.image = UIImage(named: "headphonesImage")
-        bi.translatesAutoresizingMaskIntoConstraints = false
-        bi.contentMode = .scaleAspectFill
-        bi.layer.masksToBounds = true
-        return bi
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         originalView = self.view.frame.origin.y
@@ -335,33 +325,34 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             else {
                 //save user info into database
                 
-                guard let uid = user?.uid else {
+                guard let uid = user?.user.uid else {
                     return
                 }
                 // successfully created user
                 let imageName = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("\(imageName).jpg")
-                
-             
-                
-                //Image Compression for optimization
                 if let profileImage = self.profilePic.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.075) {
                 
-                
-                    storageRef.putData(uploadData, metadata: nil, completion: {
-                        (metadata, error) in
+                storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
+                    if let error = error{
+                        print(error.localizedDescription)
+                        return
+                    }
+                    storageRef.downloadURL { (url, error) in
                         if let error = error{
                             print(error.localizedDescription)
                             return
                         }
-                        
-                        if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
-                            
-                            let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
-                            
-                        self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
+                        let profileImageUrl = url?.absoluteString
+                        if profileImageUrl == nil {
+                            print("URL was null!")
+                            return
                         }
-                    })
+                        let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
+                        
+                        self.registerUserIntoDatabaseWithUID(uid: uid,values: values as [String : AnyObject])
+                    }
+                }
                 }
 
             
@@ -470,8 +461,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     func registrationComplete() {
         self.dismiss(animated: true, completion: nil)
-        let loginControl = LoginController()
-        loginControl.handleLoginEnter()
+        let loginControl = DJLoginController()
+        loginControl.handleLogin()
         //loginControl.handleGuestEnter()
         //self.loginController?.handleGuestEnter()
     }
@@ -497,7 +488,6 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     func setupViews(){
-        view.addSubview(backgroundImage)
         view.addSubview(profilePic)
         view.addSubview(addPhoto)
         view.addSubview(hometownLabel)
@@ -517,11 +507,6 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         view.addSubview(twitterTextField)
         view.addSubview(logoGo)
         view.addSubview(logoDJ)
-        
-        backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        backgroundImage.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         
         profilePic.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profilePic.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 24).isActive = true

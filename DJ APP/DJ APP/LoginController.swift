@@ -18,18 +18,24 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     var djSnapshot: [String: AnyObject]?
 
     
-    let djGuestLoginButton: UIButton = {
+    let GuestLoginButton: UIButton = {
         let lb = UIButton(type: .system)
-        lb.setTitle("Login", for: .normal)
+        lb.setTitle("Enter", for: .normal)
         lb.setTitleColor(UIColor.white, for: .normal)
         lb.backgroundColor = UIColor.black.withAlphaComponent(0.25)
         lb.layer.cornerRadius = 40
         lb.layer.borderWidth = 1
         lb.layer.borderColor = UIColor.white.cgColor
         lb.titleLabel?.font = UIFont(name: "Mikodacs", size: 35)
-        lb.addTarget(self, action: #selector(handleLoginEnter), for: .touchUpInside)
+        lb.addTarget(self, action: #selector(handleGuestEnter), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
+    }()
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(frame: CGRect.zero)
+        aiv.translatesAutoresizingMaskIntoConstraints = false
+        return aiv
     }()
     
     
@@ -91,14 +97,13 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     }()
     
     lazy var djOrGuestSegmentedControl: UISegmentedControl = {
-        let sc = UISegmentedControl(items: [ "Guest Login","DJ Login",])
+        let sc = UISegmentedControl(items: ["Enter Guest Mode Below"])
         sc.backgroundColor = UIColor.blue.withAlphaComponent(0.25)
         sc.tintColor = UIColor.white
         sc.selectedSegmentIndex = 0
         sc.layer.cornerRadius = 12
         sc.layer.masksToBounds = true
         sc.layer.borderWidth = 1
-        sc.addTarget(self, action: #selector(handleLoginEnterChange), for: .valueChanged)
         sc.translatesAutoresizingMaskIntoConstraints = false
         return sc
     }()
@@ -106,10 +111,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     let notUserLabel: UIButton = {
         let btn = UIButton(type: .system)
         let lightblue = UIColor.white.withAlphaComponent(0.75)
-        btn.setTitle("Don't have a DJ account? Register Here!", for: .normal)
+        btn.setTitle("Please provide your email to enter Guest Mode.", for: .normal)
         btn.setTitleColor(lightblue, for: .normal)
         btn.titleLabel?.font = UIFont.italicSystemFont(ofSize: 15)
-        btn.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -139,6 +143,16 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         return img
     }()
     
+    let backButton: UIButton = {
+        let btn = UIButton(type: .system)
+        let image = UIImage(named: "icons8-rewind-50") as UIImage!
+        btn.setImage(image, for: .normal)
+        btn.addTarget(self, action: #selector(backToBreakOff), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    
     
     var loginButtonTopAnchor: NSLayoutConstraint?
     
@@ -151,11 +165,19 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         view.insertSubview(backgroundImage, at: 0)
 
         setupViews()
-        handleLoginEnterChange()
+        setupTextFields()
         
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
       
+    }
+    
+    @objc func setupTextFields() {
+            loginButtonTopAnchor?.constant = -55
+            notUserLabel.isHidden = false
+            passwordContainer.isHidden = true
+            passwordImage.isHidden = true
+            passwordTextField.isHidden = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -168,8 +190,16 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         getSnapshots()
         UIApplication.shared.statusBarStyle = .lightContent
     }
+    
+    @objc func backToBreakOff() {
+        let storyboard = UIStoryboard(name: "breakOffStoryboard", bundle: nil)
+        let breakOff = storyboard.instantiateViewController(withIdentifier: "breakOff") as! BreakoffController
+        present(breakOff, animated: true, completion: nil)
+    }
 
     func checkIfUserIsAlreadyLoggedIn() {
+        activityIndicatorView.isHidden = false
+        activityIndicatorView.startAnimating()
         //If guest is currently signed in, then his stuff is in the database, so find it
         if Auth.auth().currentUser != nil {
             if let email = Auth.auth().currentUser?.email {
@@ -181,28 +211,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
                 //if guest is found then present DJ Tableview
                 let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
                 if (isFoundTuple.0) {
+                    activityIndicatorView.stopAnimating()
+                    activityIndicatorView.isHidden = true
                     presentDJTableView(guestID: isFoundTuple.key)
-                }
-                //Else check if the dj is found then present DJ root view
-                else {
-                    guard let djSnap = self.djSnapshot else {
-                        print("Dj Snap did not load")
-                        return
-                    }
-                    let djFoundTuple = isFound(snapshot: djSnap, guestEmail: email)
-                    if (djFoundTuple.0) {
-                        checkIfValidated(uid: djFoundTuple.key)
-                    }
-                    //Else not in either database, but still signed in so sign out
-                    else {
-                        print("User was logged in but not found in user or guest database. So will now logout")
-                        do {
-                            try Auth.auth().signOut()
-                        }
-                        catch let error as NSError {
-                            print("Error with signing out of firebase: \(error.localizedDescription)")
-                        }
-                    }
                 }
             }
             else {
@@ -238,41 +249,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         
     }
     
-
-    
-    //Handle what shows when you hit login or enter (UISegmentedController)
-    @objc func handleLoginEnterChange() {
-        if (djOrGuestSegmentedControl.selectedSegmentIndex == 1) {
-            djGuestLoginButton.setTitle("Login", for: .normal)
-            passwordContainer.isHidden = false
-            passwordImage.isHidden = false
-            passwordTextField.isHidden = false
-            notUserLabel.isHidden = false
-            loginButtonTopAnchor?.constant = 25
-        }
-        else {
-            loginButtonTopAnchor?.constant = -55
-            notUserLabel.isHidden = true
-            passwordContainer.isHidden = true
-            passwordImage.isHidden = true
-            passwordTextField.isHidden = true
-            djGuestLoginButton.setTitle("Enter", for: .normal)
-        }
-    }
-    
-    //Handle what happens when you hit login/enter button
-    @objc func handleLoginEnter() {
-        //login was hit
-        if (djOrGuestSegmentedControl.selectedSegmentIndex == 1){
-            handleLogin()
-        }
-        //Guest enter was hit
-        else {
-            handleGuestEnter()
-        }
-    }
-    
-    @objc func handleRegister() {
+    /*@objc func handleRegister() {
         let registerController = RegisterController()
         registerController.loginController = self
         let navController = UINavigationController(rootViewController: registerController)
@@ -283,100 +260,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         navController.view.backgroundColor = UIColor.black
         
         present(navController, animated: true, completion: nil)
-    }
+    }*/
     
-    func handleLogin() {
-        guard let email = usernameTextField.text, let password = passwordTextField.text else {
-            let alert = UIAlertController(title: "Invalid Entries", message: "Username and password must be valid", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                self.usernameTextField.text = ""
-                self.passwordTextField.text = ""
-            }))
-            self.present(alert, animated: true, completion: nil)
-            print("Login info was invalid")
-            return
-        }
-        Auth.auth().signIn(withEmail: email, password: password, completion: {(user, error) in
-            
-            //There was an error signing in, reset text fields.
-            if let error = error {
-                print ("Error signing in: ")
-                print(error.localizedDescription)
-                self.usernameTextField.text = ""
-                self.passwordTextField.text = ""
-                let alert = UIAlertController(title: "Invalid Login", message: "Error logging in with the given username and password! Please Re-enter.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                    self.usernameTextField.text = ""
-                    self.passwordTextField.text = ""
-                }))
-                self.present(alert, animated: true, completion: nil)
-            }
-            //Else there was no error and we gucci
-            else {
-                
-                //Check if the user is validated by us
-                guard let uid = Auth.auth().currentUser?.uid else {
-                    return
-                }
-                self.checkIfValidated(uid: uid)
-            }
-        })
-    }
-    
-    func checkIfValidated(uid: String) {
-        
-        guard let djSnap = self.djSnapshot else {
-            print("djsnapshot did not load in check if validated")
-            return
-        }
-        
-        for (key, dictionary) in djSnap {
-            if key == uid {
-                guard let validated = dictionary["validated"] as? Bool else {
-                    print("Dj not validated")
-                    return
-                }
-                
-                //If user is validated, present DJRootViewController
-                if (validated) {
-                    
-                    //Create DJ object, and store the dictionary snapshot into it.
-                    if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let twitter = dictionary["twitterOrInstagram"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
-                        
-                        let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: uid, twitter: twitter)
-                        
-                        //Send DJ to Dj Tab Bar Controller
-                        
-                        if validated == true {
-                        
-                        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle: nil)
-                        let tabbarController = storyboard.instantiateViewController(withIdentifier: "tabBarView") as! DJcustomTabBarControllerViewController
-                        tabbarController.dj = dj
-                        
-                        present(tabbarController, animated: true, completion: nil)
-                        }
-                        else{
-                                let alert = UIAlertController(title: "Skrt!", message: "You must be validated in order to be a DJ.", preferredStyle: UIAlertControllerStyle.alert)
-                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-                                    print("I was pressed")
-                                    self.navigationController?.popViewController(animated: true)
-                                }))
-                            
-                                self.present(alert, animated: true, completion: nil)
-                        }
-                        
-                        
-                        
-                    }
-                    else {
-                        print("Parsing the DJ went wrong")
-                    }
-                }
-            }
-        }
-    }
-    
-    func handleGuestEnter() {
+    @objc func handleGuestEnter() {
         
         guard let email = usernameTextField.text?.lowercased(), email != "", let guestSnap = self.guestSnapshot else {
             print("Username is empty, or snap did not load")
@@ -389,6 +275,12 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         if isFoundTuple.0 {
             Auth.auth().signIn(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
+                    let alert = UIAlertController(title: "Oh man!", message: "There has been an error with your sign-in. Please try again or come back later.", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                        self.navigationController?.popViewController(animated: true)
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
                     print("Error signing in with the user from email: \(error.localizedDescription)")
                     return
                 }
@@ -402,6 +294,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
             //Also signs them in
             Auth.auth().createUser(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
+                    print(error)
                     print("Error creating user and logging in from the user from email: \(error.localizedDescription)")
                     return
                 }
@@ -410,8 +303,8 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
                     let ref = Database.database().reference().child("guests")
                     let key = ref.childByAutoId().key
                     let values = ["email":email]
-                    ref.child(key).setValue(values)
-                    self.presentDJTableView(guestID: key)
+                    ref.child(key!).setValue(values)
+                    self.presentDJTableView(guestID: key!)
 
                 }
             })
@@ -449,7 +342,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
             if let email = v["email"] as? String, email.lowercased() == guestEmail {
                 return (true, k)
             }
-           
         }
         return (false, "")
     }
@@ -458,7 +350,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     
     func setupViews() {
         UIApplication.shared.statusBarStyle = .lightContent
-        view.addSubview(djGuestLoginButton)
+        view.addSubview(GuestLoginButton)
         view.addSubview(usernameContainer)
         view.addSubview(passwordContainer)
         view.addSubview(djOrGuestSegmentedControl)
@@ -466,6 +358,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         view.addSubview(logoInLogin)
         view.addSubview(logoGo)
         view.addSubview(logoDJ)
+        view.addSubview(backButton)
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.isHidden = true
 
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)
@@ -516,11 +411,11 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         passwordContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         
         
-        djGuestLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loginButtonTopAnchor = djGuestLoginButton.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 50)
+        GuestLoginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginButtonTopAnchor = GuestLoginButton.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 50)
         loginButtonTopAnchor?.isActive = true
-        djGuestLoginButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        djGuestLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        GuestLoginButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        GuestLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
         
         usernameImage.centerYAnchor.constraint(equalTo: usernameContainer.centerYAnchor).isActive = true
         usernameImage.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 12).isActive = true
@@ -544,6 +439,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         passwordTextField.rightAnchor.constraint(equalTo: passwordContainer.rightAnchor, constant: -12).isActive = true
         passwordTextField.leftAnchor.constraint(equalTo: passwordImage.rightAnchor, constant: 12).isActive = true
+        
+        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
     }
     
 }

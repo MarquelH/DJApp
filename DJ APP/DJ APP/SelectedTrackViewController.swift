@@ -172,10 +172,11 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
             
             let song = ["id": key, "name":name, "artist":artist, "album": album, "artwork":artwork, "upvotes": 1, "downvotes":0, "totalvotes":1, "accepted":accepted] as [String : AnyObject]
             
-            refSongList.child(key).setValue(song)
+            let theKey = key as! String
+            refSongList.child(theKey).setValue(song)
             
             //update the upvoteIDs
-            upvoteIDs.append(key)
+            upvoteIDs.append(theKey)
             updateRefGuestByDJ()
         }
         else {
