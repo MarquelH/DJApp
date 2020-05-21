@@ -19,16 +19,16 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     let ref = Database.database().reference()
     
     @IBAction func tapGestureRecTapped(_ sender: UITapGestureRecognizer) {
-        print("Firing off")
+        //print("Firing off")
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Edit Profile Picture", style: .default) { action in
-            print("Fired off edit function")
+            //print("Fired off edit function")
             self.fireOffImagePicker()
         })
         
         alert.addAction(UIAlertAction(title: "View Current Profile Picture", style: .default) { action in
-            print("Fired off ")
+            //print("Fired off ")
             self.tappedActions(sender)
             
         })
@@ -77,10 +77,10 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
         super.viewDidLoad()
         
         if let name = dj?.uid{
-            print("We Have a DJ")
+            //print("We Have a DJ")
         }
         else{
-            print("No DJ")
+            //print("No DJ")
         }
         
         placeDJNameInLabel()
@@ -174,12 +174,12 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     
     @IBAction func saveChangesBtnPressed(_ sender: Any) {
         startAnimating()
-        print("HELLO FROM THIS METHOD")
+        //print("HELLO FROM THIS METHOD")
         if hometownTextField.text != "", DJNameTextField.text != "", ageTextField.text != "",
             genreTextField.text != "" {
             
             guard let uid = dj?.uid, let age = Int(ageTextField.text!), let genre = genreTextField.text, let name = DJNameTextField.text, let hometown = hometownTextField.text, let twitter = twitterInstagramTextField.text, let profileUrl = dj?.profilePicURL else {
-                print("Not valid args passed in.")
+                //print("Not valid args passed in.")
                 return
             }
             
@@ -191,7 +191,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
                 
                 storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                     if let error = error{
-                        print(error.localizedDescription)
+                        //print(error.localizedDescription)
                         self.stopAnimating()
                         let alert = UIAlertController(title: "Sorry!", message: "There was an issue saving your changes :(", preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
@@ -202,7 +202,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
                     }
                     storageRef.downloadURL { (url, error) in
                         if let error = error{
-                            print(error.localizedDescription)
+                            //print(error.localizedDescription)
                             self.stopAnimating()
                             let alert = UIAlertController(title: "Sorry!", message: "There was an issue saving your changes :(", preferredStyle: UIAlertControllerStyle.alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
@@ -213,7 +213,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
                         }
                         let profileImageUrl = url?.absoluteString
                         if profileImageUrl == nil {
-                            print("URL was null!")
+                            //print("URL was null!")
                             self.stopAnimating()
                             let alert = UIAlertController(title: "Sorry!", message: "There was an issue saving your changes :(", preferredStyle: UIAlertControllerStyle.alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
@@ -288,7 +288,7 @@ func tappedActions(_ sender: UITapGestureRecognizer){
     
     
     func fireOffImagePicker (){
-        print("FIRING OFF IMAGE PICKER")
+        //print("FIRING OFF IMAGE PICKER")
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -322,7 +322,7 @@ func tappedActions(_ sender: UITapGestureRecognizer){
             djNameLabel.adjustsFontSizeToFitWidth = true
         }
         else{
-            print("No DJ Name")
+            //print("No DJ Name")
         }
     }
     
@@ -335,7 +335,7 @@ func tappedActions(_ sender: UITapGestureRecognizer){
             twitterInstagramTextField.text = twitter
         }
         else{
-            print("No DJ Info")
+            //print("No DJ Info")
         }
     }
     
@@ -351,7 +351,7 @@ func tappedActions(_ sender: UITapGestureRecognizer){
             djProfileImage.loadImageWithChachfromUrl(urlString: profileURL)
         }
         else{
-            print("No Image to place")
+            //print("No Image to place")
         }
     }
 
@@ -432,7 +432,7 @@ extension DJSideProfileViewController: GMSAutocompleteViewControllerDelegate {
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        print("Error: ", error.localizedDescription)
+        //print("Error: ", error.localizedDescription)
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {

@@ -30,8 +30,8 @@ class BaseTrackViewController: UIViewController {
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
             if let error = error {
-                print("Adding values error: \n")
-                print(error.localizedDescription)
+                //print("Adding values error: \n")
+                //print(error.localizedDescription)
                 return
             }
             
@@ -52,7 +52,7 @@ class BaseTrackViewController: UIViewController {
             setTrackImage(urlString: trackImageAbsString)
         }
         else {
-            print("Problem with absolute string")
+            //print("Problem with absolute string")
         }
         trackName.text = track?.trackName
         trackArtist.text = track?.trackArtist

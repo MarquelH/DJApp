@@ -90,7 +90,7 @@ class DJMenuViewController: UITableViewController, NVActivityIndicatorViewable {
                         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                         
                         guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
-                            print("Failed converting the the dates")
+                            //print("Failed converting the the dates")
                             return
                         }
                         
@@ -103,7 +103,7 @@ class DJMenuViewController: UITableViewController, NVActivityIndicatorViewable {
                             (ed.timeIntervalSince1970) >= currDateTime.timeIntervalSince1970) {
                             
                             let newEvent = Event(djID: djID, location: location, startTime: sd, endTime: ed, eventID: eventID, djName: djName)
-                            print("Added to the list: \(eventID) at location: \(location)")
+                            //print("Added to the list: \(eventID) at location: \(location)")
                             self.events.append(newEvent)
                             
                             //Add the DJ to the DJ List
@@ -119,14 +119,14 @@ class DJMenuViewController: UITableViewController, NVActivityIndicatorViewable {
                         }
                     }
                     else{
-                        print("Couldn't find information about the event")
+                        //print("Couldn't find information about the event")
                     }
                     
                 }
                 
             }
             else {
-                print("Problem parsing events into [String: AnyObjet]")
+                //print("Problem parsing events into [String: AnyObjet]")
             }
             self.users.sort {
                 $0.djName! < $1.djName!
@@ -154,14 +154,14 @@ class DJMenuViewController: UITableViewController, NVActivityIndicatorViewable {
     
     func addDJToList(djID: String) {
         guard let dictionary = usersSnapshot else {
-            print("userSnapshot is empty")
+            //print("userSnapshot is empty")
             return
         }
         
         for (key,value) in dictionary {
             
             if key == djID {
-                print("DJ Found in snapshot, going to add them to the list. ")
+                //print("DJ Found in snapshot, going to add them to the list. ")
                 if let name = value["djName"] as? String, let age = value["age"] as? Int, let _ = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let _ =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
                     
                     //let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
@@ -183,7 +183,7 @@ class DJMenuViewController: UITableViewController, NVActivityIndicatorViewable {
                     
                 }
                 else{
-                    print("couldn't find DJ's")
+                    //print("couldn't find DJ's")
                 }
             }
             
@@ -292,7 +292,7 @@ class DJMenuViewController: UITableViewController, NVActivityIndicatorViewable {
             try Auth.auth().signOut()
         }
         catch let error as NSError {
-            print("Error with signing out of firebase: \(error.localizedDescription)")
+            //print("Error with signing out of firebase: \(error.localizedDescription)")
         }
         dismiss(animated: true, completion: nil)
         

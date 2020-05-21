@@ -84,7 +84,7 @@ class CustomTabBarController: UITabBarController {
             homeController.setUpRefs(uidKey: uid, id: id)
         }
         else {
-            print("dj from set did not have uid")
+            //print("dj from set did not have uid")
         }
     }
 }

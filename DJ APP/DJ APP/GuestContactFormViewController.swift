@@ -46,7 +46,7 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate, NVA
     
     
     func handleSubmit() {
-        print("Send was hit")
+        //print("Send was hit")
         //push to database
         let timeStamp = Int(Date().timeIntervalSince1970)
         
@@ -93,7 +93,7 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate, NVA
             }))
             
             self.present(alert, animated: true, completion: nil)
-            print("DJ or guest not present")
+            //print("DJ or guest not present")
         }
         guestMessage.text = ""
         guestName.text = ""
@@ -134,7 +134,7 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate, NVA
             //messagesRef = Database.database().reference().child("messages").child(id)
         }
         else {
-            print("View will appear & guestID or Dj not passed in")
+            //print("View will appear & guestID or Dj not passed in")
         }
     }
 

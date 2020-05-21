@@ -83,10 +83,10 @@ class DJProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let name = dj?.djName {
-            print("Dj name is: \(name)")
+            //print("Dj name is: \(name)")
         }
         else {
-            print("Dj was not passed through")
+            //print("Dj was not passed through")
         }
         setupViews()
         setupNavigationBar()
@@ -116,7 +116,7 @@ class DJProfileViewController: UIViewController {
             genreText.text = "\(genre)"
         }
         else {
-            print("No DJ at setupViews")
+            //print("No DJ at setupViews")
         }
         
     }
@@ -359,7 +359,7 @@ class DJProfileViewController: UIViewController {
     
     let twitterText: UILabel = {
         let lbl = UILabel()
-        lbl.textColor = UIColor.black
+        lbl.textColor = UIColor.gray
         lbl.font = UIFont(name: "BebasNeue-Regular", size : 26)
         lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false

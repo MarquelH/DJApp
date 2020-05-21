@@ -186,13 +186,13 @@ class addEventViewController: UIViewController, NVActivityIndicatorViewable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let _ = dj?.uid {
-            print("DJ has uid")
+            //print("DJ has uid")
             doWeHaveDJ = true
             refEventList = Database.database().reference().child("Events")
         }
         else {
             doWeHaveDJ = false
-            print("DJ does not have uid")
+            //print("DJ does not have uid")
         }
         getEventSnapshot()
         setFonts()
@@ -212,10 +212,10 @@ class addEventViewController: UIViewController, NVActivityIndicatorViewable {
     func getEventSnapshot(){
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
             if snapshot.exists() {
-                print("snap exists")
+                //print("snap exists")
             }
             else {
-                print("snap does not exist")
+                //print("snap does not exist")
             }
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -260,7 +260,7 @@ class addEventViewController: UIViewController, NVActivityIndicatorViewable {
                 let ref2 = Database.database().reference().child("SongList")
                 if !self.songlistsToBeDeleted.isEmpty {
                     for djID in songlistsToBeDeleted {
-                        print("DELETING LIST!")
+                        //print("DELETING LIST!")
                         ref2.child(djID).setValue(nil)
                     }
                 }
@@ -320,7 +320,7 @@ class addEventViewController: UIViewController, NVActivityIndicatorViewable {
 
 extension addEventViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print("Place coordinate: \(place.coordinate)")
+        //print("Place coordinate: \(place.coordinate)")
         strLong = place.coordinate.longitude.description
         strLat = place.coordinate.latitude.description
         let parentView = parent as! DJcustomTabBarControllerViewController
@@ -335,7 +335,7 @@ extension addEventViewController: GMSAutocompleteViewControllerDelegate {
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        print("Error: ", error.localizedDescription)
+        //print("Error: ", error.localizedDescription)
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {

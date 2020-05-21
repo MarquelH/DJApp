@@ -64,14 +64,14 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
             getMessages()
         }
         else {
-            print("Chat will appear guestID or Dj not passed in")
+            //print("Chat will appear guestID or Dj not passed in")
         }
         if let height = tabbarHeight  {
             collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
             collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         }
         else {
-            print("Tabbar height was not passed in.")
+            //print("Tabbar height was not passed in.")
         }
     }
     
@@ -102,7 +102,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
 
         }
         else {
-            print("Loading table problem with GuestID")
+            //print("Loading table problem with GuestID")
         }
         
     
@@ -137,7 +137,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
 
             
             if !snapshot.exists() {
-                print("Snapshot does not exist")
+                //print("Snapshot does not exist")
                 return
             }
             for snap in snapshot.children.allObjects as! [DataSnapshot] {
@@ -153,13 +153,13 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
                     }
                 }
                 else {
-                    print("Unable to convert snapshot children into [String:AnyObjects]")
+                    //print("Unable to convert snapshot children into [String:AnyObjects]")
                 }
             }
 
             
         }) { (error) in
-            print("Error getting snapshot: \(error.localizedDescription)")
+            //print("Error getting snapshot: \(error.localizedDescription)")
         }
         
     }
@@ -170,7 +170,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
     }
     
     @objc func handleSend() {
-        print("Send was hit")
+        //print("Send was hit")
         //push to database
         let timeStamp = Int(Date().timeIntervalSince1970)
        
@@ -179,7 +179,7 @@ class GuestChatViewController: UICollectionViewController, UITextFieldDelegate, 
             ref.childByAutoId().setValue(value)
         }
         else {
-            print("Problem unwrapping message value, or dj, or guestID")
+            //print("Problem unwrapping message value, or dj, or guestID")
         }
         messageTextField.text = ""
         getMessages()

@@ -80,8 +80,8 @@ class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
         if let workingSnap = self.eventSnapshot {
             for (k,v) in workingSnap {
                 if let dateAndTime = v["StartDateAndTime"] as? String, let theName = v["DJ Name"] as? String{
-                    print("WE'RE IN")
-                    print("\(dateAndTime)")
+                    //print("WE'RE IN")
+                    //print("\(dateAndTime)")
                     let dateAloneArray = dateAndTime.split(separator: ",")
                     let dateForComparison = dateAloneArray[0]
                     let realDate = String(dateForComparison)
@@ -130,7 +130,7 @@ class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
         if refEventList != nil {
             refEventList.observeSingleEvent(of: .value, with: {(snapshot) in
                 if snapshot.exists() {
-                    print("snap exists")
+                    //print("snap exists")
                     DispatchQueue.main.async {
                         if let dictionary = snapshot.value as? [String: AnyObject] {
                             self.eventSnapshot = dictionary
@@ -139,12 +139,12 @@ class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
                 }
                 else {
                     self.eventSnapshot = nil
-                    print("snap does not exist")
+                    //print("snap does not exist")
                 }
             }, withCancel: nil)
         } else {
             self.eventSnapshot = nil
-            print("ref even does not exist")
+            //print("ref even does not exist")
         }
     }
     
@@ -177,7 +177,7 @@ class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
         else {
-            print("Snap did not load")
+            //print("Snap did not load")
         }
         return (false, "","","","")
     }
@@ -211,11 +211,11 @@ class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
     
     override func viewWillAppear(_ animated: Bool) {
         if let _ = dj?.uid {
-            print("DJ has uid")
+            //print("DJ has uid")
             refEventList = Database.database().reference().child("Events")
         }
         else {
-            print("DJ does not have uid")
+            //print("DJ does not have uid")
         }
         getEventSnapshot()
         setThefonts()
@@ -262,11 +262,11 @@ class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
                 self.tabBarController?.selectedIndex = 2
             }
             else {
-                print("Editing location, start date, and end date not set. ")
+                //print("Editing location, start date, and end date not set. ")
             }
         }
         else {
-            print("Can't make the 2nd view controller an addevent view controller")
+            //print("Can't make the 2nd view controller an addevent view controller")
         }
     }*/
     
@@ -313,7 +313,7 @@ class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
             return true
         }
         else {
-            print("RETURNED FALSE")
+            //print("RETURNED FALSE")
         return false
         }
     }

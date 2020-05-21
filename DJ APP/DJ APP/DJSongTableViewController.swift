@@ -112,11 +112,11 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
     func getEventSnapshot(){
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
             if snapshot.exists() {
-                print("snap exists")
+                //print("snap exists")
             }
             else {
                 
-                print("snap does not exist")
+                //print("snap does not exist")
             }
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -144,7 +144,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
             alert.addAction(UIAlertAction(title: "Go to location settings", style: UIAlertActionStyle.default, handler: { action in
                 if UIApplication.shared.canOpenURL(settingsURL! as URL) {
                     UIApplication.shared.open(settingsURL! as URL, completionHandler: { (success) in
-                        print("Settings opened: \(success)") // Prints true
+                        //print("Settings opened: \(success)") // Prints true
                     })
                 }
             }))
@@ -225,7 +225,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                 }
             }
             else{
-                print("No DJ Name")
+                //print("No DJ Name")
             }
             }
         }))
@@ -283,7 +283,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
             refEventList = Database.database().reference().child("Events")
         }
         else {
-            print("DJ does not have uid")
+            //print("DJ does not have uid")
         }
         setupNavigationBar()
         setupViews()
@@ -316,7 +316,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
             self.placesClient?.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
                 (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
                 if let error = error {
-                    print("An error occurred: \(error.localizedDescription)")
+                    //print("An error occurred: \(error.localizedDescription)")
                     return
                 }
                 
@@ -328,7 +328,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                 }
             })
         }
-        print("FINISHED! with location: \(Constants.DJ_LOCATION)")*/
+        //print("FINISHED! with location: \(Constants.DJ_LOCATION)")*/
     }
     
     //HELPERS -------------------------
@@ -336,10 +336,10 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
     func getSongSnapshot(){
         refSongList.observeSingleEvent(of: .value, with: {(snapshot) in
             if snapshot.exists() {
-                print("snap exists")
+                //print("snap exists")
             }
             else {
-                print("snap does not exist")
+                //print("snap does not exist")
             }
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -351,14 +351,14 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
     
     func fetchEventList() {
         self.hasEvent = false
-        print(refEventList)
+        //print(refEventList)
         refEventList.observeSingleEvent(of: .value, with: {(snapshot) in
             
             self.tableSongList.removeAll()
             
             guard let workingSnap = snapshot.value as? [String: AnyObject] else {
                 self.eventSnapshot = nil
-                print("No snapshot for event")
+                //print("No snapshot for event")
                 return
             }
             self.eventSnapshot = workingSnap
@@ -376,7 +376,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                         
                         guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
-                            print("Failed converting the dates")
+                            //print("Failed converting the dates")
                             return
                         }
                         
@@ -390,10 +390,10 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                                 self.theNavItem.title = "\(name)" + "'s Requests"
                             }
                             else {
-                                print("No DJ Name")
+                                //print("No DJ Name")
                             }
                         } else {
-                            print("NO EVENT")
+                            //print("NO EVENT")
                         }
                     }
                 }
@@ -401,7 +401,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
             self.fetchSongList(found: self.hasEvent)
             
         }, withCancel: {(error) in
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
             return
         })
     }
@@ -443,7 +443,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                 
                 
             }, withCancel: {(error) in
-                print(error.localizedDescription)
+                //print(error.localizedDescription)
                 return
             })
             
@@ -466,7 +466,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
             refSongList.child(id).setValue(values)
         }
         else {
-            print("Problem updating firebase with accepted change. ")
+            //print("Problem updating firebase with accepted change. ")
         }
         
         
@@ -507,7 +507,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
         let ref2 = Database.database().reference().child("SongList")
         if !self.songlistsToBeDeleted.isEmpty {
             for djID in songlistsToBeDeleted {
-                print("DELETING LIST!")
+                //print("DELETING LIST!")
                 ref2.child(djID).setValue(nil)
             }
         }
@@ -528,9 +528,10 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
     func deleteEventAndReloadUI() {
         if let workingSnap = self.eventSnapshot {
             for (k,v) in workingSnap {
-                if let dateAndTime = v["StartDateAndTime"] as? String, let theName = v["DJ Name"] as? String{
-                    print("WE'RE IN")
-                    print("\(dateAndTime)")
+                if let dateAndTime = v["StartDateAndTime"] as? String, let theName = v["DJ Name"] as? String,
+                    let endTime = v["EndDateAndTime"] as? String {
+                    //print("WE'RE IN")
+                    //print("\(dateAndTime)")
                     let dateAloneArray = dateAndTime.split(separator: ",")
                     let dateForComparison = dateAloneArray[0]
                     let realDate = String(dateForComparison)
@@ -549,8 +550,18 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                         let todaysDateAloneArr = strDate.split(separator: ",")
                         let todaysDateAloneForConversion = todaysDateAloneArr[0]
                         let todaysDateAloneForComparison = String(todaysDateAloneForConversion)
+                    
+                    guard let sd = dateFormatter2.date(from: dateAndTime), let ed = dateFormatter2.date(from: endTime) else {
+                        //print("Failed converting the the dates")
+                        return
+                    }
                         
-                        if (realDate == todaysDateAloneForComparison && theName == dj?.djName){
+                    
+                    //Check if the current time is within the start and end times
+                    //Add to the events list if it is.
+                        if ((realDate == todaysDateAloneForComparison && theName == dj?.djName) ||
+                            (sd.timeIntervalSince1970 <= todaysDate.timeIntervalSince1970 &&
+                            ed.timeIntervalSince1970 >= todaysDate.timeIntervalSince1970 && theName == dj?.djName)){
                             refEventList.child(k).removeValue()
                             self.tableSongList.removeAll()
                             self.hasEvent = false
@@ -566,7 +577,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                             }))
                             self.present(alert, animated: true, completion: nil)
                         } else {
-                            print("SOMETING GOING ON")
+                            //print("SOMETING GOING ON")
                         }
                         
                     //}
@@ -607,13 +618,13 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
     func displayLabel() {
         if !self.hasEvent {
             //if there's no ongoing event...
-            print("NO EVENT")
+            //print("NO EVENT")
             goLiveButton.isHidden = false
             scheduleGigButton.isHidden = false
             noRequestLabel.isHidden = true
             self.navigationItem.rightBarButtonItem = nil
         } else {
-            print("EVENT")
+            //print("EVENT")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "End Show", style: .plain, target: self, action: #selector(endShow))
             self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
             goLiveButton.isHidden = true
@@ -633,7 +644,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
                 self.placesClient?.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
                     (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error: Error?) in
                     if let error = error {
-                        print("An error occurred: \(error.localizedDescription)")
+                        //print("An error occurred: \(error.localizedDescription)")
                         return
                     }
                     
@@ -654,7 +665,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
         do {
             try fireAuth.signOut()
         } catch let signoutError as NSError {
-            print("Error signing out: %@", signoutError)
+            //print("Error signing out: %@", signoutError)
         }
         
         let loginController = DJLoginController()
@@ -697,7 +708,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
         //Trying to change cell color when accept/deny occurs
         
         let accept = UITableViewRowAction(style: .normal, title: "Accept") { action, index in
-            print("Accept tapped")
+            //print("Accept tapped")
             //self.cellBackgroundColor = UIColor.green
             self.tableSongList[indexPath.row].accepted = true
             
@@ -721,7 +732,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
         let cell = tableView.dequeueReusableCell(withIdentifier: djTrackCellId, for: indexPath) as! djTrackCell
         
         guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let _ = tableSongList[indexPath.row].id, let accepted = tableSongList[indexPath.row].accepted else {
-            print("Issue parsing from tableSongList")
+            //print("Issue parsing from tableSongList")
             return cell
         }
         
@@ -743,7 +754,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
         }
         else {
-            print("problem with URL parsing")
+            //print("problem with URL parsing")
         }
         
         cell.noSelection()

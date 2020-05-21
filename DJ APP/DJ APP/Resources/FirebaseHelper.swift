@@ -35,7 +35,7 @@ class FirebaseHelper {
             }
         }
         else {
-            print("Snap did not load")
+            //print("Snap did not load")
         }
         return (false, "","")
     }
@@ -51,7 +51,7 @@ class FirebaseHelper {
             
         }
         else {
-            print("One of the fields is not present.")
+            //print("One of the fields is not present.")
         }
     }
 }

@@ -16,14 +16,14 @@ class BreakoffController: UIViewController, UINavigationControllerDelegate, UITe
     
     @IBAction func djRequestButtonTapped(_ sender: Any) {
         let loginController = DJLoginController()
-        print("PRESENTING DJ LOGIN CONTROLLER")
+        //print("PRESENTING DJ LOGIN CONTROLLER")
         loginController.modalPresentationStyle = .fullScreen
         self.present(loginController, animated: true, completion: nil)
     }
     
     @IBAction func guestButtonTapped(_ sender: Any) {
         let loginController = LoginController()
-        print("PRESENTING GUEST LOGIN CONTROLLER")
+        //print("PRESENTING GUEST LOGIN CONTROLLER")
         loginController.modalPresentationStyle = .fullScreen
         self.present(loginController, animated: true, completion: nil)
     }

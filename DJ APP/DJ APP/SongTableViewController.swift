@@ -65,11 +65,11 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                 refGuestByDJ = Database.database().reference().child("guests").child(id).child(uidKey)
             }
             else {
-                print("Guest ID is not in SongTable viewDidLoad")
+                //print("Guest ID is not in SongTable viewDidLoad")
             }
         }
         else {
-            print("DJ does not have uid")
+            //print("DJ does not have uid")
         }
 
         setupNavigationBar()
@@ -99,7 +99,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             addUpvote(index: indexPath.row)
         }
         else {
-            print("Issue with finding index path")
+            //print("Issue with finding index path")
         }
         
         DispatchQueue.main.async {
@@ -116,10 +116,10 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             addDownvote(index: indexPath.row)
         }
         else {
-            print("Issue with finding index path")
+            //print("Issue with finding index path")
         }
         
-        print("Relaoding Table")
+        //print("Relaoding Table")
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -145,7 +145,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                         changeCellScore(index: index, amount: 2)
                     }
                     else {
-                        print("Downvote said it contained key, but it can't find index")
+                        //print("Downvote said it contained key, but it can't find index")
                     }
                 }
                     
@@ -163,7 +163,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     refSongList.child(key).setValue(workingSong)
                 }
                 else {
-                    print("Adding total values to song was not successful")
+                    //print("Adding total values to song was not successful")
                 }
             }
                 //Already has an upvote -> remove it
@@ -177,20 +177,20 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     changeCellScore(index: index, amount: 3)
                 }
                 else {
-                    print("Upvote said it contained key, but it can't find index")
+                    //print("Upvote said it contained key, but it can't find index")
                 }
                 //store the change
                 if let workingSong = song {
                     refSongList.child(key).setValue(workingSong)
                 }
                 else {
-                    print("Adding totalvotes was unsucessful for downvote")
+                    //print("Adding totalvotes was unsucessful for downvote")
                 }
                 
             }
         }
         else {
-            print("Error with key or snapshot")
+            //print("Error with key or snapshot")
         }
 
     }
@@ -215,7 +215,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                         changeCellScore(index: index, amount: -2)
                     }
                     else {
-                        print("Upvote said it contained key, but it can't find index")
+                        //print("Upvote said it contained key, but it can't find index")
                     }
                 }
                     
@@ -235,7 +235,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     refSongList.child(key).setValue(workingSong)
                 }
                 else {
-                    print("Adding totalvotes was unsucessful for downvote")
+                    //print("Adding totalvotes was unsucessful for downvote")
                 }
             }
                 //Already has downvote, so remove it
@@ -249,19 +249,19 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
                     changeCellScore(index: index, amount: -3)
                 }
                 else {
-                    print("Downvote said it contained key, but it can't find index")
+                    //print("Downvote said it contained key, but it can't find index")
                 }
                 //store the change
                 if let workingSong = song {
                     refSongList.child(key).setValue(workingSong)
                 }
                 else {
-                    print("Adding totalvotes was unsucessful for downvote")
+                    //print("Adding totalvotes was unsucessful for downvote")
                 }
             }
         }
         else {
-            print("Error with snapshot or key")
+            //print("Error with snapshot or key")
         }
     }
     
@@ -275,7 +275,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
 
         }
         else {
-            print("Change Cell Score no data in track")
+            //print("Change Cell Score no data in track")
         }
     }
     
@@ -295,14 +295,14 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             homeTabController.fetchSongList()
         }
         else {
-            print("Something wrong with tabbar controller")
+            //print("Something wrong with tabbar controller")
         }
     }
     
     func callSearch(str: String) {
         
         if let tabbar = self.tabBarController, let searchController = tabbar.viewControllers![2] as? SearchTrackViewController {
-            print("inside call search's if")
+            //print("inside call search's if")
             searchController.searchText = str
             searchController.searchController.searchBar.placeholder = str
             searchController.search()
@@ -310,7 +310,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
 
         }
         else {
-            print("Call search: something happened with unwrapping the tab bar vc")
+            //print("Call search: something happened with unwrapping the tab bar vc")
         }
         
     }
@@ -332,7 +332,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             self.navigationItem.title = "\(name)" + "'s Requests"
         }
         else {
-            print("Dj Passed in has no name")
+            //print("Dj Passed in has no name")
         }
     }
 
@@ -395,16 +395,16 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         
         guard let name = tableSongList[indexPath.row].trackName, let artist = tableSongList[indexPath.row].trackArtist, let artwork = tableSongList[indexPath.row].trackImage, let totalvotes = tableSongList[indexPath.row].totalvotes, let key = tableSongList[indexPath.row].id, let accepted = tableSongList[indexPath.row].accepted else {
             
-            print("Issue parsing from tableSongList")
+            //print("Issue parsing from tableSongList")
             return cell
         }
         
        if accepted {
-            print("ITS TRUE")
+            //print("ITS TRUE")
             cell.backgroundColor = UIColor(red: 65/255, green: 244/255, blue: 104/255, alpha: 1.0)
         }
         else{
-            print("ITS FALSE")
+            //print("ITS FALSE")
             cell.backgroundColor = self.cellBackgroundColor
         }
         
@@ -417,7 +417,7 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
         }
         else {
-            print("problem with URL parsing")
+            //print("problem with URL parsing")
         }
         
             

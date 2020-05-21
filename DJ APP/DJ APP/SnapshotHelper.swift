@@ -19,7 +19,7 @@ class SnapshotHelper: NSObject {
         
         guard let workingSong = currentSnapshot[key], let upvotes = workingSong["upvotes"] as? Int, let totalvotes = workingSong["totalvotes"] as? Int, let downvotes = workingSong["downvotes"] as? Int, let name = workingSong["name"] as? String, let artist = workingSong["artist"] as? String, let artwork = workingSong["artwork"] as? String, let id = workingSong["id"] as? String, let album = workingSong["album"] as? String, let accepted = workingSong["accepted"] as? Bool else {
             
-            print("Current snapshot is empty.")
+            //print("Current snapshot is empty.")
             return [:]
         }
         

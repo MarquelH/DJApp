@@ -65,7 +65,7 @@ class SongSelectedTrackController: BaseTrackViewController {
                 parent.addUpvote(index: index)
              }
             else {
-                print("Parent or index sent was invalid")
+                //print("Parent or index sent was invalid")
             }
         })
     }
@@ -76,7 +76,7 @@ class SongSelectedTrackController: BaseTrackViewController {
                 parent.addDownvote(index: index)
             }
             else {
-                print("Parent or index sent was invalid")
+                //print("Parent or index sent was invalid")
             }
         })
 
@@ -88,7 +88,7 @@ class SongSelectedTrackController: BaseTrackViewController {
                 parent.callSearch(str: artist)
             }
             else {
-                print("Parent or track sent was invalid")
+                //print("Parent or track sent was invalid")
             }
         })
     }
@@ -99,7 +99,7 @@ class SongSelectedTrackController: BaseTrackViewController {
                 parent.callSearch(str: album)
             }
             else {
-                print("Parent or track sent was invalid")
+                //print("Parent or track sent was invalid")
             }
         })
     }
@@ -112,7 +112,7 @@ class SongSelectedTrackController: BaseTrackViewController {
             trackAlbum.setTitle(track.trackAlbum, for: .normal)
         }
         else {
-            print("Song Selected no track passed in")
+            //print("Song Selected no track passed in")
         }
         
 
@@ -152,7 +152,7 @@ class SongSelectedTrackController: BaseTrackViewController {
     
     //check if parent still has DJ and such
     @objc func handleCancel()  {
-        print("Cancel was clicked")
+        //print("Cancel was clicked")
         
         self.dismiss(animated: true, completion: nil)
     }

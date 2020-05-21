@@ -98,7 +98,7 @@ class HomeViewController: UIViewController {
                 }
             }
         }, withCancel: {(error) in
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
         })
     }
     
@@ -140,11 +140,11 @@ class HomeViewController: UIViewController {
                 
             }
             else {
-                print("The types for fetching are wrong")
+                //print("The types for fetching are wrong")
             }
 
         }, withCancel: {(error) in
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
         })
     }
     

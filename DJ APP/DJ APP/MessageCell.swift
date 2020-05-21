@@ -62,7 +62,7 @@ class MessageCell: UICollectionViewCell {
            
         }
         else {
-            print("Problem with cell message guest ID or guest ID")
+            //print("Problem with cell message guest ID or guest ID")
         }
         textView.leftAnchor.constraint(equalTo: textBubble.leftAnchor, constant: 8).isActive = true
         textView.topAnchor.constraint(equalTo: textBubble.topAnchor, constant: 6).isActive = true

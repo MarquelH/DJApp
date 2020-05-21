@@ -36,7 +36,7 @@ class SongSelectedByDJViewController: BaseTrackViewController {
             trackAlbum.text = track.trackAlbum
         }
         else {
-            print("Song Selected no track passed in")
+            //print("Song Selected no track passed in")
         }
         
         cancelButton.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
@@ -57,12 +57,12 @@ class SongSelectedByDJViewController: BaseTrackViewController {
         cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         cancelButton.widthAnchor.constraint(equalTo: mainview.widthAnchor, constant: -72).isActive = true
         cancelButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        print("DONE WITH CONSTRAINTS")
+        //print("DONE WITH CONSTRAINTS")
     }
     
     //check if parent still has DJ and such
     @objc func handleCancel()  {
-        print("Cancel was clicked")
+        //print("Cancel was clicked")
         
         self.dismiss(animated: true, completion: nil)
     }

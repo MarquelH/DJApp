@@ -66,7 +66,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             alert.addAction(UIAlertAction(title: "Go to location settings", style: UIAlertActionStyle.default, handler: { action in
                 if UIApplication.shared.canOpenURL(settingsURL! as URL) {
                     UIApplication.shared.open(settingsURL! as URL, completionHandler: { (success) in
-                        print("Settings opened: \(success)") // Prints true
+                        //print("Settings opened: \(success)") // Prints true
                     })
                 }
             }))
@@ -124,7 +124,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         do {
             try fireAuth.signOut()
         } catch let signoutError as NSError {
-    print("Error signing out: %@", signoutError)
+    //print("Error signing out: %@", signoutError)
     }
     
     let loginController = LoginController()
@@ -146,13 +146,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getEventSnapshot(){
-        print("GETTING EVENT SNAPSHOT")
+        //print("GETTING EVENT SNAPSHOT")
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
             if snapshot.exists() {
-                print("snap exists")
+                //print("snap exists")
             }
             else {
-                print("snap does not exist")
+                //print("snap does not exist")
             }
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -199,10 +199,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         // Creates a marker in the center of the map.
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
             if snapshot.exists() {
-                print("snap exists")
+                //print("snap exists")
             }
             else {
-                print("snap does not exist")
+                //print("snap does not exist")
             }
             DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
@@ -215,17 +215,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         dateFormatter.dateFormat = "M/dd/yy, h:mm a"
                         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                         
-                        print("\(date!)")
-                        print("\(endTime!)")
+                        //print("\(date!)")
+                        //print("\(endTime!)")
                         
                         var sde = dateFormatter.date(from: date!)
                         var ede = dateFormatter.date(from: endTime!)
                         
-                        print("\(sde)")
-                        print("\(ede)")
+                        //print("\(sde)")
+                        //print("\(ede)")
                         
                         guard let sd = dateFormatter.date(from: date!), let ed = dateFormatter.date(from: endTime!) else {
-                            print("Failed converting the the dates")
+                            //print("Failed converting the the dates")
                             return
                         }
                         //Check if the current time is within the start and end times
@@ -258,19 +258,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         let realStrTime2 = strTime2.replacingOccurrences(of: " ", with: "")
                         
                         if todaysDateForComparison == eventDateForComparison {
-                            print("DATES ARE EQUAL")
+                            //print("DATES ARE EQUAL")
                             if ((ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970){
                                 self.hasEvent = true
-                                print("HAS EVENT")
+                                //print("HAS EVENT")
                             }
                             if self.hasEvent && latCoords != "0.0" && longCoords != "0.0" {
-                                print("SETTING MARKER")
+                                //print("SETTING MARKER")
                             
                                 let marker = GMSMarker()
                                 marker.tracksInfoWindowChanges = true
                                 let actualLats = Double(latCoords!) as! CLLocationDegrees
                                 let actualLongs = Double(longCoords!) as! CLLocationDegrees
-                                print("LAT: \(actualLats), LONG: \(actualLongs)")
+                                //print("LAT: \(actualLats), LONG: \(actualLongs)")
                                 marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
                                 if ((sd.timeIntervalSince1970) <= todaysDate.timeIntervalSince1970){
                                     marker.title = "\(name!) is playing until \(realStrTime2)!"
@@ -288,20 +288,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                                 self.hasEvent = false
                             }
                             else{
-                                print("DOES NOT HAVE AN EVENT")
+                                //print("DOES NOT HAVE AN EVENT")
                             }
                        
                     }
                         else if endStringDate == todaysDateForComparison{
-                            print("DATES ARE EQUAL")
+                            //print("DATES ARE EQUAL")
                             if ((ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970){
                                 self.hasEvent = true
-                                print("ITS TRUE")
+                                //print("ITS TRUE")
                             }
                             
                             if self.hasEvent && latCoords != "0.0" && longCoords != "0.0" {
                                 
-                                print("We have something on this date!")
+                                //print("We have something on this date!")
                                 let marker = GMSMarker()
                                 let actualLats = Double(latCoords!) as! CLLocationDegrees
                                 let actualLongs = Double(longCoords!) as! CLLocationDegrees
@@ -315,15 +315,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                                 self.hasEvent = false
                             }
                             else{
-                                print("DOES NOT HAVE AN EVENT")
+                                //print("DOES NOT HAVE AN EVENT")
                             }
                             
                         }
                         else if (ed.timeIntervalSince1970 >= todaysDate.timeIntervalSince1970) && (sd.timeIntervalSince1970 <= todaysDate.timeIntervalSince1970) {
-                            print("EVENTS IN BETWEEN")
+                            //print("EVENTS IN BETWEEN")
                         }
                         else {
-                            print("NO EVENTS TODAY")
+                            //print("NO EVENTS TODAY")
                         }
                         
             }
@@ -335,7 +335,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
 
 extension MapViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        //print("Place coordinate: \(place.coordinate)")
+        ////print("Place coordinate: \(place.coordinate)")
         passedLong = place.coordinate.longitude
         passedLat = place.coordinate.latitude
         layoutViews()
@@ -343,7 +343,7 @@ extension MapViewController: GMSAutocompleteViewControllerDelegate {
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        print("Error: ", error.localizedDescription)
+        //print("Error: ", error.localizedDescription)
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
@@ -365,7 +365,7 @@ extension MapViewController: GMSAutocompleteViewControllerDelegate {
     // Handle incoming location events.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
-        print("Location: \(location)")
+        //print("Location: \(location)")
         
         passedLong = location.coordinate.longitude
         passedLat = location.coordinate.latitude
@@ -381,23 +381,23 @@ extension MapViewController: GMSAutocompleteViewControllerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .restricted:
-            print("Location access was restricted.")
+            //print("Location access was restricted.")
         case .denied:
-            print("User denied access to location.")
+            //print("User denied access to location.")
             // Display the map using the default location.
             mapView.isHidden = false
         case .notDetermined:
-            print("Location status not determined.")
+            //print("Location status not determined.")
         case .authorizedAlways: fallthrough
         case .authorizedWhenInUse:
-            print("Location status is OK.")
+            //print("Location status is OK.")
         }
     }
     
     // Handle location manager errors.
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
-        print("Error: \(error)")
+        //print("Error: \(error)")
     }
 }*/
 

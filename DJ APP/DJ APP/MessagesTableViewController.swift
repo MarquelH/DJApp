@@ -36,13 +36,13 @@ class MessagesTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(dj)
+        //print(dj)
         if let uid = dj?.uid {
-            print("SETTING THE REF")
+            //print("SETTING THE REF")
             ref = Database.database().reference().child("messages").child(uid)
             getMessages()
         } else {
-            print("Chat will appear guestID or Dj not passed in")
+            //print("Chat will appear guestID or Dj not passed in")
         }
     }
     
@@ -85,7 +85,7 @@ class MessagesTableViewController: UITableViewController {
                 
                 
                 if !snapshot.exists() {
-                    print("Snapshot does not exist")
+                    //print("Snapshot does not exist")
                     return
                 }
                 
@@ -104,13 +104,13 @@ class MessagesTableViewController: UITableViewController {
                         }
                     }
                     else {
-                        print("Unable to convert snapshot children into [String:AnyObjects]")
+                        //print("Unable to convert snapshot children into [String:AnyObjects]")
                     }
                 }
                 
                 
             }) { (error) in
-                print("Error getting snapshot: \(error.localizedDescription)")
+                //print("Error getting snapshot: \(error.localizedDescription)")
             }
         }
         self.refreshController.endRefreshing()

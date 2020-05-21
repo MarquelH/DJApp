@@ -224,9 +224,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         //If guest is currently signed in, then his stuff is in the database, so find it
         if Auth.auth().currentUser != nil {
             if let email = Auth.auth().currentUser?.email {
-                print(email)
+                //print(email)
                 guard let guestSnap = self.guestSnapshot else {
-                    print("guest snap did not load")
+                    //print("guest snap did not load")
                     return
                 }
                 //if guest is found then present DJ Tableview
@@ -235,29 +235,29 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
                     presentDJTableView(guestID: isFoundTuple.key)
                 } else {
                     stopAnimating()
-                    print("User was logged in but not found in guest database. So will now logout")
+                    //print("User was logged in but not found in guest database. So will now logout")
                     do {
                         try Auth.auth().signOut()
                     }
                     catch let error as NSError {
-                        print("Error with signing out of firebase: \(error.localizedDescription)")
+                        //print("Error with signing out of firebase: \(error.localizedDescription)")
                     }
                 }
             }
             else {
                 stopAnimating()
-                print("Error with already signed in ")
+                //print("Error with already signed in ")
             }
             
         }
         else {
             stopAnimating()
-            print("no user logged in")
+            //print("no user logged in")
         }
     }
     
     func getSnapshots() {
-        print("GETTING SNAPSHOT")
+        //print("GETTING SNAPSHOT")
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
             
             //DispatchQueue.main.async {
@@ -292,18 +292,18 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         }
         self.startAnimating()
         guard let email = usernameTextField.text?.lowercased(), email != "", let guestSnap = self.guestSnapshot else {
-            print("Username is empty, or snap did not load")
+            //print("Username is empty, or snap did not load")
             return
         }
         
         guard let djSnap = self.djSnapshot else {
-            print("Dj Snap did not load")
+            //print("Dj Snap did not load")
             return
         }
         
         let djFoundTuple = isFound(snapshot: djSnap, guestEmail: email)
         if (djFoundTuple.0) {
-            print("FOUND IN DJ SNAPSHOT!")
+            //print("FOUND IN DJ SNAPSHOT!")
             let alert = UIAlertController(title: "Oops!", message: "Email \(email) is already associated with a DJ account. Please enter another for guest use.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                 self.navigationController?.popViewController(animated: true)
@@ -317,7 +317,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         
         //Found in database
         let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
-        print(isFoundTuple.0)
+        //print(isFoundTuple.0)
         if isFoundTuple.0 {
             Auth.auth().signIn(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
@@ -327,7 +327,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
                     }))
                     self.stopAnimating()
                     self.present(alert, animated: true, completion: nil)
-                    print("Error signing in with the user from email: \(error.localizedDescription)")
+                    //print("Error signing in with the user from email: \(error.localizedDescription)")
                     return
                 }
                 else {
@@ -341,12 +341,12 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
             Auth.auth().createUser(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
                     self.stopAnimating()
-                    print(error)
-                    print("Error creating user and logging in from the user from email: \(error.localizedDescription)")
+                    //print(error)
+                    //print("Error creating user and logging in from the user from email: \(error.localizedDescription)")
                     return
                 }
                 else {
-                    print("successful creation and loggin in of user from email")
+                    //print("successful creation and loggin in of user from email")
                     let ref = Database.database().reference().child("guests")
                     let key = ref.childByAutoId().key
                     let values = ["email":email]
@@ -381,7 +381,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
             try Auth.auth().signOut()
         }
         catch let error as NSError {
-            print("Error with signing out of firebase: \(error.localizedDescription)")
+            //print("Error with signing out of firebase: \(error.localizedDescription)")
         }
         dismiss(animated: true, completion: nil)
         

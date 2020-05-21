@@ -90,7 +90,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     @objc func search() {
         guard let text = self.searchText else {
-            print("text is empty")
+            //print("text is empty")
             return
         }
         ApiService.shared.fetchResults(term: text) { items in
@@ -114,7 +114,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             selectedTrack.homeTabController = homeController
         }
         else {
-            print("NO Guest ID or homeTabController being sent to Selected Track")
+            //print("NO Guest ID or homeTabController being sent to Selected Track")
         }
         
         self.tabBarController?.present(selectedTrack, animated: true, completion: nil)
@@ -195,7 +195,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
         }
         else {
-            print("problem with URL parsing")
+            //print("problem with URL parsing")
         }*/
         
         return cell

@@ -25,35 +25,35 @@ class DJcustomTabBarControllerViewController: UITabBarController {
     
     func sendDJToViews() {
         //Setting DJ's according to view type.
-        print(self.viewControllers!)
+        //print(self.viewControllers!)
         for theView in self.viewControllers! {
             if let v1 = theView as? scheduleViewController{
-                print("PUTTING IT HERE1")
+                //print("PUTTING IT HERE1")
                 v1.dj = dj
             }
             else if let v2 = theView as? DJSongTableViewController{
-                print("PUTTING IT HERE2")
+                //print("PUTTING IT HERE2")
                 v2.dj = dj
             }
             else if let v3 = theView as? addEventViewController{
-                print("PUTTING IT HERE3")
+                //print("PUTTING IT HERE3")
                 v3.dj = dj
             }
             else if let v4 = theView as? DJSideProfileViewController{
-                print("PUTTING IT HERE4")
+                //print("PUTTING IT HERE4")
                 v4.dj = dj
             }
             else if let v5 = theView as? MessagesTableViewController{
-                print("PUTTING IT HERE5")
+                //print("PUTTING IT HERE5")
                 v5.dj = dj
             }
             else if let v6 = theView as? NavForTableViewController{
-                print("PUTTING IT HERE6")
+                //print("PUTTING IT HERE6")
                 v6.dj = dj
             }
             else{
-                print(theView)
-                print("Not the right view controller")
+                //print(theView)
+                //print("Not the right view controller")
             }
         }
     }

@@ -46,8 +46,8 @@ class ProfileImageView: UIImageView {
             let url = URL(string: urlString)
             URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
                 if let error = error {
-                    print("Adding values error: \n")
-                    print(error.localizedDescription)
+                    //print("Adding values error: \n")
+                    //print(error.localizedDescription)
                     return
                 }
                 

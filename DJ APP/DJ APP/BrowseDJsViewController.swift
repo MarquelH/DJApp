@@ -81,7 +81,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
         for dj in users {
             if let djName = dj.djName {
                 if arr.contains(djName) {
-                    print("DELETING DUPLICATE OBJECT")
+                    //print("DELETING DUPLICATE OBJECT")
                     context.delete(dj)
                 } else {
                     arr.append(djName)
@@ -139,7 +139,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
         /*do {
             users = try context.fetch(DJs.fetchRequest())
         } catch let error as NSError {
-            print("Could not fetch. \(error)")
+            //print("Could not fetch. \(error)")
         }*/
         /*var counter = UserDefaults.standard.integer(forKey: "browseDJVisitCount")
         if (counter == 1) || ((counter % 5) == 0) {
@@ -150,7 +150,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
             do {
                 users = try context.fetch(DJs.fetchRequest())
             } catch let error as NSError {
-                print("Could not fetch. \(error)")
+                //print("Could not fetch. \(error)")
             }
         }*/
         //deleteDuplicateObjects()
@@ -193,7 +193,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
             try Auth.auth().signOut()
         }
         catch let error as NSError {
-            print("Error with signing out of firebase: \(error.localizedDescription)")
+            //print("Error with signing out of firebase: \(error.localizedDescription)")
         }
         dismiss(animated: true, completion: nil)
         
@@ -204,11 +204,11 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
         
         if let dictionary = self.usersSnapshot as? [String: AnyObject] {
             for (_, value) in dictionary {
-                print("HERE IS VALUE")
-                //print(value)
+                //print("HERE IS VALUE")
+                ////print(value)
                 if let djID = value["djName"] as? String {
-                    //print("ADDING TO LIST")
-                    print(djID)
+                    ////print("ADDING TO LIST")
+                    //print(djID)
                     self.addDJToList(djID: djID)
                     self.users.sort {
                         $0.djName! < $1.djName!
@@ -218,7 +218,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
                 }
                 else {
                     stopAnimating()
-                    print("Got no value")
+                    //print("Got no value")
                 }
             }
         }
@@ -232,26 +232,26 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
                     //self.fetchEvents()
                     
                     for (key, value) in dictionary {
-                        print("HERE IS VALUE")
-                        //print(value)
+                        //print("HERE IS VALUE")
+                        ////print(value)
                         if let djID = value["djName"] as? String {
-                            //print("ADDING TO LIST")
-                            print(djID)
+                            ////print("ADDING TO LIST")
+                            //print(djID)
                             if arr.contains(djID) {
-                                print("FOUND DUPLICATE")
+                                //print("FOUND DUPLICATE")
                             } else {
                                 arr.append(djID)
                             }
                             self.addDJToList(djID: djID)
                         }
                         else {
-                            print("Got no value")
+                            //print("Got no value")
                         }
                     }
                     
                 }
                 else {
-                    print("No parse data")
+                    //print("No parse data")
                 }
                 self.users.sort {
                     $0.djName! < $1.djName!
@@ -263,7 +263,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func addDJToList(djID: String) {
         guard let dictionary = usersSnapshot else {
-            print("userSnapshot is empty")
+            //print("userSnapshot is empty")
             return
         }
         
@@ -271,7 +271,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
         for (key,value) in dictionary {
             let comparableName = value["djName"] as! String
             if comparableName == djID {
-                print("DJ Found in snapshot, going to add them to the list. ")
+                //print("DJ Found in snapshot, going to add them to the list. ")
                 if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String {
                     
                     let newDJ = DJs(entity: DJs.entity(), insertInto: self.context)
@@ -289,7 +289,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
                     
                 }
                 else{
-                    print("couldn't find DJ's")
+                    //print("couldn't find DJ's")
                 }
             }
             
@@ -314,7 +314,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
         if searching {
             cell.DJNameLabel.text = searchedDJ[indexPath.row]
         } else {
-            print("SETTING DJ NAME TO : \(dj.djName!)")
+            //print("SETTING DJ NAME TO : \(dj.djName!)")
             cell.DJNameLabel.text = dj.djName!
             
             if !djNames.contains(dj.djName!) {
@@ -344,7 +344,7 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
             if users.count != 0 {
                 totalDJsLabel.text = "Total DJs: \(users.count)"
             }
-            print("WE HAVE \(users.count) DJs")
+            //print("WE HAVE \(users.count) DJs")
             return users.count
         }
     }

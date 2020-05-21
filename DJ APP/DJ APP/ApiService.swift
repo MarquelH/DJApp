@@ -23,23 +23,23 @@ class ApiService: NSObject {
         })
         
         let termWithEscapedCharacters = term.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.lowercased()
-        //print(termWithEscapedCharacters)
+        ////print(termWithEscapedCharacters)
         
         if let url = URL(string: "\(baseURL)\(termWithEscapedCharacters)&media=music") {
             URLSession.shared.invalidateAndCancel()
             
-            //print("I created the URL: \(url.absoluteString)")
+            ////print("I created the URL: \(url.absoluteString)")
           
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 
                 guard error == nil else {
-                    print(error.debugDescription)
+                    //print(error.debugDescription)
                     return
                 }
                 
                 
                 guard let data = data else {
-                    print("no data")
+                    //print("no data")
                     return
                 }
             
@@ -47,7 +47,7 @@ class ApiService: NSObject {
                 
                 
                 guard let jsonDict = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONDict else {
-                    print("Problem with json serialization")
+                    //print("Problem with json serialization")
                     return
                 }
                 
@@ -65,17 +65,17 @@ class ApiService: NSObject {
                         let kind = result["kind"] as? String, let trackAlbum = result["collectionName"] as? String {
                         
                         guard let trackImage = URL(string: trackImageStr) else {
-                            print("error with track image url")
+                            //print("error with track image url")
                             return
                         }
                         
-                        print("Track Image: \(trackImage)")
+                        //print("Track Image: \(trackImage)")
                         //Make sure we only add songs
                         if (kind == "song") {
                             let item = TrackItem(trackName: trackName, trackArtist: trackArtist, trackImage: trackImage, trackAlbum: trackAlbum, accepted: false)
                             items.append(item)
                         }
-                    //print("Items size: \(items.count)")
+                    ////print("Items size: \(items.count)")
 
                     }
                     

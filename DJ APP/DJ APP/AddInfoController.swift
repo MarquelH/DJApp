@@ -263,7 +263,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     }
 
                 } else {
-                    print(error?.localizedDescription ?? "Failed to authenticate")
+                    //print(error?.localizedDescription ?? "Failed to authenticate")
 
                     // Fall back to a asking for username and password.
                     // ...
@@ -324,14 +324,14 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         //make sure the fields are valid
         guard let usernameUnwrapped = username, let passwordUnwrapper = password, let age = Int(ageSting), let genre = genreTextField.text, let name = djNameTextField.text, let hometown = hometownTextField.text, let twitter = twitterTextField.text else {
-            print("Not valid args passed in.")
+            //print("Not valid args passed in.")
             self.stopAnimating()
             return
         }
         
         
         if (genre == "" || hometown == "" || name == "") {
-            print("Not valid entries");
+            //print("Not valid entries");
             let alert = UIAlertController(title: "Oh man!", message: "Looks like one of your required fields is empty.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                 self.navigationController?.popViewController(animated: true)
@@ -347,12 +347,12 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         Auth.auth().createUser(withEmail: usernameUnwrapped, password: passwordUnwrapper){ (user, error) in
             if let error = error {
                 print ("My error is: \n")
-                print(error.localizedDescription)
+                //print(error.localizedDescription)
                 
                 
                 let alert = UIAlertController(title: "Oops!", message: "Error: \(error.localizedDescription)", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
-                    print("I was pressed")
+                    //print("I was pressed")
                     self.registrationNotComplete()
                 }))
                 self.stopAnimating()
@@ -372,18 +372,18 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 
                 storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                     if let error = error{
-                        print(error.localizedDescription)
+                        //print(error.localizedDescription)
                         return
                     }
                     storageRef.downloadURL { (url, error) in
                         if let error = error{
-                            print(error.localizedDescription)
+                            //print(error.localizedDescription)
                             self.stopAnimating()
                             return
                         }
                         let profileImageUrl = url?.absoluteString
                         if profileImageUrl == nil {
-                            print("URL was null!")
+                            //print("URL was null!")
                             self.stopAnimating()
                             return
                         }
@@ -401,7 +401,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     //display coninue alert
                     let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. \nPress Continue to get stated!", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
-                        print("I was pressed")
+                        //print("I was pressed")
                         self.registrationComplete(username: usernameUnwrapped, password: passwordUnwrapper)
                     }))
                     
@@ -411,7 +411,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     //display coninue alert
                     let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. \nPress Continue to get stated!", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
-                        print("I was pressed")
+                        //print("I was pressed")
                         self.registrationComplete(username: usernameUnwrapped, password: passwordUnwrapper)
                     }))
                     
@@ -424,7 +424,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         else{
             let alert = UIAlertController(title: "Skrt!", message: "DJ name is too long!", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-                print("I was pressed")
+                //print("I was pressed")
                 self.registrationNotComplete()
             }))
             self.present(alert, animated: true, completion: nil)
@@ -437,8 +437,8 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let usersRef = ref.child("users").child(uid)
         usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
             if let err = err {
-                print("Adding values error: \n")
-                print(err.localizedDescription)
+                //print("Adding values error: \n")
+                //print(err.localizedDescription)
                 return
             }
             print ("Adding values was a success!")
@@ -682,7 +682,7 @@ extension AddInfoController: GMSAutocompleteViewControllerDelegate {
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        print("Error: ", error.localizedDescription)
+        //print("Error: ", error.localizedDescription)
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {

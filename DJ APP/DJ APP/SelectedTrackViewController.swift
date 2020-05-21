@@ -41,15 +41,15 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
                 
             }
             else {
-                print("Guest ID is not in SongTable viewDidLoad")
+                //print("Guest ID is not in SongTable viewDidLoad")
             }
             
         }
         else {
-            print("DJ does not have uid")
+            //print("DJ does not have uid")
         }
         guard let homeController = homeTabController else {
-            print("Something wrong with tabbar controller")
+            //print("Something wrong with tabbar controller")
             return
         }
         
@@ -114,7 +114,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
         }
         //it isn't present in the songlist, so no upvotes or downvotes
         else {
-            print("Song not present, must add")
+            //print("Song not present, must add")
             addToList()
         }
         dismiss(animated: true, completion: {
@@ -122,7 +122,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
                 self.delegate?.setSeachDJandGuestID(dj: dj, guestID: guestID)
             }
             else {
-                print("No DJ or Guest ID when selected Track being dismissed")
+                //print("No DJ or Guest ID when selected Track being dismissed")
             }
         })
     }
@@ -158,7 +158,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
 
         }
         else {
-            print("Attempting to upvote: snapshot is empty")
+            //print("Attempting to upvote: snapshot is empty")
         }
     }
     
@@ -178,7 +178,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
             updateRefGuestByDJ()
         }
         else {
-            print("Track has no info in it")
+            //print("Track has no info in it")
         }
     }
     
@@ -189,7 +189,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
                 self.delegate?.setSeachDJandGuestID(dj: dj, guestID: guestID)
             }
             else {
-                print("No DJ or Guest ID when selected Track being dismissed")
+                //print("No DJ or Guest ID when selected Track being dismissed")
             }
         })
     }

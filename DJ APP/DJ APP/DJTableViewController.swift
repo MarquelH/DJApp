@@ -114,7 +114,7 @@ class DJTableViewController: UITableViewController {
                             alert.addAction(UIAlertAction(title: "Go to Settings", style: UIAlertActionStyle.default, handler: { action in
                                 if UIApplication.shared.canOpenURL(settingsURL as! URL) {
                                     UIApplication.shared.open(settingsURL as! URL, completionHandler: { (success) in
-                                        print("Settings opened: \(success)") // Prints true
+                                        //print("Settings opened: \(success)") // Prints true
                                     })
                                 }
                             }))
@@ -131,7 +131,7 @@ class DJTableViewController: UITableViewController {
                         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                             
                         guard let sd = dateFormatter.date(from: startTime), let ed = dateFormatter.date(from: endTime) else {
-                            print("Failed converting the the dates")
+                            //print("Failed converting the the dates")
                             return
                         }
                         
@@ -144,7 +144,7 @@ class DJTableViewController: UITableViewController {
                             (ed.timeIntervalSince1970) >= currDateTime.timeIntervalSince1970) {
                             
                             let newEvent = Event(djID: djID, location: location, startTime: sd, endTime: ed, eventID: eventID, djName: djName)
-                            print("Added to the list: \(eventID) at location: \(location)")
+                            //print("Added to the list: \(eventID) at location: \(location)")
                             self.events.append(newEvent)
                             
                             //Add the DJ to the DJ List
@@ -163,18 +163,18 @@ class DJTableViewController: UITableViewController {
                         }
                     //}
                         /*else{
-                            print("User is too far from location!")
+                            //print("User is too far from location!")
                         }*/
                     }
                     else{
-                        print("Couldn't find information about the event")
+                        //print("Couldn't find information about the event")
                     }
                     
                 }
                 
             }
             else {
-                print("Problem parsing events into [String: AnyObjet]")
+                //print("Problem parsing events into [String: AnyObjet]")
             }
             self.refreshController.endRefreshing()
         }, withCancel: nil)
@@ -182,14 +182,14 @@ class DJTableViewController: UITableViewController {
     
     func addDJToList(djID: String) {
         guard let dictionary = usersSnapshot else {
-            print("userSnapshot is empty")
+            //print("userSnapshot is empty")
             return
         }
         
         for (key,value) in dictionary {
             
             if key == djID {
-                print("DJ Found in snapshot, going to add them to the list. ")
+                //print("DJ Found in snapshot, going to add them to the list. ")
                 if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
                     
                     //let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
@@ -207,7 +207,7 @@ class DJTableViewController: UITableViewController {
                     
                 }
                 else{
-                    print("couldn't find DJ's")
+                    //print("couldn't find DJ's")
                 }
             }
             
@@ -232,7 +232,7 @@ class DJTableViewController: UITableViewController {
         
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
-        print(dj.djName)
+        //print(dj.djName)
         
         if let location = events[indexPath.row].location {
             cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
@@ -306,7 +306,7 @@ class DJTableViewController: UITableViewController {
             try Auth.auth().signOut()
         }
         catch let error as NSError {
-            print("Error with signing out of firebase: \(error.localizedDescription)")
+            //print("Error with signing out of firebase: \(error.localizedDescription)")
         }
         dismiss(animated: true, completion: nil)
 

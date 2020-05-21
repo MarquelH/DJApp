@@ -235,16 +235,16 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         }
         //If guest is currently signed in, then his stuff is in the database, so find it
         if Auth.auth().currentUser != nil {
-            print("CURRENT USER NOT NULL!")
+            //print("CURRENT USER NOT NULL!")
             if Constants.LOGGED_IN == true {
                 
             }
             if let email = Auth.auth().currentUser?.email {
-                print(email)
+                //print(email)
                     //Else check if the dj is found then present DJ root view
                 //else {
                     guard let djSnap = self.djSnapshot else {
-                        print("Dj Snap did not load")
+                        //print("Dj Snap did not load")
                         return
                     }
                     let djFoundTuple = isFound(snapshot: djSnap, guestEmail: email)
@@ -254,13 +254,13 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                         //Else not in either database, but still signed in so sign out
                     else {
                         self.stopAnimating()
-                        print("User was logged in but not found in user database. So will now logout")
+                        //print("User was logged in but not found in user database. So will now logout")
                         do {
                             try Auth.auth().signOut()
                         }
                         catch let error as NSError {
                             self.stopAnimating()
-                            print("Error with signing out of firebase: \(error.localizedDescription)")
+                            //print("Error with signing out of firebase: \(error.localizedDescription)")
                         }
                     }
                 //}
@@ -273,18 +273,18 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
                 self.stopAnimating()
                 self.present(alert, animated: true, completion: nil)
-                print("Error with already signed in ")
+                //print("Error with already signed in ")
             }
             
         }
         else {
             self.stopAnimating()
-            print("no user logged in")
+            //print("no user logged in")
         }
     }
     
     func getSnapshots() {
-        print("GETTING SNAPSHOT")
+        //print("GETTING SNAPSHOT")
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
             
             //DispatchQueue.main.async {
@@ -323,7 +323,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     }
     
     @objc func handleLogin() {
-        print("LOGGING IN!")
+        //print("LOGGING IN!")
         if !(Reachability.isConnectedToNetwork()) {
             let alert = UIAlertController(title: "Oops!", message: "It looks like you aren't connected to internet. Please try again!", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
@@ -342,17 +342,17 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
             }))
             stopAnimating()
             self.present(alert, animated: true, completion: nil)
-            print("Login info was invalid")
+            //print("Login info was invalid")
             return
         }
             guard let guestSnap = self.guestSnapshot else {
-                print("guest snap did not load")
+                //print("guest snap did not load")
                 return
             }
             //if guest is found then do not present DJ Tableview
             let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
             if (isFoundTuple.0) {
-                print("FOUND IN GUEST SNAPSHOT!")
+                //print("FOUND IN GUEST SNAPSHOT!")
                 let alert = UIAlertController(title: "Oops!", message: "Email \(email) is already associated with a guest account. Please enter another for DJ use.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                     self.navigationController?.popViewController(animated: true)
@@ -361,7 +361,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                 stopAnimating()
                 self.present(alert, animated: true, completion: nil)
             } else {
-                print("NOT FOUND IN GUEST SNAPSHOT!")
+                //print("NOT FOUND IN GUEST SNAPSHOT!")
             }
         
         Auth.auth().signIn(withEmail: email, password: password, completion: {(user, error) in
@@ -369,10 +369,10 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
             //There was an error signing in, reset text fields.
             
             if let error = error {
-                print(email)
-                print(password)
+                //print(email)
+                //print(password)
                 print ("Error signing in: ")
-                print(error.localizedDescription)
+                //print(error.localizedDescription)
                 self.passwordTextField.text = ""
                 let alert = UIAlertController(title: "Invalid Login", message: "Error logging in with the given username and password! Please Re-enter.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
@@ -395,7 +395,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     }
     
     func setupNavBar() {
-        print("SETTING UP NAV BAR")
+        //print("SETTING UP NAV BAR")
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToBreakOff))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
@@ -413,14 +413,14 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     func checkIfValidated(uid: String, email: String) {
         startAnimating()
         guard let djSnap = self.djSnapshot else {
-            print("djsnapshot did not load in check if validated")
+            //print("djsnapshot did not load in check if validated")
             return
         }
         
         for (key, dictionary) in djSnap {
             if key == uid {
                 /*guard let validated = dictionary["validated"] as? Bool else {
-                    print("Dj not validated")
+                    //print("Dj not validated")
                     return
                 }*/
                 
@@ -436,7 +436,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                         let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle: nil)
                         let tabbarController = storyboard.instantiateViewController(withIdentifier: "tabBarView") as! DJcustomTabBarControllerViewController
                         tabbarController.dj = dj
-                        print("PRESENTING TAB BAR")
+                        //print("PRESENTING TAB BAR")
                         self.stopAnimating()
                         tabBarController?.modalPresentationStyle = .fullScreen
                         self.present(tabbarController, animated: true, completion: nil)
@@ -444,10 +444,10 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                         
                     } else {
                         self.stopAnimating()
-                        print("Parsing the DJ went wrong")
+                        //print("Parsing the DJ went wrong")
                     }
                 //} else {
-                    //print("NOT VALIDATED")
+                    ////print("NOT VALIDATED")
                 //}
             }
         }
@@ -458,7 +458,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
             try Auth.auth().signOut()
         }
         catch let error as NSError {
-            print("Error with signing out of firebase: \(error.localizedDescription)")
+            //print("Error with signing out of firebase: \(error.localizedDescription)")
         }
         dismiss(animated: true, completion: nil)
         
