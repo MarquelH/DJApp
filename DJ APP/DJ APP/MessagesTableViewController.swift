@@ -24,37 +24,26 @@ class MessagesTableViewController: UITableViewController {
     }
     
     func setupNavBar() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.barTintColor = UIColor.black
-        theNavItem.title = "Messages"
-    }
-    
-    @objc func handleLogout() {
-        let fireAuth = Auth.auth()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
         
-        do {
-            try fireAuth.signOut()
-        } catch let signoutError as NSError {
-            print("Error signing out: %@", signoutError)
-        }
-        
-        let loginController = LoginController()
-        present(loginController, animated: true, completion: nil)
+        //Bar text
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 30) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        theNavItem.title = "Shout outs"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print(dj)
         if let uid = dj?.uid {
             print("SETTING THE REF")
             ref = Database.database().reference().child("messages").child(uid)
             getMessages()
-        }
-        else {
+        } else {
             print("Chat will appear guestID or Dj not passed in")
         }
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     func setupViews(){
@@ -89,42 +78,44 @@ class MessagesTableViewController: UITableViewController {
     }
     
     @objc func getMessages() {
-        ref.observeSingleEvent(of: .value, with: {(snapshot) in
-            
-            self.messages.removeAll()
-            
-            
-            if !snapshot.exists() {
-                print("Snapshot does not exist")
-                return
-            }
-            
-            for snap in snapshot.children.allObjects as! [DataSnapshot] {
+        if (ref != nil) {
+            ref.observeSingleEvent(of: .value, with: {(snapshot) in
                 
-                if let value = snap.value as? [String: AnyObject], let message = value["message"] as? String, let guestID = value["guestID"] as? String,  let timeStamp = value["timeStamp"] as? NSNumber, let djUID = value["djUID"] as? String, let nameOfGuest = value["guestName"] as? String, let guestPhone = value["Guest Phone"] as? String {
+                self.messages.removeAll()
+                
+                
+                if !snapshot.exists() {
+                    print("Snapshot does not exist")
+                    return
+                }
+                
+                for snap in snapshot.children.allObjects as! [DataSnapshot] {
                     
-                    
-                    let newMessage = Message(message: message, timeStamp: timeStamp, djUID: djUID, guestID: guestID, guestName: nameOfGuest, guestPhone: guestPhone)
-                    
-                    
-                    self.messages.append(newMessage)
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                    if let value = snap.value as? [String: AnyObject], let message = value["message"] as? String, let guestID = value["guestID"] as? String,  let timeStamp = value["timeStamp"] as? NSNumber, let djUID = value["djUID"] as? String, let nameOfGuest = value["guestName"] as? String, let guestPhone = value["Guest Phone"] as? String {
+                        
+                        
+                        let newMessage = Message(message: message, timeStamp: timeStamp, djUID: djUID, guestID: guestID, guestName: nameOfGuest, guestPhone: guestPhone)
+                        
+                        
+                        self.messages.append(newMessage)
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                    else {
+                        print("Unable to convert snapshot children into [String:AnyObjects]")
                     }
                 }
-                else {
-                    print("Unable to convert snapshot children into [String:AnyObjects]")
-                }
+                
+                
+            }) { (error) in
+                print("Error getting snapshot: \(error.localizedDescription)")
             }
-            
-            
-        }) { (error) in
-            print("Error getting snapshot: \(error.localizedDescription)")
         }
         self.refreshController.endRefreshing()
-        
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let msg = messages[indexPath.row]
         let theMessage = msg.message
@@ -132,7 +123,7 @@ class MessagesTableViewController: UITableViewController {
         let theName = msg.guestName
         
         if theNumber != "No Number Given" {
-            let alert = UIAlertController(title: theName, message: "\(theMessage!)\n Phone: \(theNumber!)", preferredStyle: .alert)
+            let alert = UIAlertController(title: theName, message: "Message: \(theMessage!)\n\n Phone: \(theNumber!)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
             self.navigationController?.popViewController(animated: true)
         }))

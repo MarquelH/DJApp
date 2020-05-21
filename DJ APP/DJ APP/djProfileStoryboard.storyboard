@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,7 +28,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="306"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLF-gl-lgn">
-                                <rect key="frame" x="0.0" y="12" width="375" height="21"/>
+                                <rect key="frame" x="0.0" y="-8" width="375" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -41,6 +38,9 @@
                                 <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
                                 <color key="textColor" red="0.85490196080000003" green="0.1058823529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fontName" value="BebasNeue-Regular"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F4-WA-yfj">
                                 <rect key="frame" x="81" y="391" width="41" height="21"/>
@@ -99,7 +99,7 @@
                                     <constraint firstAttribute="height" constant="55" id="IMZ-SU-qcd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SudegnakNo2" family="SudegnakNo2" pointSize="46"/>
-                                <state key="normal" title="Hit Up The DJ!">
+                                <state key="normal" title="Give a Shout out">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -179,7 +179,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-643.47826086956525" y="-313.04347826086956"/>
+            <point key="canvasLocation" x="-862" y="-313"/>
         </scene>
         <!--GuestContactView-->
         <scene sceneID="krE-St-iXg">
@@ -190,7 +190,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DJ Contact Form" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeE-lM-vNA">
-                                <rect key="frame" x="101" y="20" width="173" height="43"/>
+                                <rect key="frame" x="101" y="0.0" width="173" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="Nkm-hL-pnA"/>
                                 </constraints>
@@ -199,7 +199,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="lsF-ML-1ha">
-                                <rect key="frame" x="16" y="82" width="343" height="447"/>
+                                <rect key="frame" x="16" y="62" width="343" height="467"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GwW-R8-XhJ">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="21"/>
@@ -247,7 +247,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="What's up DJ!...." translatesAutoresizingMaskIntoConstraints="NO" id="0Rs-Ei-gj2">
-                                        <rect key="frame" x="0.0" y="228" width="343" height="219"/>
+                                        <rect key="frame" x="0.0" y="228" width="343" height="239"/>
                                         <color key="backgroundColor" red="0.66666668653488159" green="0.61317976848199385" blue="0.59991892087422038" alpha="0.50995291095890416" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="Mikodacs" family="Mikodacs" pointSize="17"/>
@@ -276,7 +276,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4n-q2-KNU">
-                                <rect key="frame" x="16" y="16" width="30" height="51"/>
+                                <rect key="frame" x="16" y="-4" width="30" height="51"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="29"/>
                                 <state key="normal" title="X">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -313,11 +313,16 @@
                         <outlet property="guestMessage" destination="0Rs-Ei-gj2" id="NLh-zS-9rp"/>
                         <outlet property="guestName" destination="0jn-d6-RO4" id="BcA-Qo-CBF"/>
                         <outlet property="guestPhoneNumber" destination="VqW-oN-75P" id="2bA-5c-ZJB"/>
+                        <outlet property="personalMessageLabel" destination="M0a-ZT-dzT" id="br7-kL-kcS"/>
+                        <outlet property="phoneNumberLabel" destination="zJC-a5-aUi" id="dO5-ug-7EA"/>
+                        <outlet property="submitButton" destination="mYx-pH-Ayb" id="X72-Z3-7RV"/>
+                        <outlet property="submitLabel" destination="mYx-pH-Ayb" id="zun-Oh-spt"/>
+                        <outlet property="yourNameLabel" destination="GwW-R8-XhJ" id="cEN-5N-f5v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vRj-cY-Ykf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="282.60869565217394" y="-313.04347826086956"/>
+            <point key="canvasLocation" x="-60" y="-313"/>
         </scene>
     </scenes>
     <resources>

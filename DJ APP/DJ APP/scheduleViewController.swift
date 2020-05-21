@@ -10,13 +10,23 @@ import UIKit
 import JTAppleCalendar
 import Firebase
 import StoreKit
+import NVActivityIndicatorView
 
-class scheduleViewController: UIViewController {
+class scheduleViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var weekdayLabels: UILabel!
+    @IBOutlet weak var sundayLabel: UILabel!
+    @IBOutlet weak var mondayLabel: UILabel!
+    @IBOutlet weak var tuesdayLabel: UILabel!
+    @IBOutlet weak var wednesdayLabel: UILabel!
+    @IBOutlet weak var thursdayLabel: UILabel!
+    @IBOutlet weak var fridayLabel: UILabel!
+    @IBOutlet weak var saturdayLabel: UILabel!
+    
     var dj: UserDJ?
     var eventSnapshot: [String: AnyObject]?
     var refEventList: DatabaseReference!
@@ -51,7 +61,22 @@ class scheduleViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    func setThefonts() {
+        year.font = UIFont(name: "BebasNeue-Regular", size: 15)
+        month.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        locationLabel.font = UIFont(name: "BebasNeue-Regular", size: 25)
+        timeLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        sundayLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        mondayLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        tuesdayLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        wednesdayLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        thursdayLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        fridayLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        saturdayLabel.font = UIFont(name: "BebasNeue-Regular", size: 20)
+    }
+    
     func deleteEvent() {
+        startAnimating()
         if let workingSnap = self.eventSnapshot {
             for (k,v) in workingSnap {
                 if let dateAndTime = v["StartDateAndTime"] as? String, let theName = v["DJ Name"] as? String{
@@ -79,6 +104,12 @@ class scheduleViewController: UIViewController {
                         refEventList.child(k).removeValue()
                         self.getEventSnapshot()
                         calendarView.reloadData()
+                        self.stopAnimating()
+                        let alert = UIAlertController(title: "Event deleted successfully!", message: "We have successfully removed your event from your calendar.", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                         }
                         
                     }
@@ -91,23 +122,30 @@ class scheduleViewController: UIViewController {
     
     func setEditButtonShape(){
         deleteButton.layer.cornerRadius = 10
+        deleteButton.titleLabel?.font = UIFont(name: "BebasNeue-Regular", size: 20)
     }
     
     
     func getEventSnapshot(){
-        Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
-            if snapshot.exists() {
-                print("snap exists")
-            }
-            else {
-                print("snap does not exist")
-            }
-            DispatchQueue.main.async {
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.eventSnapshot = dictionary
+        if refEventList != nil {
+            refEventList.observeSingleEvent(of: .value, with: {(snapshot) in
+                if snapshot.exists() {
+                    print("snap exists")
+                    DispatchQueue.main.async {
+                        if let dictionary = snapshot.value as? [String: AnyObject] {
+                            self.eventSnapshot = dictionary
+                        }
+                    }
                 }
-            }
-        }, withCancel: nil)
+                else {
+                    self.eventSnapshot = nil
+                    print("snap does not exist")
+                }
+            }, withCancel: nil)
+        } else {
+            self.eventSnapshot = nil
+            print("ref even does not exist")
+        }
     }
     
     
@@ -132,6 +170,7 @@ class scheduleViewController: UIViewController {
                     let realEndTimeBare = realEndTime.replacingOccurrences(of: " ", with: "")
                 
                     if theName == dj?.djName && realDate == eventDateAndTime {
+                        //cache this data here
                         return (true, k, location,realTimeBare,realEndTimeBare)
                     }
                 }
@@ -159,15 +198,14 @@ class scheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (UserDefaults.standard.integer(forKey: "launchCount") == 10){
-            //Asking for review on 10th launch.
-            var sk = SKStoreReviewController()
-            SKStoreReviewController.requestReview()
-        }
         setupCalendarView()
         setEditButtonShape()
         timeLabel.isHidden = true
         deleteButton.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.calendarView.reloadData()
     }
 
     
@@ -180,8 +218,7 @@ class scheduleViewController: UIViewController {
             print("DJ does not have uid")
         }
         getEventSnapshot()
-        calendarView.reloadData()
-        UIApplication.shared.statusBarStyle = .lightContent
+        setThefonts()
     }
     
     //override func viewWillDisappear(_ animated: Bool) {
@@ -276,6 +313,7 @@ class scheduleViewController: UIViewController {
             return true
         }
         else {
+            print("RETURNED FALSE")
         return false
         }
     }
@@ -289,8 +327,20 @@ extension scheduleViewController: JTAppleCalendarViewDataSource {
         formatter.timeZone = Calendar.current.timeZone
         formatter.locale = Calendar.current.locale
         
-        let startDate = formatter.date(from: "2018 04 10")
-        let endDate = formatter.date(from: "2020 12 29")
+        let date = Date()
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = DateFormatter.Style.short
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        let day = calendar.component(.day, from: date)
+        let month = calendar.component(.month, from: date)
+        let year = calendar.component(.year, from: date)
+        
+        
+        let startDate = formatter.date(from: "\(year) \(month) \(day)")
+        let endDate = formatter.date(from: "2030 12 29")
         
         let parameters = ConfigurationParameters(startDate: startDate!, endDate: endDate!)
         return parameters
@@ -333,13 +383,13 @@ extension scheduleViewController: JTAppleCalendarViewDelegate {
         
         if isFoundTuple.0 {
             locationLabel.adjustsFontSizeToFitWidth = true
-            locationLabel.text = "Playing at \(isFoundTuple.2) on this day!"
+            locationLabel.text = "Show at \(isFoundTuple.2)"
             timeLabel.isHidden = false
             timeLabel.text = "\(isFoundTuple.3) - \(isFoundTuple.4)"
             deleteButton.isHidden = false
         }
         else{
-            locationLabel.text = "No Scheduled Events on Selected Day"
+            locationLabel.text = "No Scheduled gigs on Selected Day"
             timeLabel.isHidden = true
             deleteButton.isHidden = true
         }

@@ -12,14 +12,14 @@ import Firebase
 protocol SearchToSelectedProtocol {
     
     //Pass back dj reference
-    func setSeachDJandGuestID(dj: UserDJ, guestID: String)
+    func setSeachDJandGuestID(dj: DJs, guestID: String)
     
 }
 
 class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelectedTrack {
 
     var delegate : SearchToSelectedProtocol?
-    var dj: UserDJ?
+    var dj: DJs?
     var guestID: String?
     var refSongList: DatabaseReference!
     var refGuestByDJ: DatabaseReference!
@@ -61,13 +61,13 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //Change status bar background color
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
     }
     
     
@@ -85,7 +85,6 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
     
     //Might have to change this to pull data just before we add. But if we do this, not guarenteed to get the correct data
     @objc func handleAdd() {
-        
         let isPresentTuple = songIsPresentInCurrentSnapshot()
         //it is present in the songlist
         if isPresentTuple.0 {
@@ -100,7 +99,7 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
                         upvoteIDs.append(isPresentTuple.1)
                         updateRefGuestByDJ()
                         addUpvoteToSong(key: isPresentTuple.1, amount: 1)
-
+                        
                     }
                 }
                 //else in neither, add to upvote and upvote by 1
@@ -174,7 +173,6 @@ class SelectedTrackViewController: BaseTrackViewController, FetchDataForSelected
             
             let theKey = key as! String
             refSongList.child(theKey).setValue(song)
-            
             //update the upvoteIDs
             upvoteIDs.append(theKey)
             updateRefGuestByDJ()

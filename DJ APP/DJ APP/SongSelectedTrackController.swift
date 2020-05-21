@@ -160,7 +160,7 @@ class SongSelectedTrackController: BaseTrackViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //Change status bar background color
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.lightGray
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.lightGray
     }
     
     override func didReceiveMemoryWarning() {

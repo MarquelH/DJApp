@@ -10,8 +10,10 @@ import UIKit
 import Firebase
 import GoogleMaps
 import GooglePlaces
+import NVActivityIndicatorView
+import SwiftKeychainWrapper
 
-class DJLoginController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate {
+class DJLoginController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     
     var guestSnapshot: [String: AnyObject]?
@@ -26,7 +28,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         lb.layer.cornerRadius = 40
         lb.layer.borderWidth = 1
         lb.layer.borderColor = UIColor.white.cgColor
-        lb.titleLabel?.font = UIFont(name: "Mikodacs", size: 35)
+        lb.titleLabel?.font = UIFont(name: "BebasNeue-Regular", size: 35)
         lb.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
@@ -61,6 +63,12 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         tf.placeholder = "Email"
         tf.clearButtonMode = UITextFieldViewMode.whileEditing
         tf.translatesAutoresizingMaskIntoConstraints = false
+        
+        if #available(iOS 11.0, *) {
+            tf.textContentType = .username
+        } else {
+            // don't set
+        }
         return tf
     }()
     
@@ -71,6 +79,11 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         tf.placeholder = "Password"
         tf.clearButtonMode = UITextFieldViewMode.whileEditing
         tf.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            tf.textContentType = .password
+        } else {
+            // don't set
+        }
         return tf
     }()
     
@@ -113,6 +126,16 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         return btn
     }()
     
+    let autofillLabel: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Autofill with your credentials for Go.DJ", for: .normal)
+        btn.setTitleColor(UIColor.white, for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        btn.addTarget(self, action: #selector(autofill), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
     
     let logoInLogin: UIImageView = {
         let img = UIImageView()
@@ -139,8 +162,9 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     }()
     
     let backButton: UIButton = {
-        let btn = UIButton(type: .system)
-        let image = UIImage(named: "icons8-rewind-50") as UIImage!
+        let btn = UIButton(type: .roundedRect)
+        let image = UIImage(named: "icons8-go-back-64")
+        btn.tintColor = UIColor.white
         btn.setImage(image, for: .normal)
         btn.addTarget(self, action: #selector(backToBreakOff), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -153,6 +177,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getSnapshots()
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
         backgroundImage.contentMode = .scaleAspectFill
@@ -161,9 +186,22 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         
         setupViews()
         setupTextFields()
-        
+        setupNavBar()
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
+    }
+    
+    @objc func autofill() {
+        if let retrievedPassword = KeychainWrapper.standard.string(forKey: "userPassword"), let retrievedUsername = KeychainWrapper.standard.string(forKey: "username"){
+            usernameTextField.text = retrievedUsername
+            passwordTextField.text = retrievedPassword
+        } else {
+            let alert = UIAlertController(title: "Oops", message: "Nothing stored in your keychain for Go.DJ", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -173,8 +211,6 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getSnapshots()
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     @objc func setupTextFields() {
@@ -188,71 +224,84 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     @objc func backToBreakOff() {
         let storyboard = UIStoryboard(name: "breakOffStoryboard", bundle: nil)
         let breakOff = storyboard.instantiateViewController(withIdentifier: "breakOff") as! BreakoffController
+        breakOff.modalPresentationStyle = .fullScreen
         present(breakOff, animated: true, completion: nil)
     }
     
     func checkIfUserIsAlreadyLoggedIn() {
+        self.startAnimating()
+        if Constants.LOGGED_IN == true {
+            //checkIfValidated(uid: <#T##String#>, email: <#T##String#>)
+        }
         //If guest is currently signed in, then his stuff is in the database, so find it
         if Auth.auth().currentUser != nil {
+            print("CURRENT USER NOT NULL!")
+            if Constants.LOGGED_IN == true {
+                
+            }
             if let email = Auth.auth().currentUser?.email {
                 print(email)
-                guard let guestSnap = self.guestSnapshot else {
-                    print("guest snap did not load")
-                    return
-                }
-                //if guest is found then present DJ Tableview
-                let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
-                if (isFoundTuple.0) {
-                    checkIfValidated(uid: isFoundTuple.key)
-                }
                     //Else check if the dj is found then present DJ root view
-                else {
+                //else {
                     guard let djSnap = self.djSnapshot else {
                         print("Dj Snap did not load")
                         return
                     }
                     let djFoundTuple = isFound(snapshot: djSnap, guestEmail: email)
                     if (djFoundTuple.0) {
-                        checkIfValidated(uid: djFoundTuple.key)
+                        checkIfValidated(uid: djFoundTuple.key, email: email)
                     }
                         //Else not in either database, but still signed in so sign out
                     else {
-                        print("User was logged in but not found in user or guest database. So will now logout")
+                        self.stopAnimating()
+                        print("User was logged in but not found in user database. So will now logout")
                         do {
                             try Auth.auth().signOut()
                         }
                         catch let error as NSError {
+                            self.stopAnimating()
                             print("Error with signing out of firebase: \(error.localizedDescription)")
                         }
                     }
-                }
+                //}
             }
             else {
+                let alert = UIAlertController(title: "Oops", message: "Tried to sign you in but an error occurred.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                self.stopAnimating()
+                self.present(alert, animated: true, completion: nil)
                 print("Error with already signed in ")
             }
             
         }
         else {
+            self.stopAnimating()
             print("no user logged in")
         }
     }
     
     func getSnapshots() {
+        print("GETTING SNAPSHOT")
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
             
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.guestSnapshot = dictionary
                 }
-            }
+            //}
             //get users
             Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
                 
-                DispatchQueue.main.async {
+                //DispatchQueue.main.async {
                     if let dictionary = snapshot.value as? [String: AnyObject] {
                         self.djSnapshot = dictionary
-                    }
-                    self.checkIfUserIsAlreadyLoggedIn()
+                    //}
+                        self.checkIfUserIsAlreadyLoggedIn()
+                    } else {
+                        self.stopAnimating()
                 }
             }, withCancel: nil)
             
@@ -269,34 +318,67 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         backgroundImage.contentMode = .scaleAspectFill
         navController.view.insertSubview(backgroundImage, at: 0)
         navController.view.backgroundColor = UIColor.black
-        
+        navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true, completion: nil)
     }
     
     @objc func handleLogin() {
+        print("LOGGING IN!")
+        if !(Reachability.isConnectedToNetwork()) {
+            let alert = UIAlertController(title: "Oops!", message: "It looks like you aren't connected to internet. Please try again!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+                self.stopAnimating()
+                return
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        startAnimating()
         guard let email = usernameTextField.text, let password = passwordTextField.text else {
             let alert = UIAlertController(title: "Invalid Entries", message: "Username and password must be valid", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
                 self.usernameTextField.text = ""
                 self.passwordTextField.text = ""
             }))
+            stopAnimating()
             self.present(alert, animated: true, completion: nil)
             print("Login info was invalid")
             return
         }
+            guard let guestSnap = self.guestSnapshot else {
+                print("guest snap did not load")
+                return
+            }
+            //if guest is found then do not present DJ Tableview
+            let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
+            if (isFoundTuple.0) {
+                print("FOUND IN GUEST SNAPSHOT!")
+                let alert = UIAlertController(title: "Oops!", message: "Email \(email) is already associated with a guest account. Please enter another for DJ use.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                    self.navigationController?.popViewController(animated: true)
+                    return
+                }))
+                stopAnimating()
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                print("NOT FOUND IN GUEST SNAPSHOT!")
+            }
+        
         Auth.auth().signIn(withEmail: email, password: password, completion: {(user, error) in
             
             //There was an error signing in, reset text fields.
+            
             if let error = error {
+                print(email)
+                print(password)
                 print ("Error signing in: ")
                 print(error.localizedDescription)
-                self.usernameTextField.text = ""
                 self.passwordTextField.text = ""
                 let alert = UIAlertController(title: "Invalid Login", message: "Error logging in with the given username and password! Please Re-enter.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { action in
-                    self.usernameTextField.text = ""
                     self.passwordTextField.text = ""
                 }))
+                self.stopAnimating()
                 self.present(alert, animated: true, completion: nil)
             }
                 //Else there was no error and we gucci
@@ -304,15 +386,32 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                 
                 //Check if the user is validated by us
                 guard let uid = Auth.auth().currentUser?.uid else {
+                    self.stopAnimating()
                     return
                 }
-                self.checkIfValidated(uid: uid)
+                self.checkIfValidated(uid: uid, email: email)
             }
         })
     }
     
-    func checkIfValidated(uid: String) {
+    func setupNavBar() {
+        print("SETTING UP NAV BAR")
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToBreakOff))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        //self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        //self.navigationController?.navigationBar.shadowImage = UIImage()
+        //self.navigationController?.navigationBar.isTranslucent = true
+        //self.navigationController?.view.backgroundColor = UIColor.clear
+        
+        //Bar text
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 30) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationItem.title = "DJ Mode"
+        
+    }
+    
+    func checkIfValidated(uid: String, email: String) {
+        startAnimating()
         guard let djSnap = self.djSnapshot else {
             print("djsnapshot did not load in check if validated")
             return
@@ -320,14 +419,13 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         
         for (key, dictionary) in djSnap {
             if key == uid {
-                guard let validated = dictionary["validated"] as? Bool else {
+                /*guard let validated = dictionary["validated"] as? Bool else {
                     print("Dj not validated")
                     return
-                }
+                }*/
                 
                 //If user is validated, present DJRootViewController
-                if (validated) {
-                    
+                //if (validated) {
                     //Create DJ object, and store the dictionary snapshot into it.
                     if let name = dictionary["djName"] as? String, let age = dictionary["age"] as? Int, let currentLocation = dictionary["currentLocation"] as? String, let email = dictionary["email"] as? String, let genre = dictionary["genre"] as? String, let hometown = dictionary["hometown"] as? String, let twitter = dictionary["twitterOrInstagram"] as? String, let validated =  dictionary["validated"] as? Bool, let profilePicURL = dictionary["profilePicURL"] as? String{
                         
@@ -335,31 +433,22 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                         
                         //Send DJ to Dj Tab Bar Controller
                         
-                        if validated == true {
-                            
-                            let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle: nil)
-                            let tabbarController = storyboard.instantiateViewController(withIdentifier: "tabBarView") as! DJcustomTabBarControllerViewController
-                            tabbarController.dj = dj
-                            
-                            present(tabbarController, animated: true, completion: nil)
-                        }
-                        else{
-                            let alert = UIAlertController(title: "Skrt!", message: "You must be validated in order to be a DJ.", preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-                                print("I was pressed")
-                                self.navigationController?.popViewController(animated: true)
-                            }))
-                            
-                            self.present(alert, animated: true, completion: nil)
-                        }
+                        let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle: nil)
+                        let tabbarController = storyboard.instantiateViewController(withIdentifier: "tabBarView") as! DJcustomTabBarControllerViewController
+                        tabbarController.dj = dj
+                        print("PRESENTING TAB BAR")
+                        self.stopAnimating()
+                        tabBarController?.modalPresentationStyle = .fullScreen
+                        self.present(tabbarController, animated: true, completion: nil)
                         
                         
-                        
-                    }
-                    else {
+                    } else {
+                        self.stopAnimating()
                         print("Parsing the DJ went wrong")
                     }
-                }
+                //} else {
+                    //print("NOT VALIDATED")
+                //}
             }
         }
     }
@@ -389,7 +478,6 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
     
     
     func setupViews() {
-        UIApplication.shared.statusBarStyle = .lightContent
         view.addSubview(djGuestLoginButton)
         view.addSubview(usernameContainer)
         view.addSubview(passwordContainer)
@@ -399,6 +487,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         view.addSubview(logoGo)
         view.addSubview(logoDJ)
         view.addSubview(backButton)
+        view.addSubview(autofillLabel)
         
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)
@@ -454,6 +543,9 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         loginButtonTopAnchor?.isActive = true
         djGuestLoginButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         djGuestLoginButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+        
+        autofillLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        autofillLabel.topAnchor.constraint(equalTo: djGuestLoginButton.bottomAnchor, constant: 5).isActive = true
         
         usernameImage.centerYAnchor.constraint(equalTo: usernameContainer.centerYAnchor).isActive = true
         usernameImage.leftAnchor.constraint(equalTo: usernameContainer.leftAnchor, constant: 12).isActive = true

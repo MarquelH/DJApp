@@ -37,7 +37,7 @@ class BaseCell: UITableViewCell {
         
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     

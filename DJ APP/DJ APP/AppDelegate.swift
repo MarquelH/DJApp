@@ -10,12 +10,36 @@ import UIKit
 import Firebase
 import GooglePlaces
 import GoogleMaps
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DJ APP")
+        container.loadPersistentStores(completionHandler: {
+            (storeDescription, error) in
+            print(storeDescription)
+            /*if let error = error as? NSError? {
+                fatalError("Unresolved error \(error)")
+            }*/
+            })
+        return container
+    }()
+    
+    func saveContext() {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let error = error as NSError
+                fatalError("Unresolved error \(error)")
+            }
+        }
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
@@ -23,13 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        UIApplication.shared.statusBarStyle = .lightContent
         let storyboard = UIStoryboard(name: "breakOffStoryboard", bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: "breakOff")
         window?.rootViewController = initialViewController
         
-        GMSPlacesClient.provideAPIKey("AIzaSyCGFT46V-bJKMBqTCfe0ME3wqHfd0cUuz0")
-        GMSServices.provideAPIKey("AIzaSyCGFT46V-bJKMBqTCfe0ME3wqHfd0cUuz0")
+        GMSPlacesClient.provideAPIKey("AIzaSyDe-HPBTtaESQvqk2ixTcMXNSlcGK1JJ7o")
+        GMSServices.provideAPIKey("AIzaSyBPKOJvebe0Vp09zm_YTGcKAWeT2GndO20")
         
         // get current number of times app has been launched
         let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
@@ -39,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // save changes to disk
         UserDefaults.standard.synchronize()
+        
+        UserDefaults.standard.set(0, forKey: "browseDJVisitCount")
         
         return true
     }

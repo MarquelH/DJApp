@@ -12,7 +12,7 @@ import StoreKit
 
 class SongTableViewController: UITableViewController, FetchDataForSongTable {
 
-    var dj: UserDJ?
+    var dj: DJs?
     var guestID: String?
     let trackCellId: String = "trackCellId"
     //Used for up and down arrows to send to database
@@ -41,8 +41,8 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor.white
-        nrl.text = "No songs requested\nBe the first to request a song!"
-        nrl.font = UIFont(name: "Mikodacs", size: 18)
+        nrl.text = "No songs requested yet\nBe the first to request a song!"
+        nrl.font = UIFont(name: "BebasNeue-Regular", size: 22)
         nrl.textAlignment = .center
         nrl.lineBreakMode = .byWordWrapping
         nrl.numberOfLines = 0
@@ -51,16 +51,13 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.refreshData()
-        UIApplication.shared.statusBarStyle = .lightContent
+        if Reachability.isConnectedToNetwork() {
+            self.refreshData()
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (UserDefaults.standard.integer(forKey: "launchCount") == 10){
-            //Request review from user every 10th launch.
-            SKStoreReviewController.requestReview()
-        }
         //Set the reference to the dj selected & to the guest
         if let uidKey = dj?.uid {
             refSongList = Database.database().reference().child("SongList").child(uidKey)
@@ -283,6 +280,14 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
     }
     
     @objc func refreshData() {
+        if !Reachability.isConnectedToNetwork() {
+            let alert = UIAlertController(title: "Oops!", message: "It seems you aren't connected to the internet. \nReconnect and try again!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+                return
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
         if let homeTabController = self.tabBarController?.viewControllers?[0] as? HomeViewController  {
             //Set the as the delegate
             homeTabController.songTableDelegate = self
@@ -317,10 +322,11 @@ class SongTableViewController: UITableViewController, FetchDataForSongTable {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(handleBack))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
-        
-        //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 29) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 30) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
         
         if let name = dj?.djName {
             self.navigationItem.title = "\(name)" + "'s Requests"

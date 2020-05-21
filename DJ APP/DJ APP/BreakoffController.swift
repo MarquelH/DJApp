@@ -10,59 +10,31 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 import LGButton
+import NVActivityIndicatorView
 
-class BreakoffController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate {
+class BreakoffController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     @IBAction func djRequestButtonTapped(_ sender: Any) {
         let loginController = DJLoginController()
         print("PRESENTING DJ LOGIN CONTROLLER")
+        loginController.modalPresentationStyle = .fullScreen
         self.present(loginController, animated: true, completion: nil)
     }
     
     @IBAction func guestButtonTapped(_ sender: Any) {
         let loginController = LoginController()
-        print("PRESENTING LOGIN CONTROLLER")
+        print("PRESENTING GUEST LOGIN CONTROLLER")
+        loginController.modalPresentationStyle = .fullScreen
         self.present(loginController, animated: true, completion: nil)
     }
     
-    
-    
-    
-    /*let requestEngineButton: UIButton = {
-        let lb = UIButton(type: .system)
-        lb.setTitle("Go.DJ Request Engine", for: .normal)
-        lb.setTitleColor(UIColor.white, for: .normal)
-        lb.backgroundColor = UIColor.black.withAlphaComponent(0.25)
-        lb.layer.cornerRadius = 40
-        lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.white.cgColor
-        lb.titleLabel?.font = UIFont(name: "Mikodacs", size: 25)
-        lb.addTarget(self, action: #selector(handleRequestEnter), for: .touchUpInside)
-        lb.translatesAutoresizingMaskIntoConstraints = false
-        return lb
-    }()*/
-    
     let logoInLogin: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "headphones")
+        img.image = UIImage(named: "GoDJLogo")
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleAspectFill
         return img
     }()
-    
-    /*let findADJButton: UIButton = {
-        let lb = UIButton(type: .system)
-        lb.setTitle("Find A DJ", for: .normal)
-        lb.setTitleColor(UIColor.white, for: .normal)
-        lb.backgroundColor = UIColor.black.withAlphaComponent(0.25)
-        lb.layer.cornerRadius = 40
-        lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.white.cgColor
-        lb.titleLabel?.font = UIFont(name: "Mikodacs", size: 25)
-        lb.addTarget(self, action: #selector(handleFindDJEnter), for: .touchUpInside)
-        lb.translatesAutoresizingMaskIntoConstraints = false
-        return lb
-    }()*/
     
     @objc func handleFindDJEnter() {
         //let findADJController = findADJController()
@@ -75,9 +47,10 @@ class BreakoffController: UIViewController, UINavigationControllerDelegate, UITe
         addLogo()
     }
     
-    @objc func handleRequestEnter() {
-        let loginController = LoginController()
-        self.present(loginController, animated: true, completion: nil)
+    override func viewWillDisappear(_ animated: Bool) {
+        if Reachability.isConnectedToNetwork() {
+         startAnimating(CGSize(width: 30, height: 30), message: "Checking if already logged in", messageFont: UIFont(name: "BebasNeue-Regular", size: 30), type: .audioEqualizer, color: UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5), padding: 0, displayTimeThreshold: 7, minimumDisplayTime: 0, backgroundColor: .black, textColor: .white, fadeInAnimation: nil)
+        }
     }
     
     func addLogo() {

@@ -7,6 +7,7 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)MMAT.DJ-APP</string>
+		<string>$(AppIdentifierPrefix)com.marquelhendricks.godj</string>
 	</array>
 </dict>
 </plist>

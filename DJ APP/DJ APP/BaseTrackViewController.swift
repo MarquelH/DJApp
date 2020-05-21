@@ -21,7 +21,7 @@ class BaseTrackViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Change status bar background color
-        UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+        //UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
     }
     
     func setTrackImage(urlString: String) {
@@ -56,8 +56,8 @@ class BaseTrackViewController: UIViewController {
         }
         trackName.text = track?.trackName
         trackArtist.text = track?.trackArtist
-        trackName.font = UIFont(name: "Mikodacs", size : 20)
-        trackArtist.font = UIFont(name: "Mikodacs", size : 20)
+        trackName.font = UIFont(name: "BebasNeue-Regular", size : 20)
+        trackArtist.font = UIFont(name: "BebasNeue-Regular", size : 20)
     }
     
     override func viewWillLayoutSubviews() {

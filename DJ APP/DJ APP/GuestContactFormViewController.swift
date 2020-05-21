@@ -8,10 +8,11 @@
 
 import UIKit
 import Firebase
+import NVActivityIndicatorView
 
-class GuestContactFormViewController: UIViewController, UITextFieldDelegate {
+class GuestContactFormViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
 
-    var dj: UserDJ?
+    var dj: DJs?
     var guestID: String?
     var ref: DatabaseReference!
     var messages = [Message]()
@@ -21,12 +22,18 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var guestName: UITextField!
     @IBOutlet weak var guestPhoneNumber: UITextField!
     @IBOutlet weak var guestMessage: UITextView!
+    @IBOutlet weak var yourNameLabel: UILabel!
+    @IBOutlet weak var phoneNumberLabel: UILabel!
+    @IBOutlet weak var personalMessageLabel: UILabel!
+    @IBOutlet weak var submitLabel: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func submitButtonPressed(_ sender: Any) {
+        startAnimating()
         handleSubmit()
     }
     
@@ -47,13 +54,28 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate {
 
             if guestPhoneNumber.text != "", message != "",guestNameForDB != "" {
                 value = ["message": message, "timeStamp": timeStamp, "djUID":uid, "guestID": id,"guestName": guestNameForDB,"Guest Phone": guestPhoneNumber.text!] as [String : Any]
+                self.stopAnimating()
                 ref.childByAutoId().setValue(value)
+                let alert = UIAlertController(title: "Congrats!", message: "Your message has been sent", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
             }
             else if guestPhoneNumber.text == "", message != "", guestNameForDB != ""{
                 value = ["message": message, "timeStamp": timeStamp, "djUID":uid, "guestID": id,"guestName": guestNameForDB,"Guest Phone": "No Number Given"] as [String : Any]
+                self.stopAnimating()
                 ref.childByAutoId().setValue(value)
+                let alert = UIAlertController(title: "Congrats!", message: "Your message has been sent", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
             }
             else{
+                self.stopAnimating()
                 let alert = UIAlertController(title: "Skrt!", message: "You must fill out at least the name and message fields!", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
                     self.navigationController?.popViewController(animated: true)
@@ -64,11 +86,19 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate {
             }
         }
         else {
+            self.stopAnimating()
+            let alert = UIAlertController(title: "Oops!", message: "Sorry, there was an issue sending your message", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
             print("DJ or guest not present")
         }
         guestMessage.text = ""
         guestName.text = ""
         guestPhoneNumber.text = ""
+        self.stopAnimating()
         dismiss(animated: true, completion: nil)
     }
     
@@ -82,6 +112,14 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate {
         guestName.delegate = self
         guestPhoneNumber.delegate = self
         guestMessage.delegate = self
+        guestName.font = UIFont(name: "BebasNeue-Regular", size : 20)
+        djContactFormLabel.font = UIFont(name: "BebasNeue-Regular", size : 30)
+        guestPhoneNumber.font = UIFont(name: "BebasNeue-Regular", size : 20)
+        guestMessage.font = UIFont(name: "BebasNeue-Regular", size : 20)
+        yourNameLabel.font = UIFont(name: "BebasNeue-Regular", size : 25)
+        phoneNumberLabel.font = UIFont(name: "BebasNeue-Regular", size : 25)
+        personalMessageLabel.font = UIFont(name: "BebasNeue-Regular", size : 25)
+        submitButton.titleLabel?.font = UIFont(name: "BebasNeue-Regular", size : 30)
     }
     
     func setupLabel(){
@@ -98,7 +136,6 @@ class GuestContactFormViewController: UIViewController, UITextFieldDelegate {
         else {
             print("View will appear & guestID or Dj not passed in")
         }
-        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     override func didReceiveMemoryWarning() {

@@ -16,8 +16,9 @@ class CustomInitialTabBarController: UITabBarController {
     
     let mapController = MapViewController()
     //let djTableView = DJTableViewController()
-    let radioTableView = RadioDJsListController()
+    //let radioTableView = RadioDJsListController()
     var collectionsVC = DJMenuViewController()
+    var browseCollectionView = BrowseDJsViewController()
     
    
     
@@ -26,11 +27,11 @@ class CustomInitialTabBarController: UITabBarController {
         super.viewDidLoad()
         
         let sb = UIStoryboard(name: "breakOffStoryboard", bundle: nil)
-        let browseCollectionView = sb.instantiateViewController(withIdentifier: "BrowseDJsViewController") as! BrowseDJsViewController
+        browseCollectionView = sb.instantiateViewController(withIdentifier: "BrowseDJsViewController") as! BrowseDJsViewController
         
         
         let mapNavController = UINavigationController()
-        mapController.tabBarItem.title = "Map"
+        mapController.tabBarItem.title = "Live Map"
         mapController.tabBarItem.image = UIImage(named: "pin-map-7")
         mapNavController.viewControllers = [mapController]
     
@@ -39,10 +40,10 @@ class CustomInitialTabBarController: UITabBarController {
         collectionsVC.tabBarItem.image = UIImage(named: "text-list-7")
         djNavController.viewControllers = [collectionsVC]
         
-        let radioNavController = UINavigationController()
+        /*let radioNavController = UINavigationController()
         radioTableView.tabBarItem.title = "Live Radio DJs"
         radioTableView.tabBarItem.image = UIImage(named: "text-list-7")
-        radioNavController.viewControllers = [radioTableView]
+        radioNavController.viewControllers = [radioTableView]*/
         
         let browseNavController = UINavigationController()
         browseCollectionView.tabBarItem.title = "Browse All DJs"
@@ -53,10 +54,9 @@ class CustomInitialTabBarController: UITabBarController {
         tabBar.barTintColor = UIColor.black
         tabBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         
-        viewControllers = [mapNavController,djNavController,radioNavController,browseNavController]
+        viewControllers = [browseNavController,djNavController,mapNavController]
         
         self.selectedIndex = 0
-        //UIApplication.shared.statusBarStyle = .default
     }
     
     func handleBack() {
@@ -78,7 +78,7 @@ class CustomInitialTabBarController: UITabBarController {
     func setGuestIDs(id: String) {
         mapController.guestID = id
         collectionsVC.guestID = id
-        radioTableView.guestID = id
+        //radioTableView.guestID = id
         self.guestID = id
     }
 

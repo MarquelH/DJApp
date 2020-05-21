@@ -38,9 +38,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
         
-        let tableNav = self.tabBarController?.viewControllers![1] as! UINavigationController
-        let tableView = tableNav.viewControllers[0] as! DJMenuViewController
-        tableView.currentUserLocation = location
+        //let tableNav = self.tabBarController?.viewControllers![2] as! UINavigationController
+        //let tableView = tableNav.viewControllers[0] as! DJMenuViewController
+        //tableView.currentUserLocation = location
         
         strLat = location.coordinate.latitude
         strLong = location.coordinate.longitude
@@ -59,7 +59,23 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //listLikelyPlaces()
+        let status = CLLocationManager.authorizationStatus()
+        let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString)
+        if ((UserDefaults.standard.integer(forKey: "launchCount") == 10) && status != CLAuthorizationStatus.authorizedWhenInUse && status != CLAuthorizationStatus.authorizedAlways) {
+            let alert = UIAlertController(title: "Oops!", message: "Your Location must be enabled if you want to see DJs near you", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Go to location settings", style: UIAlertActionStyle.default, handler: { action in
+                if UIApplication.shared.canOpenURL(settingsURL! as URL) {
+                    UIApplication.shared.open(settingsURL! as URL, completionHandler: { (success) in
+                        print("Settings opened: \(success)") // Prints true
+                    })
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Eh, I don't care", style: UIAlertActionStyle.cancel, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            UserDefaults.standard.set(0, forKey:"launchCount")
+            self.present(alert, animated: true, completion: nil)
+        }
         setupNavBar()
         
         
@@ -68,12 +84,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
-        let status = CLLocationManager.authorizationStatus()
-        
-        if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.notDetermined ||
-            status == CLAuthorizationStatus.restricted){
-            
-            }
         layoutViews()
         
     }
@@ -82,21 +92,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
         locationManager.startUpdatingLocation()
     }
     
+    @objc func popVC() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     func setupNavBar(){
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(popVC))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleSearch))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Search Map", style: .plain, target: self, action: #selector(handleSearch))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
-        self.navigationItem.title = "Map of DJs"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 40) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationItem.title = "Venue Map"
         self.navigationController?.navigationBar.barTintColor = UIColor.black
     }
     
@@ -110,6 +128,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     let loginController = LoginController()
+    loginController.modalPresentationStyle = .fullScreen
     present(loginController, animated: true, completion: nil)
         
     }
@@ -117,6 +136,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     @objc func handleSearch() {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
+        autocompleteController.modalPresentationStyle = .fullScreen
+        autocompleteController.tableCellBackgroundColor = UIColor.darkGray
+        autocompleteController.navigationController?.navigationBar.barTintColor = UIColor.darkGray
+        autocompleteController.primaryTextHighlightColor = UIColor.white
+        autocompleteController.primaryTextColor = UIColor.black
+        autocompleteController.secondaryTextColor = UIColor.black
         present(autocompleteController, animated: true, completion: nil)
     }
     
@@ -145,14 +170,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func layoutViews() {
-        
-        
-        if (passedLat == 0.0){
-        strLong = -76.942554
-        strLat = 38.986918
+        if (passedLat == 0.0 || passedLong == 0.0){
+        strLong = -73.935242
+        strLat = 40.730610
         camera = GMSCameraPosition.camera(withLatitude: strLat, longitude: strLong, zoom: 15.0)
-        }
-        else{
+        } else{
             camera = GMSCameraPosition.camera(withLatitude: passedLat, longitude: passedLong, zoom: 15.0)
         }
         
@@ -188,13 +210,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         let latCoords = v["Latitude Coordinates"] as? String, longCoords = v["Longitude Coordinates"] as? String,name = v["DJ Name"] as? String,location = v["location"] as? String,date = v["StartDateAndTime"] as? String, endTime = v["EndDateAndTime"] as? String
                         
                         let todaysDate = Date.init()
-                        
-                            
-                            
-                            
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "M/dd/yy, h:mm a"
-                            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "M/dd/yy, h:mm a"
+                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                         
                         print("\(date!)")
                         print("\(endTime!)")
@@ -206,18 +225,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         print("\(ede)")
                         
                         guard let sd = dateFormatter.date(from: date!), let ed = dateFormatter.date(from: endTime!) else {
-                                print("Failed converting the the dates")
-                                return
-                            }
-                        
-                        
-                        
-                        
+                            print("Failed converting the the dates")
+                            return
+                        }
                         //Check if the current time is within the start and end times
                         //Add to the events list if it is.
-                        
-                        
-                        
+
                         let dateFormatter2 = DateFormatter()
                         dateFormatter2.dateStyle = DateFormatter.Style.short
                         dateFormatter2.timeStyle = DateFormatter.Style.short
@@ -245,29 +258,34 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         let realStrTime2 = strTime2.replacingOccurrences(of: " ", with: "")
                         
                         if todaysDateForComparison == eventDateForComparison {
-                            
+                            print("DATES ARE EQUAL")
                             if ((ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970){
                                 self.hasEvent = true
+                                print("HAS EVENT")
                             }
-                            if self.hasEvent{
+                            if self.hasEvent && latCoords != "0.0" && longCoords != "0.0" {
+                                print("SETTING MARKER")
                             
-                        let marker = GMSMarker()
-                        let actualLats = Double(latCoords!) as! CLLocationDegrees
-                        let actualLongs = Double(longCoords!) as! CLLocationDegrees
-                        marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
+                                let marker = GMSMarker()
+                                marker.tracksInfoWindowChanges = true
+                                let actualLats = Double(latCoords!) as! CLLocationDegrees
+                                let actualLongs = Double(longCoords!) as! CLLocationDegrees
+                                print("LAT: \(actualLats), LONG: \(actualLongs)")
+                                marker.position = CLLocationCoordinate2D(latitude: actualLats, longitude: actualLongs)
                                 if ((sd.timeIntervalSince1970) <= todaysDate.timeIntervalSince1970){
                                     marker.title = "\(name!) is playing until \(realStrTime2)!"
                                 }
-                                else{
+                                else {
                                     marker.title = "\(name!) is playing at \(realStrTime)!"
                                 }
-                        marker.icon = UIImage(named: "headphonesSmall")
-                        //marker.snippet = "\(location!)"
-                        marker.snippet = "Click Select A DJ tab to Request!"
-                        marker.tracksViewChanges = true
-                        marker.tracksInfoWindowChanges = true
-                        marker.map = self.mapView
-                        self.hasEvent = false
+                                
+                                marker.icon = UIImage(named: "headphonesSmall")
+                                //marker.snippet = "\(location!)"
+                                marker.snippet = "Click Live DJs tab to Request!"
+                                marker.tracksViewChanges = true
+                                marker.tracksInfoWindowChanges = true
+                                marker.map = self.mapView
+                                self.hasEvent = false
                             }
                             else{
                                 print("DOES NOT HAVE AN EVENT")
@@ -275,13 +293,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                        
                     }
                         else if endStringDate == todaysDateForComparison{
-                            
+                            print("DATES ARE EQUAL")
                             if ((ed.timeIntervalSince1970) >= todaysDate.timeIntervalSince1970){
                                 self.hasEvent = true
                                 print("ITS TRUE")
                             }
                             
-                            if self.hasEvent{
+                            if self.hasEvent && latCoords != "0.0" && longCoords != "0.0" {
                                 
                                 print("We have something on this date!")
                                 let marker = GMSMarker()
@@ -300,12 +318,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                                 print("DOES NOT HAVE AN EVENT")
                             }
                             
-                            
-                            
                         }
-                        else{
+                        else if (ed.timeIntervalSince1970 >= todaysDate.timeIntervalSince1970) && (sd.timeIntervalSince1970 <= todaysDate.timeIntervalSince1970) {
+                            print("EVENTS IN BETWEEN")
+                        }
+                        else {
                             print("NO EVENTS TODAY")
                         }
+                        
             }
                 }
             }}, withCancel: nil)

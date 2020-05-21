@@ -10,12 +10,14 @@ import UIKit
 import Firebase
 import GoogleMaps
 import GooglePlaces
+import NVActivityIndicatorView
 
-class LoginController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate {
+class LoginController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     
     var guestSnapshot: [String: AnyObject]?
     var djSnapshot: [String: AnyObject]?
+    let activityIndicatorView:UIActivityIndicatorView = UIActivityIndicatorView()
 
     
     let GuestLoginButton: UIButton = {
@@ -26,17 +28,19 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         lb.layer.cornerRadius = 40
         lb.layer.borderWidth = 1
         lb.layer.borderColor = UIColor.white.cgColor
-        lb.titleLabel?.font = UIFont(name: "Mikodacs", size: 35)
+        lb.titleLabel?.font = UIFont(name: "BebasNeue-Regular", size: 35)
         lb.addTarget(self, action: #selector(handleGuestEnter), for: .touchUpInside)
         lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
-    let activityIndicatorView: UIActivityIndicatorView = {
+    
+    
+    /*let activityIndicatorView: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(frame: CGRect.zero)
         aiv.translatesAutoresizingMaskIntoConstraints = false
         return aiv
-    }()
+    }()*/
     
     
     let usernameContainer: UIView = {
@@ -97,7 +101,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     }()
     
     lazy var djOrGuestSegmentedControl: UISegmentedControl = {
-        let sc = UISegmentedControl(items: ["Enter Guest Mode Below"])
+        let sc = UISegmentedControl(items: ["Enter Listener Mode Below"])
         sc.backgroundColor = UIColor.blue.withAlphaComponent(0.25)
         sc.tintColor = UIColor.white
         sc.selectedSegmentIndex = 0
@@ -111,7 +115,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     let notUserLabel: UIButton = {
         let btn = UIButton(type: .system)
         let lightblue = UIColor.white.withAlphaComponent(0.75)
-        btn.setTitle("Please provide your email to enter Guest Mode.", for: .normal)
+        btn.setTitle("Please provide your email to enter Listener Mode.", for: .normal)
         btn.setTitleColor(lightblue, for: .normal)
         btn.titleLabel?.font = UIFont.italicSystemFont(ofSize: 15)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -145,8 +149,9 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     
     let backButton: UIButton = {
         let btn = UIButton(type: .system)
-        let image = UIImage(named: "icons8-rewind-50") as UIImage!
+        let image = UIImage(named: "icons8-go-back-64")
         btn.setImage(image, for: .normal)
+        btn.tintColor = UIColor.white
         btn.addTarget(self, action: #selector(backToBreakOff), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
@@ -158,6 +163,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getSnapshots()
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "djBackgroundImage")
         backgroundImage.contentMode = .scaleAspectFill
@@ -172,12 +178,29 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
       
     }
     
+    
+    
     @objc func setupTextFields() {
-            loginButtonTopAnchor?.constant = -55
-            notUserLabel.isHidden = false
-            passwordContainer.isHidden = true
-            passwordImage.isHidden = true
-            passwordTextField.isHidden = true
+        loginButtonTopAnchor?.constant = -55
+        notUserLabel.isHidden = false
+        passwordContainer.isHidden = true
+        passwordImage.isHidden = true
+        passwordTextField.isHidden = true
+    }
+    
+    func setupNavBar() {
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backToBreakOff))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
+        
+        //Bar text
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 30) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationItem.title = "Listener Mode"
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -187,19 +210,17 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getSnapshots()
-        UIApplication.shared.statusBarStyle = .lightContent
+        setupNavBar()
     }
     
     @objc func backToBreakOff() {
         let storyboard = UIStoryboard(name: "breakOffStoryboard", bundle: nil)
         let breakOff = storyboard.instantiateViewController(withIdentifier: "breakOff") as! BreakoffController
+        breakOff.modalPresentationStyle = .fullScreen
         present(breakOff, animated: true, completion: nil)
     }
 
     func checkIfUserIsAlreadyLoggedIn() {
-        activityIndicatorView.isHidden = false
-        activityIndicatorView.startAnimating()
         //If guest is currently signed in, then his stuff is in the database, so find it
         if Auth.auth().currentUser != nil {
             if let email = Auth.auth().currentUser?.email {
@@ -211,36 +232,46 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
                 //if guest is found then present DJ Tableview
                 let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
                 if (isFoundTuple.0) {
-                    activityIndicatorView.stopAnimating()
-                    activityIndicatorView.isHidden = true
                     presentDJTableView(guestID: isFoundTuple.key)
+                } else {
+                    stopAnimating()
+                    print("User was logged in but not found in guest database. So will now logout")
+                    do {
+                        try Auth.auth().signOut()
+                    }
+                    catch let error as NSError {
+                        print("Error with signing out of firebase: \(error.localizedDescription)")
+                    }
                 }
             }
             else {
+                stopAnimating()
                 print("Error with already signed in ")
             }
             
         }
         else {
+            stopAnimating()
             print("no user logged in")
         }
     }
     
     func getSnapshots() {
+        print("GETTING SNAPSHOT")
         Database.database().reference().child("guests").observeSingleEvent(of: .value, with: {(snapshot) in
-
-            DispatchQueue.main.async {
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.guestSnapshot = dictionary
-                }
+            
+            //DispatchQueue.main.async {
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                self.guestSnapshot = dictionary
             }
+            //}
             //get users
             Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
                 
-                DispatchQueue.main.async {
-                    if let dictionary = snapshot.value as? [String: AnyObject] {
-                        self.djSnapshot = dictionary
-                    }
+                //DispatchQueue.main.async {
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.djSnapshot = dictionary
+                    //}
                     self.checkIfUserIsAlreadyLoggedIn()
                 }
             }, withCancel: nil)
@@ -249,29 +280,44 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         
     }
     
-    /*@objc func handleRegister() {
-        let registerController = RegisterController()
-        registerController.loginController = self
-        let navController = UINavigationController(rootViewController: registerController)
-        let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
-        backgroundImage.image = UIImage(named: "headphonesImage")
-        backgroundImage.contentMode = .scaleAspectFill
-        navController.view.insertSubview(backgroundImage, at: 0)
-        navController.view.backgroundColor = UIColor.black
-        
-        present(navController, animated: true, completion: nil)
-    }*/
-    
     @objc func handleGuestEnter() {
-        
+        if !Reachability.isConnectedToNetwork() {
+            let alert = UIAlertController(title: "Oops!", message: "It seems you aren't connected to the internet. \nReconnect and try again!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+                self.stopAnimating()
+                return
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        self.startAnimating()
         guard let email = usernameTextField.text?.lowercased(), email != "", let guestSnap = self.guestSnapshot else {
             print("Username is empty, or snap did not load")
             return
+        }
+        
+        guard let djSnap = self.djSnapshot else {
+            print("Dj Snap did not load")
+            return
+        }
+        
+        let djFoundTuple = isFound(snapshot: djSnap, guestEmail: email)
+        if (djFoundTuple.0) {
+            print("FOUND IN DJ SNAPSHOT!")
+            let alert = UIAlertController(title: "Oops!", message: "Email \(email) is already associated with a DJ account. Please enter another for guest use.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+                return
+            }))
+            self.stopAnimating()
+            self.present(alert, animated: true, completion: nil)
+            //checkIfValidated(uid: djFoundTuple.key)
         }
 
         
         //Found in database
         let isFoundTuple = isFound(snapshot: guestSnap, guestEmail: email)
+        print(isFoundTuple.0)
         if isFoundTuple.0 {
             Auth.auth().signIn(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
@@ -279,7 +325,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                         self.navigationController?.popViewController(animated: true)
                     }))
-                    
+                    self.stopAnimating()
                     self.present(alert, animated: true, completion: nil)
                     print("Error signing in with the user from email: \(error.localizedDescription)")
                     return
@@ -294,6 +340,7 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
             //Also signs them in
             Auth.auth().createUser(withEmail: email, password: "123456", completion: { (user, error) in
                 if let error = error {
+                    self.stopAnimating()
                     print(error)
                     print("Error creating user and logging in from the user from email: \(error.localizedDescription)")
                     return
@@ -305,7 +352,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
                     let values = ["email":email]
                     ref.child(key!).setValue(values)
                     self.presentDJTableView(guestID: key!)
-
                 }
             })
             
@@ -314,14 +360,19 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
     }
     
     func presentDJTableView (guestID: String) {
+        self.startAnimating()
         let initialTab = CustomInitialTabBarController()
         
         //Send selected DJ and guest id to new views
         
         initialTab.setGuestIDs(id: guestID)
-        
-        //Insert views into navigation controller
-        
+        let browseNavController = UINavigationController()
+        let browseDJsVC = initialTab.browseCollectionView
+        let djMenuVC = initialTab.collectionsVC
+        browseDJsVC.usersSnapshot = self.djSnapshot
+        djMenuVC.usersSnapshot = self.djSnapshot
+        self.stopAnimating()
+        initialTab.modalPresentationStyle = .fullScreen
         present(initialTab, animated: true, completion: nil)
     }
     
@@ -349,7 +400,6 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
 
     
     func setupViews() {
-        UIApplication.shared.statusBarStyle = .lightContent
         view.addSubview(GuestLoginButton)
         view.addSubview(usernameContainer)
         view.addSubview(passwordContainer)
@@ -359,8 +409,8 @@ class LoginController: UIViewController, UINavigationControllerDelegate, UITextF
         view.addSubview(logoGo)
         view.addSubview(logoDJ)
         view.addSubview(backButton)
-        view.addSubview(activityIndicatorView)
-        activityIndicatorView.isHidden = true
+        //view.addSubview(activityIndicatorView)
+        //activityIndicatorView.isHidden = true
 
         usernameContainer.addSubview(usernameTextField)
         usernameContainer.addSubview(usernameImage)

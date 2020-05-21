@@ -9,9 +9,10 @@
 import UIKit
 import Firebase
 import GooglePlaces
+import NVActivityIndicatorView
 
 class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate,
- UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+ UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, NVActivityIndicatorViewable {
     
 
     var dj: UserDJ?
@@ -97,7 +98,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
+        setFonts()
     }
     
     
@@ -108,7 +109,7 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     lazy var profilePic: ProfileImageView = {
         let pp = ProfileImageView()
         pp.contentMode = .scaleAspectFill
-        pp.layer.cornerRadius = 70
+        pp.layer.cornerRadius = 30
         pp.layer.masksToBounds = true
         pp.clipsToBounds = true
         pp.layer.borderWidth = 1.0
@@ -125,6 +126,12 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet weak var genreTextField: UITextField!
     @IBOutlet weak var twitterInstagramTextField: UITextField!
+    @IBOutlet weak var hometownLabel: UILabel!
+    @IBOutlet weak var djLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var twitterInstagramLabel: UILabel!
+    
     
     @IBOutlet weak var saveChangesBtn: UIButton!
     @IBOutlet weak var cancelChangesBtn: UIButton!
@@ -133,7 +140,24 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     @IBAction func hometownEditingBegan(_ sender: Any) {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
+        autocompleteController.modalPresentationStyle = .fullScreen
         present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    func setFonts() {
+        djNameLabel.font = UIFont(name: "BebasNeue-Regular", size: 55)
+        hometownLabel.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        djLabel.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        ageLabel.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        genreLabel.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        twitterInstagramLabel.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        hometownTextField.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        DJNameTextField.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        ageTextField.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        genreTextField.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        twitterInstagramTextField.font = UIFont(name: "BebasNeue-Regular", size: 18)
+        saveChangesBtn.titleLabel?.font = UIFont(name: "BebasNeue-Regular", size: 17)
+        cancelChangesBtn.titleLabel?.font = UIFont(name: "BebasNeue-Regular", size: 17)
     }
     
     @IBAction func djNameEditingDone(_ sender: Any) {
@@ -149,8 +173,10 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
     }
     
     @IBAction func saveChangesBtnPressed(_ sender: Any) {
+        startAnimating()
+        print("HELLO FROM THIS METHOD")
         if hometownTextField.text != "", DJNameTextField.text != "", ageTextField.text != "",
-            genreTextField.text != "", twitterInstagramTextField.text != "" {
+            genreTextField.text != "" {
             
             guard let uid = dj?.uid, let age = Int(ageTextField.text!), let genre = genreTextField.text, let name = DJNameTextField.text, let hometown = hometownTextField.text, let twitter = twitterInstagramTextField.text, let profileUrl = dj?.profilePicURL else {
                 print("Not valid args passed in.")
@@ -166,21 +192,39 @@ class DJSideProfileViewController: UIViewController, UIScrollViewDelegate, UIIma
                 storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                     if let error = error{
                         print(error.localizedDescription)
+                        self.stopAnimating()
+                        let alert = UIAlertController(title: "Sorry!", message: "There was an issue saving your changes :(", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                            self.popAlertOff()
+                        }))
+                        self.present(alert,animated: true, completion: nil)
                         return
                     }
                     storageRef.downloadURL { (url, error) in
                         if let error = error{
                             print(error.localizedDescription)
+                            self.stopAnimating()
+                            let alert = UIAlertController(title: "Sorry!", message: "There was an issue saving your changes :(", preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                                self.popAlertOff()
+                            }))
+                            self.present(alert, animated: true, completion: nil)
                             return
                         }
                         let profileImageUrl = url?.absoluteString
                         if profileImageUrl == nil {
                             print("URL was null!")
+                            self.stopAnimating()
+                            let alert = UIAlertController(title: "Sorry!", message: "There was an issue saving your changes :(", preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                                self.popAlertOff()
+                            }))
+                            self.present(alert, animated: true, completion: nil)
                             return
                         }
                     self.ref.child("users").child(uid).updateChildValues(["djName":name, "hometown":hometown, "age":age,
                                                                           "genre":genre, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter])
-                    
+                    self.stopAnimating()
                     let alert = UIAlertController(title: "Success", message: "We have updated your info \(name)!", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
                         self.popAlertOff()
@@ -248,6 +292,7 @@ func tappedActions(_ sender: UITapGestureRecognizer){
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        imagePicker.modalPresentationStyle = .fullScreen
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -273,7 +318,6 @@ func tappedActions(_ sender: UITapGestureRecognizer){
     
     func placeDJNameInLabel(){
         if let djName = dj?.djName {
-            djNameLabel.font = UIFont(name: "SudegnakNo2", size: 60)
             djNameLabel.text = djName
             djNameLabel.adjustsFontSizeToFitWidth = true
         }
@@ -298,11 +342,11 @@ func tappedActions(_ sender: UITapGestureRecognizer){
     func placeDJImageInView(){
         if let profileURL = dj?.profilePicURL{
             djProfileImage.contentMode = .scaleAspectFill
-            djProfileImage.layer.cornerRadius = 50
+            djProfileImage.layer.cornerRadius = 20
             djProfileImage.layer.masksToBounds = true
             djProfileImage.clipsToBounds = true
-            djProfileImage.layer.borderWidth = 1.0
-            djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0).cgColor
+            //djProfileImage.layer.borderWidth = 1.0
+            //djProfileImage.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0).cgColor
             djProfileImage.translatesAutoresizingMaskIntoConstraints = false
             djProfileImage.loadImageWithChachfromUrl(urlString: profileURL)
         }

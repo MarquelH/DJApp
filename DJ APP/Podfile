@@ -1,34 +1,42 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, ’9.0’
+ platform :ios, ’10.0’
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'DJ APP' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for DJ APP
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
+  pod 'JTAppleCalendar','~> 7.1.4'
+  pod 'GooglePlaces'
+  pod 'GooglePlacePicker'
+  pod 'GoogleMaps'
+  pod 'LGButton'
+  pod 'CardsLayout'
+  pod 'NVActivityIndicatorView'
+  pod 'SwiftKeychainWrapper'
 
-pod 'Firebase/Database'
-pod 'Firebase/Auth'
-pod 'Firebase/Storage'
-pod 'JTAppleCalendar','~> 7.1.4'
-pod 'GooglePlaces'
-pod 'GooglePlacePicker'
-pod 'GoogleMaps'
-pod 'LGButton'
-pod 'CardsLayout'
-pod 'TONavigationBar'
+ target 'DJ APPTests' do
+   inherit! :search_paths
+    # Pods for testing
+ end
 
-  target 'DJ APPTests' do
+
+
+ target 'DJ APPUITests' do
     inherit! :search_paths
     # Pods for testing
+ end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    next unless target.name == '<NAME OF POD>'
+    target.build_configurations.each do |config|
+      next unless config.name.start_with?('Release')
+      config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
+    end
   end
-
-
-
-  target 'DJ APPUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
+end
 end

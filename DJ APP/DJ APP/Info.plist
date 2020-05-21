@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.1</string>
+	<string>1.2.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -26,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>8</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechromes</string>
@@ -51,14 +51,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Log in with your face</string>
 	<key>NSHumanReadableCopyright</key>
 	<string></string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Determine what DJs you can request from!</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Determine what DJs you can request from!</string>
+	<string>See what DJ's are near you on the map</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>See what DJ's are near you!</string>
+	<string>See what DJ's are near you on the map</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to photos to provide us with a profile pic</string>
 	<key>UIAppFonts</key>
@@ -66,6 +66,7 @@
 		<string>Mathlete-Bulky.otf</string>
 		<string>Mikodacs.otf</string>
 		<string>SudegnakNo2.otf</string>
+		<string>BebasNeue-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -75,6 +76,8 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

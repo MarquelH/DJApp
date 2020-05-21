@@ -9,10 +9,12 @@
 
 import UIKit
 import FirebaseDatabase
+import CoreData
+import LGButton
 
-class DJPRofileViewController: UIViewController {
+class DJProfileViewController: UIViewController {
     
-    var dj: UserDJ?
+    var dj: DJs?
     var guestID: String?
     
     override func viewDidLoad(){
@@ -21,7 +23,6 @@ class DJPRofileViewController: UIViewController {
         profilePic.isUserInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
         self.view.backgroundColor = UIColor.black
-        //self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(goBackToTabbedView))
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -38,20 +39,16 @@ class DJPRofileViewController: UIViewController {
     
     @objc func setupNavigationBar() {
         //Back button
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(goBackToTabbedView))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(goBackToTabbedView))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
         
         //Bar text
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 29) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.barTintColor = UIColor.black
-        
-        if let name = dj?.djName {
-            self.navigationItem.title = "\(name)" + "'s Profile"
-        }
-        else {
-            print("Dj Passed in has no name")
-        }
+        //self.navigationItem.title = "DJ Profile"
+        //self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 40) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
     }
     
     @objc func goBackToTabbedView() {
@@ -70,11 +67,13 @@ class DJPRofileViewController: UIViewController {
         self.scrollView.isHidden = true
         view.addSubview(newImageView)
         self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     @objc func dismissFullscreenImage(sender: UITapGestureRecognizer) {
         self.scrollView.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.isNavigationBarHidden = false
         sender.view?.removeFromSuperview()
     }
     
@@ -91,7 +90,6 @@ class DJPRofileViewController: UIViewController {
         }
         setupViews()
         setupNavigationBar()
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     @objc func handleDM() {
@@ -99,17 +97,23 @@ class DJPRofileViewController: UIViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: "GuestContactView") as! GuestContactFormViewController
         controller.dj = dj
         controller.guestID = guestID
+        controller.modalPresentationStyle = .fullScreen
         self.present(controller, animated: true, completion: nil)
     }
     
     func setupViews() {
         if let name = dj?.djName, let hometown = dj?.hometown, let profileUrl = dj?.profilePicURL, let age = dj?.age, let genre = dj?.genre, let twitterHandle = dj?.twitter {
+            if !(twitterHandle == "") {
+                twitterText.text = "\(twitterHandle)"
+            }
+            else {
+                twitterText.text = "--"
+            }
             djNameLabel.text = "\(name)"
             profilePic.loadImageWithChachfromUrl(urlString: profileUrl)
             hometownText.text = "\(hometown)"
             ageText.text = "\(age)"
             genreText.text = "\(genre)"
-            twitterText.text = "\(twitterHandle)"
         }
         else {
             print("No DJ at setupViews")
@@ -133,10 +137,13 @@ class DJPRofileViewController: UIViewController {
         scrollView.addSubview(hometownText)
         scrollView.addSubview(genreText)
         scrollView.addSubview(twitterText)
+        //scrollView.addSubview(cosmosView)
         
-        //scrollView.addSubview(dmDJButton)
-        scrollView.addSubview(headphonesLogo)
+        scrollView.addSubview(dmDJButton)
+        //scrollView.addSubview(reviewsButton)
+        //scrollView.addSubview(headphonesLogo)
         
+        //cosmosView.centerInSuperview()
         scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
@@ -144,28 +151,33 @@ class DJPRofileViewController: UIViewController {
         
         let backgroundImage: UIImageView = UIImageView(frame: view.bounds)
         backgroundImage.image = UIImage(named: "jacob-morch-272617")
-        backgroundImage.contentMode = .scaleAspectFit
+        backgroundImage.contentMode = .scaleAspectFill
         backgroundImage.translatesAutoresizingMaskIntoConstraints = false
         
         scrollView.insertSubview(backgroundImage, at: 0)
         
-        backgroundImage.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        backgroundImage.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
+        backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        //backgroundImage.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         backgroundImage.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        backgroundImage.bottomAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
+        backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         profilePic.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        profilePic.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30).isActive = true
+        profilePic.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 35).isActive = true
         profilePic.widthAnchor.constraint(equalToConstant: 140).isActive = true
         profilePic.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        
-        
-        
         
         djNameLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         djNameLabel.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 12).isActive = true
         djNameLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -36).isActive = true
         djNameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        //cosmosView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        //cosmosView.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 12).isActive = true
+        //reviewsButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        //reviewsButton.topAnchor.constraint(equalTo: profilePic.bottomAnchor, constant: 15).isActive = true
+        //reviewsButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        //reviewsButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
         ageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16).isActive = true
         ageLabel.topAnchor.constraint(equalTo: djNameLabel.bottomAnchor, constant: 12).isActive = true
@@ -208,23 +220,53 @@ class DJPRofileViewController: UIViewController {
         twitterText.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
         twitterText.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        headphonesLogo.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        headphonesLogo.topAnchor.constraint(equalTo: twitterLabel.bottomAnchor).isActive = true
-        headphonesLogo.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        headphonesLogo.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
-        //dmDJButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 24).isActive = true
-        //dmDJButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        //dmDJButton.bottomAnchor.constraint(equalTo: (self.tabBarController?.tabBar.topAnchor)!).isActive = true
-        //dmDJButton.widthAnchor.constraint(equalTo: djNameLabel.widthAnchor).isActive = true
-        //dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        
+        dmDJButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        dmDJButton.topAnchor.constraint(equalTo: twitterText.bottomAnchor, constant: 30).isActive = true
+        dmDJButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
+    
+    
+   /* let cosmosView: CosmosView = {
+       let cv = CosmosView()
+        cv.settings.filledImage = UIImage(named: "filled_star")
+        cv.settings.starSize = 60.0
+        cv.settings.starMargin = 10
+        cv.settings.emptyBorderWidth = 0.75
+        return cv
+    //}()*/
     
     let scrollView: UIScrollView = {
         let sv = UIScrollView()
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.backgroundColor = UIColor.black
         return sv
+    }()
+    
+    let reviewsButton: UIButton = {
+       let lb = UIButton()
+        lb.setTitle("See DJ Reviews »", for: .normal)
+        lb.setTitleColor(UIColor.white, for: .normal)
+        lb.backgroundColor = UIColor.clear
+        //lb.layer.cornerRadius = 25
+        lb.layer.masksToBounds = true
+        //lb.layer.borderWidth = 1
+        //lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0).cgColor
+        lb.titleLabel?.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        lb.addTarget(self, action: #selector(handleDM), for: .touchUpInside)
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
+    
+    let star: UIImageView = {
+        let img = UIImageView()
+        img.layer.masksToBounds = true
+        img.clipsToBounds = true
+        img.layer.borderColor = UIColor.clear.cgColor
+        img.image = UIImage(named: "open_star")
+        img.translatesAutoresizingMaskIntoConstraints = false
+        return img
     }()
 
     
@@ -243,7 +285,7 @@ class DJPRofileViewController: UIViewController {
     let hometownLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.font = UIFont(name: "BebasNeue-Regular", size : 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = "Hometown:"
         return lbl
@@ -252,7 +294,7 @@ class DJPRofileViewController: UIViewController {
     let ageLabel: UILabel = {
         let al = UILabel()
         al.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        al.font = UIFont(name: "Mikodacs", size: 26)
+        al.font = UIFont(name: "BebasNeue-Regular", size: 26)
         al.translatesAutoresizingMaskIntoConstraints = false
         al.text = "Age:"
         return al
@@ -261,7 +303,7 @@ class DJPRofileViewController: UIViewController {
     let genreLabel: UILabel = {
         let gl = UILabel()
         gl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        gl.font = UIFont(name: "Mikodacs", size: 26)
+        gl.font = UIFont(name: "BebasNeue-Regular", size: 26)
         gl.translatesAutoresizingMaskIntoConstraints = false
         gl.text = "Favorite Genre:"
         return gl
@@ -270,9 +312,10 @@ class DJPRofileViewController: UIViewController {
     let twitterLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.font = UIFont(name: "BebasNeue-Regular", size : 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "Twitter/IG:"
+        lbl.text = "Social Media:"
+        lbl.adjustsFontSizeToFitWidth = true
         return lbl
     }()
     
@@ -280,7 +323,7 @@ class DJPRofileViewController: UIViewController {
     let hometownText: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor.white
-        lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.font = UIFont(name: "BebasNeue-Regular", size : 26)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .right
         return lbl
@@ -289,7 +332,7 @@ class DJPRofileViewController: UIViewController {
     let ageText: UILabel = {
         let al = UILabel()
         al.textColor = UIColor.white
-        al.font = UIFont(name: "Mikodacs", size: 26)
+        al.font = UIFont(name: "BebasNeue-Regular", size: 26)
         al.translatesAutoresizingMaskIntoConstraints = false
         al.textAlignment = .right
         return al
@@ -297,7 +340,7 @@ class DJPRofileViewController: UIViewController {
     
     let djNameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "SudegnakNo2", size: 45)
+        lbl.font = UIFont(name: "BebasNeue-Regular", size: 45)
         lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textColor = UIColor.white
@@ -308,7 +351,7 @@ class DJPRofileViewController: UIViewController {
     let genreText: UILabel = {
         let gl = UILabel()
         gl.textColor = UIColor.white
-        gl.font = UIFont(name: "Mikodacs", size: 26)
+        gl.font = UIFont(name: "BebasNeue-Regular", size: 26)
         gl.translatesAutoresizingMaskIntoConstraints = false
         gl.textAlignment = .right
         return gl
@@ -316,27 +359,26 @@ class DJPRofileViewController: UIViewController {
     
     let twitterText: UILabel = {
         let lbl = UILabel()
-        lbl.textColor = UIColor.white
-        lbl.font = UIFont(name: "Mikodacs", size : 26)
+        lbl.textColor = UIColor.black
+        lbl.font = UIFont(name: "BebasNeue-Regular", size : 26)
         lbl.adjustsFontSizeToFitWidth = true
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .right
         return lbl
     }()
     
-    let dmDJButton: UIButton = {
-        let lb = UIButton(type: .system)
-        lb.setTitle("Hit up The DJ!", for: .normal)
-        lb.setTitleColor(UIColor.white, for: .normal)
-        lb.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        lb.layer.cornerRadius = 25
-        lb.layer.masksToBounds = true
-        lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0).cgColor
-        lb.titleLabel?.font = UIFont(name: "SudegnakNo2", size: 40)
-        lb.addTarget(self, action: #selector(handleDM), for: .touchUpInside)
-        lb.translatesAutoresizingMaskIntoConstraints = false
-        return lb
+    let dmDJButton: LGButton = {
+        let btn = LGButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.titleString = "Hit up this DJ!"
+        btn.titleFontName = "BebasNeue-Regular"
+        btn.titleFontSize = 20
+        btn.titleColor = UIColor.black
+        btn.addTarget(self, action: #selector(handleDM), for: .touchUpInside)
+        btn.fullyRoundedCorners = true
+        btn.gradientStartColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        btn.gradientEndColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        return btn
     }()
     
     let twitterIcon: UIImageView = {
@@ -361,4 +403,18 @@ class DJPRofileViewController: UIViewController {
         sep.translatesAutoresizingMaskIntoConstraints = false
         return sep
     }()
+}
+
+extension UIView {
+    
+    func fadeIn(_ duration: TimeInterval = 0.5, delay: TimeInterval = 0.0, completion: @escaping ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.alpha = 1.0
+        }, completion: completion)  }
+    
+    func fadeOut(_ duration: TimeInterval = 0.5, delay: TimeInterval = 1.0, completion: @escaping (Bool) -> Void = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.alpha = 0.3
+        }, completion: completion)
+    }
 }

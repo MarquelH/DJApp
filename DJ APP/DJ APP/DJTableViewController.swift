@@ -12,7 +12,7 @@ import CoreLocation
 
 class DJTableViewController: UITableViewController {
 
-    var users = [UserDJ]()
+    var users = [DJs]()
     var events = [Event]()
     let cellId = "cellId"
     var guestID: String?
@@ -20,6 +20,8 @@ class DJTableViewController: UITableViewController {
     var eventsToBeDeleted: [String] = []
     var songlistsToBeDeleted: [String] = []
     var currentUserLocation: CLLocation?
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     lazy var refreshController: UIRefreshControl = {
         let rc = UIRefreshControl()
@@ -32,9 +34,9 @@ class DJTableViewController: UITableViewController {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-        nrl.text = "No DJs are currently live within 1 mile of you.\nPlease try again later!"
+        nrl.text = "Here, DJs which are currently live on Go.DJ will automatically appear\n\nYou just select a DJ in order to request songs during their live sessions."
         nrl.textAlignment = .center
-        nrl.font = UIFont(name: "Mikodacs", size : 20)
+        nrl.font = UIFont(name: "BebasNeue-Regular", size : 28)
         nrl.lineBreakMode = .byWordWrapping
         nrl.numberOfLines = 0
         return nrl
@@ -42,7 +44,6 @@ class DJTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
         fetchDjs()
     }
     
@@ -86,23 +87,25 @@ class DJTableViewController: UITableViewController {
     
     
     func fetchEvents() {
+        //TODO: Turn location restriction logic back on
         self.events.removeAll()
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
-            
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 
                 for (key,value) in dictionary {
                     
                     if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String, let djName = value["DJ Name"] as? String, let eventLat = value["Latitude Coordinates"] as? String, let eventLong = value["Longitude Coordinates"] as? String {
-                        let realLat = Double(eventLat)
-                        let realLong = Double(eventLong)
-                        let locationIwant = CLLocation(latitude: realLat!, longitude: realLong!)
+                        
+                        //let realLat = Double(eventLat)
+                        //let realLong = Double(eventLong)
+                        //let locationIwant = CLLocation(latitude: realLat!, longitude: realLong!)
                         
                         //let status = CLLocationManager.authorizationStatus()
                         //while status != CLAuthorizationStatus.authorizedAlways || sta
-                        let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString)
-                        //Check if location has been allowed here
-                        guard let curentUserLoc = self.currentUserLocation else {
+                        //let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString)
+                        //Check if location has been allowed here.
+                    
+                        /*guard let curentUserLoc = self.currentUserLocation else {
                             let alert = UIAlertController(title: "User location not enabled!", message: "Location must be enabled so we can determine whether you are eligible to request!", preferredStyle: UIAlertControllerStyle.alert)
                             alert.addAction(UIAlertAction(title: "Screw you", style: UIAlertActionStyle.destructive, handler: { action in
                                 let mapview = MapViewController()
@@ -117,10 +120,10 @@ class DJTableViewController: UITableViewController {
                             }))
                             self.present(alert, animated: true, completion: nil)
                             return
-                        }
+                        }*/
                         
-                        let theDistance = locationIwant.distance(from: self.currentUserLocation!)
-                        if theDistance <= 1609.34 { //1609.34 is about 1 mile in meters.
+                        ///let theDistance = locationIwant.distance(from: self.currentUserLocation!)
+                        //if theDistance <= 1609.34 { //1609.34 is about 1 mile in meters.
 
                         let currDateTime = Date()
                         let dateFormatter = DateFormatter()
@@ -158,10 +161,10 @@ class DJTableViewController: UITableViewController {
                             //Add key to eventsToBeDeleted
                             self.eventsToBeDeleted.append(key)
                         }
-                    }
-                        else{
+                    //}
+                        /*else{
                             print("User is too far from location!")
-                        }
+                        }*/
                     }
                     else{
                         print("Couldn't find information about the event")
@@ -174,22 +177,7 @@ class DJTableViewController: UITableViewController {
                 print("Problem parsing events into [String: AnyObjet]")
             }
             self.refreshController.endRefreshing()
-            self.removePastEventsAndSonglists()
         }, withCancel: nil)
-    }
-    
-    func removePastEventsAndSonglists() {
-        //Remove past events
-        let ref = Database.database().reference().child("Events")
-        for eventID in eventsToBeDeleted {
-            ref.child(eventID).setValue(nil)
-        }
-        
-        //Remove past song lists
-        let ref2 = Database.database().reference().child("SongList")
-        for djID in songlistsToBeDeleted {
-            ref2.child(djID).setValue(nil)
-        }
     }
     
     func addDJToList(djID: String) {
@@ -204,10 +192,18 @@ class DJTableViewController: UITableViewController {
                 print("DJ Found in snapshot, going to add them to the list. ")
                 if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
                     
-                    let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
+                    //let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
+                    let newDJ = DJs(entity: DJs.entity(), insertInto: self.context)
+                    newDJ.djName = name
+                    newDJ.age = age
+                    newDJ.email = email
+                    newDJ.genre = genre
+                    newDJ.hometown = hometown
+                    newDJ.profilePicURL = profilePicURL
+                    newDJ.uid = key
+                    newDJ.twitter = twitter
                     
-                    
-                    self.users.append(dj)
+                    self.users.append(newDJ)
                     
                 }
                 else{
@@ -236,6 +232,7 @@ class DJTableViewController: UITableViewController {
         
         let dj = users[indexPath.row]
         cell.textLabel?.text = dj.djName
+        print(dj.djName)
         
         if let location = events[indexPath.row].location {
             cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
@@ -284,6 +281,7 @@ class DJTableViewController: UITableViewController {
         //Insert views into navigation controller
         
         customTabBarController.selectedIndex = 1
+        customTabBarController.modalPresentationStyle = .fullScreen
         present(customTabBarController, animated: true, completion: nil)
         
         
@@ -295,11 +293,11 @@ class DJTableViewController: UITableViewController {
     }
 
     func setupNavBar() {
-        navigationItem.title = "Live DJs Near You"
+        navigationItem.title = "Live DJs"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.barTintColor = UIColor.black
     }
 

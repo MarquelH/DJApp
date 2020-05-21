@@ -9,8 +9,11 @@
 import UIKit
 import Firebase
 import GooglePlaces
+import LocalAuthentication
+import NVActivityIndicatorView
+import SwiftKeychainWrapper
 
-class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
+class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, NVActivityIndicatorViewable {
 
     var loginController: DJLoginController?
     var originalView: CGFloat?
@@ -242,6 +245,33 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
     //}
     
+    func tryingFaceID() {
+        var context = LAContext()
+        context.localizedCancelTitle = "Enter Username/Password"
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            let reason = "Log in to your account"
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
+
+                if success {
+
+                    // Move to the main thread because a state update triggers UI changes.
+                    DispatchQueue.main.async { [unowned self] in
+                        //Do stuff here
+                        Constants.LOGGED_IN = true
+                        
+                    }
+
+                } else {
+                    print(error?.localizedDescription ?? "Failed to authenticate")
+
+                    // Fall back to a asking for username and password.
+                    // ...
+                }
+            }
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
@@ -283,7 +313,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     @objc func handleDone() {
-
+        self.startAnimating()
         if (genreTextField.isEditing == true || ageTextField.isEditing == true) {
             handleToolBarDone()
         }
@@ -295,12 +325,19 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         //make sure the fields are valid
         guard let usernameUnwrapped = username, let passwordUnwrapper = password, let age = Int(ageSting), let genre = genreTextField.text, let name = djNameTextField.text, let hometown = hometownTextField.text, let twitter = twitterTextField.text else {
             print("Not valid args passed in.")
+            self.stopAnimating()
             return
         }
         
         
         if (genre == "" || hometown == "" || name == "") {
             print("Not valid entries");
+            let alert = UIAlertController(title: "Oh man!", message: "Looks like one of your required fields is empty.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            self.stopAnimating()
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -313,12 +350,12 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 print(error.localizedDescription)
                 
                 
-                let alert = UIAlertController(title: "Oops!", message: "\(error.localizedDescription)", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Oops!", message: "Error: \(error.localizedDescription)", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
                     print("I was pressed")
                     self.registrationNotComplete()
                 }))
-                
+                self.stopAnimating()
                 self.present(alert, animated: true, completion: nil)
                 return
             }
@@ -341,11 +378,13 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     storageRef.downloadURL { (url, error) in
                         if let error = error{
                             print(error.localizedDescription)
+                            self.stopAnimating()
                             return
                         }
                         let profileImageUrl = url?.absoluteString
                         if profileImageUrl == nil {
                             print("URL was null!")
+                            self.stopAnimating()
                             return
                         }
                         let values = ["djName":name, "hometown":hometown, "age":age, "genre":genre, "email": usernameUnwrapped, "validated": true, "currentLocation": "Somewhere","profilePicURL": profileImageUrl, "twitterOrInstagram":twitter] as [String : Any]
@@ -354,17 +393,31 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     }
                 }
                 }
-
-            
                 
-                //display alert
-                let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. \nPress Continue to get stated!", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
-                    print("I was pressed")
-                    self.registrationComplete()
+                let keychainAlert = UIAlertController(title: "Keychain Access", message: "Add this password to keychain for easy access to Go.DJ? \nIf you select \"No\" here, please remember your password!", preferredStyle: UIAlertControllerStyle.alert)
+                keychainAlert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
+                    KeychainWrapper.standard.set(passwordUnwrapper, forKey: "userPassword")
+                    KeychainWrapper.standard.set(usernameUnwrapped, forKey: "username")
+                    //display coninue alert
+                    let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. \nPress Continue to get stated!", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
+                        print("I was pressed")
+                        self.registrationComplete(username: usernameUnwrapped, password: passwordUnwrapper)
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
                 }))
-                
-                self.present(alert, animated: true, completion: nil)
+                keychainAlert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: { action in
+                    //display coninue alert
+                    let alert = UIAlertController(title: "Registration Complete", message: "Congratulations!\nYou have finished the registration process. \nPress Continue to get stated!", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: { action in
+                        print("I was pressed")
+                        self.registrationComplete(username: usernameUnwrapped, password: passwordUnwrapper)
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }))
+                self.present(keychainAlert, animated: true, completion: nil)
             }
         }
         }
@@ -390,7 +443,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             }
             print ("Adding values was a success!")
         })
-        
+        self.stopAnimating()
     }
     // returns the number of 'columns' to display.
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -459,10 +512,16 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         self.navigationController?.popViewController(animated: true)
     }
     
-    func registrationComplete() {
-        self.dismiss(animated: true, completion: nil)
+    func registrationComplete(username: String, password: String) {
+        //dismiss(animated: true, completion: nil)
+        self.stopAnimating()
         let loginControl = DJLoginController()
-        loginControl.handleLogin()
+        loginControl.usernameTextField.text = username
+        loginControl.passwordTextField.text = password
+        loginControl.modalPresentationStyle = .fullScreen
+        self.present(loginControl, animated: true, completion: nil)
+        //loginControl.getSnapshots()
+        //loginControl.handleLogin()
         //loginControl.handleGuestEnter()
         //self.loginController?.handleGuestEnter()
     }
@@ -475,14 +534,20 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
     }
     
-    @objc func showPlacesAPI (){
+    @objc func showPlacesAPI(){
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
+        autocompleteController.modalPresentationStyle = .fullScreen
         present(autocompleteController, animated: true, completion: nil)
     }
     
     func setupNavigationBar(){
         self.navigationItem.title = "Enter Info"
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size: 40) as Any]
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleDone))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleBack))
     }

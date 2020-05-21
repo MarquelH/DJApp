@@ -9,15 +9,14 @@
 import UIKit
 import Firebase
 
-class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate, SearchToSelectedProtocol  {
+class SearchTrackViewController: UITableViewController, UISearchControllerDelegate, UISearchBarDelegate, SearchToSelectedProtocol  {    
     
     let searchCellId = "searchCellId"
     var searchText: String?
-    var dj: UserDJ?
+    var dj: DJs?
     var guestID: String?
     var currentSnapshot: [String: AnyObject]?
     var guestSnapshot: [String: AnyObject]?
-
 
     
     var results = [TrackItem]() {
@@ -35,21 +34,12 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     lazy var searchController: UISearchController = {
        let sc = UISearchController(searchResultsController: nil)
-        sc.searchBar.placeholder = "Search Tracks, Artist, or Albums"
+        sc.searchBar.placeholder = "Search Tracks, Artists, or Albums"
         sc.dimsBackgroundDuringPresentation = false
         sc.hidesNavigationBarDuringPresentation = false
         sc.searchBar.searchBarStyle = .minimal
         //sc.searchBar.barTintColor = UIColor.darkGray
         sc.searchBar.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-        //sc.searchBar.backgroundColor = UIColor.lightGray
-        //Change color of searching text
-        var textField = sc.searchBar.value(forKey: "searchField") as? UITextField
-        textField?.textColor = UIColor.white
-        
-        //Change color of placeholder text
-        var placeholderTextLabel = textField?.value(forKey: "placeholderLabel") as? UILabel
-        placeholderTextLabel?.textColor = UIColor.white
-        
         sc.searchBar.delegate = self
         sc.definesPresentationContext = true
 
@@ -62,7 +52,11 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchController.searchBar.barTintColor = UIColor.darkGray
+        // white text field text
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        searchController.searchBar.barTintColor = UIColor.white
+        let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField
+        textField?.textColor = UIColor.white
         
         //Need this to display the next screen
         self.definesPresentationContext = true
@@ -70,7 +64,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         //Register reusable cell with class
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: searchCellId)
 
-        
         setupTableView()
     }
 
@@ -79,7 +72,6 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         if #available (iOS 11.0, *) {
             navigationItem.hidesSearchBarWhenScrolling = false
         }
-        UIApplication.shared.statusBarStyle = .default
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -91,7 +83,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
     
     // HELPERS -------------
     
-    func setSeachDJandGuestID(dj: UserDJ, guestID: String) {
+    func setSeachDJandGuestID(dj: DJs, guestID: String) {
         self.dj = dj
         self.guestID = guestID
     }
@@ -134,7 +126,7 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         if (!(searchController.searchBar.text?.isEmpty)!) {
             self.searchText = searchText
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
-            self.perform(#selector(search), with: nil, afterDelay: 0.5)
+            self.perform(#selector(search), with: nil, afterDelay: 0.25)
         }
         else {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(search), object: nil)
@@ -157,21 +149,19 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         //UIApplication.shared.statusBarFrame.height
 
         navigationItem.title = "Search"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any]
-        //navigationController?.navigationBar.barTintColor = UIColor.darkGray
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 30) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
         if #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-            navigationItem.searchController = self.searchController
+            //tableView.contentInsetAdjustmentBehavior = .never
+            self.navigationItem.searchController = self.searchController
         }
         else {
             tableView.tableHeaderView = searchController.searchBar
         }
         
-        let navBarHeight = (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!
-        let seachBarHeight = self.searchController.searchBar.frame.size.height + self.searchController.searchBar.frame.origin.y
-        
-        tableView.contentInset = UIEdgeInsets(top: seachBarHeight + navBarHeight + 10.0, left: 0, bottom: (tabBarController?.tabBar.frame.height)!, right: 0)
-
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.darkGray
         tableView.backgroundView = noResults
@@ -196,17 +186,17 @@ class SearchTrackViewController: UITableViewController, UISearchControllerDelega
         cell.textLabel?.text = track.trackName
         cell.detailTextLabel?.text = track.trackArtist
         
-        cell.textLabel?.font = UIFont(name: "Mikodacs", size : 19)
-        cell.detailTextLabel?.font = UIFont(name: "Mikodacs", size : 15)
+        cell.textLabel?.font = UIFont(name: "BebasNeue-Regular", size : 19)
+        cell.detailTextLabel?.font = UIFont(name: "BebasNeue-Regular", size : 15)
         
         
-        if let imageURL = track.trackImage?.addHTTPS()?.absoluteString.replaceWith60() {
+        /*if let imageURL = track.trackImage?.addHTTPS()?.absoluteString.replaceWith60() {
 
             cell.profileImageView.loadImageWithChachfromUrl(urlString: imageURL)
         }
         else {
             print("problem with URL parsing")
-        }
+        }*/
         
         return cell
     }

@@ -9,10 +9,12 @@
 import UIKit
 import Firebase
 import CoreLocation
+import CoreData
+import NVActivityIndicatorView
 
-class DJMenuViewController: UITableViewController {
+class DJMenuViewController: UITableViewController, NVActivityIndicatorViewable {
     
-    var users = [UserDJ]()
+    var users = [DJs]()
     var events = [Event]()
     let cellId = "cellId"
     var guestID: String?
@@ -20,10 +22,12 @@ class DJMenuViewController: UITableViewController {
     var eventsToBeDeleted: [String] = []
     var songlistsToBeDeleted: [String] = []
     var currentUserLocation: CLLocation?
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     lazy var refreshController: UIRefreshControl = {
         let rc = UIRefreshControl()
-        rc.addTarget(self, action: #selector(self.fetchDjs), for: UIControlEvents.valueChanged)
+        rc.addTarget(self, action: #selector(self.fetchEvents), for: UIControlEvents.valueChanged)
         rc.tintColor = UIColor.blue.withAlphaComponent(0.75)
         return rc
     }()
@@ -32,9 +36,9 @@ class DJMenuViewController: UITableViewController {
         let nrl = UILabel()
         nrl.translatesAutoresizingMaskIntoConstraints = false
         nrl.textColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.9)
-        nrl.text = "No DJs are currently live within 1 mile of you.\nPlease try again later!"
+        nrl.text = "Here, you can select a DJ's session in order to request songs during their live sessions.\n\n No DJs are currently live"
         nrl.textAlignment = .center
-        nrl.font = UIFont(name: "Mikodacs", size : 20)
+        nrl.font = UIFont(name: "BebasNeue-Regular", size : 27)
         nrl.lineBreakMode = .byWordWrapping
         nrl.numberOfLines = 0
         return nrl
@@ -42,8 +46,7 @@ class DJMenuViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = .lightContent
-        fetchDjs()
+        fetchEvents()
     }
     
     
@@ -69,31 +72,17 @@ class DJMenuViewController: UITableViewController {
         noDJLabel.heightAnchor.constraint(equalTo: self.tableView.heightAnchor).isActive = true
     }
     
-    @objc func fetchDjs() {
-        //So that table view doesn't load duplicates
+    
+    @objc func fetchEvents() {
         self.users.removeAll()
-        //self.events.removeAll()
-        
-        Database.database().reference().child("users").observeSingleEvent(of: .value, with: {(snapshot) in
-            
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                self.usersSnapshot = dictionary
-                self.fetchEvents()
-            }
-            
-        }, withCancel: nil)
-    }
-    
-    
-    func fetchEvents() {
         self.events.removeAll()
+        self.startAnimating()
         Database.database().reference().child("Events").observeSingleEvent(of: .value, with: {(snapshot) in
-            
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 
                 for (key,value) in dictionary {
                     
-                    if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String, let djName = value["DJ Name"] as? String, let eventLat = value["Latitude Coordinates"] as? String, let eventLong = value["Longitude Coordinates"] as? String {
+                    if let djID  = value["DjID"] as? String, let endTime = value["EndDateAndTime"] as? String, let startTime = value["StartDateAndTime"] as? String, let eventID = value["id"] as? String, let location = value["location"] as? String, let djName = value["DJ Name"] as? String, let _ = value["Latitude Coordinates"] as? String, let _ = value["Longitude Coordinates"] as? String {
                         
                         let currDateTime = Date()
                         let dateFormatter = DateFormatter()
@@ -123,9 +112,6 @@ class DJMenuViewController: UITableViewController {
                             //remove from the songlists to be deleted array because it is a valid songlist
                             self.songlistsToBeDeleted.removeLast()
                             
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
                         }
                         else if ((ed.timeIntervalSince1970) <= currDateTime.timeIntervalSince1970) {
                             //Add key to eventsToBeDeleted
@@ -142,17 +128,22 @@ class DJMenuViewController: UITableViewController {
             else {
                 print("Problem parsing events into [String: AnyObjet]")
             }
+            self.users.sort {
+                $0.djName! < $1.djName!
+            }
+            //self.removePastSonglists()
+            self.tableView.reloadData()
             self.refreshController.endRefreshing()
-            self.removePastEventsAndSonglists()
+            self.stopAnimating()
         }, withCancel: nil)
     }
     
-    func removePastEventsAndSonglists() {
+    func removePastSonglists() {
         //Remove past events
-        let ref = Database.database().reference().child("Events")
+        /*let ref = Database.database().reference().child("Events")
         for eventID in eventsToBeDeleted {
             ref.child(eventID).setValue(nil)
-        }
+        }*/
         
         //Remove past song lists
         let ref2 = Database.database().reference().child("SongList")
@@ -171,12 +162,24 @@ class DJMenuViewController: UITableViewController {
             
             if key == djID {
                 print("DJ Found in snapshot, going to add them to the list. ")
-                if let name = value["djName"] as? String, let age = value["age"] as? Int, let currentLocation = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let validated =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
+                if let name = value["djName"] as? String, let age = value["age"] as? Int, let _ = value["currentLocation"] as? String, let email = value["email"] as? String, let twitter = value["twitterOrInstagram"] as? String, let genre = value["genre"] as? String, let hometown = value["hometown"] as? String, let _ =  value["validated"] as? Bool, let profilePicURL = value["profilePicURL"] as? String{
                     
-                    let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
+                    //let dj = UserDJ(age: age, currentLocation: currentLocation, djName: name, email: email, genre: genre, hometown: hometown, validated: validated, profilePicURL: profilePicURL, uid: key, twitter: twitter)
+                    
+                    let newDJ = DJs(entity: DJs.entity(), insertInto: self.context)
+                    newDJ.djName = name
+                    newDJ.age = age
+                    newDJ.email = email
+                    newDJ.genre = genre
+                    newDJ.hometown = hometown
+                    newDJ.profilePicURL = profilePicURL
+                    newDJ.uid = key
+                    newDJ.twitter = twitter
                     
                     
-                    self.users.append(dj)
+                    if !self.users.contains(newDJ) {
+                        self.users.append(newDJ)
+                    }
                     
                 }
                 else{
@@ -204,11 +207,19 @@ class DJMenuViewController: UITableViewController {
         
         
         let dj = users[indexPath.row]
-        cell.textLabel?.text = dj.djName
         
-        if let location = events[indexPath.row].location {
+        let dateFormatter2 = DateFormatter()
+        
+        dateFormatter2.dateStyle = DateFormatter.Style.short
+        dateFormatter2.timeStyle = DateFormatter.Style.short
+        dateFormatter2.locale = Locale(identifier: "en_US_POSIX")
+        
+        cell.textLabel?.text = dj.djName
+        if let location = events[indexPath.row].location, let endTime = events[indexPath.row].endTime {
+            let strDate = dateFormatter2.string(from: endTime)
+            let endTimeAlone = strDate.split(separator: ",")[1]
             cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
-            cell.detailTextLabel?.text = "Playing at: " +  "\(String(describing: location))"
+            cell.detailTextLabel?.text = "Location details: \(String(describing: location)) until\(endTimeAlone)"
         }
         else {
             cell.detailTextLabel?.text = ""
@@ -253,6 +264,7 @@ class DJMenuViewController: UITableViewController {
         //Insert views into navigation controller
         
         customTabBarController.selectedIndex = 1
+        customTabBarController.modalPresentationStyle = .fullScreen
         present(customTabBarController, animated: true, completion: nil)
         
         
@@ -264,12 +276,15 @@ class DJMenuViewController: UITableViewController {
     }
     
     func setupNavBar() {
-        navigationItem.title = "Live DJs Near You"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        navigationItem.title = "Live DJs"
+        //self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        //self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "SudegnakNo2", size : 35) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size : 40) as Any, NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
     }
     
     @objc func handleLogout() {

@@ -74,8 +74,8 @@ class TrackCell: BaseCell {
         detailTextLabel?.textColor = UIColor.white
         textLabel?.textColor = UIColor.white
         
-        textLabel?.font = UIFont(name: "Mikodacs", size : 19)
-        detailTextLabel?.font = UIFont(name: "Mikodacs", size : 15)
+        textLabel?.font = UIFont(name: "BebasNeue-Regular", size : 21)
+        detailTextLabel?.font = UIFont(name: "BebasNeue-Regular", size : 17)
         
         textLabel?.lineBreakMode = .byTruncatingTail
         detailTextLabel?.lineBreakMode = .byTruncatingTail
@@ -86,12 +86,12 @@ class TrackCell: BaseCell {
         //80 is from 10 for left and right, 60 for size of image, 35 for thumb 15 for right, 5 for left = 135
         if (textLabel?.frame.width)! > self.frame.width - 135 {
             let difference = (textLabel?.frame.width)! - self.frame.width + 135
-            textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
-            detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width - difference, height: textLabel!.frame.height)
+            textLabel?.frame = CGRect(x: 5, y: textLabel!.frame.origin.y, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
+            detailTextLabel?.frame = CGRect(x: 5, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width - difference, height: textLabel!.frame.height)
         }
         else {
-            textLabel?.frame = CGRect(x: 80, y: textLabel!.frame.origin.y, width: textLabel!.frame.width, height: textLabel!.frame.height)
-            detailTextLabel?.frame = CGRect(x: 80, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+            textLabel?.frame = CGRect(x: 5, y: textLabel!.frame.origin.y, width: textLabel!.frame.width, height: textLabel!.frame.height)
+            detailTextLabel?.frame = CGRect(x: 5, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         }
     }
     
@@ -103,17 +103,17 @@ class TrackCell: BaseCell {
         downArrowImageView.image = downArrowImage.maskWithColor(color: UIColor.lightGray)
         
         //contentView.backgroundColor = UIColor.black
-        contentView.addSubview(profileImageView)
+        //contentView.addSubview(profileImageView)
         contentView.addSubview(upArrowImageView)
         contentView.addSubview(downArrowImageView)
         contentView.addSubview(totalvotesLabel)
 
         
-        profileImageView.layer.cornerRadius = 3
+        /*profileImageView.layer.cornerRadius = 3
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true*/
         
         upArrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -20).isActive = true
         upArrowImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true

@@ -11,13 +11,13 @@ import Firebase
 
 class CustomTabBarController: UITabBarController {
 
-    var dj: UserDJ?
+    var dj: DJs?
     var guestID: String?
     
     let songController = SongTableViewController()
     let searchController = SearchTrackViewController()
     let homeController = HomeViewController()
-    let profileController = DJPRofileViewController()
+    let profileController = DJProfileViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,11 +55,11 @@ class CustomTabBarController: UITabBarController {
         let index = item.index(ofAccessibilityElement: item)
         if (index != 2) {
             searchController.results.removeAll()
-            UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+            //UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
             searchController.searchController.isActive = false
         }
         else {
-            UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+            //UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
         }
     }
 
@@ -67,7 +67,7 @@ class CustomTabBarController: UITabBarController {
         super.didReceiveMemoryWarning()
     }
     
-    func setDJsAndGuestID(dj: UserDJ, id: String) {
+    func setDJsAndGuestID(dj: DJs, id: String) {
         profileController.dj = dj
         songController.dj = dj
         searchController.dj = dj

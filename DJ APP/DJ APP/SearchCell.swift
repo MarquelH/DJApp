@@ -14,13 +14,13 @@ class SearchCell: BaseCell {
         super.setupViews()
         contentView.backgroundColor = UIColor.darkGray
         
-        contentView.addSubview(profileImageView)
+        /*contentView.addSubview(profileImageView)
 
         profileImageView.layer.cornerRadius = 2
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true*/
     }
     
 
@@ -43,12 +43,12 @@ class SearchCell: BaseCell {
         //15 + 15 + 40 = 70
         if (textLabel?.frame.width)! > self.frame.width - 70 {
             let difference = (textLabel?.frame.width)! - self.frame.width + 70
-            textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 1, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
-             detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width - difference, height: textLabel!.frame.height)
+            textLabel?.frame = CGRect(x: 5, y: textLabel!.frame.origin.y - 1, width: textLabel!.frame.width - difference, height: textLabel!.frame.height)
+             detailTextLabel?.frame = CGRect(x: 5, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width - difference, height: textLabel!.frame.height)
         }
         else {
-            textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 1, width: textLabel!.frame.width, height: textLabel!.frame.height)
-             detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
+            textLabel?.frame = CGRect(x: 5, y: textLabel!.frame.origin.y - 1, width: textLabel!.frame.width, height: textLabel!.frame.height)
+             detailTextLabel?.frame = CGRect(x: 5, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
         }
     }
     

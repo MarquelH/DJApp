@@ -21,6 +21,7 @@ class NavForTableViewController: UINavigationController {
                 v1.dj = dj
             }
             if let v2 = child as? MessagesTableViewController{
+                print("PUTTING IT HEREEEEE")
                 v2.dj = dj
             }
             if let v3 = child as? scheduleViewController{
@@ -33,7 +34,8 @@ class NavForTableViewController: UINavigationController {
                 v5.dj = dj
             }
             else{
-                print("Not the right VC")
+                print(child)
+                print("Unrecognized VC")
             }
         }
     }

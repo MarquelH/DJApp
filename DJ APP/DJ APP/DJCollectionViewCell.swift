@@ -25,6 +25,8 @@ class DJCollectionViewCell: UICollectionViewCell {
        let tl = UILabel()
         tl.text = "DJ So&So"
         tl.translatesAutoresizingMaskIntoConstraints = false
+        tl.font = UIFont(name: "BebasNeue-Regular", size: 25)
+        tl.textColor = UIColor.black
         return tl
     }()
     
@@ -32,6 +34,8 @@ class DJCollectionViewCell: UICollectionViewCell {
        let gl = UILabel()
         gl.text = "Favorite Genre"
         gl.translatesAutoresizingMaskIntoConstraints = false
+        gl.font = UIFont(name: "BebasNeue-Regular", size: 20)
+        gl.textColor = UIColor.black
         return gl
     }()
     

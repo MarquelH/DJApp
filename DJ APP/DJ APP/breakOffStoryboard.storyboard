@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,9 +35,13 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="gradientHorizontal" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="DJ Mode"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="I'm a DJ"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleFontName" value="BebasNeue-Regular"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
+                                        <real key="value" value="23"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -68,7 +70,11 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="gradientHorizontal" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="Guest Mode"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="I'm a Listener"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleFontName" value="BebasNeue-Regular"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
+                                        <real key="value" value="23"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="guestButtonTapped:" destination="Yrp-Lu-LHx" eventType="touchUpInside" id="xUa-S1-Fzb"/>
@@ -89,7 +95,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WuJ-1w-CVg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1583.2" y="-21.139430284857571"/>
+            <point key="canvasLocation" x="-1788" y="-29"/>
         </scene>
         <!--BrowseDJsViewController-->
         <scene sceneID="kAV-3e-OVW">
@@ -99,13 +105,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" barStyle="black" placeholder="Search For a DJ" translatesAutoresizingMaskIntoConstraints="NO" id="7FE-3s-1uU">
-                                <rect key="frame" x="0.0" y="65" width="414" height="56"/>
-                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lhQ-rW-GMm">
-                                <rect key="frame" x="84" y="192" width="246" height="419"/>
+                                <rect key="frame" x="84" y="238.5" width="246" height="419"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="246" id="SHc-et-4W5"/>
@@ -124,25 +125,95 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QaB-fO-OIz">
+                                <rect key="frame" x="84" y="94" width="246" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
                             <constraint firstItem="lhQ-rW-GMm" firstAttribute="centerX" secondItem="veK-wf-4rF" secondAttribute="centerX" id="5yc-EO-a3m"/>
-                            <constraint firstItem="7FE-3s-1uU" firstAttribute="leading" secondItem="mj9-ig-DiB" secondAttribute="leading" id="BSs-6n-WV3"/>
-                            <constraint firstItem="lhQ-rW-GMm" firstAttribute="top" secondItem="7FE-3s-1uU" secondAttribute="bottom" constant="71" id="J8V-wY-oG6"/>
-                            <constraint firstItem="7FE-3s-1uU" firstAttribute="trailing" secondItem="mj9-ig-DiB" secondAttribute="trailing" id="Zay-b0-wPf"/>
-                            <constraint firstItem="7FE-3s-1uU" firstAttribute="top" secondItem="mj9-ig-DiB" secondAttribute="top" constant="21" id="s0I-cJ-dER"/>
+                            <constraint firstItem="mj9-ig-DiB" firstAttribute="trailing" secondItem="QaB-fO-OIz" secondAttribute="trailing" constant="84" id="Mhu-xu-RwD"/>
+                            <constraint firstItem="lhQ-rW-GMm" firstAttribute="centerY" secondItem="veK-wf-4rF" secondAttribute="centerY" id="cTX-Sv-mox"/>
+                            <constraint firstItem="QaB-fO-OIz" firstAttribute="top" secondItem="mj9-ig-DiB" secondAttribute="top" constant="50" id="udv-9y-xHc"/>
+                            <constraint firstItem="QaB-fO-OIz" firstAttribute="leading" secondItem="mj9-ig-DiB" secondAttribute="leading" constant="84" id="x69-Wf-7M6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mj9-ig-DiB"/>
                     </view>
                     <connections>
-                        <outlet property="djSearchBar" destination="7FE-3s-1uU" id="hAJ-vE-fcm"/>
                         <outlet property="myCollectionView" destination="lhQ-rW-GMm" id="Cqw-OB-leN"/>
+                        <outlet property="totalDJsLabel" destination="QaB-fO-OIz" id="6Td-aI-tmX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LLK-nl-XPo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-709" y="10"/>
+            <point key="canvasLocation" x="-554" y="-41"/>
+        </scene>
+        <!--Search Popover View Controller-->
+        <scene sceneID="hwK-Ii-Y2R">
+            <objects>
+                <viewController storyboardIdentifier="searchPopover" id="vj5-Ch-yus" customClass="SearchPopoverViewController" customModule="DJ_APP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6X7-Uh-4GL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DJ Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ecm-gs-o7y">
+                                <rect key="frame" x="114" y="44" width="186" height="47"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <searchBar contentMode="redraw" barStyle="black" placeholder="Type in a DJ" showsSearchResultsButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="08U-qu-Tw6">
+                                <rect key="frame" x="0.0" y="106" width="414" height="56"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lDR-L1-pmO">
+                                <rect key="frame" x="0.0" y="162" width="414" height="346"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="346" id="7t7-Wv-3EI"/>
+                                </constraints>
+                                <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="djSearchTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="djSearchTableViewCell" id="EEL-c4-xtp" customClass="djSearchTableViewCell" customModule="DJ_APP" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EEL-c4-xtp" id="Wpa-JL-rpT">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ecm-gs-o7y" firstAttribute="centerX" secondItem="6X7-Uh-4GL" secondAttribute="centerX" id="0Ed-G0-e22"/>
+                            <constraint firstItem="08U-qu-Tw6" firstAttribute="trailing" secondItem="RSR-BK-gBZ" secondAttribute="trailing" id="9m1-n0-qh0"/>
+                            <constraint firstItem="lDR-L1-pmO" firstAttribute="leading" secondItem="RSR-BK-gBZ" secondAttribute="leading" id="IuK-d4-PQK"/>
+                            <constraint firstItem="lDR-L1-pmO" firstAttribute="trailing" secondItem="RSR-BK-gBZ" secondAttribute="trailing" id="JmL-PF-brk"/>
+                            <constraint firstItem="Ecm-gs-o7y" firstAttribute="top" secondItem="RSR-BK-gBZ" secondAttribute="top" id="Mj3-SR-bdK"/>
+                            <constraint firstItem="08U-qu-Tw6" firstAttribute="leading" secondItem="RSR-BK-gBZ" secondAttribute="leading" id="YUR-UB-gwN"/>
+                            <constraint firstItem="08U-qu-Tw6" firstAttribute="top" secondItem="Ecm-gs-o7y" secondAttribute="bottom" constant="15" id="sxv-Yp-hrK"/>
+                            <constraint firstItem="lDR-L1-pmO" firstAttribute="top" secondItem="08U-qu-Tw6" secondAttribute="bottom" id="tMw-VV-BSK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="RSR-BK-gBZ"/>
+                    </view>
+                    <connections>
+                        <outlet property="djSearchBar" destination="08U-qu-Tw6" id="r05-vJ-nrQ"/>
+                        <outlet property="djSearchLabel" destination="Ecm-gs-o7y" id="UgF-3d-Qdl"/>
+                        <outlet property="djTableView" destination="lDR-L1-pmO" id="c1G-x8-8kM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vlu-yV-MT6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="61" y="-1"/>
         </scene>
     </scenes>
 </document>

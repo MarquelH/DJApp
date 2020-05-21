@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class RegisterController: UIViewController, UITextFieldDelegate {
 
@@ -22,61 +23,72 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     
     let usernameContainer: UIView = {
         let cv = UIView()
-        cv.backgroundColor = UIColor.white
+        cv.backgroundColor = UIColor.black
         cv.layer.masksToBounds = true
         cv.layer.cornerRadius = 30
         cv.layer.borderWidth = 0.5
-        cv.layer.borderColor = UIColor.black.cgColor
+        cv.layer.borderColor = UIColor.white.cgColor
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
     let usernameTextField: UITextField = {
         let htf = UITextField()
-        htf.placeholder = "Email"
-        htf.textColor = UIColor.black
+        let placeHolderText = "Email"
+        htf.attributedPlaceholder = NSAttributedString(string: placeHolderText,
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         htf.clearButtonMode = .whileEditing
         htf.translatesAutoresizingMaskIntoConstraints = false
+        htf.backgroundColor = UIColor.black
+        htf.textColor = UIColor.white
+        htf.font = UIFont(name: "BebasNeue-Regular", size: 20)
         return htf
     }()
     
     let passwordTextField: UITextField = {
         let htf = UITextField()
-        htf.placeholder = "Password (Must be at least 6 characters)"
+        let placeHolderText = "Password (Must be at least 6 characters)"
+        htf.attributedPlaceholder = NSAttributedString(string: placeHolderText,
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        htf.backgroundColor = UIColor.black
         htf.clearButtonMode = .whileEditing
-        //htf.isSecureTextEntry = true
+        htf.isSecureTextEntry = true
         htf.translatesAutoresizingMaskIntoConstraints = false
-        htf.textColor = UIColor.black
+        htf.textColor = UIColor.white
+        htf.font = UIFont(name: "BebasNeue-Regular", size: 20)
         return htf
     }()
     
     let passwordContainer: UIView = {
         let cv = UIView()
-        cv.backgroundColor = UIColor.white
+        cv.backgroundColor = UIColor.black
         cv.layer.masksToBounds = true
         cv.layer.cornerRadius = 30
         cv.layer.borderWidth = 0.5
-        cv.layer.borderColor = UIColor.black.cgColor
+        cv.layer.borderColor = UIColor.white.cgColor
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
     let reenterPasswordTextField: UITextField = {
         let htf = UITextField()
-        htf.placeholder = "Confirm Password"
+        let placeHolderText = "Confirm Password"
+        htf.attributedPlaceholder = NSAttributedString(string: placeHolderText,
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         htf.clearButtonMode = .whileEditing
         htf.isSecureTextEntry = true
-        htf.textColor = UIColor.black
+        htf.textColor = UIColor.white
         htf.translatesAutoresizingMaskIntoConstraints = false
+        htf.font = UIFont(name: "BebasNeue-Regular", size: 20)
         return htf
     }()
     let reenterPasswordContainer: UIView = {
         let cv = UIView()
-        cv.backgroundColor = UIColor.white
+        cv.backgroundColor = UIColor.black
         cv.layer.masksToBounds = true
         cv.layer.cornerRadius = 30
         cv.layer.borderWidth = 0.5
-        cv.layer.borderColor = UIColor.black.cgColor
+        cv.layer.borderColor = UIColor.white.cgColor
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
@@ -141,11 +153,16 @@ class RegisterController: UIViewController, UITextFieldDelegate {
     }
     
     func setupNavigationBar() {
-        self.navigationItem.title = "Login Credentials"
+        self.navigationItem.title = "Login Creds"
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "BebasNeue-Regular", size: 40) as Any]
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleContinue))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        //self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        //self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
     }
     
     func setupViews() {

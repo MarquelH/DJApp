@@ -13,7 +13,7 @@ class MessageTableViewCell: UITableViewCell {
     let separator: UIView = {
         let s = UIView()
         s.translatesAutoresizingMaskIntoConstraints = false
-        s.backgroundColor = UIColor(red: 214/255, green: 29/255, blue: 1, alpha:1.0)
+        s.backgroundColor = UIColor.white
         return s
     }()
     
@@ -25,23 +25,21 @@ class MessageTableViewCell: UITableViewCell {
         detailTextLabel?.textColor = UIColor.white
         textLabel?.textColor = UIColor.white
         
-        textLabel?.font = UIFont(name: "Mikodacs", size : 19)
-        detailTextLabel?.font = UIFont(name: "Mikodacs", size : 16)
+        textLabel?.font = UIFont(name: "BebasNeue-Regular", size : 19)
+        detailTextLabel?.font = UIFont(name: "BebasNeue-Regular", size : 16)
         
         contentView.addSubview(separator)
         
         separator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         separator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: 2.5).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         separator.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         
         textLabel?.lineBreakMode = .byTruncatingTail
         detailTextLabel?.lineBreakMode = .byTruncatingTail
         
        // textLabel?.frame = CGRect(x: 90, y: textLabel!.frame.origin.y - 3, width: textLabel!.frame.width, height: textLabel!.frame.height)
-        textLabel?.backgroundColor = UIColor.clear
        // detailTextLabel?.frame = CGRect(x: 90, y: detailTextLabel!.frame.origin.y + 1, width: detailTextLabel!.frame.width, height: textLabel!.frame.height)
-        detailTextLabel?.backgroundColor = UIColor.clear
     }
     
     
