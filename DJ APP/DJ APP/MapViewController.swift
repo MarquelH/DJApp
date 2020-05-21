@@ -73,7 +73,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             alert.addAction(UIAlertAction(title: "Eh, I don't care", style: UIAlertActionStyle.cancel, handler: { action in
                 self.navigationController?.popViewController(animated: true)
             }))
-            UserDefaults.standard.set(0, forKey:"launchCount")
+            //UserDefaults.standard.set(0, forKey:"launchCount")
             self.present(alert, animated: true, completion: nil)
         }
         setupNavBar()

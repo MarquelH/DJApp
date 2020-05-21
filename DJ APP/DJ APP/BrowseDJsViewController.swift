@@ -69,7 +69,6 @@ class BrowseDJsViewController: UIViewController, UICollectionViewDataSource, UIC
         if (UserDefaults.standard.integer(forKey: "launchCount") == 30){
             //Asking for review on 10th launch.
             SKStoreReviewController.requestReview()
-            UserDefaults.standard.set(0, forKey:"launchCount")
         }
         fetchDjs()
         //djSearchBar.delegate = self

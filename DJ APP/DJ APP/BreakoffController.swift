@@ -48,7 +48,7 @@ class BreakoffController: UIViewController, UINavigationControllerDelegate, UITe
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if Reachability.isConnectedToNetwork() {
+        if Reachability.isConnectedToNetwork() && (UserDefaults.standard.integer(forKey: "launchCount") > 2){
          startAnimating(CGSize(width: 30, height: 30), message: "Checking if already logged in", messageFont: UIFont(name: "BebasNeue-Regular", size: 30), type: .audioEqualizer, color: UIColor(red: 214/255, green: 29/255, blue: 1, alpha:0.5), padding: 0, displayTimeThreshold: 7, minimumDisplayTime: 0, backgroundColor: .black, textColor: .white, fadeInAnimation: nil)
         }
     }

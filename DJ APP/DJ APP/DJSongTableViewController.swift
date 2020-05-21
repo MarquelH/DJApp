@@ -296,7 +296,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
         if (UserDefaults.standard.integer(forKey: "launchCount") == 50){
             //Asking for review on 10th launch.
             SKStoreReviewController.requestReview()
-            UserDefaults.standard.set(0, forKey:"launchCount")
+            //UserDefaults.standard.set(0, forKey:"launchCount")
         }
         /*placesClient = GMSPlacesClient.shared()
         
