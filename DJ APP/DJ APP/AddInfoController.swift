@@ -394,7 +394,7 @@ class AddInfoController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 }
                 }
                 
-                let keychainAlert = UIAlertController(title: "Keychain Access", message: "Add this password to keychain for easy access to Go.DJ? \nIf you select \"No\" here, please remember your password!", preferredStyle: UIAlertControllerStyle.alert)
+                let keychainAlert = UIAlertController(title: "Keychain Access", message: "Add this password to keychain for easy access to Go.DJ? \nIf you select \"No\" here, please remember your password", preferredStyle: UIAlertControllerStyle.alert)
                 keychainAlert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
                     KeychainWrapper.standard.set(passwordUnwrapper, forKey: "userPassword")
                     KeychainWrapper.standard.set(usernameUnwrapped, forKey: "username")

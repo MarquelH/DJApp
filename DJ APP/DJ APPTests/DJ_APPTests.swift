@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Firebase
 @testable import DJ_APP
 
 class DJ_APPTests: XCTestCase {
@@ -31,6 +32,21 @@ class DJ_APPTests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testDJLogin() {
+        let djLoginController = DJLoginController()
+        djLoginController.usernameTextField.text = "HelloHello@gmail.com"
+        djLoginController.passwordTextField.text = "123456"
+        djLoginController.handleLogin()
+        XCTAssert(Auth.auth().currentUser != nil)
+    }
+    
+    func testUserLogin() {
+        let listenerLoginController = LoginController()
+        listenerLoginController.usernameTextField.text = "user123@google.com"
+        listenerLoginController.handleGuestEnter()
+        XCTAssert(Auth.auth().currentUser != nil)
     }
     
 }

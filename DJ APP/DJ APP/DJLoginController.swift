@@ -189,6 +189,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
         setupNavBar()
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
+        view.accessibilityIdentifier = "djLoginView"
     }
     
     @objc func autofill() {

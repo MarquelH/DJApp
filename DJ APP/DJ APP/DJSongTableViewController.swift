@@ -136,24 +136,6 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
     }
     
     @objc func goLivePressed() {
-        let status = CLLocationManager.authorizationStatus()
-        let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString)
-        if (status != .authorizedWhenInUse && status != .authorizedAlways) {
-            let alert = UIAlertController(title: "Oops!", message: "DJ Location must be enabled in order to use \"Go Live Now\"", preferredStyle: UIAlertControllerStyle.alert)
-            self.doAlertColoring(alertController: alert)
-            alert.addAction(UIAlertAction(title: "Go to location settings", style: UIAlertActionStyle.default, handler: { action in
-                if UIApplication.shared.canOpenURL(settingsURL! as URL) {
-                    UIApplication.shared.open(settingsURL! as URL, completionHandler: { (success) in
-                        //print("Settings opened: \(success)") // Prints true
-                    })
-                }
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { action in
-                self.navigationController?.popViewController(animated: true)
-            }))
-            self.present(alert, animated: true, completion: nil)
-        }
-
         
         let date = Date()
         let threeHoursLater = Date.init(timeInterval: 10800, since: date)
@@ -184,6 +166,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
         
         //Time: \(hour):\(minutes)\n Date: \(month)/\(day)/\(year)\n Location: \(Constants.DJ_LOCATION)
         alert.addAction(UIAlertAction(title: "Confirm & Go Live", style: UIAlertActionStyle.default, handler: { action in
+            action.accessibilityLabel = "goLiveButton"
             if (alert.textFields![0].text == "") {
                 let alert = UIAlertController(title: "Skrt!", message: "You must enter a lcation for your event. this can be a virtual or physical place", preferredStyle: UIAlertControllerStyle.alert)
                 self.doAlertColoring(alertController: alert)
@@ -229,7 +212,7 @@ class DJSongTableViewController: UITableViewController, UIPopoverPresentationCon
             }
             }
         }))
-        alert.addAction(UIAlertAction(title: "Create an Event with new details", style: UIAlertActionStyle.default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Create an Event With New Start/End", style: UIAlertActionStyle.default, handler: { action in
             //if let v3 = theView as? addEventViewController
             self.tabBarController?.selectedIndex = 2
             if let selectedVC = self.tabBarController?.selectedViewController as? addEventViewController {
