@@ -436,7 +436,7 @@ class DJLoginController: UIViewController, UINavigationControllerDelegate, UITex
                         
                         let storyboard = UIStoryboard(name: "ScehdulingStoryboard", bundle: nil)
                         let tabbarController = storyboard.instantiateViewController(withIdentifier: "tabBarView") as! DJcustomTabBarControllerViewController
-                        tabbarController.dj = dj
+                        tabbarController.dj = dj 
                         //print("PRESENTING TAB BAR")
                         self.stopAnimating()
                         tabBarController?.modalPresentationStyle = .fullScreen
